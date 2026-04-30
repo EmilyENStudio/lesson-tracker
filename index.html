@@ -9,19 +9,18 @@
   <title>Emily's English Studio</title>
   <style>
     :root {
-      --primary: #4A90D9;
-      --primary-light: #6BA3E0;
-      --primary-dark: #3A7BC8;
+      --primary: #667eea;
+      --primary-dark: #764ba2;
       --secondary: #F5A623;
       --secondary-light: #FFB84D;
       --bg: #F7F8FA;
       --card-bg: #FFFFFF;
-      --text-dark: #333333;
-      --text-medium: #666666;
+      --text-dark: #1a1a2e;
+      --text-medium: #4a4a6a;
       --text-light: #999999;
       --border: #E8E8E8;
-      --shadow: 0 2px 12px rgba(74, 144, 217, 0.08);
-      --shadow-hover: 0 4px 16px rgba(74, 144, 217, 0.15);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.2);
     }
 
     * {
@@ -78,52 +77,194 @@
       font-size: 14px;
     }
 
-    /* ========== Login Page ========== */
+    /* ========== Login Page - Copilot Style ========== */
     .login-page {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
       padding: 20px;
+      position: relative;
+      overflow: hidden;
     }
 
+    /* Gradient Background */
+    .login-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      z-index: -2;
+    }
+
+    /* Blur Orbs */
+    .login-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: -1;
+      opacity: 0.6;
+    }
+
+    .login-orb-1 {
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.4);
+      top: -100px;
+      left: -100px;
+      animation: float1 20s ease-in-out infinite;
+    }
+
+    .login-orb-2 {
+      width: 250px;
+      height: 250px;
+      background: rgba(255, 255, 255, 0.3);
+      bottom: -80px;
+      right: -80px;
+      animation: float2 25s ease-in-out infinite;
+    }
+
+    .login-orb-3 {
+      width: 200px;
+      height: 200px;
+      background: rgba(240, 147, 251, 0.4);
+      top: 50%;
+      right: -100px;
+      animation: float3 22s ease-in-out infinite;
+    }
+
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(50px, 30px); }
+      66% { transform: translate(-30px, 50px); }
+    }
+
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(-40px, -30px); }
+      66% { transform: translate(30px, -50px); }
+    }
+
+    @keyframes float3 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-50px, 40px); }
+    }
+
+    /* Login Card */
     .login-card {
-      background: var(--card-bg);
-      border-radius: 24px;
+      width: min(360px, 90vw);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
       box-shadow: var(--shadow);
-      padding: 48px 32px;
+      padding: 32px;
       text-align: center;
+      animation: slideUp 0.6s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .login-logo {
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
 
     .login-logo .icon {
-      font-size: 64px;
-      margin-bottom: 16px;
+      font-size: 32px;
+      margin-bottom: 8px;
       display: block;
     }
 
     .login-logo h1 {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--primary);
-      letter-spacing: 1px;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-dark);
+      letter-spacing: 0.5px;
     }
 
+    /* Bilingual Quotes */
+    .quotes-section {
+      margin: 16px 0;
+      padding: 16px 0;
+      position: relative;
+    }
+
+    .quotes-section::before,
+    .quotes-section::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+    }
+
+    .quotes-section::before {
+      top: 0;
+    }
+
+    .quotes-section::after {
+      bottom: 0;
+    }
+
+    .quote-chinese {
+      font-family: 'Songti SC', 'STSong', 'SimSun', serif;
+      font-size: 16px;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .quote-chinese-author {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    .quote-english {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--text-medium);
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .quote-english-author {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-top: 4px;
+      font-style: normal;
+    }
+
+    /* Login Form */
     .login-form {
-      margin-top: 32px;
+      margin-top: 24px;
     }
 
     .login-input {
       width: 100%;
-      padding: 16px 20px;
-      border: 2px solid var(--border);
-      border-radius: 12px;
+      height: 44px;
+      padding: 12px 16px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
       font-size: 16px;
       color: var(--text-dark);
-      background: var(--bg);
+      background: white;
       transition: all 0.3s ease;
       outline: none;
       text-align: center;
@@ -131,8 +272,7 @@
 
     .login-input:focus {
       border-color: var(--primary);
-      background: white;
-      box-shadow: 0 0 0 4px rgba(74, 144, 217, 0.1);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
     }
 
     .login-input::placeholder {
@@ -142,25 +282,26 @@
     .login-btn {
       width: 100%;
       margin-top: 16px;
-      padding: 16px 24px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      height: 44px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
       border: none;
-      border-radius: 12px;
+      border-radius: 8px;
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(74, 144, 217, 0.3);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
     }
 
     .login-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(74, 144, 217, 0.4);
+      filter: brightness(1.1);
+      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
     }
 
     .login-btn:active {
-      transform: translateY(0);
+      transform: scale(0.98);
     }
 
     .login-error {
@@ -168,22 +309,23 @@
       font-size: 13px;
       margin-top: 12px;
       min-height: 20px;
+      animation: fadeIn 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Login Footer */
     .login-footer {
-      margin-top: 48px;
+      margin-top: 32px;
       text-align: center;
-      color: var(--text-light);
-    }
-
-    .login-footer .brand {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 4px;
-    }
-
-    .login-footer .tagline {
+      color: rgba(255, 255, 255, 0.7);
       font-size: 12px;
     }
 
@@ -198,7 +340,7 @@
 
     /* Header */
     .header {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       padding: 16px 16px 32px;
       color: white;
       position: relative;
@@ -212,7 +354,7 @@
       right: -30%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -394,7 +536,7 @@
       top: 8px;
       bottom: 40px;
       width: 2px;
-      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-light) 50%, var(--border) 100%);
+      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 50%, var(--border) 100%);
       border-radius: 1px;
     }
 
@@ -453,7 +595,7 @@
     }
 
     .lesson-badge {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: white;
       padding: 4px 10px;
       border-radius: 20px;
@@ -638,15 +780,15 @@
       }
 
       .login-card {
-        padding: 32px 24px;
+        padding: 24px 20px;
       }
 
       .login-logo .icon {
-        font-size: 48px;
+        font-size: 28px;
       }
 
       .login-logo h1 {
-        font-size: 20px;
+        font-size: 18px;
       }
 
       .student-info h1 {
@@ -674,10 +816,27 @@
 
     <!-- Login Page -->
     <div id="loginPage" class="login-page" style="display: none;">
+      <!-- Gradient Background -->
+      <div class="login-bg"></div>
+      
+      <!-- Blur Orbs -->
+      <div class="login-orb login-orb-1"></div>
+      <div class="login-orb login-orb-2"></div>
+      <div class="login-orb login-orb-3"></div>
+      
       <div class="login-card">
         <div class="login-logo">
           <span class="icon">📚</span>
           <h1>Emily's English Studio</h1>
+        </div>
+        
+        <!-- Bilingual Quotes -->
+        <div class="quotes-section">
+          <p class="quote-chinese">亲其师，信其道。</p>
+          <p class="quote-chinese-author">——《礼记·学记》</p>
+          <p class="quote-english">The mind is not a vessel to be filled,
+but a fire to be kindled.</p>
+          <p class="quote-english-author">— Plutarch</p>
         </div>
         
         <form class="login-form" id="loginForm">
@@ -694,8 +853,7 @@
       </div>
       
       <div class="login-footer">
-        <div class="brand">Emily's English Studio</div>
-        <div class="tagline">绍兴城南 · RAZ & Power Up</div>
+        绍兴城南 · RAZ & Power Up
       </div>
     </div>
 
@@ -956,7 +1114,7 @@
       const errorEl = document.getElementById('loginError');
       
       if (!inputName) {
-        errorEl.textContent = '请输入学员姓名';
+        errorEl.innerHTML = '❗ 请输入学员姓名';
         return;
       }
       
@@ -976,7 +1134,7 @@
         });
         
         if (!matchedStudent) {
-          errorEl.textContent = '未找到该学员，请确认姓名';
+          errorEl.innerHTML = '❗ 未找到该学员，请确认姓名';
           return;
         }
         
@@ -995,7 +1153,7 @@
         
       } catch (error) {
         console.error('Login error:', error);
-        errorEl.textContent = '加载失败，请重试';
+        errorEl.innerHTML = '❗ 加载失败，请重试';
       }
     }
 
@@ -1033,4 +1191,18 @@
       } else {
         // Show login page
         showLoginPage();
+      }
       
+      // Setup login form
+      document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const nameInput = document.getElementById('nameInput').value;
+        handleLogin(nameInput);
+      });
+      
+      // Setup logout button
+      document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+    });
+  </script>
+</body>
+</html>
