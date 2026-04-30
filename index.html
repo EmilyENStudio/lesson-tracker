@@ -533,7 +533,7 @@
     }
 
     .stat-item .stat-number {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 700;
       color: var(--primary);
       line-height: 1.2;
@@ -545,6 +545,10 @@
 
     .stat-item:nth-child(3) .stat-number {
       color: #52C41A;
+    }
+
+    .stat-item:nth-child(4) .stat-number {
+      color: #764ba2;
     }
 
     .stat-item .stat-label {
@@ -567,6 +571,29 @@
       display: flex;
       align-items: center;
       gap: 8px;
+    }
+
+    /* Month Filter */
+    .month-filter select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 6px 28px 6px 12px;
+      font-size: 13px;
+      color: var(--text-medium);
+      cursor: pointer;
+      outline: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      transition: border-color 0.3s;
+    }
+
+    .month-filter select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
     }
 
     .section-title::before {
@@ -1248,11 +1275,22 @@ but a fire to be kindled.</p>
           <div class="stat-number" id="remainHours">--</div>
           <div class="stat-label">剩余课时</div>
         </div>
+        <div class="stat-item">
+          <div class="stat-number" id="monthHours">--</div>
+          <div class="stat-label">本月已上</div>
+        </div>
       </div>
 
       <!-- Records Section -->
       <section class="records-section">
-        <h2 class="section-title">上课记录</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <h2 class="section-title" style="margin-bottom:0;">上课记录</h2>
+          <div class="month-filter">
+            <select id="monthSelect" onchange="filterByMonth()">
+              <option value="all">全部</option>
+            </select>
+          </div>
+        </div>
         <div class="timeline" id="recordsContainer">
           <!-- Records will be rendered here -->
         </div>
@@ -1396,11 +1434,17 @@ but a fire to be kindled.</p>
       // Calculate remaining hours
       const remaining = studentData.totalHours - studentData.usedHours;
       
+      // Calculate this month's hours
+      const now = new Date();
+      const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+      const monthHours = studentData.records.filter(r => r.date.startsWith(currentMonth)).length;
+      
       // Update stats
       document.getElementById('totalHours').textContent = studentData.totalHours;
       document.getElementById('usedHours').textContent = studentData.usedHours;
       document.getElementById('remainHours').textContent = Math.max(0, remaining);
       document.getElementById('remainingHours').textContent = Math.max(0, remaining);
+      document.getElementById('monthHours').textContent = monthHours;
       
       // Update last updated time
       const updateDate = new Date().toLocaleDateString('zh-CN', {
@@ -1420,6 +1464,7 @@ but a fire to be kindled.</p>
       
       // Render records
       renderRecords();
+      populateMonthFilter();
       
       // Show detail page, hide loading and login
       document.getElementById('loadingContainer').style.display = 'none';
@@ -1508,6 +1553,97 @@ but a fire to be kindled.</p>
       if (content) {
         content.classList.toggle('collapsed');
       }
+    }
+
+    // Populate month filter dropdown
+    function populateMonthFilter() {
+      const select = document.getElementById('monthSelect');
+      if (!studentData || !studentData.records.length) return;
+      
+      // Extract unique year-months from records
+      const months = [...new Set(studentData.records.map(r => r.date.substring(0, 7)))];
+      months.sort().reverse(); // Latest first
+      
+      // Clear existing options except "all"
+      select.innerHTML = '<option value="all">全部</option>';
+      
+      months.forEach(ym => {
+        const [year, month] = ym.split('-');
+        const option = document.createElement('option');
+        option.value = ym;
+        option.textContent = `${year}年${parseInt(month)}月`;
+        select.appendChild(option);
+      });
+    }
+
+    // Filter records by selected month
+    function filterByMonth() {
+      const selectedMonth = document.getElementById('monthSelect').value;
+      const container = document.getElementById('recordsContainer');
+      
+      if (!studentData || !studentData.records.length) return;
+      
+      const filteredRecords = selectedMonth === 'all' 
+        ? studentData.records 
+        : studentData.records.filter(r => r.date.startsWith(selectedMonth));
+      
+      if (filteredRecords.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="icon">📭</div>
+            <p>该月暂无上课记录</p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Find the original index for each filtered record (for toggleRecord)
+      const recordsHTML = filteredRecords.map((record) => {
+        const originalIndex = studentData.records.indexOf(record);
+        const lessonNumber = originalIndex + 1;
+        const isLatest = originalIndex === 0;
+        
+        return `
+          <div class="record-card" data-index="${originalIndex}">
+            <div class="timeline-dot"></div>
+            <div class="record-header" onclick="toggleRecord(${originalIndex})">
+              <div class="record-date">
+                <span class="date">${formatDate(record.date)}</span>
+                <span class="time">${record.time}</span>
+              </div>
+              <span class="lesson-badge">第${lessonNumber}次课</span>
+            </div>
+            <div class="record-content ${isLatest ? '' : 'collapsed'}" id="content-${originalIndex}">
+              <div class="course-info">
+                <div class="course-name">${record.courseName}</div>
+                <div class="lesson-title">${record.lessonTitle}</div>
+              </div>
+              
+              <div class="knowledge-section">
+                <div class="section-header">
+                  <span class="icon">📚</span>
+                  <span>重点知识</span>
+                </div>
+                <ul class="knowledge-list">
+                  ${record.keyKnowledge.map(k => `<li>${k}</li>`).join('')}
+                </ul>
+              </div>
+              
+              <div class="homework-section">
+                <div class="section-header">
+                  <span class="icon">📝</span>
+                  <span>课后练习</span>
+                </div>
+                <ul class="homework-list">
+                  ${record.homework.map(h => `<li>${h}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      container.innerHTML = recordsHTML;
     }
 
     function toggleAll() {
