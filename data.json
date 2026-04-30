@@ -1,0 +1,22 @@
+{
+  "name": "小明同学",
+  "totalHours": 60,
+  "records": [
+    {
+      "date": "2026-05-08",
+      "time": "周四 14:00-15:30",
+      "courseName": "Power Up 1 Unit 4",
+      "lessonTitle": "第1课：I like / I don't like",
+      "keyKnowledge": [
+        "词汇：chicken, burger, cake, bread, chocolate, banana, mango, salad, lemonade, water",
+        "语法：I like ___. / I don't like ___. / Do you like ___? — Yes, I do. / No, I don't.",
+        "故事：The Friendly Farm — Gracie喜欢吃所有东西，Harry只喜欢mangoes"
+      ],
+      "homework": [
+        "跟读课本P46-47音频2遍",
+        "画3样喜欢和3样不喜欢的食物，标注英文",
+        "用Do you like ___?问家人，记录回答"
+      ]
+    }
+  ]
+}
