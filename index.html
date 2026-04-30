@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="white">
+  <meta name="format-detection" content="telephone=no">
+  <title>消课记录 - Emily's English Studio</title>
+  <style>
+    :root {
+      --primary: #4A90D9;
+      --primary-light: #6BA3E0;
+      --primary-dark: #3A7BC8;
+      --secondary: #F5A623;
+      --secondary-light: #FFB84D;
+      --bg: #F7F8FA;
+      --card-bg: #FFFFFF;
+      --text-dark: #333333;
+      --text-medium: #666666;
+      --text-light: #999999;
+      --border: #E8E8E8;
+      --shadow: 0 2px 12px rgba(74, 144, 217, 0.08);
+      --shadow-hover: 0 4px 16px rgba(74, 144, 217, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--bg);
+      position: relative;
+    }
+
+    /* Loading State */
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      color: var(--text-light);
+      font-size: 14px;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      padding: 24px 20px 32px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .student-info h1 {
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      letter-spacing: 1px;
+    }
+
+    .student-info .label {
+      font-size: 13px;
+      opacity: 0.85;
+      font-weight: 400;
+    }
+
+    .last-updated {
+      font-size: 11px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    .progress-ring-container {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+
+    .progress-ring-bg {
+      fill: none;
+      stroke: rgba(255,255,255,0.2);
+      stroke-width: 6;
+    }
+
+    .progress-ring-fill {
+      fill: none;
+      stroke: white;
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 201;
+      stroke-dashoffset: 201;
+      transition: stroke-dashoffset 1.2s ease-out;
+    }
+
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .progress-text .number {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .progress-text .unit {
+      font-size: 10px;
+      opacity: 0.8;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      background: var(--card-bg);
+      margin: -16px 16px 20px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .stat-item {
+      flex: 1;
+      text-align: center;
+      padding: 16px 8px;
+      position: relative;
+    }
+
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .stat-item .stat-number {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .stat-item:nth-child(2) .stat-number {
+      color: var(--secondary);
+    }
+
+    .stat-item:nth-child(3) .stat-number {
+      color: #52C41A;
+    }
+
+    .stat-item .stat-label {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    /* Records Section */
+    .records-section {
+      padding: 0 16px 100px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      padding-left: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 18px;
+      background: linear-gradient(180deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 40px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-light) 50%, var(--border) 100%);
+      border-radius: 1px;
+    }
+
+    .record-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .record-card:nth-child(1) { animation-delay: 0.1s; }
+    .record-card:nth-child(2) { animation-delay: 0.2s; }
+    .record-card:nth-child(3) { animation-delay: 0.3s; }
+    .record-card:nth-child(4) { animation-delay: 0.4s; }
+    .record-card:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .record-card:hover {
+      box-shadow: var(--shadow-hover);
+    }
+
+    .record-header {
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .record-date {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .record-date .date {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .record-date .time {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .lesson-badge {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .record-content {
+      padding: 0 16px 16px;
+      display: block;
+    }
+
+    .record-content.collapsed {
+      display: none;
+    }
+
+    .course-info {
+      background: linear-gradient(135deg, #F0F7FF 0%, #E8F4FD 100%);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    .course-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-bottom: 4px;
+    }
+
+    .lesson-title {
+      font-size: 13px;
+      color: var(--text-medium);
+    }
+
+    .knowledge-section, .homework-section {
+      margin-bottom: 12px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .section-header .icon {
+      font-size: 16px;
+    }
+
+    .knowledge-section .section-header {
+      color: var(--primary);
+    }
+
+    .homework-section .section-header {
+      color: var(--secondary);
+    }
+
+    .knowledge-list, .homework-list {
+      padding-left: 22px;
+    }
+
+    .knowledge-list li, .homework-list li {
+      font-size: 13px;
+      color: var(--text-medium);
+      margin-bottom: 6px;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .knowledge-list li::marker {
+      color: var(--primary);
+    }
+
+    .homework-list li::marker {
+      color: var(--secondary);
+    }
+
+    /* Timeline Dot */
+    .timeline-dot {
+      position: absolute;
+      left: -24px;
+      top: 24px;
+      width: 16px;
+      height: 16px;
+      background: var(--card-bg);
+      border: 3px solid var(--primary);
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .timeline-dot::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px;
+      height: 6px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    /* Footer */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      z-index: 100;
+    }
+
+    .footer-brand {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .footer-tagline {
+      font-size: 11px;
+      color: var(--text-light);
+    }
+
+    /* Expand/Collapse Indicator */
+    .expand-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      color: var(--text-light);
+      font-size: 12px;
+      gap: 4px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .expand-indicator:hover {
+      color: var(--primary);
+    }
+
+    .expand-indicator .arrow {
+      transition: transform 0.3s;
+    }
+
+    .expand-indicator.expanded .arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-light);
+    }
+
+    .empty-state .icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-state p {
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 360px) {
+      .header {
+        padding: 20px 16px 28px;
+      }
+      
+      .student-info h1 {
+        font-size: 22px;
+      }
+      
+      .progress-ring-container {
+        width: 70px;
+        height: 70px;
+      }
+      
+      .stat-item .stat-number {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Loading State -->
+    <div class="loading-container" id="loadingContainer">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">加载中...</div>
+    </div>
+
+    <!-- Main Content (hidden until loaded) -->
+    <div id="mainContent" style="display: none;">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-top">
+        <div class="student-info">
+          <div class="label">学员课时记录</div>
+          <h1 id="studentName">加载中...</h1>
+          <div class="last-updated" id="lastUpdated"></div>
+        </div>
+        <div class="progress-ring-container">
+          <svg class="progress-ring" width="80" height="80" viewBox="0 0 80 80">
+            <circle class="progress-ring-bg" cx="40" cy="40" r="32"/>
+            <circle class="progress-ring-fill" id="progressRing" cx="40" cy="40" r="32"/>
+          </svg>
+          <div class="progress-text">
+            <div class="number" id="remainingHours">--</div>
+            <div class="unit">剩余</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-number" id="totalHours">--</div>
+        <div class="stat-label">总课时</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="usedHours">--</div>
+        <div class="stat-label">已消课</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="remainHours">--</div>
+        <div class="stat-label">剩余课时</div>
+      </div>
+    </div>
+
+    <!-- Records Section -->
+    <section class="records-section">
+      <h2 class="section-title">消课记录</h2>
+      <div class="timeline" id="recordsContainer">
+        <!-- Records will be rendered here -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-brand">Emily's English Studio</div>
+      <div class="footer-tagline">上海普陀 · 5人小班 · RAZ & Power Up</div>
+    </footer>
+    </div>
+  </div>
+
+  <script>
+    // Global variable to store student data
+    let studentData = null;
+
+    // Render Functions
+    function init() {
+      if (!studentData) return;
+      
+      // Update student name
+      document.getElementById('studentName').textContent = studentData.name;
+      
+      // Calculate used hours from records
+      const actualUsedHours = studentData.records.length;
+      studentData.usedHours = actualUsedHours;
+      
+      // Calculate remaining hours
+      const remaining = studentData.totalHours - studentData.usedHours;
+      
+      // Update stats
+      document.getElementById('totalHours').textContent = studentData.totalHours;
+      document.getElementById('usedHours').textContent = studentData.usedHours;
+      document.getElementById('remainHours').textContent = Math.max(0, remaining);
+      document.getElementById('remainingHours').textContent = Math.max(0, remaining);
+      
+      // Update last updated time
+      const updateDate = new Date().toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      document.getElementById('lastUpdated').textContent = `更新时间：${updateDate}`;
+      
+      // Animate progress ring
+      setTimeout(() => {
+        const progress = remaining / studentData.totalHours;
+        const circumference = 2 * Math.PI * 32;
+        const offset = circumference * (1 - progress);
+        document.getElementById('progressRing').style.strokeDashoffset = offset;
+      }, 300);
+      
+      // Render records
+      renderRecords();
+      
+      // Show main content, hide loading
+      document.getElementById('loadingContainer').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'block';
+    }
+
+    function renderRecords() {
+      const container = document.getElementById('recordsContainer');
+      
+      if (studentData.records.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="icon">📚</div>
+            <p>暂无消课记录</p>
+          </div>
+        `;
+        return;
+      }
+      
+      const recordsHTML = studentData.records.map((record, index) => {
+        const lessonNumber = index + 1;
+        const isLatest = index === 0;
+        
+        return `
+          <div class="record-card" data-index="${index}">
+            <div class="timeline-dot"></div>
+            <div class="record-header" onclick="toggleRecord(${index})">
+              <div class="record-date">
+                <span class="date">${formatDate(record.date)}</span>
+                <span class="time">${record.time}</span>
+              </div>
+              <span class="lesson-badge">第${lessonNumber}次课</span>
+            </div>
+            <div class="record-content ${isLatest ? '' : 'collapsed'}" id="content-${index}">
+              <div class="course-info">
+                <div class="course-name">${record.courseName}</div>
+                <div class="lesson-title">${record.lessonTitle}</div>
+              </div>
+              
+              <div class="knowledge-section">
+                <div class="section-header">
+                  <span class="icon">📚</span>
+                  <span>重点知识</span>
+                </div>
+                <ul class="knowledge-list">
+                  ${record.keyKnowledge.map(k => `<li>${k}</li>`).join('')}
+                </ul>
+              </div>
+              
+              <div class="homework-section">
+                <div class="section-header">
+                  <span class="icon">📝</span>
+                  <span>课后练习</span>
+                </div>
+                <ul class="homework-list">
+                  ${record.homework.map(h => `<li>${h}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      // Add expand/collapse all control if there are multiple records
+      const expandControl = studentData.records.length > 1 ? `
+        <div class="expand-indicator expanded" id="expandControl" onclick="toggleAll()">
+          <span>收起历史记录</span>
+          <span class="arrow">▼</span>
+        </div>
+      ` : '';
+      
+      container.innerHTML = recordsHTML + expandControl;
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][date.getDay()];
+      return `${month}月${day}日 ${weekDay}`;
+    }
+
+    function toggleRecord(index) {
+      const content = document.getElementById(`content-${index}`);
+      if (content) {
+        content.classList.toggle('collapsed');
+      }
+    }
+
+    function toggleAll() {
+      const control = document.getElementById('expandControl');
+      const isExpanded = control.classList.contains('expanded');
+      const contents = document.querySelectorAll('.record-content');
+      
+      contents.forEach((content, index) => {
+        // Keep the first one (latest) always visible, collapse others
+        if (isExpanded) {
+          if (index > 0) content.classList.add('collapsed');
+        } else {
+          content.classList.remove('collapsed');
+        }
+      });
+      
+      control.classList.toggle('expanded');
+      control.querySelector('span').textContent = isExpanded ? '展开历史记录' : '收起历史记录';
+    }
+
+    // Load data and initialize
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        const response = await fetch('./data.json');
+        if (!response.ok) {
+          throw new Error('Failed to load data');
+        }
+        studentData = await response.json();
+        init();
+      } catch (error) {
+        console.error('Error loading data:', error);
+        document.getElementById('loadingContainer').innerHTML = `
+          <div class="loading-spinner"></div>
+          <div class="loading-text">加载中...</div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
