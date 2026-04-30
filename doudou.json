@@ -1,0 +1,31 @@
+{
+  "name": "兜兜",
+  "totalHours": 20,
+  "usedHours": 3,
+  "records": [
+    {
+      "date": "2025-04-04",
+      "time": "周五",
+      "courseName": "",
+      "lessonTitle": "第1次课",
+      "keyKnowledge": ["待补充"],
+      "homework": ["待补充"]
+    },
+    {
+      "date": "2025-04-11",
+      "time": "周五",
+      "courseName": "",
+      "lessonTitle": "第2次课",
+      "keyKnowledge": ["待补充"],
+      "homework": ["待补充"]
+    },
+    {
+      "date": "2025-04-18",
+      "time": "周五",
+      "courseName": "",
+      "lessonTitle": "第3次课",
+      "keyKnowledge": ["待补充"],
+      "homework": ["待补充"]
+    }
+  ]
+}
