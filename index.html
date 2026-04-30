@@ -236,10 +236,161 @@
       margin-bottom: 24px;
     }
 
+    /* Animated Flying Owl */
     .login-logo .icon {
-      font-size: 32px;
-      margin-bottom: 8px;
-      display: block;
+      width: 64px;
+      height: 56px;
+      margin: 0 auto 12px;
+      position: relative;
+      animation: owlFloat 2.5s ease-in-out infinite;
+    }
+
+    .owl-body {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 36px;
+      background: linear-gradient(180deg, #8B7BB8, #6B5B95);
+      border-radius: 50% 50% 45% 45%;
+    }
+
+    .owl-body::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 28px;
+      height: 14px;
+      background: #D4C5E8;
+      border-radius: 50% 50% 0 0;
+    }
+
+    .owl-eye {
+      position: absolute;
+      top: 8px;
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .owl-eye-left { left: 8px; }
+    .owl-eye-right { right: 8px; }
+
+    .owl-eye::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 7px;
+      height: 7px;
+      background: #2D1B4E;
+      border-radius: 50%;
+      animation: blink 4s ease-in-out infinite;
+    }
+
+    .owl-eye::before {
+      content: '';
+      position: absolute;
+      top: 3px;
+      right: 2px;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    .owl-beak {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 6px solid #F5A623;
+      z-index: 3;
+    }
+
+    .owl-ear {
+      position: absolute;
+      top: -6px;
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 10px solid #8B7BB8;
+    }
+
+    .owl-ear-left { left: 6px; transform: rotate(-10deg); }
+    .owl-ear-right { right: 6px; transform: rotate(10deg); }
+
+    .owl-wing {
+      position: absolute;
+      top: 10px;
+      width: 18px;
+      height: 20px;
+      background: linear-gradient(180deg, #7B6BA8, #5B4B85);
+      border-radius: 50% 50% 30% 30%;
+      z-index: 1;
+    }
+
+    .owl-wing-left {
+      left: -10px;
+      transform-origin: right top;
+      animation: wingFlapLeft 0.6s ease-in-out infinite;
+    }
+
+    .owl-wing-right {
+      right: -10px;
+      transform-origin: left top;
+      animation: wingFlapRight 0.6s ease-in-out infinite;
+    }
+
+    /* Sparkle trail */
+    .owl-sparkle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(200, 180, 255, 0.7);
+      animation: sparkleTrail 2s ease-out infinite;
+    }
+
+    .sparkle-trail-1 { width: 5px; height: 5px; bottom: -8px; left: 12px; animation-delay: 0s; }
+    .sparkle-trail-2 { width: 4px; height: 4px; bottom: -12px; left: 22px; animation-delay: 0.3s; }
+    .sparkle-trail-3 { width: 3px; height: 3px; bottom: -6px; left: 32px; animation-delay: 0.6s; }
+    .sparkle-trail-4 { width: 4px; height: 4px; bottom: -15px; left: 18px; animation-delay: 0.9s; background: rgba(255, 200, 230, 0.6); }
+
+    @keyframes owlFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-6px) rotate(-2deg); }
+      75% { transform: translateY(-3px) rotate(1deg); }
+    }
+
+    @keyframes wingFlapLeft {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-30deg) translateY(-3px); }
+    }
+
+    @keyframes wingFlapRight {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(30deg) translateY(-3px); }
+    }
+
+    @keyframes blink {
+      0%, 45%, 55%, 100% { transform: translate(-50%, -50%) scaleY(1); }
+      50% { transform: translate(-50%, -50%) scaleY(0.1); }
+    }
+
+    @keyframes sparkleTrail {
+      0% { opacity: 0.8; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(12px) scale(0.3); }
     }
 
     .login-logo h1 {
@@ -1202,7 +1353,21 @@
       
       <div class="login-card">
         <div class="login-logo">
-          <span class="icon">📚</span>
+          <div class="icon">
+            <div class="owl-ear owl-ear-left"></div>
+            <div class="owl-ear owl-ear-right"></div>
+            <div class="owl-body">
+              <div class="owl-eye owl-eye-left"></div>
+              <div class="owl-eye owl-eye-right"></div>
+              <div class="owl-beak"></div>
+            </div>
+            <div class="owl-wing owl-wing-left"></div>
+            <div class="owl-wing owl-wing-right"></div>
+            <div class="owl-sparkle sparkle-trail-1"></div>
+            <div class="owl-sparkle sparkle-trail-2"></div>
+            <div class="owl-sparkle sparkle-trail-3"></div>
+            <div class="owl-sparkle sparkle-trail-4"></div>
+          </div>
           <h1>Emily's English Studio</h1>
         </div>
         
