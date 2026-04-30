@@ -2,5 +2,13 @@
   "name": "Mark Wu",
   "totalHours": 20,
   "usedHours": 0,
+  "payments": [
+    {
+      "date": "2025-04-20",
+      "hours": 20,
+      "firstLessonDate": null
+    }
+  ],
+  "monthlyStats": [],
   "records": []
 }
