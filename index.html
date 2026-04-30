@@ -78,127 +78,112 @@
       font-size: 14px;
     }
 
-    /* ========== Home Page (Student Selection) ========== */
-    .home-page {
+    /* ========== Login Page ========== */
+    .login-page {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      padding: 20px;
     }
 
-    .home-header {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      padding: 48px 20px 60px;
-      color: white;
+    .login-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 48px 32px;
       text-align: center;
-      position: relative;
-      overflow: hidden;
     }
 
-    .home-header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -30%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-      pointer-events: none;
+    .login-logo {
+      margin-bottom: 32px;
     }
 
-    .home-brand {
-      position: relative;
-      z-index: 1;
+    .login-logo .icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      display: block;
     }
 
-    .home-brand h1 {
+    .login-logo h1 {
       font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 4px;
+      font-weight: 700;
+      color: var(--primary);
       letter-spacing: 1px;
     }
 
-    .home-brand .subtitle {
-      font-size: 13px;
-      opacity: 0.85;
+    .login-form {
+      margin-top: 32px;
     }
 
-    .student-list {
-      padding: 0 16px;
-      margin-top: -32px;
-      position: relative;
-      z-index: 10;
-      flex: 1;
+    .login-input {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 16px;
+      color: var(--text-dark);
+      background: var(--bg);
+      transition: all 0.3s ease;
+      outline: none;
+      text-align: center;
     }
 
-    .student-list-title {
-      font-size: 14px;
-      color: var(--text-medium);
-      margin-bottom: 12px;
-      padding-left: 4px;
+    .login-input:focus {
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(74, 144, 217, 0.1);
     }
 
-    .student-card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      padding: 20px;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    .login-input::placeholder {
+      color: var(--text-light);
+    }
+
+    .login-btn {
+      width: 100%;
+      margin-top: 16px;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      text-decoration: none;
-      color: inherit;
+      box-shadow: 0 4px 12px rgba(74, 144, 217, 0.3);
     }
 
-    .student-card:hover {
-      box-shadow: var(--shadow-hover);
+    .login-btn:hover {
       transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(74, 144, 217, 0.4);
     }
 
-    .student-avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 24px;
-      flex-shrink: 0;
+    .login-btn:active {
+      transform: translateY(0);
     }
 
-    .student-info {
-      flex: 1;
+    .login-error {
+      color: #FF4D4F;
+      font-size: 13px;
+      margin-top: 12px;
+      min-height: 20px;
     }
 
-    .student-info .name {
-      font-size: 18px;
+    .login-footer {
+      margin-top: 48px;
+      text-align: center;
+      color: var(--text-light);
+    }
+
+    .login-footer .brand {
+      font-size: 14px;
       font-weight: 600;
-      color: var(--text-dark);
+      color: var(--primary);
       margin-bottom: 4px;
     }
 
-    .student-info .stats {
-      font-size: 13px;
-      color: var(--text-light);
-    }
-
-    .student-info .stats span {
-      margin-right: 12px;
-    }
-
-    .student-arrow {
-      color: var(--text-light);
-      font-size: 20px;
-    }
-
-    .home-footer {
-      padding: 20px;
-      text-align: center;
-      color: var(--text-light);
+    .login-footer .tagline {
       font-size: 12px;
     }
 
@@ -239,7 +224,7 @@
       z-index: 1;
     }
 
-    .back-btn {
+    .logout-btn {
       display: flex;
       align-items: center;
       gap: 4px;
@@ -248,9 +233,13 @@
       font-size: 14px;
       margin-bottom: 8px;
       opacity: 0.9;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
     }
 
-    .back-btn:hover {
+    .logout-btn:hover {
       opacity: 1;
     }
 
@@ -647,24 +636,28 @@
       .header {
         padding: 16px 16px 28px;
       }
-      
-      .home-header {
-        padding: 40px 16px 50px;
+
+      .login-card {
+        padding: 32px 24px;
       }
 
-      .home-brand h1 {
+      .login-logo .icon {
+        font-size: 48px;
+      }
+
+      .login-logo h1 {
         font-size: 20px;
       }
-      
+
       .student-info h1 {
         font-size: 22px;
       }
-      
+
       .progress-ring-container {
         width: 70px;
         height: 70px;
       }
-      
+
       .stat-item .stat-number {
         font-size: 20px;
       }
@@ -679,26 +672,31 @@
       <div class="loading-text">加载中...</div>
     </div>
 
-    <!-- Home Page (Student Selection) -->
-    <div id="homePage" class="home-page" style="display: none;">
-      <header class="home-header">
-        <div class="home-brand">
+    <!-- Login Page -->
+    <div id="loginPage" class="login-page" style="display: none;">
+      <div class="login-card">
+        <div class="login-logo">
+          <span class="icon">📚</span>
           <h1>Emily's English Studio</h1>
-          <div class="subtitle">绍兴城南 · RAZ & Power Up</div>
         </div>
-      </header>
-      
-      <div class="student-list">
-        <div class="student-list-title">选择学员</div>
-        <div id="studentCardsContainer">
-          <!-- Student cards will be rendered here -->
-        </div>
+        
+        <form class="login-form" id="loginForm">
+          <input 
+            type="text" 
+            class="login-input" 
+            id="nameInput" 
+            placeholder="请输入学员姓名"
+            autocomplete="off"
+          >
+          <button type="submit" class="login-btn">查看消课记录</button>
+          <div class="login-error" id="loginError"></div>
+        </form>
       </div>
       
-      <footer class="home-footer">
-        <div class="footer-brand">Emily's English Studio</div>
-        <div class="footer-tagline">绍兴城南 · RAZ & Power Up</div>
-      </footer>
+      <div class="login-footer">
+        <div class="brand">Emily's English Studio</div>
+        <div class="tagline">绍兴城南 · RAZ & Power Up</div>
+      </div>
     </div>
 
     <!-- Detail Page (Student Records) -->
@@ -706,10 +704,10 @@
       <header class="header">
         <div class="header-top">
           <div>
-            <a href="./" class="back-btn">
+            <button class="logout-btn" id="logoutBtn">
               <span>←</span>
-              <span>返回选择</span>
-            </a>
+              <span>退出登录</span>
+            </button>
             <div class="student-info">
               <div class="label">学员课时记录</div>
               <h1 id="studentName">加载中...</h1>
@@ -766,41 +764,35 @@
     let studentData = null;
     let studentsList = [];
 
-    // Get URL parameter
-    function getUrlParam(name) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(name);
+    // LocalStorage key
+    const STORAGE_KEY = 'lesson_tracker_student_id';
+
+    // Get stored student ID
+    function getStoredStudentId() {
+      return localStorage.getItem(STORAGE_KEY);
     }
 
-    // Render home page (student selection)
-    function renderHomePage() {
-      const container = document.getElementById('studentCardsContainer');
-      
-      const cardsHTML = studentsList.map(student => `
-        <a href="?s=${student.id}" class="student-card">
-          <div class="student-avatar">${getAvatarEmoji(student.name)}</div>
-          <div class="student-info">
-            <div class="name">${student.name}</div>
-            <div class="stats">
-              <span>总课时：${student.totalHours || '--'}课时</span>
-              <span>已消课：${student.usedHours || 0}次</span>
-            </div>
-          </div>
-          <div class="student-arrow">›</div>
-        </a>
-      `).join('');
-      
-      container.innerHTML = cardsHTML;
-      
-      // Show home page, hide loading
+    // Save student ID to localStorage
+    function saveStudentId(studentId) {
+      localStorage.setItem(STORAGE_KEY, studentId);
+    }
+
+    // Clear stored student ID
+    function clearStoredStudentId() {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
+    // Show login page
+    function showLoginPage() {
       document.getElementById('loadingContainer').style.display = 'none';
-      document.getElementById('homePage').style.display = 'flex';
+      document.getElementById('loginPage').style.display = 'flex';
       document.getElementById('detailPage').classList.remove('active');
+      document.getElementById('nameInput').value = '';
+      document.getElementById('loginError').textContent = '';
     }
 
     // Get avatar emoji based on name
     function getAvatarEmoji(name) {
-      // Use first character as emoji fallback, or map common names
       const emojiMap = {
         '兜兜': '🎒',
         'doudou': '🎒',
@@ -821,4 +813,224 @@
       
       // Calculate used hours from records
       const actualUsedHours = studentData.records.length;
-      studentData.usedH
+      studentData.usedHours = actualUsedHours;
+      
+      // Calculate remaining hours
+      const remaining = studentData.totalHours - studentData.usedHours;
+      
+      // Update stats
+      document.getElementById('totalHours').textContent = studentData.totalHours;
+      document.getElementById('usedHours').textContent = studentData.usedHours;
+      document.getElementById('remainHours').textContent = Math.max(0, remaining);
+      document.getElementById('remainingHours').textContent = Math.max(0, remaining);
+      
+      // Update last updated time
+      const updateDate = new Date().toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      document.getElementById('lastUpdated').textContent = `更新时间：${updateDate}`;
+      
+      // Animate progress ring
+      setTimeout(() => {
+        const progress = remaining / studentData.totalHours;
+        const circumference = 2 * Math.PI * 32;
+        const offset = circumference * (1 - progress);
+        document.getElementById('progressRing').style.strokeDashoffset = offset;
+      }, 300);
+      
+      // Render records
+      renderRecords();
+      
+      // Show detail page, hide loading and login
+      document.getElementById('loadingContainer').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('detailPage').classList.add('active');
+    }
+
+    function renderRecords() {
+      const container = document.getElementById('recordsContainer');
+      
+      if (studentData.records.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="icon">📚</div>
+            <p>暂无消课记录</p>
+          </div>
+        `;
+        return;
+      }
+      
+      const recordsHTML = studentData.records.map((record, index) => {
+        const lessonNumber = index + 1;
+        const isLatest = index === 0;
+        
+        return `
+          <div class="record-card" data-index="${index}">
+            <div class="timeline-dot"></div>
+            <div class="record-header" onclick="toggleRecord(${index})">
+              <div class="record-date">
+                <span class="date">${formatDate(record.date)}</span>
+                <span class="time">${record.time}</span>
+              </div>
+              <span class="lesson-badge">第${lessonNumber}次课</span>
+            </div>
+            <div class="record-content ${isLatest ? '' : 'collapsed'}" id="content-${index}">
+              <div class="course-info">
+                <div class="course-name">${record.courseName}</div>
+                <div class="lesson-title">${record.lessonTitle}</div>
+              </div>
+              
+              <div class="knowledge-section">
+                <div class="section-header">
+                  <span class="icon">📚</span>
+                  <span>重点知识</span>
+                </div>
+                <ul class="knowledge-list">
+                  ${record.keyKnowledge.map(k => `<li>${k}</li>`).join('')}
+                </ul>
+              </div>
+              
+              <div class="homework-section">
+                <div class="section-header">
+                  <span class="icon">📝</span>
+                  <span>课后练习</span>
+                </div>
+                <ul class="homework-list">
+                  ${record.homework.map(h => `<li>${h}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      // Add expand/collapse all control if there are multiple records
+      const expandControl = studentData.records.length > 1 ? `
+        <div class="expand-indicator expanded" id="expandControl" onclick="toggleAll()">
+          <span>收起历史记录</span>
+          <span class="arrow">▼</span>
+        </div>
+      ` : '';
+      
+      container.innerHTML = recordsHTML + expandControl;
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][date.getDay()];
+      return `${month}月${day}日 ${weekDay}`;
+    }
+
+    function toggleRecord(index) {
+      const content = document.getElementById(`content-${index}`);
+      if (content) {
+        content.classList.toggle('collapsed');
+      }
+    }
+
+    function toggleAll() {
+      const control = document.getElementById('expandControl');
+      const isExpanded = control.classList.contains('expanded');
+      const contents = document.querySelectorAll('.record-content');
+      
+      contents.forEach((content, index) => {
+        // Keep the first one (latest) always visible, collapse others
+        if (isExpanded) {
+          if (index > 0) content.classList.add('collapsed');
+        } else {
+          content.classList.remove('collapsed');
+        }
+      });
+      
+      control.classList.toggle('expanded');
+      control.querySelector('span').textContent = isExpanded ? '展开历史记录' : '收起历史记录';
+    }
+
+    // Login handler
+    async function handleLogin(nameInput) {
+      const inputName = nameInput.trim().toLowerCase();
+      const errorEl = document.getElementById('loginError');
+      
+      if (!inputName) {
+        errorEl.textContent = '请输入学员姓名';
+        return;
+      }
+      
+      try {
+        // Load students list
+        const studentsResponse = await fetch('./students.json');
+        if (!studentsResponse.ok) {
+          throw new Error('无法加载学员列表');
+        }
+        studentsList = await studentsResponse.json();
+        
+        // Match student by name or id (case-insensitive, trim whitespace)
+        const matchedStudent = studentsList.find(student => {
+          const studentName = student.name.trim().toLowerCase();
+          const studentId = student.id.trim().toLowerCase();
+          return studentName === inputName || studentId === inputName;
+        });
+        
+        if (!matchedStudent) {
+          errorEl.textContent = '未找到该学员，请确认姓名';
+          return;
+        }
+        
+        // Save to localStorage
+        saveStudentId(matchedStudent.id);
+        
+        // Load student data
+        const response = await fetch(`./${matchedStudent.id}.json`);
+        if (!response.ok) {
+          throw new Error('无法加载学员数据');
+        }
+        studentData = await response.json();
+        
+        // Render detail page
+        renderDetailPage();
+        
+      } catch (error) {
+        console.error('Login error:', error);
+        errorEl.textContent = '加载失败，请重试';
+      }
+    }
+
+    // Load student data by ID
+    async function loadStudentData(studentId) {
+      try {
+        const response = await fetch(`./${studentId}.json`);
+        if (!response.ok) {
+          throw new Error('Failed to load student data');
+        }
+        studentData = await response.json();
+        renderDetailPage();
+      } catch (error) {
+        console.error('Error loading student data:', error);
+        // If loading fails, show login page
+        showLoginPage();
+      }
+    }
+
+    // Logout handler
+    function handleLogout() {
+      clearStoredStudentId();
+      studentData = null;
+      showLoginPage();
+    }
+
+    // Main initialization
+    document.addEventListener('DOMContentLoaded', async function() {
+      // Check if there's a stored student ID
+      const storedStudentId = getStoredStudentId();
+      
+      if (storedStudentId) {
+        // Auto login with stored student ID
+        await loadStudentData(storedStudentId);
+      } else {
+        // Show login page
+        showLoginPage();
+      
