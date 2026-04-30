@@ -4,8 +4,9 @@
   "usedHours": 0,
   "payments": [
     {
-      "date": "2025-04-20",
+      "date": "2026-04-21",
       "hours": 20,
+      "amount": 3000,
       "firstLessonDate": null
     }
   ],
