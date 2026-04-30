@@ -2,6 +2,16 @@
   "name": "兜兜",
   "totalHours": 20,
   "usedHours": 3,
+  "payments": [
+    {
+      "date": "2025-03-15",
+      "hours": 20,
+      "firstLessonDate": "2025-04-04"
+    }
+  ],
+  "monthlyStats": [
+    {"month": "2025-04", "hours": 3}
+  ],
   "records": [
     {
       "date": "2025-04-04",
