@@ -21,6 +21,9 @@
       --border: #E8E8E8;
       --shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
       --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.2);
+      --green: #4CAF50;
+      --orange: #FF9800;
+      --red: #F44336;
     }
 
     * {
@@ -773,6 +776,291 @@
       font-size: 14px;
     }
 
+    /* ========== Teacher Dashboard Page ========== */
+    .teacher-page {
+      display: none;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f0ff 0%, #fce4f0 35%, #e8e0f0 65%, #f0e6ff 100%);
+      padding-bottom: 80px;
+    }
+
+    .teacher-page.active {
+      display: block;
+    }
+
+    .teacher-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 16px 16px 24px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .teacher-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .teacher-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .teacher-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .teacher-title .icon {
+      font-size: 24px;
+    }
+
+    .teacher-title h1 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .teacher-title .subtitle {
+      font-size: 13px;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+
+    .teacher-logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      opacity: 0.9;
+      cursor: pointer;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .teacher-logout-btn:hover {
+      opacity: 1;
+      background: rgba(255,255,255,0.25);
+    }
+
+    /* Stats Cards */
+    .teacher-stats {
+      display: flex;
+      gap: 12px;
+      padding: 16px;
+      margin-top: -12px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .teacher-stat-card {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 16px 12px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .teacher-stat-card .stat-icon {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .teacher-stat-card .stat-number {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .teacher-stat-card .stat-label {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    /* Students List */
+    .teacher-students {
+      padding: 0 16px;
+    }
+
+    .teacher-section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      padding-left: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .teacher-section-title::before {
+      content: '';
+      width: 4px;
+      height: 18px;
+      background: linear-gradient(180deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    /* Student Card */
+    .student-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .student-card:nth-child(1) { animation-delay: 0.1s; }
+    .student-card:nth-child(2) { animation-delay: 0.2s; }
+    .student-card:nth-child(3) { animation-delay: 0.3s; }
+    .student-card:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .student-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .student-card-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .student-card-remaining {
+      font-size: 14px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(76, 175, 80, 0.15);
+      color: var(--green);
+    }
+
+    .student-card-remaining.warning {
+      background: rgba(255, 152, 0, 0.15);
+      color: var(--orange);
+    }
+
+    .student-card-remaining.danger {
+      background: rgba(244, 67, 54, 0.15);
+      color: var(--red);
+    }
+
+    .student-card-subtitle {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    .student-card-subtitle span {
+      margin-right: 12px;
+    }
+
+    /* Expandable Sections */
+    .expandable-section {
+      border-top: 1px solid var(--border);
+      margin-top: 12px;
+      padding-top: 12px;
+    }
+
+    .expandable-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 8px 0;
+      color: var(--text-medium);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .expandable-header:hover {
+      color: var(--primary);
+    }
+
+    .expandable-header .arrow {
+      transition: transform 0.3s;
+      font-size: 12px;
+    }
+
+    .expandable-header.expanded .arrow {
+      transform: rotate(180deg);
+    }
+
+    .expandable-content {
+      display: none;
+      padding: 8px 0 8px 12px;
+    }
+
+    .expandable-content.expanded {
+      display: block;
+    }
+
+    .expandable-content .month-item,
+    .expandable-content .payment-item {
+      font-size: 13px;
+      color: var(--text-medium);
+      padding: 4px 0;
+    }
+
+    .expandable-content .first-lesson {
+      font-size: 13px;
+      color: var(--text-light);
+      padding: 4px 0;
+    }
+
+    /* Teacher Footer */
+    .teacher-footer {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      z-index: 100;
+    }
+
     /* Responsive */
     @media (max-width: 360px) {
       .header {
@@ -801,6 +1089,14 @@
       }
 
       .stat-item .stat-number {
+        font-size: 20px;
+      }
+
+      .teacher-stats {
+        gap: 8px;
+      }
+
+      .teacher-stat-card .stat-number {
         font-size: 20px;
       }
     }
@@ -847,7 +1143,7 @@ but a fire to be kindled.</p>
             placeholder="请输入学员姓名"
             autocomplete="off"
           >
-          <button type="submit" class="login-btn">查看消课记录</button>
+          <button type="submit" class="login-btn">查看上课记录</button>
           <div class="login-error" id="loginError"></div>
         </form>
       </div>
@@ -893,7 +1189,7 @@ but a fire to be kindled.</p>
         </div>
         <div class="stat-item">
           <div class="stat-number" id="usedHours">--</div>
-          <div class="stat-label">已消课</div>
+          <div class="stat-label">已上课</div>
         </div>
         <div class="stat-item">
           <div class="stat-number" id="remainHours">--</div>
@@ -903,7 +1199,7 @@ but a fire to be kindled.</p>
 
       <!-- Records Section -->
       <section class="records-section">
-        <h2 class="section-title">消课记录</h2>
+        <h2 class="section-title">上课记录</h2>
         <div class="timeline" id="recordsContainer">
           <!-- Records will be rendered here -->
         </div>
@@ -915,19 +1211,75 @@ but a fire to be kindled.</p>
         <div class="footer-tagline">绍兴城南 · RAZ & Power Up</div>
       </footer>
     </div>
+
+    <!-- Teacher Dashboard Page -->
+    <div id="teacherPage" class="teacher-page">
+      <header class="teacher-header">
+        <div class="teacher-header-top">
+          <div class="teacher-title">
+            <span class="icon">📊</span>
+            <div>
+              <h1>Emily's English Studio</h1>
+              <div class="subtitle">教师管理面板</div>
+            </div>
+          </div>
+          <button class="teacher-logout-btn" id="teacherLogoutBtn">
+            <span>←</span>
+            <span>退出登录</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Stats Cards -->
+      <div class="teacher-stats" id="teacherStats">
+        <div class="teacher-stat-card">
+          <div class="stat-icon">👨‍🎓</div>
+          <div class="stat-number" id="totalStudents">--</div>
+          <div class="stat-label">学员</div>
+        </div>
+        <div class="teacher-stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-number" id="monthlyUsed">--</div>
+          <div class="stat-label">本月消课</div>
+        </div>
+        <div class="teacher-stat-card">
+          <div class="stat-icon">📚</div>
+          <div class="stat-number" id="totalUsed">--</div>
+          <div class="stat-label">总消课</div>
+        </div>
+      </div>
+
+      <!-- Students List -->
+      <div class="teacher-students" id="teacherStudentsList">
+        <!-- Student cards will be rendered here -->
+      </div>
+
+      <!-- Teacher Footer -->
+      <footer class="teacher-footer">
+        <div class="footer-brand">Emily's English Studio</div>
+        <div class="footer-tagline">绍兴城南 · RAZ & Power Up</div>
+      </footer>
+    </div>
   </div>
 
   <script>
     // Global variable to store student data
     let studentData = null;
     let studentsList = [];
+    let allStudentData = {}; // Store all student data for teacher page
 
     // LocalStorage key
     const STORAGE_KEY = 'lesson_tracker_student_id';
+    const TEACHER_KEY = 'lesson_tracker_is_teacher';
 
     // Get stored student ID
     function getStoredStudentId() {
       return localStorage.getItem(STORAGE_KEY);
+    }
+
+    // Get stored teacher status
+    function getStoredTeacherStatus() {
+      return localStorage.getItem(TEACHER_KEY) === 'true';
     }
 
     // Save student ID to localStorage
@@ -935,9 +1287,15 @@ but a fire to be kindled.</p>
       localStorage.setItem(STORAGE_KEY, studentId);
     }
 
+    // Save teacher status
+    function saveTeacherStatus(isTeacher) {
+      localStorage.setItem(TEACHER_KEY, isTeacher ? 'true' : 'false');
+    }
+
     // Clear stored student ID
     function clearStoredStudentId() {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(TEACHER_KEY);
     }
 
     // Show login page
@@ -945,8 +1303,17 @@ but a fire to be kindled.</p>
       document.getElementById('loadingContainer').style.display = 'none';
       document.getElementById('loginPage').style.display = 'flex';
       document.getElementById('detailPage').classList.remove('active');
+      document.getElementById('teacherPage').classList.remove('active');
       document.getElementById('nameInput').value = '';
       document.getElementById('loginError').textContent = '';
+    }
+
+    // Show teacher page
+    function showTeacherPage() {
+      document.getElementById('loadingContainer').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('detailPage').classList.remove('active');
+      document.getElementById('teacherPage').classList.add('active');
     }
 
     // Get avatar emoji based on name
@@ -1014,7 +1381,7 @@ but a fire to be kindled.</p>
         container.innerHTML = `
           <div class="empty-state">
             <div class="icon">📚</div>
-            <p>暂无消课记录</p>
+            <p>暂无上课记录</p>
           </div>
         `;
         return;
@@ -1108,6 +1475,172 @@ but a fire to be kindled.</p>
       control.querySelector('span').textContent = isExpanded ? '展开历史记录' : '收起历史记录';
     }
 
+    // Toggle expandable section
+    function toggleExpandable(headerEl) {
+      headerEl.classList.toggle('expanded');
+      const contentEl = headerEl.nextElementSibling;
+      contentEl.classList.toggle('expanded');
+    }
+
+    // Render teacher dashboard
+    function renderTeacherPage() {
+      // Calculate stats
+      const nonTeacherStudents = studentsList.filter(s => s.id !== 'teacher');
+      const totalStudents = nonTeacherStudents.length;
+      
+      // Calculate monthly and total used hours
+      let monthlyUsed = 0;
+      let totalUsed = 0;
+      const currentMonth = new Date().toISOString().slice(0, 7); // Format: YYYY-MM
+      
+      nonTeacherStudents.forEach(student => {
+        const data = allStudentData[student.id];
+        if (data) {
+          totalUsed += data.usedHours || 0;
+          
+          // Calculate monthly stats
+          if (data.monthlyStats && data.monthlyStats.length > 0) {
+            const monthStat = data.monthlyStats.find(m => m.month === currentMonth);
+            if (monthStat) {
+              monthlyUsed += monthStat.hours;
+            }
+          }
+        }
+      });
+      
+      // Update stats display
+      document.getElementById('totalStudents').textContent = totalStudents;
+      document.getElementById('monthlyUsed').textContent = monthlyUsed + '课时';
+      document.getElementById('totalUsed').textContent = totalUsed + '课时';
+      
+      // Render student cards
+      const container = document.getElementById('teacherStudentsList');
+      const cardsHTML = nonTeacherStudents.map(student => {
+        const data = allStudentData[student.id];
+        if (!data) return '';
+        
+        const remaining = data.totalHours - data.usedHours;
+        let remainingClass = '';
+        if (remaining < 3) {
+          remainingClass = 'danger';
+        } else if (remaining < 5) {
+          remainingClass = 'warning';
+        }
+        
+        // Format monthly stats
+        let monthlyStatsHTML = '';
+        if (data.monthlyStats && data.monthlyStats.length > 0) {
+          monthlyStatsHTML = data.monthlyStats.map(m => {
+            const [year, month] = m.month.split('-');
+            return `<div class="month-item">${parseInt(month)}月：${m.hours}课时</div>`;
+          }).join('');
+        } else {
+          monthlyStatsHTML = '<div class="month-item" style="color: var(--text-light);">暂无数据</div>';
+        }
+        
+        // Format payment history
+        let paymentsHTML = '';
+        if (data.payments && data.payments.length > 0) {
+          paymentsHTML = data.payments.map(p => {
+            const date = new Date(p.date);
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            return `<div class="payment-item">${month}/${day} 充值${p.hours}课时</div>`;
+          }).join('');
+        } else {
+          paymentsHTML = '<div class="payment-item" style="color: var(--text-light);">暂无充值记录</div>';
+        }
+        
+        // First lesson date
+        let firstLessonHTML = '';
+        const firstPayment = data.payments && data.payments.length > 0 ? data.payments[0] : null;
+        if (firstPayment && firstPayment.firstLessonDate) {
+          const date = new Date(firstPayment.firstLessonDate);
+          const month = date.getMonth() + 1;
+          const day = date.getDate();
+          firstLessonHTML = `<div class="first-lesson">首次上课 ${month}/${day}</div>`;
+        } else {
+          firstLessonHTML = '<div class="first-lesson" style="color: var(--text-light);">首次上课 待记录</div>';
+        }
+        
+        return `
+          <div class="student-card">
+            <div class="student-card-header">
+              <div class="student-card-name">${data.name}</div>
+              <div class="student-card-remaining ${remainingClass}">剩余 ${remaining} 课时</div>
+            </div>
+            <div class="student-card-subtitle">
+              <span>总课时${data.totalHours}</span>
+              <span>已消${data.usedHours}</span>
+            </div>
+            
+            <div class="expandable-section">
+              <div class="expandable-header expanded" onclick="toggleExpandable(this)">
+                <span>▼ 月度统计</span>
+                <span class="arrow">▼</span>
+              </div>
+              <div class="expandable-content expanded">
+                ${monthlyStatsHTML}
+              </div>
+            </div>
+            
+            <div class="expandable-section">
+              <div class="expandable-header" onclick="toggleExpandable(this)">
+                <span>▼ 充值记录</span>
+                <span class="arrow">▼</span>
+              </div>
+              <div class="expandable-content">
+                ${paymentsHTML}
+                ${firstLessonHTML}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      container.innerHTML = `
+        <h2 class="teacher-section-title">学员列表</h2>
+        ${cardsHTML}
+      `;
+      
+      showTeacherPage();
+    }
+
+    // Load teacher dashboard data
+    async function loadTeacherDashboard() {
+      try {
+        // Load students list
+        const studentsResponse = await fetch('./students.json');
+        if (!studentsResponse.ok) {
+          throw new Error('无法加载学员列表');
+        }
+        studentsList = await studentsResponse.json();
+        
+        // Load all student data
+        const nonTeacherStudents = studentsList.filter(s => s.id !== 'teacher');
+        
+        for (const student of nonTeacherStudents) {
+          try {
+            const response = await fetch(`./${student.id}.json`);
+            if (response.ok) {
+              const data = await response.json();
+              allStudentData[student.id] = data;
+            }
+          } catch (e) {
+            console.error(`Failed to load data for ${student.id}:`, e);
+          }
+        }
+        
+        // Render teacher page
+        renderTeacherPage();
+        
+      } catch (error) {
+        console.error('Teacher dashboard error:', error);
+        showLoginPage();
+        document.getElementById('loginError').innerHTML = '❗ 加载失败，请重试';
+      }
+    }
+
     // Login handler
     async function handleLogin(nameInput) {
       const inputName = nameInput.trim().toLowerCase();
@@ -1126,8 +1659,21 @@ but a fire to be kindled.</p>
         }
         studentsList = await studentsResponse.json();
         
+        // Check if input matches teacher
+        const teacherMatch = studentsList.find(student => {
+          return student.id === 'teacher' && student.name.trim().toLowerCase() === inputName;
+        });
+        
+        if (teacherMatch) {
+          // Teacher login
+          saveTeacherStatus(true);
+          await loadTeacherDashboard();
+          return;
+        }
+        
         // Match student by name or id (case-insensitive, trim whitespace)
         const matchedStudent = studentsList.find(student => {
+          if (student.id === 'teacher') return false; // Exclude teacher from student matching
           const studentName = student.name.trim().toLowerCase();
           const studentId = student.id.trim().toLowerCase();
           return studentName === inputName || studentId === inputName;
@@ -1177,15 +1723,20 @@ but a fire to be kindled.</p>
     function handleLogout() {
       clearStoredStudentId();
       studentData = null;
+      allStudentData = {};
       showLoginPage();
     }
 
     // Main initialization
     document.addEventListener('DOMContentLoaded', async function() {
-      // Check if there's a stored student ID
+      // Check if there's a stored student ID or teacher status
       const storedStudentId = getStoredStudentId();
+      const isTeacher = getStoredTeacherStatus();
       
-      if (storedStudentId) {
+      if (isTeacher) {
+        // Resume teacher session
+        await loadTeacherDashboard();
+      } else if (storedStudentId) {
         // Auto login with stored student ID
         await loadStudentData(storedStudentId);
       } else {
@@ -1202,6 +1753,9 @@ but a fire to be kindled.</p>
       
       // Setup logout button
       document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+      
+      // Setup teacher logout button
+      document.getElementById('teacherLogoutBtn').addEventListener('click', handleLogout);
     });
   </script>
 </body>
