@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="white">
   <meta name="format-detection" content="telephone=no">
-  <title>消课记录 - Emily's English Studio</title>
+  <title>Emily's English Studio</title>
   <style>
     :root {
       --primary: #4A90D9;
@@ -78,10 +78,143 @@
       font-size: 14px;
     }
 
+    /* ========== Home Page (Student Selection) ========== */
+    .home-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .home-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      padding: 48px 20px 60px;
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .home-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .home-brand {
+      position: relative;
+      z-index: 1;
+    }
+
+    .home-brand h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      letter-spacing: 1px;
+    }
+
+    .home-brand .subtitle {
+      font-size: 13px;
+      opacity: 0.85;
+    }
+
+    .student-list {
+      padding: 0 16px;
+      margin-top: -32px;
+      position: relative;
+      z-index: 10;
+      flex: 1;
+    }
+
+    .student-list-title {
+      font-size: 14px;
+      color: var(--text-medium);
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+
+    .student-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .student-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .student-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .student-info {
+      flex: 1;
+    }
+
+    .student-info .name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .student-info .stats {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    .student-info .stats span {
+      margin-right: 12px;
+    }
+
+    .student-arrow {
+      color: var(--text-light);
+      font-size: 20px;
+    }
+
+    .home-footer {
+      padding: 20px;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 12px;
+    }
+
+    /* ========== Student Detail Page ========== */
+    .detail-page {
+      display: none;
+    }
+
+    .detail-page.active {
+      display: block;
+    }
+
     /* Header */
     .header {
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      padding: 24px 20px 32px;
+      padding: 16px 16px 32px;
       color: white;
       position: relative;
       overflow: hidden;
@@ -104,6 +237,21 @@
       align-items: flex-start;
       position: relative;
       z-index: 1;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .back-btn:hover {
+      opacity: 1;
     }
 
     .student-info h1 {
@@ -497,7 +645,15 @@
     /* Responsive */
     @media (max-width: 360px) {
       .header {
-        padding: 20px 16px 28px;
+        padding: 16px 16px 28px;
+      }
+      
+      .home-header {
+        padding: 40px 16px 50px;
+      }
+
+      .home-brand h1 {
+        font-size: 20px;
       }
       
       .student-info h1 {
@@ -523,67 +679,141 @@
       <div class="loading-text">加载中...</div>
     </div>
 
-    <!-- Main Content (hidden until loaded) -->
-    <div id="mainContent" style="display: none;">
-    <!-- Header -->
-    <header class="header">
-      <div class="header-top">
-        <div class="student-info">
-          <div class="label">学员课时记录</div>
-          <h1 id="studentName">加载中...</h1>
-          <div class="last-updated" id="lastUpdated"></div>
+    <!-- Home Page (Student Selection) -->
+    <div id="homePage" class="home-page" style="display: none;">
+      <header class="home-header">
+        <div class="home-brand">
+          <h1>Emily's English Studio</h1>
+          <div class="subtitle">绍兴城南 · RAZ & Power Up</div>
         </div>
-        <div class="progress-ring-container">
-          <svg class="progress-ring" width="80" height="80" viewBox="0 0 80 80">
-            <circle class="progress-ring-bg" cx="40" cy="40" r="32"/>
-            <circle class="progress-ring-fill" id="progressRing" cx="40" cy="40" r="32"/>
-          </svg>
-          <div class="progress-text">
-            <div class="number" id="remainingHours">--</div>
-            <div class="unit">剩余</div>
-          </div>
+      </header>
+      
+      <div class="student-list">
+        <div class="student-list-title">选择学员</div>
+        <div id="studentCardsContainer">
+          <!-- Student cards will be rendered here -->
         </div>
       </div>
-    </header>
-
-    <!-- Stats Bar -->
-    <div class="stats-bar">
-      <div class="stat-item">
-        <div class="stat-number" id="totalHours">--</div>
-        <div class="stat-label">总课时</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" id="usedHours">--</div>
-        <div class="stat-label">已消课</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" id="remainHours">--</div>
-        <div class="stat-label">剩余课时</div>
-      </div>
+      
+      <footer class="home-footer">
+        <div class="footer-brand">Emily's English Studio</div>
+        <div class="footer-tagline">绍兴城南 · RAZ & Power Up</div>
+      </footer>
     </div>
 
-    <!-- Records Section -->
-    <section class="records-section">
-      <h2 class="section-title">消课记录</h2>
-      <div class="timeline" id="recordsContainer">
-        <!-- Records will be rendered here -->
-      </div>
-    </section>
+    <!-- Detail Page (Student Records) -->
+    <div id="detailPage" class="detail-page">
+      <header class="header">
+        <div class="header-top">
+          <div>
+            <a href="./" class="back-btn">
+              <span>←</span>
+              <span>返回选择</span>
+            </a>
+            <div class="student-info">
+              <div class="label">学员课时记录</div>
+              <h1 id="studentName">加载中...</h1>
+              <div class="last-updated" id="lastUpdated"></div>
+            </div>
+          </div>
+          <div class="progress-ring-container">
+            <svg class="progress-ring" width="80" height="80" viewBox="0 0 80 80">
+              <circle class="progress-ring-bg" cx="40" cy="40" r="32"/>
+              <circle class="progress-ring-fill" id="progressRing" cx="40" cy="40" r="32"/>
+            </svg>
+            <div class="progress-text">
+              <div class="number" id="remainingHours">--</div>
+              <div class="unit">剩余</div>
+            </div>
+          </div>
+        </div>
+      </header>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-brand">Emily's English Studio</div>
-      <div class="footer-tagline">绍兴城南 · RAZ & Power Up</div>
-    </footer>
+      <!-- Stats Bar -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-number" id="totalHours">--</div>
+          <div class="stat-label">总课时</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="usedHours">--</div>
+          <div class="stat-label">已消课</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="remainHours">--</div>
+          <div class="stat-label">剩余课时</div>
+        </div>
+      </div>
+
+      <!-- Records Section -->
+      <section class="records-section">
+        <h2 class="section-title">消课记录</h2>
+        <div class="timeline" id="recordsContainer">
+          <!-- Records will be rendered here -->
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-brand">Emily's English Studio</div>
+        <div class="footer-tagline">绍兴城南 · RAZ & Power Up</div>
+      </footer>
     </div>
   </div>
 
   <script>
     // Global variable to store student data
     let studentData = null;
+    let studentsList = [];
 
-    // Render Functions
-    function init() {
+    // Get URL parameter
+    function getUrlParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Render home page (student selection)
+    function renderHomePage() {
+      const container = document.getElementById('studentCardsContainer');
+      
+      const cardsHTML = studentsList.map(student => `
+        <a href="?s=${student.id}" class="student-card">
+          <div class="student-avatar">${getAvatarEmoji(student.name)}</div>
+          <div class="student-info">
+            <div class="name">${student.name}</div>
+            <div class="stats">
+              <span>总课时：${student.totalHours || '--'}课时</span>
+              <span>已消课：${student.usedHours || 0}次</span>
+            </div>
+          </div>
+          <div class="student-arrow">›</div>
+        </a>
+      `).join('');
+      
+      container.innerHTML = cardsHTML;
+      
+      // Show home page, hide loading
+      document.getElementById('loadingContainer').style.display = 'none';
+      document.getElementById('homePage').style.display = 'flex';
+      document.getElementById('detailPage').classList.remove('active');
+    }
+
+    // Get avatar emoji based on name
+    function getAvatarEmoji(name) {
+      // Use first character as emoji fallback, or map common names
+      const emojiMap = {
+        '兜兜': '🎒',
+        'doudou': '🎒',
+        'Mark': '📚',
+        'mark': '📚',
+        '小明': '🎓',
+        '小华': '🌟'
+      };
+      return emojiMap[name] || '👤';
+    }
+
+    // Render detail page (student records)
+    function renderDetailPage() {
       if (!studentData) return;
       
       // Update student name
@@ -591,159 +821,4 @@
       
       // Calculate used hours from records
       const actualUsedHours = studentData.records.length;
-      studentData.usedHours = actualUsedHours;
-      
-      // Calculate remaining hours
-      const remaining = studentData.totalHours - studentData.usedHours;
-      
-      // Update stats
-      document.getElementById('totalHours').textContent = studentData.totalHours;
-      document.getElementById('usedHours').textContent = studentData.usedHours;
-      document.getElementById('remainHours').textContent = Math.max(0, remaining);
-      document.getElementById('remainingHours').textContent = Math.max(0, remaining);
-      
-      // Update last updated time
-      const updateDate = new Date().toLocaleDateString('zh-CN', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-      document.getElementById('lastUpdated').textContent = `更新时间：${updateDate}`;
-      
-      // Animate progress ring
-      setTimeout(() => {
-        const progress = remaining / studentData.totalHours;
-        const circumference = 2 * Math.PI * 32;
-        const offset = circumference * (1 - progress);
-        document.getElementById('progressRing').style.strokeDashoffset = offset;
-      }, 300);
-      
-      // Render records
-      renderRecords();
-      
-      // Show main content, hide loading
-      document.getElementById('loadingContainer').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'block';
-    }
-
-    function renderRecords() {
-      const container = document.getElementById('recordsContainer');
-      
-      if (studentData.records.length === 0) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <div class="icon">📚</div>
-            <p>暂无消课记录</p>
-          </div>
-        `;
-        return;
-      }
-      
-      const recordsHTML = studentData.records.map((record, index) => {
-        const lessonNumber = index + 1;
-        const isLatest = index === 0;
-        
-        return `
-          <div class="record-card" data-index="${index}">
-            <div class="timeline-dot"></div>
-            <div class="record-header" onclick="toggleRecord(${index})">
-              <div class="record-date">
-                <span class="date">${formatDate(record.date)}</span>
-                <span class="time">${record.time}</span>
-              </div>
-              <span class="lesson-badge">第${lessonNumber}次课</span>
-            </div>
-            <div class="record-content ${isLatest ? '' : 'collapsed'}" id="content-${index}">
-              <div class="course-info">
-                <div class="course-name">${record.courseName}</div>
-                <div class="lesson-title">${record.lessonTitle}</div>
-              </div>
-              
-              <div class="knowledge-section">
-                <div class="section-header">
-                  <span class="icon">📚</span>
-                  <span>重点知识</span>
-                </div>
-                <ul class="knowledge-list">
-                  ${record.keyKnowledge.map(k => `<li>${k}</li>`).join('')}
-                </ul>
-              </div>
-              
-              <div class="homework-section">
-                <div class="section-header">
-                  <span class="icon">📝</span>
-                  <span>课后练习</span>
-                </div>
-                <ul class="homework-list">
-                  ${record.homework.map(h => `<li>${h}</li>`).join('')}
-                </ul>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-      
-      // Add expand/collapse all control if there are multiple records
-      const expandControl = studentData.records.length > 1 ? `
-        <div class="expand-indicator expanded" id="expandControl" onclick="toggleAll()">
-          <span>收起历史记录</span>
-          <span class="arrow">▼</span>
-        </div>
-      ` : '';
-      
-      container.innerHTML = recordsHTML + expandControl;
-    }
-
-    function formatDate(dateStr) {
-      const date = new Date(dateStr);
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      const weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][date.getDay()];
-      return `${month}月${day}日 ${weekDay}`;
-    }
-
-    function toggleRecord(index) {
-      const content = document.getElementById(`content-${index}`);
-      if (content) {
-        content.classList.toggle('collapsed');
-      }
-    }
-
-    function toggleAll() {
-      const control = document.getElementById('expandControl');
-      const isExpanded = control.classList.contains('expanded');
-      const contents = document.querySelectorAll('.record-content');
-      
-      contents.forEach((content, index) => {
-        // Keep the first one (latest) always visible, collapse others
-        if (isExpanded) {
-          if (index > 0) content.classList.add('collapsed');
-        } else {
-          content.classList.remove('collapsed');
-        }
-      });
-      
-      control.classList.toggle('expanded');
-      control.querySelector('span').textContent = isExpanded ? '展开历史记录' : '收起历史记录';
-    }
-
-    // Load data and initialize
-    document.addEventListener('DOMContentLoaded', async function() {
-      try {
-        const response = await fetch('./data.json');
-        if (!response.ok) {
-          throw new Error('Failed to load data');
-        }
-        studentData = await response.json();
-        init();
-      } catch (error) {
-        console.error('Error loading data:', error);
-        document.getElementById('loadingContainer').innerHTML = `
-          <div class="loading-spinner"></div>
-          <div class="loading-text">加载中...</div>
-        `;
-      }
-    });
-  </script>
-</body>
-</html>
+      studentData.usedH
