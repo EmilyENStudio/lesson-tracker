@@ -52,7 +52,11 @@
         "完成like/likes练习题5道",
         "用Do/Does提问并回答3组对话",
         "用What does...like?问家人喜好并记录"
-      ]
+      ],
+      "parentFeedback": {
+        "content": "test",
+        "submitTime": "2026-05-01T04:17:14.266Z"
+      }
     },
     {
       "date": "2026-04-18",
