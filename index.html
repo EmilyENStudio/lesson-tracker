@@ -2775,7 +2775,8 @@ but a fire to be kindled.</p>
     async function loadTeacherDashboard() {
       try {
         // Load students list
-        const studentsResponse = await fetch('./students.json');
+        const cacheBuster = `?t=${Date.now()}`;
+        const studentsResponse = await fetch(`./students.json${cacheBuster}`);
         if (!studentsResponse.ok) {
           throw new Error('无法加载学员列表');
         }
@@ -2786,7 +2787,7 @@ but a fire to be kindled.</p>
         
         for (const student of nonTeacherStudents) {
           try {
-            const response = await fetch(`./${student.id}.json`);
+            const response = await fetch(`./${student.id}.json${cacheBuster}`);
             if (response.ok) {
               const data = await response.json();
               allStudentData[student.id] = data;
@@ -2871,11 +2872,13 @@ but a fire to be kindled.</p>
     // Load student data by ID
     async function loadStudentData(studentId) {
       try {
-        const response = await fetch(`./${studentId}.json`);
+        const cacheBuster = `?t=${Date.now()}`;
+        const response = await fetch(`./${studentId}.json${cacheBuster}`);
         if (!response.ok) {
           throw new Error('Failed to load student data');
         }
         studentData = await response.json();
+        allStudentData[studentId] = studentData;
         renderDetailPage();
       } catch (error) {
         console.error('Error loading student data:', error);
