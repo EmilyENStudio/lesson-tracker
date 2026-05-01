@@ -24,6 +24,7 @@
       --green: #4CAF50;
       --orange: #FF9800;
       --red: #F44336;
+      --purple: #9C27B0;
     }
 
     * {
@@ -92,7 +93,6 @@
       overflow: hidden;
     }
 
-    /* Gradient Background with Office-style Frosted Texture */
     .login-bg {
       position: fixed;
       top: 0;
@@ -109,7 +109,6 @@
       z-index: -3;
     }
 
-    /* Frosted Noise Texture Overlay */
     .login-bg::after {
       content: '';
       position: fixed;
@@ -123,7 +122,6 @@
       pointer-events: none;
     }
 
-    /* Decorative Color Blocks - Office Ad Style */
     .login-orb {
       position: fixed;
       border-radius: 40% 60% 50% 50%;
@@ -161,7 +159,6 @@
       animation: float3 22s ease-in-out infinite;
     }
 
-    /* Extra decorative blobs for richer texture */
     .login-orb-4 {
       width: 180px;
       height: 220px;
@@ -207,7 +204,6 @@
       50% { transform: translate(-40px, 30px) rotate(2deg); }
     }
 
-    /* Login Card */
     .login-card {
       width: min(360px, 90vw);
       background: rgba(255, 255, 255, 0.92);
@@ -236,7 +232,6 @@
       margin-bottom: 24px;
     }
 
-    /* Animated Flying Owl */
     .login-logo .icon {
       width: 64px;
       height: 56px;
@@ -354,7 +349,6 @@
       animation: wingFlapRight 0.6s ease-in-out infinite;
     }
 
-    /* Sparkle trail */
     .owl-sparkle {
       position: absolute;
       border-radius: 50%;
@@ -400,7 +394,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* Bilingual Quotes */
     .quotes-section {
       margin: 16px 0;
       padding: 16px 0;
@@ -418,13 +411,8 @@
       background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
     }
 
-    .quotes-section::before {
-      top: 0;
-    }
-
-    .quotes-section::after {
-      bottom: 0;
-    }
+    .quotes-section::before { top: 0; }
+    .quotes-section::after { bottom: 0; }
 
     .quote-chinese {
       font-family: 'Songti SC', 'STSong', 'SimSun', serif;
@@ -456,7 +444,6 @@
       font-style: normal;
     }
 
-    /* Login Form */
     .login-form {
       margin-top: 24px;
     }
@@ -526,7 +513,6 @@
       to { opacity: 1; }
     }
 
-    /* Login Footer */
     .login-footer {
       margin-top: 32px;
       text-align: center;
@@ -543,7 +529,6 @@
       display: block;
     }
 
-    /* Header */
     .header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       padding: 16px 16px 32px;
@@ -586,9 +571,7 @@
       padding: 0;
     }
 
-    .logout-btn:hover {
-      opacity: 1;
-    }
+    .logout-btn:hover { opacity: 1; }
 
     .student-info h1 {
       font-size: 26px;
@@ -615,9 +598,7 @@
       height: 80px;
     }
 
-    .progress-ring {
-      transform: rotate(-90deg);
-    }
+    .progress-ring { transform: rotate(-90deg); }
 
     .progress-ring-bg {
       fill: none;
@@ -654,11 +635,197 @@
       opacity: 0.8;
     }
 
+    /* ========== Upcoming Classes Section ========== */
+    .upcoming-section {
+      margin: -16px 16px 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .upcoming-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .upcoming-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .upcoming-header .icon {
+      font-size: 18px;
+    }
+
+    .upcoming-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .upcoming-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: linear-gradient(135deg, #f8f5ff 0%, #f5f0ff 100%);
+      border-radius: 12px;
+      border-left: 4px solid var(--primary);
+      transition: all 0.2s ease;
+    }
+
+    .upcoming-item:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+    }
+
+    .upcoming-item.urgent {
+      border-left-color: var(--orange);
+      background: linear-gradient(135deg, #fff8f0 0%, #fff5e8 100%);
+    }
+
+    .upcoming-item.leave {
+      border-left-color: var(--green);
+      background: linear-gradient(135deg, #f0fff0 0%, #e8f5e8 100%);
+      opacity: 0.8;
+    }
+
+    .upcoming-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 50px;
+    }
+
+    .upcoming-date .day {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      line-height: 1;
+    }
+
+    .upcoming-date .month {
+      font-size: 11px;
+      color: var(--text-light);
+    }
+
+    .upcoming-date .weekday {
+      font-size: 11px;
+      color: var(--text-medium);
+      margin-top: 2px;
+    }
+
+    .upcoming-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .upcoming-info .course-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 2px;
+    }
+
+    .upcoming-info .time {
+      font-size: 12px;
+      color: var(--text-medium);
+    }
+
+    .upcoming-info .duration {
+      font-size: 11px;
+      color: var(--text-light);
+    }
+
+    .upcoming-tags {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-end;
+    }
+
+    .upcoming-tag {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .upcoming-tag.urgent {
+      background: var(--orange);
+      color: white;
+    }
+
+    .upcoming-tag.leave {
+      background: var(--green);
+      color: white;
+    }
+
+    .leave-btn {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .leave-btn.request {
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+      color: white;
+    }
+
+    .leave-btn.request:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+    }
+
+    .leave-btn.cancel {
+      background: linear-gradient(135deg, var(--green) 0%, #66BB6A 100%);
+      color: white;
+    }
+
+    .leave-btn.cancel:hover {
+      filter: brightness(1.1);
+    }
+
+    .leave-btn:disabled {
+      background: var(--border);
+      color: var(--text-light);
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .no-schedule {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-light);
+      font-size: 13px;
+    }
+
+    .no-schedule .icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+      opacity: 0.5;
+    }
+
     /* Stats Bar */
     .stats-bar {
       display: flex;
       background: var(--card-bg);
-      margin: -16px 16px 20px;
+      margin: 0 16px 20px;
       border-radius: 16px;
       box-shadow: var(--shadow);
       position: relative;
@@ -690,17 +857,9 @@
       line-height: 1.2;
     }
 
-    .stat-item:nth-child(2) .stat-number {
-      color: var(--secondary);
-    }
-
-    .stat-item:nth-child(3) .stat-number {
-      color: #52C41A;
-    }
-
-    .stat-item:nth-child(4) .stat-number {
-      color: #764ba2;
-    }
+    .stat-item:nth-child(2) .stat-number { color: var(--secondary); }
+    .stat-item:nth-child(3) .stat-number { color: #52C41A; }
+    .stat-item:nth-child(4) .stat-number { color: #764ba2; }
 
     .stat-item .stat-label {
       font-size: 12px;
@@ -724,7 +883,6 @@
       gap: 8px;
     }
 
-    /* Month Filter */
     .month-filter select {
       appearance: none;
       -webkit-appearance: none;
@@ -881,13 +1039,8 @@
       font-size: 16px;
     }
 
-    .knowledge-section .section-header {
-      color: var(--primary);
-    }
-
-    .homework-section .section-header {
-      color: var(--secondary);
-    }
+    .knowledge-section .section-header { color: var(--primary); }
+    .homework-section .section-header { color: var(--secondary); }
 
     .knowledge-list, .homework-list {
       padding-left: 22px;
@@ -901,9 +1054,8 @@
       position: relative;
     }
 
-    .knowledge-list li::marker {
-      color: var(--primary);
-    }
+    .knowledge-list li::marker { color: var(--primary); }
+    .homework-list li::marker { color: var(--secondary); }
 
     .knowledge-image-card {
       margin: 6px 0;
@@ -974,10 +1126,6 @@
       cursor: pointer;
     }
 
-    .homework-list li::marker {
-      color: var(--secondary);
-    }
-
     /* Parent Feedback Section */
     .parent-feedback-section {
       margin-top: 16px;
@@ -1027,10 +1175,7 @@
       transition: all 0.3s ease;
     }
 
-    .feedback-submit-btn:hover {
-      filter: brightness(1.1);
-    }
-
+    .feedback-submit-btn:hover { filter: brightness(1.1); }
     .feedback-submit-btn:disabled {
       opacity: 0.6;
       cursor: not-allowed;
@@ -1100,9 +1245,7 @@
       font-weight: 500;
     }
 
-    .feedback-summary-header:hover {
-      color: #389E0D;
-    }
+    .feedback-summary-header:hover { color: #389E0D; }
 
     .feedback-badge {
       background: #F5222D;
@@ -1172,9 +1315,7 @@
       transition: background 0.2s;
     }
 
-    .feedback-month-header:active {
-      background: #e8ebff;
-    }
+    .feedback-month-header:active { background: #e8ebff; }
 
     .feedback-month-label {
       display: flex;
@@ -1226,13 +1367,8 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    .toast.success {
-      background: #52C41A;
-    }
-
-    .toast.error {
-      background: #F5222D;
-    }
+    .toast.success { background: #52C41A; }
+    .toast.error { background: #F5222D; }
 
     .no-feedback {
       color: var(--text-light);
@@ -1307,9 +1443,7 @@
       transition: color 0.2s;
     }
 
-    .expand-indicator:hover {
-      color: var(--primary);
-    }
+    .expand-indicator:hover { color: var(--primary); }
 
     .expand-indicator .arrow {
       transition: transform 0.3s;
@@ -1418,12 +1552,158 @@
       background: rgba(255,255,255,0.25);
     }
 
-    /* Stats Cards */
+    /* ========== Today's Classes Section ========== */
+    .today-classes-section {
+      margin: -12px 16px 16px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .today-classes-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+      border: 2px solid var(--primary);
+    }
+
+    .today-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .today-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .today-title .icon {
+      font-size: 20px;
+    }
+
+    .week-switch {
+      display: flex;
+      gap: 4px;
+    }
+
+    .week-btn {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text-medium);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .week-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .week-btn:hover:not(.active) {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .today-classes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .today-class-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: linear-gradient(135deg, #f8f5ff 0%, #f5f0ff 100%);
+      border-radius: 10px;
+      border-left: 3px solid var(--primary);
+    }
+
+    .today-class-item.leave {
+      border-left-color: var(--green);
+      background: linear-gradient(135deg, #f0fff0 0%, #e8f5e8 100%);
+      opacity: 0.85;
+    }
+
+    .today-class-item.no-class {
+      border-left-color: var(--border);
+      background: white;
+      justify-content: center;
+      color: var(--text-light);
+      font-size: 13px;
+    }
+
+    .today-student-avatar {
+      font-size: 24px;
+    }
+
+    .today-class-info {
+      flex: 1;
+    }
+
+    .today-class-info .student-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .today-class-info .class-time {
+      font-size: 12px;
+      color: var(--text-medium);
+    }
+
+    .today-class-status {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .today-course-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      background: var(--primary);
+      color: white;
+      border-radius: 8px;
+    }
+
+    .leave-status-badge {
+      font-size: 10px;
+      padding: 2px 8px;
+      background: var(--green);
+      color: white;
+      border-radius: 8px;
+    }
+
+    .leave-reason {
+      font-size: 10px;
+      color: var(--text-light);
+      max-width: 120px;
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Teacher Stats Cards */
     .teacher-stats {
       display: flex;
       gap: 12px;
       padding: 16px;
-      margin-top: -12px;
+      margin-top: 0;
       position: relative;
       z-index: 10;
     }
@@ -1569,9 +1849,7 @@
       transition: color 0.2s;
     }
 
-    .expandable-header:hover {
-      color: var(--primary);
-    }
+    .expandable-header:hover { color: var(--primary); }
 
     .expandable-header .arrow {
       transition: transform 0.3s;
@@ -1604,6 +1882,86 @@
       padding: 4px 0;
     }
 
+    /* Leave Records Section */
+    .leave-records-section {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 0 16px 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .leave-records-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    .leave-records-header .icon {
+      font-size: 18px;
+    }
+
+    .leave-record-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: linear-gradient(135deg, #f0fff0 0%, #e8f5e8 100%);
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+
+    .leave-record-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .leave-record-date {
+      min-width: 60px;
+    }
+
+    .leave-record-date .date {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .leave-record-date .weekday {
+      font-size: 10px;
+      color: var(--text-light);
+    }
+
+    .leave-record-info {
+      flex: 1;
+    }
+
+    .leave-record-info .student-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .leave-record-info .reason {
+      font-size: 11px;
+      color: var(--text-medium);
+    }
+
+    .leave-record-time {
+      font-size: 10px;
+      color: var(--text-light);
+    }
+
+    .no-leave-records {
+      text-align: center;
+      padding: 16px;
+      color: var(--text-light);
+      font-size: 13px;
+    }
+
     /* Teacher Footer */
     .teacher-footer {
       position: fixed;
@@ -1621,293 +1979,230 @@
       z-index: 100;
     }
 
-    /* Responsive */
-    @media (max-width: 360px) {
-      .header {
-        padding: 16px 16px 28px;
-      }
-
-      .login-card {
-        padding: 24px 20px;
-      }
-
-      .login-logo .icon {
-        font-size: 28px;
-      }
-
-      .login-logo h1 {
-        font-size: 18px;
-      }
-
-      .student-info h1 {
-        font-size: 22px;
-      }
-
-      .progress-ring-container {
-        width: 70px;
-        height: 70px;
-      }
-
-      .stat-item .stat-number {
-        font-size: 20px;
-      }
-
-      .teacher-stats {
-        gap: 8px;
-      }
-
-      .teacher-stat-card .stat-number {
-        font-size: 20px;
-      }
+    /* ========== Leave Modal ========== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
     }
 
-    /* ========== Desktop Responsive (min-width: 769px) ========== */
-    @media (min-width: 769px) {
-      .container {
-        max-width: 960px;
-      }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
 
-      /* Login Page - wider and more spacious */
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      width: 90%;
+      max-width: 340px;
+      transform: scale(0.9);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .modal-class-info {
+      background: linear-gradient(135deg, #f8f5ff 0%, #f5f0ff 100%);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .modal-class-info .date {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-bottom: 4px;
+    }
+
+    .modal-class-info .time {
+      font-size: 13px;
+      color: var(--text-medium);
+    }
+
+    .modal-reason {
+      margin-bottom: 16px;
+    }
+
+    .modal-reason label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-medium);
+      margin-bottom: 8px;
+    }
+
+    .modal-reason textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      color: var(--text-medium);
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .modal-reason textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      height: 44px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .modal-btn.cancel {
+      background: var(--border);
+      color: var(--text-medium);
+    }
+
+    .modal-btn.cancel:hover {
+      background: #d0d0d0;
+    }
+
+    .modal-btn.confirm {
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+      color: white;
+    }
+
+    .modal-btn.confirm:hover {
+      filter: brightness(1.1);
+    }
+
+    .modal-btn.confirm:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Responsive */
+    @media (max-width: 360px) {
+      .header { padding: 16px 16px 28px; }
+      .login-card { padding: 24px 20px; }
+      .login-logo .icon { font-size: 28px; }
+      .login-logo h1 { font-size: 18px; }
+      .student-info h1 { font-size: 22px; }
+      .progress-ring-container { width: 70px; height: 70px; }
+      .stat-item .stat-number { font-size: 20px; }
+      .teacher-stats { gap: 8px; }
+      .teacher-stat-card .stat-number { font-size: 20px; }
+    }
+
+    @media (min-width: 769px) {
+      .container { max-width: 960px; }
+
       .login-card {
         max-width: 420px;
         padding: 40px 48px;
       }
 
-      .quotes-section {
-        padding: 20px 0;
-      }
+      .quotes-section { padding: 20px 0; }
+      .quote-chinese { font-size: 18px; }
+      .quote-english { font-size: 15px; }
+      .login-input { height: 48px; font-size: 16px; }
+      .login-btn { height: 48px; font-size: 17px; }
 
-      .quote-chinese {
-        font-size: 18px;
-      }
+      .header { padding: 24px 32px 40px; }
+      .header-top { flex-direction: row; align-items: center; gap: 32px; }
+      .student-info h1 { font-size: 30px; margin-bottom: 6px; }
+      .student-info .label { font-size: 14px; }
+      .progress-ring-container { width: 90px; height: 90px; }
+      .progress-text .number { font-size: 24px; }
+      .progress-text .unit { font-size: 12px; }
 
-      .quote-english {
-        font-size: 15px;
-      }
+      .upcoming-section { margin: -20px 32px 24px; }
+      .upcoming-card { padding: 20px; }
+      .upcoming-item { padding: 14px 16px; }
 
-      .login-input {
-        height: 48px;
-        font-size: 16px;
-      }
+      .stats-bar { margin: 0 32px 24px; padding: 8px 0; }
+      .stat-item { padding: 20px 12px; }
+      .stat-item .stat-number { font-size: 24px; }
+      .stat-item .stat-label { font-size: 13px; }
 
-      .login-btn {
-        height: 48px;
-        font-size: 17px;
-      }
+      .records-section { padding: 0 32px 100px; }
+      .section-title { font-size: 18px; }
+      .timeline { padding-left: 32px; }
+      .record-card { margin-bottom: 20px; border-radius: 20px; }
+      .record-header { padding: 20px 24px; }
+      .record-content { padding: 0 24px 24px; }
+      .course-info { padding: 16px; border-radius: 14px; }
+      .course-name { font-size: 17px; }
+      .lesson-title { font-size: 14px; }
+      .section-header { font-size: 14px; margin-bottom: 10px; }
+      .knowledge-list li, .homework-list li { font-size: 14px; margin-bottom: 8px; }
+      .knowledge-image-card { max-width: 400px; }
 
-      /* Detail Page - horizontal header */
-      .header {
-        padding: 24px 32px 40px;
-      }
+      .parent-feedback-section { margin-top: 20px; padding-top: 16px; }
+      .feedback-textarea { min-height: 100px; font-size: 14px; padding: 14px 16px; }
+      .feedback-display { padding: 16px; font-size: 14px; }
+      .feedback-submit-btn { height: 40px; font-size: 15px; }
 
-      .header-top {
-        flex-direction: row;
-        align-items: center;
-        gap: 32px;
-      }
+      .teacher-header { padding: 24px 32px 32px; }
+      .teacher-title h1 { font-size: 22px; }
+      .teacher-title .subtitle { font-size: 14px; }
 
-      .student-info h1 {
-        font-size: 30px;
-        margin-bottom: 6px;
-      }
+      .today-classes-section { margin: -16px 32px 20px; }
+      .today-classes-card { padding: 20px; }
+      .today-class-item { padding: 12px 16px; }
 
-      .student-info .label {
-        font-size: 14px;
-      }
+      .teacher-stats { padding: 20px 32px; gap: 20px; }
+      .teacher-stat-card { padding: 20px 16px; border-radius: 20px; }
+      .teacher-stat-card .stat-icon { font-size: 24px; margin-bottom: 10px; }
+      .teacher-stat-card .stat-number { font-size: 28px; }
+      .teacher-stat-card .stat-label { font-size: 13px; }
 
-      .progress-ring-container {
-        width: 90px;
-        height: 90px;
-      }
+      .teacher-students { padding: 0 32px; }
+      .teacher-section-title { font-size: 18px; margin-bottom: 20px; }
 
-      .progress-text .number {
-        font-size: 24px;
-      }
+      .student-card { padding: 20px; border-radius: 20px; margin-bottom: 20px; }
+      .student-card-name { font-size: 20px; }
+      .student-card-subtitle { font-size: 14px; }
+      .expandable-header { font-size: 15px; padding: 10px 0; }
 
-      .progress-text .unit {
-        font-size: 12px;
-      }
+      .leave-records-section { margin: 0 32px 20px; padding: 20px; }
 
-      /* Stats Bar - wider and more spaced */
-      .stats-bar {
-        margin: -20px 32px 24px;
-        padding: 8px 0;
-      }
+      .feedback-list { max-height: 400px; }
+      .feedback-item { padding: 16px; margin-bottom: 12px; border-radius: 14px; }
+      .feedback-item-content { font-size: 14px; }
 
-      .stat-item {
-        padding: 20px 12px;
-      }
-
-      .stat-item .stat-number {
-        font-size: 24px;
-      }
-
-      .stat-item .stat-label {
-        font-size: 13px;
-      }
-
-      /* Records Section */
-      .records-section {
-        padding: 0 32px 100px;
-      }
-
-      .section-title {
-        font-size: 18px;
-      }
-
-      /* Timeline and Cards - two columns grid for history */
-      .timeline {
-        padding-left: 32px;
-      }
-
-      .record-card {
-        margin-bottom: 20px;
-        border-radius: 20px;
-      }
-
-      .record-header {
-        padding: 20px 24px;
-      }
-
-      .record-content {
-        padding: 0 24px 24px;
-      }
-
-      .course-info {
-        padding: 16px;
-        border-radius: 14px;
-      }
-
-      .course-name {
-        font-size: 17px;
-      }
-
-      .lesson-title {
-        font-size: 14px;
-      }
-
-      .section-header {
-        font-size: 14px;
-        margin-bottom: 10px;
-      }
-
-      .knowledge-list li, .homework-list li {
-        font-size: 14px;
-        margin-bottom: 8px;
-      }
-
-      .knowledge-image-card {
-        max-width: 400px;
-      }
-
-      /* Parent Feedback Section */
-      .parent-feedback-section {
-        margin-top: 20px;
-        padding-top: 16px;
-      }
-
-      .feedback-textarea {
-        min-height: 100px;
-        font-size: 14px;
-        padding: 14px 16px;
-      }
-
-      .feedback-display {
-        padding: 16px;
-        font-size: 14px;
-      }
-
-      .feedback-submit-btn {
-        height: 40px;
-        font-size: 15px;
-      }
-
-      /* Teacher Page - wider layout */
-      .teacher-header {
-        padding: 24px 32px 32px;
-      }
-
-      .teacher-title h1 {
-        font-size: 22px;
-      }
-
-      .teacher-title .subtitle {
-        font-size: 14px;
-      }
-
-      .teacher-stats {
-        padding: 20px 32px;
-        gap: 20px;
-      }
-
-      .teacher-stat-card {
-        padding: 20px 16px;
-        border-radius: 20px;
-      }
-
-      .teacher-stat-card .stat-icon {
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
-
-      .teacher-stat-card .stat-number {
-        font-size: 28px;
-      }
-
-      .teacher-stat-card .stat-label {
-        font-size: 13px;
-      }
-
-      .teacher-students {
-        padding: 0 32px;
-      }
-
-      .teacher-section-title {
-        font-size: 18px;
-        margin-bottom: 20px;
-      }
-
-      /* Student Cards in Teacher View */
-      .student-card {
-        padding: 20px;
-        border-radius: 20px;
-        margin-bottom: 20px;
-      }
-
-      .student-card-name {
-        font-size: 20px;
-      }
-
-      .student-card-subtitle {
-        font-size: 14px;
-      }
-
-      .expandable-header {
-        font-size: 15px;
-        padding: 10px 0;
-      }
-
-      /* Feedback Items in Teacher View */
-      .feedback-list {
-        max-height: 400px;
-      }
-
-      .feedback-item {
-        padding: 16px;
-        margin-bottom: 12px;
-        border-radius: 14px;
-      }
-
-      .feedback-item-content {
-        font-size: 14px;
-      }
-
-      /* Toast - slightly larger on desktop */
-      .toast {
-        padding: 16px 32px;
-        font-size: 15px;
-        border-radius: 10px;
-      }
+      .toast { padding: 16px 32px; font-size: 15px; border-radius: 10px; }
     }
   </style>
 </head>
@@ -1921,10 +2216,7 @@
 
     <!-- Login Page -->
     <div id="loginPage" class="login-page" style="display: none;">
-      <!-- Gradient Background -->
       <div class="login-bg"></div>
-      
-      <!-- Blur Orbs -->
       <div class="login-orb login-orb-1"></div>
       <div class="login-orb login-orb-2"></div>
       <div class="login-orb login-orb-3"></div>
@@ -1951,7 +2243,6 @@
           <h1>Emily's English Studio</h1>
         </div>
         
-        <!-- Bilingual Quotes -->
         <div class="quotes-section">
           <p class="quote-chinese">亲其师，信其道。</p>
           <p class="quote-chinese-author">——《礼记·学记》</p>
@@ -2005,6 +2296,19 @@ but a fire to be kindled.</p>
           </div>
         </div>
       </header>
+
+      <!-- Upcoming Classes Section -->
+      <div class="upcoming-section" id="upcomingSection">
+        <div class="upcoming-card">
+          <div class="upcoming-header">
+            <span class="icon">📅</span>
+            <span>Upcoming Classes</span>
+          </div>
+          <div class="upcoming-list" id="upcomingList">
+            <!-- Upcoming classes will be rendered here -->
+          </div>
+        </div>
+      </div>
 
       <!-- Stats Bar -->
       <div class="stats-bar">
@@ -2066,6 +2370,36 @@ but a fire to be kindled.</p>
         </div>
       </header>
 
+      <!-- Today's Classes Section -->
+      <div class="today-classes-section">
+        <div class="today-classes-card">
+          <div class="today-header">
+            <div class="today-title">
+              <span class="icon">📅</span>
+              <span id="todayClassesTitle">今日课程</span>
+            </div>
+            <div class="week-switch">
+              <button class="week-btn active" id="thisWeekBtn" onclick="switchWeek('this')">本周</button>
+              <button class="week-btn" id="nextWeekBtn" onclick="switchWeek('next')">下周</button>
+            </div>
+          </div>
+          <div class="today-classes-list" id="todayClassesList">
+            <!-- Today's classes will be rendered here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Leave Records Section -->
+      <div class="leave-records-section" id="leaveRecordsSection">
+        <div class="leave-records-header">
+          <span class="icon">📋</span>
+          <span>请假记录</span>
+        </div>
+        <div class="leave-records-list" id="leaveRecordsList">
+          <!-- Leave records will be rendered here -->
+        </div>
+      </div>
+
       <!-- Stats Cards -->
       <div class="teacher-stats" id="teacherStats">
         <div class="teacher-stat-card">
@@ -2098,12 +2432,33 @@ but a fire to be kindled.</p>
     </div>
   </div>
 
+  <!-- Leave Request Modal -->
+  <div class="modal-overlay" id="leaveModal">
+    <div class="modal-content">
+      <div class="modal-title" id="modalTitle">请假申请</div>
+      <div class="modal-class-info" id="modalClassInfo">
+        <div class="date" id="modalClassDate">5月10日 周六</div>
+        <div class="time" id="modalClassTime">09:30 · 90分钟</div>
+      </div>
+      <div class="modal-reason">
+        <label>请假原因（选填）</label>
+        <textarea id="leaveReason" placeholder="请输入请假原因..."></textarea>
+      </div>
+      <div class="modal-buttons">
+        <button class="modal-btn cancel" onclick="closeLeaveModal()">取消</button>
+        <button class="modal-btn confirm" id="modalConfirmBtn" onclick="confirmLeave()">确认请假</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Global variable to store student data
     let studentData = null;
     let studentsList = [];
-    let allStudentData = {}; // Store all student data for teacher page
-    let currentStudentFileName = null; // Store current student JSON filename for GitHub API
+    let allStudentData = {};
+    let currentStudentFileName = null;
+    let currentWeekView = 'this';
+    let pendingLeaveRequest = null;
 
     // GitHub Configuration
     const GITHUB_TOKEN = 'ghp_cVq' + 'oT2wxMn' + 'YqcW814' + '0u3l7CP' + 'RTE8j30' + 'vQzmm';
@@ -2129,33 +2484,27 @@ but a fire to be kindled.</p>
     const STORAGE_KEY = 'lesson_tracker_student_id';
     const TEACHER_KEY = 'lesson_tracker_is_teacher';
 
-    // Get stored student ID
     function getStoredStudentId() {
       return localStorage.getItem(STORAGE_KEY);
     }
 
-    // Get stored teacher status
     function getStoredTeacherStatus() {
       return localStorage.getItem(TEACHER_KEY) === 'true';
     }
 
-    // Save student ID to localStorage
     function saveStudentId(studentId) {
       localStorage.setItem(STORAGE_KEY, studentId);
     }
 
-    // Save teacher status
     function saveTeacherStatus(isTeacher) {
       localStorage.setItem(TEACHER_KEY, isTeacher ? 'true' : 'false');
     }
 
-    // Clear stored student ID
     function clearStoredStudentId() {
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(TEACHER_KEY);
     }
 
-    // Show login page
     function showLoginPage() {
       document.getElementById('loadingContainer').style.display = 'none';
       document.getElementById('loginPage').style.display = 'flex';
@@ -2165,7 +2514,6 @@ but a fire to be kindled.</p>
       document.getElementById('loginError').textContent = '';
     }
 
-    // Show teacher page
     function showTeacherPage() {
       document.getElementById('loadingContainer').style.display = 'none';
       document.getElementById('loginPage').style.display = 'none';
@@ -2173,7 +2521,6 @@ but a fire to be kindled.</p>
       document.getElementById('teacherPage').classList.add('active');
     }
 
-    // Get avatar emoji based on name
     function getAvatarEmoji(name) {
       const emojiMap = {
         '兜兜': '🎒',
@@ -2186,33 +2533,480 @@ but a fire to be kindled.</p>
       return emojiMap[name] || '👤';
     }
 
-    // Render detail page (student records)
+    // ========== Schedule Functions ==========
+    
+    // Get upcoming classes based on schedule
+    function getUpcomingClasses(schedule, count = 3) {
+      if (!schedule || schedule.length === 0) return [];
+      
+      const classes = [];
+      const now = new Date();
+      const searchDate = new Date(now);
+      
+      // Normalize to start of day
+      searchDate.setHours(0, 0, 0, 0);
+      
+      let daysSearched = 0;
+      const maxDays = 365; // Safety limit
+      
+      while (classes.length < count && daysSearched < maxDays) {
+        schedule.forEach(sched => {
+          const dayOfWeek = searchDate.getDay();
+          // Handle Sunday (0) with dayOfWeek 7
+          const targetDay = sched.dayOfWeek === 7 ? 0 : sched.dayOfWeek;
+          
+          if (dayOfWeek === targetDay) {
+            const classDateTime = new Date(searchDate);
+            const [hours, minutes] = sched.startTime.split(':');
+            classDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+            
+            if (classDateTime > now) {
+              classes.push({
+                date: searchDate.toISOString().slice(0, 10),
+                dayOfWeek: sched.dayOfWeek,
+                startTime: sched.startTime,
+                duration: sched.duration,
+                courseName: sched.courseName,
+                classDateTime: classDateTime
+              });
+            }
+          }
+        });
+        
+        searchDate.setDate(searchDate.getDate() + 1);
+        daysSearched++;
+      }
+      
+      // Sort by date and time, return only first 'count' items
+      classes.sort((a, b) => a.classDateTime - b.classDateTime);
+      return classes.slice(0, count);
+    }
+
+    // Check if class is within 24 hours
+    function canLeave(classDateTime) {
+      const now = new Date();
+      const hoursDiff = (classDateTime - now) / (1000 * 60 * 60);
+      return hoursDiff > 24;
+    }
+
+    // Check if a class date has an approved leave request
+    function getLeaveStatus(studentData, date) {
+      if (!studentData.leaveRequests) return null;
+      const leave = studentData.leaveRequests.find(l => l.date === date && l.status === 'approved');
+      return leave || null;
+    }
+
+    // Render upcoming classes section
+    function renderUpcomingClasses() {
+      const container = document.getElementById('upcomingList');
+      const section = document.getElementById('upcomingSection');
+      
+      if (!studentData || !studentData.schedule || studentData.schedule.length === 0) {
+        section.style.display = 'none';
+        return;
+      }
+      
+      section.style.display = 'block';
+      const upcomingClasses = getUpcomingClasses(studentData.schedule, 3);
+      
+      if (upcomingClasses.length === 0) {
+        container.innerHTML = `
+          <div class="no-schedule">
+            <div class="icon">📅</div>
+            <p>暂无排课信息</p>
+          </div>
+        `;
+        return;
+      }
+      
+      const html = upcomingClasses.map(cls => {
+        const date = new Date(cls.date);
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+        const weekday = weekdays[date.getDay()];
+        
+        const leaveStatus = getLeaveStatus(studentData, cls.date);
+        const isLeave = !!leaveStatus;
+        const isUrgent = !isLeave && !canLeave(cls.classDateTime);
+        const canRequestLeave = canLeave(cls.classDateTime);
+        
+        let itemClass = '';
+        if (isLeave) itemClass = 'leave';
+        else if (isUrgent) itemClass = 'urgent';
+        
+        return `
+          <div class="upcoming-item ${itemClass}">
+            <div class="upcoming-date">
+              <div class="day">${day}</div>
+              <div class="month">${month}月</div>
+              <div class="weekday">${weekday}</div>
+            </div>
+            <div class="upcoming-info">
+              <div class="course-name">${cls.courseName}</div>
+              <div class="time">${cls.startTime}</div>
+              <div class="duration">${cls.duration}分钟</div>
+            </div>
+            <div class="upcoming-tags">
+              ${isUrgent ? '<span class="upcoming-tag urgent">即将上课</span>' : ''}
+              ${isLeave ? '<span class="upcoming-tag leave">已请假</span>' : ''}
+            </div>
+            <button 
+              class="leave-btn ${isLeave ? 'cancel' : 'request'}"
+              ${!canRequestLeave && !isLeave ? 'disabled' : ''}
+              onclick="${isLeave ? `cancelLeave('${cls.date}')` : `requestLeave('${cls.date}', '${cls.startTime}', '${cls.duration}', '${cls.courseName}')`}"
+            >
+              ${isLeave ? '取消请假' : '请假'}
+            </button>
+          </div>
+        `;
+      }).join('');
+      
+      container.innerHTML = html;
+    }
+
+    // Request leave
+    function requestLeave(date, startTime, duration, courseName) {
+      pendingLeaveRequest = { date, startTime, duration, courseName };
+      
+      const modal = document.getElementById('leaveModal');
+      const dateObj = new Date(date);
+      const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+      const weekday = weekdays[dateObj.getDay()];
+      const month = dateObj.getMonth() + 1;
+      const day = dateObj.getDate();
+      
+      document.getElementById('modalTitle').textContent = '请假申请';
+      document.getElementById('modalClassDate').textContent = `${month}月${day}日 ${weekday}`;
+      document.getElementById('modalClassTime').textContent = `${startTime} · ${duration}分钟`;
+      document.getElementById('modalConfirmBtn').textContent = '确认请假';
+      document.getElementById('modalConfirmBtn').className = 'modal-btn confirm';
+      document.getElementById('leaveReason').value = '';
+      
+      modal.classList.add('active');
+    }
+
+    // Cancel leave
+    function cancelLeave(date) {
+      pendingLeaveRequest = { date, isCancel: true };
+      
+      const modal = document.getElementById('leaveModal');
+      const dateObj = new Date(date);
+      const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+      const weekday = weekdays[dateObj.getDay()];
+      const month = dateObj.getMonth() + 1;
+      const day = dateObj.getDate();
+      
+      document.getElementById('modalTitle').textContent = '取消请假';
+      document.getElementById('modalClassDate').textContent = `${month}月${day}日 ${weekday}`;
+      document.getElementById('modalClassTime').textContent = '确定要取消请假吗？';
+      document.getElementById('modalConfirmBtn').textContent = '确认取消';
+      document.getElementById('modalConfirmBtn').className = 'modal-btn cancel';
+      document.getElementById('leaveReason').value = '';
+      
+      modal.classList.add('active');
+    }
+
+    // Close leave modal
+    function closeLeaveModal() {
+      document.getElementById('leaveModal').classList.remove('active');
+      pendingLeaveRequest = null;
+    }
+
+    // Confirm leave request/cancellation
+    async function confirmLeave() {
+      if (!pendingLeaveRequest) return;
+      
+      const btn = document.getElementById('modalConfirmBtn');
+      btn.disabled = true;
+      btn.textContent = '处理中...';
+      
+      try {
+        const studentId = getStoredStudentId();
+        const filename = `${studentId}.json`;
+        
+        // Fetch current file to get SHA
+        const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${filename}`, {
+          headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+        
+        if (!getResponse.ok) {
+          throw new Error('获取文件信息失败');
+        }
+        
+        const fileInfo = await getResponse.json();
+        const sha = fileInfo.sha;
+        
+        // Initialize leaveRequests if not exists
+        if (!studentData.leaveRequests) {
+          studentData.leaveRequests = [];
+        }
+        
+        if (pendingLeaveRequest.isCancel) {
+          // Cancel leave request
+          const leaveIndex = studentData.leaveRequests.findIndex(l => l.date === pendingLeaveRequest.date);
+          if (leaveIndex !== -1) {
+            studentData.leaveRequests[leaveIndex].status = 'cancelled';
+          }
+        } else {
+          // Add new leave request
+          const reason = document.getElementById('leaveReason').value.trim();
+          studentData.leaveRequests.push({
+            date: pendingLeaveRequest.date,
+            reason: reason || '无',
+            requestTime: new Date().toISOString(),
+            status: 'approved'
+          });
+        }
+        
+        // Base64 encode the content
+        const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(studentData, null, 2))));
+        
+        // Update file via GitHub API
+        const updateResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${filename}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: pendingLeaveRequest.isCancel 
+              ? `feat: 取消请假 - ${studentData.name}`
+              : `feat: 请假申请 - ${studentData.name}`,
+            content: contentBase64,
+            sha: sha
+          })
+        });
+        
+        if (!updateResponse.ok) {
+          throw new Error('提交失败');
+        }
+        
+        // Update local data
+        allStudentData[studentId] = studentData;
+        
+        // Re-render
+        renderUpcomingClasses();
+        closeLeaveModal();
+        
+        showToast(pendingLeaveRequest.isCancel ? '请假已取消' : '请假申请成功', 'success');
+        
+      } catch (error) {
+        console.error('Leave request error:', error);
+        showToast('操作失败，请重试', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = pendingLeaveRequest?.isCancel ? '确认取消' : '确认请假';
+      }
+    }
+
+    // ========== Teacher Schedule Functions ==========
+    
+    function switchWeek(week) {
+      currentWeekView = week;
+      document.getElementById('thisWeekBtn').classList.toggle('active', week === 'this');
+      document.getElementById('nextWeekBtn').classList.toggle('active', week === 'next');
+      renderTodayClasses();
+    }
+
+    function getWeekDates(week) {
+      const today = new Date();
+      const dayOfWeek = today.getDay();
+      const monday = new Date(today);
+      monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+      
+      if (week === 'next') {
+        monday.setDate(monday.getDate() + 7);
+      }
+      
+      const dates = [];
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(monday);
+        date.setDate(monday.getDate() + i);
+        dates.push({
+          date: date.toISOString().slice(0, 10),
+          dayOfWeek: date.getDay(),
+          weekday: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][date.getDay()]
+        });
+      }
+      return dates;
+    }
+
+    function getClassesForDate(schedule, dateStr, dayOfWeek) {
+      if (!schedule) return [];
+      
+      return schedule.filter(s => {
+        const targetDay = s.dayOfWeek === 7 ? 0 : s.dayOfWeek;
+        return targetDay === dayOfWeek;
+      }).map(s => ({
+        ...s,
+        date: dateStr
+      }));
+    }
+
+    function renderTodayClasses() {
+      const container = document.getElementById('todayClassesList');
+      const weekDates = getWeekDates(currentWeekView);
+      const nonTeacherStudents = studentsList.filter(s => s.id !== 'teacher');
+      
+      let allClassesHTML = '';
+      let hasAnyClass = false;
+      
+      weekDates.forEach(day => {
+        const dayClasses = [];
+        
+        nonTeacherStudents.forEach(student => {
+          const data = allStudentData[student.id];
+          if (!data || !data.schedule) return;
+          
+          const classes = getClassesForDate(data.schedule, day.date, day.dayOfWeek);
+          classes.forEach(cls => {
+            const leaveStatus = getLeaveStatus(data, day.date);
+            dayClasses.push({
+              ...cls,
+              studentName: data.name,
+              studentId: student.id,
+              leaveStatus: leaveStatus
+            });
+          });
+        });
+        
+        if (dayClasses.length > 0) {
+          hasAnyClass = true;
+          // Sort by start time
+          dayClasses.sort((a, b) => a.startTime.localeCompare(b.startTime));
+          
+          const classesHTML = dayClasses.map(cls => {
+            const dateObj = new Date(cls.date);
+            const month = dateObj.getMonth() + 1;
+            const dayNum = dateObj.getDate();
+            
+            return `
+              <div class="today-class-item ${cls.leaveStatus ? 'leave' : ''}">
+                <div class="today-student-avatar">${getAvatarEmoji(cls.studentName)}</div>
+                <div class="today-class-info">
+                  <div class="student-name">${cls.studentName}</div>
+                  <div class="class-time">${cls.startTime} · ${cls.duration}分钟</div>
+                </div>
+                <div class="today-class-status">
+                  <span class="today-course-badge">${cls.courseName}</span>
+                  ${cls.leaveStatus ? `
+                    <span class="leave-status-badge">已请假</span>
+                    ${cls.leaveStatus.reason !== '无' ? `<div class="leave-reason">原因：${cls.leaveStatus.reason}</div>` : ''}
+                  ` : ''}
+                </div>
+              </div>
+            `;
+          }).join('');
+          
+          allClassesHTML += `
+            <div style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--text-light); margin-bottom: 6px; padding-left: 4px;">
+                ${month}月${dayNum}日 ${day.weekday}
+              </div>
+              ${classesHTML}
+            </div>
+          `;
+        }
+      });
+      
+      if (!hasAnyClass) {
+        const weekLabel = currentWeekView === 'this' ? '本周' : '下周';
+        container.innerHTML = `
+          <div class="today-class-item no-class">
+            ${weekLabel}暂无课程安排
+          </div>
+        `;
+      } else {
+        container.innerHTML = allClassesHTML;
+      }
+    }
+
+    function renderLeaveRecords() {
+      const container = document.getElementById('leaveRecordsList');
+      const nonTeacherStudents = studentsList.filter(s => s.id !== 'teacher');
+      
+      const allLeaves = [];
+      
+      nonTeacherStudents.forEach(student => {
+        const data = allStudentData[student.id];
+        if (!data || !data.leaveRequests) return;
+        
+        data.leaveRequests.forEach(leave => {
+          if (leave.status === 'approved') {
+            allLeaves.push({
+              ...leave,
+              studentName: data.name
+            });
+          }
+        });
+      });
+      
+      // Sort by date descending
+      allLeaves.sort((a, b) => b.date.localeCompare(a.date));
+      
+      if (allLeaves.length === 0) {
+        container.innerHTML = `
+          <div class="no-leave-records">
+            <div class="icon">✓</div>
+            <p>暂无请假记录</p>
+          </div>
+        `;
+        return;
+      }
+      
+      const html = allLeaves.slice(0, 10).map(leave => {
+        const dateObj = new Date(leave.date);
+        const month = dateObj.getMonth() + 1;
+        const day = dateObj.getDate();
+        const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+        const weekday = weekdays[dateObj.getDay()];
+        
+        return `
+          <div class="leave-record-item">
+            <div class="leave-record-date">
+              <div class="date">${month}/${day}</div>
+              <div class="weekday">${weekday}</div>
+            </div>
+            <div class="leave-record-info">
+              <div class="student-name">${leave.studentName}</div>
+              ${leave.reason !== '无' ? `<div class="reason">${leave.reason}</div>` : ''}
+            </div>
+            <div class="leave-record-time">
+              ${new Date(leave.requestTime).toLocaleDateString('zh-CN', {month: '2-digit', day: '2-digit'})}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      container.innerHTML = html;
+    }
+
+    // ========== Main Render Functions ==========
+
     function renderDetailPage() {
       if (!studentData) return;
       
-      // Update student name
       document.getElementById('studentName').textContent = studentData.name;
       
-      // Calculate used hours from records
       const actualUsedHours = studentData.records.length;
       studentData.usedHours = actualUsedHours;
       
-      // Calculate remaining hours
       const remaining = studentData.totalHours - studentData.usedHours;
       
-      // Calculate this month's hours
       const now = new Date();
       const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
       const monthHours = studentData.records.filter(r => r.date.startsWith(currentMonth)).length;
       
-      // Update stats
       document.getElementById('totalHours').textContent = studentData.totalHours;
       document.getElementById('usedHours').textContent = studentData.usedHours;
       document.getElementById('remainHours').textContent = Math.max(0, remaining);
       document.getElementById('remainingHours').textContent = Math.max(0, remaining);
       document.getElementById('monthHours').textContent = monthHours;
       
-      // Update last updated time
       const updateDate = new Date().toLocaleDateString('zh-CN', {
         year: 'numeric',
         month: 'long',
@@ -2220,7 +3014,6 @@ but a fire to be kindled.</p>
       });
       document.getElementById('lastUpdated').textContent = `更新时间：${updateDate}`;
       
-      // Animate progress ring
       setTimeout(() => {
         const progress = remaining / studentData.totalHours;
         const circumference = 2 * Math.PI * 32;
@@ -2228,11 +3021,12 @@ but a fire to be kindled.</p>
         document.getElementById('progressRing').style.strokeDashoffset = offset;
       }, 300);
       
-      // Render records
+      // Render upcoming classes
+      renderUpcomingClasses();
+      
       renderRecords();
       populateMonthFilter();
       
-      // Show detail page, hide loading and login
       document.getElementById('loadingContainer').style.display = 'none';
       document.getElementById('loginPage').style.display = 'none';
       document.getElementById('detailPage').classList.add('active');
@@ -2311,7 +3105,6 @@ but a fire to be kindled.</p>
         `;
       }).join('');
       
-      // Add expand/collapse all control if there are multiple records
       const expandControl = studentData.records.length > 1 ? `
         <div class="expand-indicator expanded" id="expandControl" onclick="toggleAll()">
           <span>收起历史记录</span>
@@ -2322,7 +3115,6 @@ but a fire to be kindled.</p>
       container.innerHTML = recordsHTML + expandControl;
     }
     
-    // Render feedback area for a record
     function renderFeedbackArea(record, index) {
       const feedback = record.parentFeedback;
       if (feedback) {
@@ -2353,7 +3145,6 @@ but a fire to be kindled.</p>
       `;
     }
     
-    // Escape HTML to prevent XSS
     function escapeHtml(text) {
       if (!text) return '';
       const div = document.createElement('div');
@@ -2361,7 +3152,6 @@ but a fire to be kindled.</p>
       return div.innerHTML;
     }
     
-    // Enable feedback edit mode
     function enableFeedbackEdit(index) {
       const displayEl = document.getElementById(`feedback-display-${index}`);
       const editEl = document.getElementById(`feedback-edit-${index}`);
@@ -2384,16 +3174,13 @@ but a fire to be kindled.</p>
       }
     }
 
-    // Populate month filter dropdown
     function populateMonthFilter() {
       const select = document.getElementById('monthSelect');
       if (!studentData || !studentData.records.length) return;
       
-      // Extract unique year-months from records
       const months = [...new Set(studentData.records.map(r => r.date.substring(0, 7)))];
-      months.sort().reverse(); // Latest first
+      months.sort().reverse();
       
-      // Clear existing options except "all"
       select.innerHTML = '<option value="all">全部</option>';
       
       months.forEach(ym => {
@@ -2405,7 +3192,6 @@ but a fire to be kindled.</p>
       });
     }
 
-    // Filter records by selected month
     function filterByMonth() {
       const selectedMonth = document.getElementById('monthSelect').value;
       const container = document.getElementById('recordsContainer');
@@ -2426,7 +3212,6 @@ but a fire to be kindled.</p>
         return;
       }
       
-      // Find the original index for each filtered record (for toggleRecord)
       const recordsHTML = filteredRecords.map((record) => {
         const originalIndex = studentData.records.indexOf(record);
         const lessonNumber = originalIndex + 1;
@@ -2497,7 +3282,6 @@ but a fire to be kindled.</p>
       const contents = document.querySelectorAll('.record-content');
       
       contents.forEach((content, index) => {
-        // Keep the first one (latest) always visible, collapse others
         if (isExpanded) {
           if (index > 0) content.classList.add('collapsed');
         } else {
@@ -2509,14 +3293,12 @@ but a fire to be kindled.</p>
       control.querySelector('span').textContent = isExpanded ? '展开历史记录' : '收起历史记录';
     }
 
-    // Toggle expandable section
     function toggleExpandable(headerEl) {
       headerEl.classList.toggle('expanded');
       const contentEl = headerEl.nextElementSibling;
       contentEl.classList.toggle('expanded');
     }
     
-    // Toggle feedback month section
     function toggleFeedbackMonth(headerEl) {
       const contentEl = headerEl.nextElementSibling;
       const arrowEl = headerEl.querySelector('.feedback-month-arrow');
@@ -2531,7 +3313,6 @@ but a fire to be kindled.</p>
       }
     }
     
-    // Submit parent feedback via GitHub API
     async function submitParentFeedback(recordIndex) {
       const textarea = document.getElementById(`feedback-textarea-${recordIndex}`);
       const feedbackContent = textarea.value.trim();
@@ -2547,11 +3328,9 @@ but a fire to be kindled.</p>
       btn.textContent = '提交中...';
       
       try {
-        // Get the student file path
         const studentId = getStoredStudentId();
         const filename = `${studentId}.json`;
         
-        // Fetch current file to get SHA
         const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${filename}`, {
           headers: {
             'Authorization': `token ${GITHUB_TOKEN}`,
@@ -2566,17 +3345,14 @@ but a fire to be kindled.</p>
         const fileInfo = await getResponse.json();
         const sha = fileInfo.sha;
         
-        // Update the record's parentFeedback
         const updatedData = JSON.parse(JSON.stringify(studentData));
         updatedData.records[recordIndex].parentFeedback = {
           content: feedbackContent,
           submitTime: new Date().toISOString()
         };
         
-        // Base64 encode the content
         const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(updatedData, null, 2))));
         
-        // Update file via GitHub API
         const updateResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${filename}`, {
           method: 'PUT',
           headers: {
@@ -2594,15 +3370,12 @@ but a fire to be kindled.</p>
           throw new Error('提交失败');
         }
         
-        // Update local data
         studentData = updatedData;
-        // Sync to allStudentData so teacher page can see updates
         const currentId = getStoredStudentId();
         if (currentId) {
           allStudentData[currentId] = updatedData;
         }
         
-        // Re-render the feedback area
         const sectionEl = textarea.closest('.parent-feedback-section');
         if (sectionEl) {
           sectionEl.innerHTML = `
@@ -2625,23 +3398,19 @@ but a fire to be kindled.</p>
       }
     }
 
-    // Render teacher dashboard
     function renderTeacherPage() {
-      // Calculate stats
       const nonTeacherStudents = studentsList.filter(s => s.id !== 'teacher');
       const totalStudents = nonTeacherStudents.length;
       
-      // Calculate monthly and total used hours
       let monthlyUsed = 0;
       let totalUsed = 0;
-      const currentMonth = new Date().toISOString().slice(0, 7); // Format: YYYY-MM
+      const currentMonth = new Date().toISOString().slice(0, 7);
       
       nonTeacherStudents.forEach(student => {
         const data = allStudentData[student.id];
         if (data) {
           totalUsed += data.usedHours || 0;
           
-          // Calculate monthly stats
           if (data.monthlyStats && data.monthlyStats.length > 0) {
             const monthStat = data.monthlyStats.find(m => m.month === currentMonth);
             if (monthStat) {
@@ -2651,12 +3420,16 @@ but a fire to be kindled.</p>
         }
       });
       
-      // Update stats display
       document.getElementById('totalStudents').textContent = totalStudents;
       document.getElementById('monthlyUsed').textContent = monthlyUsed + '课时';
       document.getElementById('totalUsed').textContent = totalUsed + '课时';
       
-      // Render student cards
+      // Render today's classes
+      renderTodayClasses();
+      
+      // Render leave records
+      renderLeaveRecords();
+      
       const container = document.getElementById('teacherStudentsList');
       const cardsHTML = nonTeacherStudents.map(student => {
         const data = allStudentData[student.id];
@@ -2670,7 +3443,6 @@ but a fire to be kindled.</p>
           remainingClass = 'warning';
         }
         
-        // Format monthly stats
         let monthlyStatsHTML = '';
         if (data.monthlyStats && data.monthlyStats.length > 0) {
           monthlyStatsHTML = data.monthlyStats.map(m => {
@@ -2681,7 +3453,6 @@ but a fire to be kindled.</p>
           monthlyStatsHTML = '<div class="month-item" style="color: var(--text-light);">暂无数据</div>';
         }
         
-        // Format payment history
         let paymentsHTML = '';
         if (data.payments && data.payments.length > 0) {
           paymentsHTML = data.payments.map(p => {
@@ -2694,7 +3465,6 @@ but a fire to be kindled.</p>
           paymentsHTML = '<div class="payment-item" style="color: var(--text-light);">暂无充值记录</div>';
         }
         
-        // First lesson date
         let firstLessonHTML = '';
         const firstPayment = data.payments && data.payments.length > 0 ? data.payments[0] : null;
         if (firstPayment && firstPayment.firstLessonDate) {
@@ -2706,12 +3476,10 @@ but a fire to be kindled.</p>
           firstLessonHTML = '<div class="first-lesson" style="color: var(--text-light);">首次上课 待记录</div>';
         }
         
-        // Format parent feedback for this student - grouped by month
         let studentFeedbackHTML = '';
         const feedbackCount = data.records ? data.records.filter(r => r.parentFeedback).length : 0;
         if (feedbackCount > 0) {
           const feedbackRecords = data.records.filter(r => r.parentFeedback);
-          // Group by month (based on submitTime)
           const monthGroups = {};
           feedbackRecords.forEach(r => {
             const submitDate = new Date(r.parentFeedback.submitTime);
@@ -2719,15 +3487,14 @@ but a fire to be kindled.</p>
             if (!monthGroups[monthKey]) monthGroups[monthKey] = [];
             monthGroups[monthKey].push(r);
           });
-          // Sort months descending
           const sortedMonths = Object.keys(monthGroups).sort((a, b) => b.localeCompare(a));
-          const currentMonth = new Date().toISOString().slice(0, 7);
+          const currentMonthKey = new Date().toISOString().slice(0, 7);
           
           const monthSections = sortedMonths.map(monthKey => {
             const [year, mon] = monthKey.split('-');
             const monthLabel = `${year}年${parseInt(mon)}月`;
             const monthFeedbacks = monthGroups[monthKey];
-            const isCurrentMonth = monthKey === currentMonth;
+            const isCurrentMonth = monthKey === currentMonthKey;
             const newCount = monthFeedbacks.filter(r => r.parentFeedback.submitTime && (Date.now() - new Date(r.parentFeedback.submitTime).getTime() < 7 * 24 * 60 * 60 * 1000)).length;
             
             return `
@@ -2805,7 +3572,6 @@ but a fire to be kindled.</p>
         `;
       }).join('');
       
-      // Collect all feedback from all students
       let allFeedbackHTML = '';
       let newFeedbackCount = 0;
       const allFeedback = [];
@@ -2829,7 +3595,6 @@ but a fire to be kindled.</p>
         }
       });
       
-      // Sort by submit time, newest first
       allFeedback.sort((a, b) => new Date(b.submitTime) - new Date(a.submitTime));
       
       if (allFeedback.length > 0) {
@@ -2867,10 +3632,8 @@ but a fire to be kindled.</p>
       showTeacherPage();
     }
 
-    // Load teacher dashboard data
     async function loadTeacherDashboard() {
       try {
-        // Load students list
         const cacheBuster = `?t=${Date.now()}`;
         const studentsResponse = await fetch(`./students.json${cacheBuster}`);
         if (!studentsResponse.ok) {
@@ -2878,7 +3641,6 @@ but a fire to be kindled.</p>
         }
         studentsList = await studentsResponse.json();
         
-        // Load all student data
         const nonTeacherStudents = studentsList.filter(s => s.id !== 'teacher');
         
         for (const student of nonTeacherStudents) {
@@ -2893,7 +3655,6 @@ but a fire to be kindled.</p>
           }
         }
         
-        // Render teacher page
         renderTeacherPage();
         
       } catch (error) {
@@ -2903,7 +3664,6 @@ but a fire to be kindled.</p>
       }
     }
 
-    // Login handler
     async function handleLogin(nameInput) {
       const inputName = nameInput.trim().toLowerCase();
       const errorEl = document.getElementById('loginError');
@@ -2914,28 +3674,24 @@ but a fire to be kindled.</p>
       }
       
       try {
-        // Load students list
         const studentsResponse = await fetch('./students.json');
         if (!studentsResponse.ok) {
           throw new Error('无法加载学员列表');
         }
         studentsList = await studentsResponse.json();
         
-        // Check if input matches teacher
         const teacherMatch = studentsList.find(student => {
           return student.id === 'teacher' && student.name.trim().toLowerCase() === inputName;
         });
         
         if (teacherMatch) {
-          // Teacher login
           saveTeacherStatus(true);
           await loadTeacherDashboard();
           return;
         }
         
-        // Match student by name or id (case-insensitive, trim whitespace)
         const matchedStudent = studentsList.find(student => {
-          if (student.id === 'teacher') return false; // Exclude teacher from student matching
+          if (student.id === 'teacher') return false;
           const studentName = student.name.trim().toLowerCase();
           const studentId = student.id.trim().toLowerCase();
           return studentName === inputName || studentId === inputName;
@@ -2946,17 +3702,14 @@ but a fire to be kindled.</p>
           return;
         }
         
-        // Save to localStorage
         saveStudentId(matchedStudent.id);
         
-        // Load student data
         const response = await fetch(`./${matchedStudent.id}.json`);
         if (!response.ok) {
           throw new Error('无法加载学员数据');
         }
         studentData = await response.json();
         
-        // Render detail page
         renderDetailPage();
         
       } catch (error) {
@@ -2965,7 +3718,6 @@ but a fire to be kindled.</p>
       }
     }
 
-    // Load student data by ID
     async function loadStudentData(studentId) {
       try {
         const cacheBuster = `?t=${Date.now()}`;
@@ -2978,12 +3730,10 @@ but a fire to be kindled.</p>
         renderDetailPage();
       } catch (error) {
         console.error('Error loading student data:', error);
-        // If loading fails, show login page
         showLoginPage();
       }
     }
 
-    // Logout handler
     function handleLogout() {
       clearStoredStudentId();
       studentData = null;
@@ -2991,38 +3741,28 @@ but a fire to be kindled.</p>
       showLoginPage();
     }
 
-    // Main initialization
     document.addEventListener('DOMContentLoaded', async function() {
-      // Check if there's a stored student ID or teacher status
       const storedStudentId = getStoredStudentId();
       const isTeacher = getStoredTeacherStatus();
       
       if (isTeacher) {
-        // Resume teacher session
         await loadTeacherDashboard();
       } else if (storedStudentId) {
-        // Auto login with stored student ID
         await loadStudentData(storedStudentId);
       } else {
-        // Show login page
         showLoginPage();
       }
       
-      // Setup login form
       document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const nameInput = document.getElementById('nameInput').value;
         handleLogin(nameInput);
       });
       
-      // Setup logout button
       document.getElementById('logoutBtn').addEventListener('click', handleLogout);
-      
-      // Setup teacher logout button
       document.getElementById('teacherLogoutBtn').addEventListener('click', handleLogout);
     });
 
-    // Lightbox functions
     function openLightbox(url) {
       let overlay = document.getElementById('lightbox');
       if (!overlay) {
