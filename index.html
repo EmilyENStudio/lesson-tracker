@@ -2942,9 +2942,45 @@ but a fire to be kindled.</p>
         
         data.leaveRequests.forEach(leave => {
           if (leave.status === 'approved') {
+            // Match courseName from schedule
+            const dateObj = new Date(leave.date);
+            const dayOfWeek = dateObj.getDay();
+            let courseName = leave.courseName || '未知课程';
+            if (data.schedule) {
+              const matchedSched = data.schedule.find(s => {
+                const targetDay = s.dayOfWeek === 7 ? 0 : s.dayOfWeek;
+                return targetDay === dayOfWeek;
+              });
+              if (matchedSched) courseName = matchedSched.courseName;
+            }
+            
+            // Count how many students are still attending this class on this date
+            const attendingCount = nonTeacherStudents.filter(s => {
+              const sd = allStudentData[s.id];
+              if (!sd || !sd.schedule) return false;
+              const hasSched = sd.schedule.some(sch => {
+                const targetDay = sch.dayOfWeek === 7 ? 0 : sch.dayOfWeek;
+                return targetDay === dayOfWeek && sch.courseName === courseName;
+              });
+              if (!hasSched) return false;
+              // Check if this student has an approved leave for this date
+              const hasLeave = sd.leaveRequests && sd.leaveRequests.some(l => l.date === leave.date && l.status === 'approved');
+              return !hasLeave;
+            }).length;
+            
             allLeaves.push({
               ...leave,
-              studentName: data.name
+              studentName: data.name,
+              courseName: courseName,
+              attendingCount: attendingCount,
+              totalStudents: nonTeacherStudents.filter(s => {
+                const sd = allStudentData[s.id];
+                if (!sd || !sd.schedule) return false;
+                return sd.schedule.some(sch => {
+                  const targetDay = sch.dayOfWeek === 7 ? 0 : sch.dayOfWeek;
+                  return targetDay === dayOfWeek && sch.courseName === courseName;
+                });
+              }).length
             });
           }
         });
@@ -2977,7 +3013,8 @@ but a fire to be kindled.</p>
               <div class="weekday">${weekday}</div>
             </div>
             <div class="leave-record-info">
-              <div class="student-name">${leave.studentName}</div>
+              <div class="student-name">${leave.studentName} · ${leave.courseName}</div>
+              <div class="reason" style="color: var(--orange);">剩余${leave.attendingCount}/${leave.totalStudents}人上课</div>
               ${leave.reason !== '无' ? `<div class="reason">${leave.reason}</div>` : ''}
             </div>
             <div class="leave-record-time">
