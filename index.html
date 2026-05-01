@@ -3674,7 +3674,8 @@ but a fire to be kindled.</p>
       }
       
       try {
-        const studentsResponse = await fetch('./students.json');
+        const cacheBuster = `?t=${Date.now()}`;
+        const studentsResponse = await fetch(`./students.json${cacheBuster}`);
         if (!studentsResponse.ok) {
           throw new Error('无法加载学员列表');
         }
@@ -3704,11 +3705,12 @@ but a fire to be kindled.</p>
         
         saveStudentId(matchedStudent.id);
         
-        const response = await fetch(`./${matchedStudent.id}.json`);
+        const response = await fetch(`./${matchedStudent.id}.json${cacheBuster}`);
         if (!response.ok) {
           throw new Error('无法加载学员数据');
         }
         studentData = await response.json();
+        allStudentData[matchedStudent.id] = studentData;
         
         renderDetailPage();
         
