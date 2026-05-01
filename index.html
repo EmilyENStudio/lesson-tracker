@@ -3660,7 +3660,7 @@ but a fire to be kindled.</p>
       } catch (error) {
         console.error('Teacher dashboard error:', error);
         showLoginPage();
-        document.getElementById('loginError').innerHTML = '❗ 加载失败，请重试';
+        document.getElementById('loginError').innerHTML = `❗ 加载失败：${error.message}`;
       }
     }
 
