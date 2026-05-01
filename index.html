@@ -2726,7 +2726,7 @@ but a fire to be kindled.</p>
         const filename = `${studentId}.json`;
         
         // Fetch current file to get SHA
-        const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${filename}`, {
+        const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${filename}?t=${Date.now()}`, {
           headers: {
             'Authorization': `token ${GITHUB_TOKEN}`,
             'Accept': 'application/vnd.github.v3+json'
@@ -2734,7 +2734,9 @@ but a fire to be kindled.</p>
         });
         
         if (!getResponse.ok) {
-          throw new Error('获取文件信息失败');
+          const errDetail = await getResponse.text();
+          console.error('GitHub GET error:', getResponse.status, errDetail);
+          throw new Error(`获取文件信息失败(${getResponse.status}): ${errDetail}`);
         }
         
         const fileInfo = await getResponse.json();
@@ -2782,7 +2784,9 @@ but a fire to be kindled.</p>
         });
         
         if (!updateResponse.ok) {
-          throw new Error('提交失败');
+          const errDetail = await updateResponse.text();
+          console.error('GitHub PUT error:', updateResponse.status, errDetail);
+          throw new Error(`提交失败(${updateResponse.status}): ${errDetail}`);
         }
         
         // Update local data
@@ -2796,7 +2800,7 @@ but a fire to be kindled.</p>
         
       } catch (error) {
         console.error('Leave request error:', error);
-        showToast('操作失败，请重试', 'error');
+        showToast(`操作失败: ${error.message}`, 'error');
       } finally {
         btn.disabled = false;
         btn.textContent = pendingLeaveRequest?.isCancel ? '确认取消' : '确认请假';
@@ -3368,7 +3372,9 @@ but a fire to be kindled.</p>
         });
         
         if (!updateResponse.ok) {
-          throw new Error('提交失败');
+          const errDetail = await updateResponse.text();
+          console.error('GitHub PUT error:', updateResponse.status, errDetail);
+          throw new Error(`提交失败(${updateResponse.status}): ${errDetail}`);
         }
         
         studentData = updatedData;
