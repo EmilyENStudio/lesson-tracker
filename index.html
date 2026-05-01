@@ -905,6 +905,75 @@
       color: var(--primary);
     }
 
+    .knowledge-image-card {
+      margin: 6px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(102, 126, 234, 0.12);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .knowledge-image-card:active {
+      transform: scale(0.98);
+    }
+
+    .knowledge-image-card img {
+      width: 100%;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .knowledge-image-caption {
+      font-size: 11px;
+      color: var(--text-light);
+      text-align: center;
+      padding: 4px 0 2px;
+    }
+
+    /* Lightbox */
+    .lightbox-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .lightbox-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox-overlay img {
+      max-width: 95%;
+      max-height: 90vh;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
     .homework-list li::marker {
       color: var(--secondary);
     }
@@ -1675,9 +1744,17 @@ but a fire to be kindled.</p>
                   <span class="icon">📚</span>
                   <span>重点知识</span>
                 </div>
-                <ul class="knowledge-list">
-                  ${record.keyKnowledge.map(k => `<li>${k}</li>`).join('')}
-                </ul>
+                <div class="knowledge-list">
+                  ${record.keyKnowledge.map(k => {
+                    if (typeof k === 'object' && k.type === 'image') {
+                      return `<div class="knowledge-image-card" onclick="openLightbox('${k.url}')">
+                        <img src="${k.url}" alt="${k.caption || '白板笔记'}" loading="lazy">
+                        ${k.caption ? `<div class="knowledge-image-caption">${k.caption}</div>` : ''}
+                      </div>`;
+                    }
+                    return `<li>${k}</li>`;
+                  }).join('')}
+                </div>
               </div>
               
               <div class="homework-section">
@@ -1789,9 +1866,17 @@ but a fire to be kindled.</p>
                   <span class="icon">📚</span>
                   <span>重点知识</span>
                 </div>
-                <ul class="knowledge-list">
-                  ${record.keyKnowledge.map(k => `<li>${k}</li>`).join('')}
-                </ul>
+                <div class="knowledge-list">
+                  ${record.keyKnowledge.map(k => {
+                    if (typeof k === 'object' && k.type === 'image') {
+                      return `<div class="knowledge-image-card" onclick="openLightbox('${k.url}')">
+                        <img src="${k.url}" alt="${k.caption || '白板笔记'}" loading="lazy">
+                        ${k.caption ? `<div class="knowledge-image-caption">${k.caption}</div>` : ''}
+                      </div>`;
+                    }
+                    return `<li>${k}</li>`;
+                  }).join('')}
+                </div>
               </div>
               
               <div class="homework-section">
@@ -2111,6 +2196,28 @@ but a fire to be kindled.</p>
       // Setup teacher logout button
       document.getElementById('teacherLogoutBtn').addEventListener('click', handleLogout);
     });
+
+    // Lightbox functions
+    function openLightbox(url) {
+      let overlay = document.getElementById('lightbox');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'lightbox';
+        overlay.className = 'lightbox-overlay';
+        overlay.innerHTML = `<button class="lightbox-close" onclick="closeLightbox()">✕</button><img id="lightbox-img" src="">`;
+        overlay.addEventListener('click', function(e) {
+          if (e.target === overlay) closeLightbox();
+        });
+        document.body.appendChild(overlay);
+      }
+      document.getElementById('lightbox-img').src = url;
+      overlay.classList.add('active');
+    }
+
+    function closeLightbox() {
+      const overlay = document.getElementById('lightbox');
+      if (overlay) overlay.classList.remove('active');
+    }
   </script>
 </body>
 </html>
