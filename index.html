@@ -1154,6 +1154,52 @@
       animation: pulseNew 2s ease-in-out infinite;
     }
 
+    .feedback-month-group {
+      margin-bottom: 8px;
+    }
+
+    .feedback-month-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      transition: background 0.2s;
+    }
+
+    .feedback-month-header:active {
+      background: #e8ebff;
+    }
+
+    .feedback-month-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feedback-new-badge {
+      background: #F5222D;
+      color: white;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-weight: 500;
+    }
+
+    .feedback-month-arrow {
+      font-size: 10px;
+      transition: transform 0.2s;
+    }
+
+    .feedback-month-content {
+      padding: 8px 0 0 0;
+    }
+
     @keyframes pulseNew {
       0%, 100% { box-shadow: 0 0 0 0 rgba(245, 34, 45, 0.2); }
       50% { box-shadow: 0 0 0 4px rgba(245, 34, 45, 0.1); }
@@ -2470,6 +2516,21 @@ but a fire to be kindled.</p>
       contentEl.classList.toggle('expanded');
     }
     
+    // Toggle feedback month section
+    function toggleFeedbackMonth(headerEl) {
+      const contentEl = headerEl.nextElementSibling;
+      const arrowEl = headerEl.querySelector('.feedback-month-arrow');
+      if (contentEl.style.display === 'none') {
+        contentEl.style.display = '';
+        arrowEl.textContent = '▼';
+        arrowEl.classList.add('open');
+      } else {
+        contentEl.style.display = 'none';
+        arrowEl.textContent = '▶';
+        arrowEl.classList.remove('open');
+      }
+    }
+    
     // Submit parent feedback via GitHub API
     async function submitParentFeedback(recordIndex) {
       const textarea = document.getElementById(`feedback-textarea-${recordIndex}`);
@@ -2645,13 +2706,55 @@ but a fire to be kindled.</p>
           firstLessonHTML = '<div class="first-lesson" style="color: var(--text-light);">首次上课 待记录</div>';
         }
         
-        // Format parent feedback for this student
+        // Format parent feedback for this student - grouped by month
         let studentFeedbackHTML = '';
         const feedbackCount = data.records ? data.records.filter(r => r.parentFeedback).length : 0;
         if (feedbackCount > 0) {
-          const latestFeedback = data.records
-            .filter(r => r.parentFeedback)
-            .sort((a, b) => new Date(b.parentFeedback.submitTime) - new Date(a.parentFeedback.submitTime))[0];
+          const feedbackRecords = data.records.filter(r => r.parentFeedback);
+          // Group by month (based on submitTime)
+          const monthGroups = {};
+          feedbackRecords.forEach(r => {
+            const submitDate = new Date(r.parentFeedback.submitTime);
+            const monthKey = `${submitDate.getFullYear()}-${String(submitDate.getMonth() + 1).padStart(2, '0')}`;
+            if (!monthGroups[monthKey]) monthGroups[monthKey] = [];
+            monthGroups[monthKey].push(r);
+          });
+          // Sort months descending
+          const sortedMonths = Object.keys(monthGroups).sort((a, b) => b.localeCompare(a));
+          const currentMonth = new Date().toISOString().slice(0, 7);
+          
+          const monthSections = sortedMonths.map(monthKey => {
+            const [year, mon] = monthKey.split('-');
+            const monthLabel = `${year}年${parseInt(mon)}月`;
+            const monthFeedbacks = monthGroups[monthKey];
+            const isCurrentMonth = monthKey === currentMonth;
+            const newCount = monthFeedbacks.filter(r => r.parentFeedback.submitTime && (Date.now() - new Date(r.parentFeedback.submitTime).getTime() < 7 * 24 * 60 * 60 * 1000)).length;
+            
+            return `
+              <div class="feedback-month-group">
+                <div class="feedback-month-header" onclick="toggleFeedbackMonth(this)">
+                  <span class="feedback-month-label">${monthLabel} (${monthFeedbacks.length}条)${newCount > 0 ? ` <span class="feedback-new-badge">${newCount}条新</span>` : ''}</span>
+                  <span class="feedback-month-arrow ${isCurrentMonth ? 'open' : ''}">${isCurrentMonth ? '▼' : '▶'}</span>
+                </div>
+                <div class="feedback-month-content" style="${isCurrentMonth ? '' : 'display:none'}">
+                  <div class="feedback-list">
+                    ${monthFeedbacks.map(r => {
+                      const feedbackDate = new Date(r.date).toLocaleDateString('zh-CN', {month: '2-digit', day: '2-digit'});
+                      const feedbackTime = new Date(r.parentFeedback.submitTime).toLocaleDateString('zh-CN', {month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'});
+                      const isNew = r.parentFeedback.submitTime && (Date.now() - new Date(r.parentFeedback.submitTime).getTime() < 7 * 24 * 60 * 60 * 1000);
+                      return `<div class="feedback-item${isNew ? ' new' : ''}">
+                        <div class="feedback-item-header">
+                          <span class="feedback-item-date">${feedbackDate} 课 · ${feedbackTime} 提交</span>
+                        </div>
+                        <div class="feedback-item-content">${escapeHtml(r.parentFeedback.content)}</div>
+                      </div>`;
+                    }).join('')}
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+          
           studentFeedbackHTML = `
             <div class="expandable-section">
               <div class="expandable-header" onclick="toggleExpandable(this)">
@@ -2659,19 +2762,7 @@ but a fire to be kindled.</p>
                 <span class="arrow">▼</span>
               </div>
               <div class="expandable-content">
-                <div class="feedback-list">
-                  ${data.records.filter(r => r.parentFeedback).map(r => {
-                    const feedbackDate = new Date(r.date).toLocaleDateString('zh-CN', {month: '2-digit', day: '2-digit'});
-                    const feedbackTime = new Date(r.parentFeedback.submitTime).toLocaleDateString('zh-CN', {month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'});
-                    const isNew = r.parentFeedback.submitTime && (Date.now() - new Date(r.parentFeedback.submitTime).getTime() < 7 * 24 * 60 * 60 * 1000);
-                    return `<div class="feedback-item${isNew ? ' new' : ''}">
-                      <div class="feedback-item-header">
-                        <span class="feedback-item-date">${feedbackDate} 课 · ${feedbackTime} 提交</span>
-                      </div>
-                      <div class="feedback-item-content">${escapeHtml(r.parentFeedback.content)}</div>
-                    </div>`;
-                  }).join('')}
-                </div>
+                ${monthSections}
               </div>
             </div>
           `;
