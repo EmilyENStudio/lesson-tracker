@@ -11,7 +11,10 @@
     }
   ],
   "monthlyStats": [
-    {"month": "2026-04", "hours": 3}
+    {
+      "month": "2026-04",
+      "hours": 3
+    }
   ],
   "records": [
     {
@@ -28,7 +31,11 @@
         "复习1-3单元核心词汇",
         "用has got造3个句子描述农场动物",
         "用it is + 形容词描述2种动物"
-      ]
+      ],
+      "parentFeedback": {
+        "content": "test",
+        "submitTime": "2026-05-01T03:06:12.680Z"
+      }
     },
     {
       "date": "2026-04-11",
@@ -57,7 +64,11 @@
         "单数主语 → 动词+s（A cow gives us milk）",
         "复数主语 → 动词原形（Cows give us milk）",
         "可数名词 vs 不可数名词：bees可加s / milk不加s",
-        {"type": "image", "url": "https://emilyenstudio.github.io/lesson-tracker/images/whiteboard-0418.png", "caption": "白板笔记：句子结构"}
+        {
+          "type": "image",
+          "url": "https://emilyenstudio.github.io/lesson-tracker/images/whiteboard-0418.png",
+          "caption": "白板笔记：句子结构"
+        }
       ],
       "homework": [
         "写出5个完整句子（主语+动词+宾语），注意单复数动词变化",
