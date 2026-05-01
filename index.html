@@ -978,6 +978,222 @@
       color: var(--secondary);
     }
 
+    /* Parent Feedback Section */
+    .parent-feedback-section {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .parent-feedback-section .section-header {
+      color: #52C41A;
+    }
+
+    .feedback-textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--text-medium);
+      resize: vertical;
+      font-family: inherit;
+      line-height: 1.5;
+      transition: border-color 0.3s;
+    }
+
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+    }
+
+    .feedback-textarea::placeholder {
+      color: var(--text-light);
+    }
+
+    .feedback-submit-btn {
+      margin-top: 8px;
+      width: 100%;
+      height: 36px;
+      background: linear-gradient(135deg, #52C41A, #389E0D);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .feedback-submit-btn:hover {
+      filter: brightness(1.1);
+    }
+
+    .feedback-submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .feedback-display {
+      background: linear-gradient(135deg, #F6FFED 0%, #E8F9E8 100%);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 13px;
+      color: var(--text-medium);
+      line-height: 1.6;
+      white-space: pre-wrap;
+      position: relative;
+    }
+
+    .feedback-display-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .feedback-display-label {
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .feedback-edit-btn {
+      background: none;
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .feedback-edit-btn:hover {
+      background: var(--green);
+      color: white;
+    }
+
+    .feedback-time {
+      font-size: 11px;
+      color: var(--text-light);
+      margin-top: 6px;
+    }
+
+    /* Teacher Feedback Section */
+    .feedback-summary {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .feedback-summary-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 8px 0;
+      color: #52C41A;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .feedback-summary-header:hover {
+      color: #389E0D;
+    }
+
+    .feedback-badge {
+      background: #F5222D;
+      color: white;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: 6px;
+    }
+
+    .feedback-list {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .feedback-item {
+      background: linear-gradient(135deg, #F6FFED 0%, #E8F9E8 100%);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .feedback-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .feedback-item-student {
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .feedback-item-date {
+      font-size: 11px;
+      color: var(--text-light);
+    }
+
+    .feedback-item-content {
+      color: var(--text-medium);
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .feedback-item.new {
+      border-left: 3px solid #F5222D;
+      animation: pulseNew 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseNew {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 34, 45, 0.2); }
+      50% { box-shadow: 0 0 0 4px rgba(245, 34, 45, 0.1); }
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 10000;
+      transition: transform 0.3s ease;
+      max-width: 320px;
+      text-align: center;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.success {
+      background: #52C41A;
+    }
+
+    .toast.error {
+      background: #F5222D;
+    }
+
+    .no-feedback {
+      color: var(--text-light);
+      font-size: 13px;
+      padding: 8px 0;
+    }
+
     /* Timeline Dot */
     .timeline-dot {
       position: absolute;
@@ -1398,6 +1614,255 @@
         font-size: 20px;
       }
     }
+
+    /* ========== Desktop Responsive (min-width: 769px) ========== */
+    @media (min-width: 769px) {
+      .container {
+        max-width: 960px;
+      }
+
+      /* Login Page - wider and more spacious */
+      .login-card {
+        max-width: 420px;
+        padding: 40px 48px;
+      }
+
+      .quotes-section {
+        padding: 20px 0;
+      }
+
+      .quote-chinese {
+        font-size: 18px;
+      }
+
+      .quote-english {
+        font-size: 15px;
+      }
+
+      .login-input {
+        height: 48px;
+        font-size: 16px;
+      }
+
+      .login-btn {
+        height: 48px;
+        font-size: 17px;
+      }
+
+      /* Detail Page - horizontal header */
+      .header {
+        padding: 24px 32px 40px;
+      }
+
+      .header-top {
+        flex-direction: row;
+        align-items: center;
+        gap: 32px;
+      }
+
+      .student-info h1 {
+        font-size: 30px;
+        margin-bottom: 6px;
+      }
+
+      .student-info .label {
+        font-size: 14px;
+      }
+
+      .progress-ring-container {
+        width: 90px;
+        height: 90px;
+      }
+
+      .progress-text .number {
+        font-size: 24px;
+      }
+
+      .progress-text .unit {
+        font-size: 12px;
+      }
+
+      /* Stats Bar - wider and more spaced */
+      .stats-bar {
+        margin: -20px 32px 24px;
+        padding: 8px 0;
+      }
+
+      .stat-item {
+        padding: 20px 12px;
+      }
+
+      .stat-item .stat-number {
+        font-size: 24px;
+      }
+
+      .stat-item .stat-label {
+        font-size: 13px;
+      }
+
+      /* Records Section */
+      .records-section {
+        padding: 0 32px 100px;
+      }
+
+      .section-title {
+        font-size: 18px;
+      }
+
+      /* Timeline and Cards - two columns grid for history */
+      .timeline {
+        padding-left: 32px;
+      }
+
+      .record-card {
+        margin-bottom: 20px;
+        border-radius: 20px;
+      }
+
+      .record-header {
+        padding: 20px 24px;
+      }
+
+      .record-content {
+        padding: 0 24px 24px;
+      }
+
+      .course-info {
+        padding: 16px;
+        border-radius: 14px;
+      }
+
+      .course-name {
+        font-size: 17px;
+      }
+
+      .lesson-title {
+        font-size: 14px;
+      }
+
+      .section-header {
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .knowledge-list li, .homework-list li {
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+
+      .knowledge-image-card {
+        max-width: 400px;
+      }
+
+      /* Parent Feedback Section */
+      .parent-feedback-section {
+        margin-top: 20px;
+        padding-top: 16px;
+      }
+
+      .feedback-textarea {
+        min-height: 100px;
+        font-size: 14px;
+        padding: 14px 16px;
+      }
+
+      .feedback-display {
+        padding: 16px;
+        font-size: 14px;
+      }
+
+      .feedback-submit-btn {
+        height: 40px;
+        font-size: 15px;
+      }
+
+      /* Teacher Page - wider layout */
+      .teacher-header {
+        padding: 24px 32px 32px;
+      }
+
+      .teacher-title h1 {
+        font-size: 22px;
+      }
+
+      .teacher-title .subtitle {
+        font-size: 14px;
+      }
+
+      .teacher-stats {
+        padding: 20px 32px;
+        gap: 20px;
+      }
+
+      .teacher-stat-card {
+        padding: 20px 16px;
+        border-radius: 20px;
+      }
+
+      .teacher-stat-card .stat-icon {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .teacher-stat-card .stat-number {
+        font-size: 28px;
+      }
+
+      .teacher-stat-card .stat-label {
+        font-size: 13px;
+      }
+
+      .teacher-students {
+        padding: 0 32px;
+      }
+
+      .teacher-section-title {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      /* Student Cards in Teacher View */
+      .student-card {
+        padding: 20px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+
+      .student-card-name {
+        font-size: 20px;
+      }
+
+      .student-card-subtitle {
+        font-size: 14px;
+      }
+
+      .expandable-header {
+        font-size: 15px;
+        padding: 10px 0;
+      }
+
+      /* Feedback Items in Teacher View */
+      .feedback-list {
+        max-height: 400px;
+      }
+
+      .feedback-item {
+        padding: 16px;
+        margin-bottom: 12px;
+        border-radius: 14px;
+      }
+
+      .feedback-item-content {
+        font-size: 14px;
+      }
+
+      /* Toast - slightly larger on desktop */
+      .toast {
+        padding: 16px 32px;
+        font-size: 15px;
+        border-radius: 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1592,6 +2057,29 @@ but a fire to be kindled.</p>
     let studentData = null;
     let studentsList = [];
     let allStudentData = {}; // Store all student data for teacher page
+    let currentStudentFileName = null; // Store current student JSON filename for GitHub API
+
+    // GitHub Configuration
+    // Token is injected via GitHub Actions during build
+    // For local development, use: atob('YOUR_BASE64_ENCODED_TOKEN')
+    const GITHUB_TOKEN = typeof __GITHUB_TOKEN__ !== 'undefined' ? __GITHUB_TOKEN__ : '';
+    const GITHUB_REPO = 'EmilyENStudio/lesson-tracker';
+
+    // Toast notification
+    function showToast(message, type = 'info') {
+      let toast = document.getElementById('toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        document.body.appendChild(toast);
+      }
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
 
     // LocalStorage key
     const STORAGE_KEY = 'lesson_tracker_student_id';
@@ -1766,6 +2254,14 @@ but a fire to be kindled.</p>
                   ${record.homework.map(h => `<li>${h}</li>`).join('')}
                 </ul>
               </div>
+              
+              <div class="parent-feedback-section">
+                <div class="section-header">
+                  <span class="icon">💬</span>
+                  <span>家长反馈</span>
+                </div>
+                ${renderFeedbackArea(record, index)}
+              </div>
             </div>
           </div>
         `;
@@ -1780,6 +2276,53 @@ but a fire to be kindled.</p>
       ` : '';
       
       container.innerHTML = recordsHTML + expandControl;
+    }
+    
+    // Render feedback area for a record
+    function renderFeedbackArea(record, index) {
+      const feedback = record.parentFeedback;
+      if (feedback) {
+        const feedbackTime = feedback.submitTime ? new Date(feedback.submitTime).toLocaleString('zh-CN', {
+          year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit'
+        }) : '';
+        return `
+          <div class="feedback-display" id="feedback-display-${index}">
+            <div class="feedback-display-header">
+              <span class="feedback-display-label">✓ 已提交</span>
+              <button class="feedback-edit-btn" onclick="enableFeedbackEdit(${index})">编辑</button>
+            </div>
+            <div class="feedback-content">${escapeHtml(feedback.content)}</div>
+            ${feedbackTime ? `<div class="feedback-time">提交时间：${feedbackTime}</div>` : ''}
+          </div>
+          <div class="feedback-edit-form" id="feedback-edit-${index}" style="display: none;">
+            <textarea class="feedback-textarea" id="feedback-textarea-${index}" placeholder="请输入您的反馈...">${escapeHtml(feedback.content)}</textarea>
+            <button class="feedback-submit-btn" onclick="submitParentFeedback(${index})">保存反馈</button>
+          </div>
+        `;
+      }
+      return `
+        <div class="feedback-edit-form" id="feedback-edit-${index}">
+          <textarea class="feedback-textarea" id="feedback-textarea-${index}" placeholder="对本次课程有任何建议或想和老师沟通的，可以在这里留言（非必填）..."></textarea>
+          <button class="feedback-submit-btn" onclick="submitParentFeedback(${index})">提交反馈</button>
+        </div>
+      `;
+    }
+    
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    // Enable feedback edit mode
+    function enableFeedbackEdit(index) {
+      const displayEl = document.getElementById(`feedback-display-${index}`);
+      const editEl = document.getElementById(`feedback-edit-${index}`);
+      if (displayEl) displayEl.style.display = 'none';
+      if (editEl) editEl.style.display = 'block';
     }
 
     function formatDate(dateStr) {
@@ -1888,6 +2431,14 @@ but a fire to be kindled.</p>
                   ${record.homework.map(h => `<li>${h}</li>`).join('')}
                 </ul>
               </div>
+              
+              <div class="parent-feedback-section">
+                <div class="section-header">
+                  <span class="icon">💬</span>
+                  <span>家长反馈</span>
+                </div>
+                ${renderFeedbackArea(record, originalIndex)}
+              </div>
             </div>
           </div>
         `;
@@ -1919,6 +2470,95 @@ but a fire to be kindled.</p>
       headerEl.classList.toggle('expanded');
       const contentEl = headerEl.nextElementSibling;
       contentEl.classList.toggle('expanded');
+    }
+    
+    // Submit parent feedback via GitHub API
+    async function submitParentFeedback(recordIndex) {
+      const textarea = document.getElementById(`feedback-textarea-${recordIndex}`);
+      const feedbackContent = textarea.value.trim();
+      
+      if (!feedbackContent) {
+        showToast('请输入反馈内容', 'error');
+        return;
+      }
+      
+      const btn = textarea.nextElementSibling;
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = '提交中...';
+      
+      try {
+        // Get the student file path
+        const studentId = getStoredStudentId();
+        const filename = `${studentId}.json`;
+        
+        // Fetch current file to get SHA
+        const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${filename}`, {
+          headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+        
+        if (!getResponse.ok) {
+          throw new Error('获取文件信息失败');
+        }
+        
+        const fileInfo = await getResponse.json();
+        const sha = fileInfo.sha;
+        
+        // Update the record's parentFeedback
+        const updatedData = JSON.parse(JSON.stringify(studentData));
+        updatedData.records[recordIndex].parentFeedback = {
+          content: feedbackContent,
+          submitTime: new Date().toISOString()
+        };
+        
+        // Base64 encode the content
+        const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(updatedData, null, 2))));
+        
+        // Update file via GitHub API
+        const updateResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${filename}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: `feat: 家长反馈 - ${studentData.name}`,
+            content: contentBase64,
+            sha: sha
+          })
+        });
+        
+        if (!updateResponse.ok) {
+          throw new Error('提交失败');
+        }
+        
+        // Update local data
+        studentData = updatedData;
+        
+        // Re-render the feedback area
+        const sectionEl = textarea.closest('.parent-feedback-section');
+        if (sectionEl) {
+          sectionEl.innerHTML = `
+            <div class="section-header">
+              <span class="icon">💬</span>
+              <span>家长反馈</span>
+            </div>
+            ${renderFeedbackArea(studentData.records[recordIndex], recordIndex)}
+          `;
+        }
+        
+        showToast('反馈提交成功！', 'success');
+        
+      } catch (error) {
+        console.error('Feedback submit error:', error);
+        showToast('提交失败，请重试', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
     }
 
     // Render teacher dashboard
@@ -2002,6 +2642,38 @@ but a fire to be kindled.</p>
           firstLessonHTML = '<div class="first-lesson" style="color: var(--text-light);">首次上课 待记录</div>';
         }
         
+        // Format parent feedback for this student
+        let studentFeedbackHTML = '';
+        const feedbackCount = data.records ? data.records.filter(r => r.parentFeedback).length : 0;
+        if (feedbackCount > 0) {
+          const latestFeedback = data.records
+            .filter(r => r.parentFeedback)
+            .sort((a, b) => new Date(b.parentFeedback.submitTime) - new Date(a.parentFeedback.submitTime))[0];
+          studentFeedbackHTML = `
+            <div class="expandable-section">
+              <div class="expandable-header" onclick="toggleExpandable(this)">
+                <span>▼ 家长反馈 (${feedbackCount})</span>
+                <span class="arrow">▼</span>
+              </div>
+              <div class="expandable-content">
+                <div class="feedback-list">
+                  ${data.records.filter(r => r.parentFeedback).map(r => {
+                    const feedbackDate = new Date(r.date).toLocaleDateString('zh-CN', {month: '2-digit', day: '2-digit'});
+                    const feedbackTime = new Date(r.parentFeedback.submitTime).toLocaleDateString('zh-CN', {month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'});
+                    const isNew = r.parentFeedback.submitTime && (Date.now() - new Date(r.parentFeedback.submitTime).getTime() < 7 * 24 * 60 * 60 * 1000);
+                    return `<div class="feedback-item${isNew ? ' new' : ''}">
+                      <div class="feedback-item-header">
+                        <span class="feedback-item-date">${feedbackDate} 课 · ${feedbackTime} 提交</span>
+                      </div>
+                      <div class="feedback-item-content">${escapeHtml(r.parentFeedback.content)}</div>
+                    </div>`;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        
         return `
           <div class="student-card">
             <div class="student-card-header">
@@ -2033,12 +2705,68 @@ but a fire to be kindled.</p>
                 ${firstLessonHTML}
               </div>
             </div>
+            
+            ${studentFeedbackHTML}
           </div>
         `;
       }).join('');
       
+      // Collect all feedback from all students
+      let allFeedbackHTML = '';
+      let newFeedbackCount = 0;
+      const allFeedback = [];
+      
+      nonTeacherStudents.forEach(student => {
+        const data = allStudentData[student.id];
+        if (data && data.records) {
+          data.records.forEach(record => {
+            if (record.parentFeedback) {
+              const isNew = record.parentFeedback.submitTime && (Date.now() - new Date(record.parentFeedback.submitTime).getTime() < 7 * 24 * 60 * 60 * 1000);
+              if (isNew) newFeedbackCount++;
+              allFeedback.push({
+                studentName: data.name,
+                recordDate: record.date,
+                submitTime: record.parentFeedback.submitTime,
+                content: record.parentFeedback.content,
+                isNew: isNew
+              });
+            }
+          });
+        }
+      });
+      
+      // Sort by submit time, newest first
+      allFeedback.sort((a, b) => new Date(b.submitTime) - new Date(a.submitTime));
+      
+      if (allFeedback.length > 0) {
+        allFeedbackHTML = `
+          <div class="student-card" style="margin-top: 0;">
+            <div class="student-card-header" style="margin-bottom: 8px;">
+              <div class="student-card-name" style="font-size: 16px; display: flex; align-items: center; gap: 8px;">
+                💬 家长反馈汇总
+                ${newFeedbackCount > 0 ? `<span class="feedback-badge">${newFeedbackCount}条新反馈</span>` : ''}
+              </div>
+            </div>
+            <div class="feedback-list" style="max-height: 250px;">
+              ${allFeedback.slice(0, 20).map(f => `
+                <div class="feedback-item${f.isNew ? ' new' : ''}">
+                  <div class="feedback-item-header">
+                    <span class="feedback-item-student">${f.studentName}</span>
+                    <span class="feedback-item-date">${new Date(f.recordDate).toLocaleDateString('zh-CN', {month: '2-digit', day: '2-digit'})} 课 · ${new Date(f.submitTime).toLocaleDateString('zh-CN', {month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'})} 提交</span>
+                  </div>
+                  <div class="feedback-item-content">${escapeHtml(f.content)}</div>
+                </div>
+              `).join('')}
+              ${allFeedback.length > 20 ? `<div class="no-feedback" style="text-align: center; padding: 8px;">还有 ${allFeedback.length - 20} 条反馈...</div>` : ''}
+            </div>
+          </div>
+        `;
+      }
+      
       container.innerHTML = `
-        <h2 class="teacher-section-title">学员列表</h2>
+        <h2 class="teacher-section-title">📢 最新反馈</h2>
+        ${allFeedbackHTML || '<div class="student-card"><div class="no-feedback">暂无家长反馈</div></div>'}
+        <h2 class="teacher-section-title">👨‍🎓 学员列表</h2>
         ${cardsHTML}
       `;
       
