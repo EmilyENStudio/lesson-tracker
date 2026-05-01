@@ -2879,10 +2879,11 @@ but a fire to be kindled.</p>
           // Sort by start time
           dayClasses.sort((a, b) => a.startTime.localeCompare(b.startTime));
           
+          const dateObj = new Date(day.date);
+          const month = dateObj.getMonth() + 1;
+          const dayNum = dateObj.getDate();
+          
           const classesHTML = dayClasses.map(cls => {
-            const dateObj = new Date(cls.date);
-            const month = dateObj.getMonth() + 1;
-            const dayNum = dateObj.getDate();
             
             return `
               <div class="today-class-item ${cls.leaveStatus ? 'leave' : ''}">
