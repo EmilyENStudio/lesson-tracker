@@ -2758,6 +2758,7 @@ but a fire to be kindled.</p>
           const reason = document.getElementById('leaveReason').value.trim();
           studentData.leaveRequests.push({
             date: pendingLeaveRequest.date,
+            courseName: pendingLeaveRequest.courseName || '',
             reason: reason || '无',
             requestTime: new Date().toISOString(),
             status: 'approved'
@@ -2942,26 +2943,27 @@ but a fire to be kindled.</p>
         
         data.leaveRequests.forEach(leave => {
           if (leave.status === 'approved') {
-            // Match courseName from schedule
-            const dateObj = new Date(leave.date);
-            const dayOfWeek = dateObj.getDay();
-            let courseName = leave.courseName || '未知课程';
-            if (data.schedule) {
+            // Match courseName: prefer saved courseName, then match by dayOfWeek, then fallback to first schedule
+            let courseName = leave.courseName || '';
+            if (!courseName && data.schedule) {
+              const dateObj = new Date(leave.date + 'T00:00:00');
+              const dayOfWeek = dateObj.getDay();
               const matchedSched = data.schedule.find(s => {
                 const targetDay = s.dayOfWeek === 7 ? 0 : s.dayOfWeek;
                 return targetDay === dayOfWeek;
               });
               if (matchedSched) courseName = matchedSched.courseName;
             }
+            if (!courseName && data.schedule && data.schedule.length > 0) {
+              courseName = data.schedule[0].courseName;
+            }
+            if (!courseName) courseName = '未知课程';
             
             // Count how many students are still attending this class on this date
             const attendingCount = nonTeacherStudents.filter(s => {
               const sd = allStudentData[s.id];
               if (!sd || !sd.schedule) return false;
-              const hasSched = sd.schedule.some(sch => {
-                const targetDay = sch.dayOfWeek === 7 ? 0 : sch.dayOfWeek;
-                return targetDay === dayOfWeek && sch.courseName === courseName;
-              });
+              const hasSched = sd.schedule.some(sch => sch.courseName === courseName);
               if (!hasSched) return false;
               // Check if this student has an approved leave for this date
               const hasLeave = sd.leaveRequests && sd.leaveRequests.some(l => l.date === leave.date && l.status === 'approved');
@@ -2976,10 +2978,7 @@ but a fire to be kindled.</p>
               totalStudents: nonTeacherStudents.filter(s => {
                 const sd = allStudentData[s.id];
                 if (!sd || !sd.schedule) return false;
-                return sd.schedule.some(sch => {
-                  const targetDay = sch.dayOfWeek === 7 ? 0 : sch.dayOfWeek;
-                  return targetDay === dayOfWeek && sch.courseName === courseName;
-                });
+                return sd.schedule.some(sch => sch.courseName === courseName);
               }).length
             });
           }
