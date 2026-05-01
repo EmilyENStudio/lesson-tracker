@@ -11,7 +11,14 @@
       "courseName": "Power Up 1"
     }
   ],
-  "leaveRequests": [],
+  "leaveRequests": [
+    {
+      "date": "2026-05-08",
+      "reason": "test",
+      "requestTime": "2026-05-01T07:10:08.315Z",
+      "status": "approved"
+    }
+  ],
   "payments": [
     {
       "date": "2026-04-21",
