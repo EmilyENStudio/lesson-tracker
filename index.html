@@ -2535,6 +2535,11 @@ but a fire to be kindled.</p>
         
         // Update local data
         studentData = updatedData;
+        // Sync to allStudentData so teacher page can see updates
+        const currentId = getStoredStudentId();
+        if (currentId) {
+          allStudentData[currentId] = updatedData;
+        }
         
         // Re-render the feedback area
         const sectionEl = textarea.closest('.parent-feedback-section');
