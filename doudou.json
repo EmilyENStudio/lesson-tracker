@@ -2,7 +2,7 @@
   "courseName": "Power Up 1",
   "name": "兜兜",
   "totalHours": 20,
-  "usedHours": 3,
+  "usedHours": 4,
   "schedule": [
     {
       "dayOfWeek": 6,
@@ -23,6 +23,10 @@
     {
       "month": "2026-04",
       "hours": 3
+    },
+    {
+      "month": "2026-05",
+      "hours": 1
     }
   ],
   "records": [
@@ -87,10 +91,12 @@
       "courseName": "Power Up 1",
       "lessonTitle": "Unit 4 食物主题",
       "keyKnowledge": [
-        "7个核心词汇：fruit, apple, grapes, orange, juice, sausage, meatballs",
-        "Can I have some ___, please? / Here you are. 点餐句型",
-        "用does/doesn't描述喜好",
-        "图片练习：Read and circle + Write about you"
+        {
+          "type": "image",
+          "url": "images/homework/2025-05-02-course-key.png",
+          "caption": "Unit 4 5/2 课程重点"
+        },
+        "7个核心词汇：fruit, apple, grapes, orange, juice, sausage, meatballs"
       ],
       "homework": [
         "作业本上截图的两个题目完成",
