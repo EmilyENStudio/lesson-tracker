@@ -2,7 +2,7 @@
   "courseName": "Power Up 1",
   "name": "Mark Wu",
   "totalHours": 20,
-  "usedHours": 1,
+  "usedHours": 0,
   "schedule": [
     {
       "dayOfWeek": 6,
@@ -28,28 +28,26 @@
       "firstLessonDate": null
     }
   ],
-  "monthlyStats": [
-    {
-      "month": "2026-05",
-      "hours": 1
-    }
-  ],
+  "monthlyStats": [],
   "records": [
     {
       "date": "2026-05-02",
       "time": "周五",
       "courseName": "Power Up 1",
-      "lessonTitle": "Unit 4 对话练习",
+      "lessonTitle": "Unit 4 食物主题",
       "keyKnowledge": [
-        "对话1: Can I have some chocolate, please? — Here you are.",
-        "对话2: Would you like some ice cream? — Yes, please. / No, thank you.",
-        "对话3: I'm sorry, I haven't got any ___. / I don't have any",
-        "发音重点: 元音I和A的双元音发音"
+        "7个核心词汇：fruit, apple, grapes, orange, juice, sausage, meatballs",
+        "Can I have some ___, please? / Here you are. 点餐句型",
+        "用does/doesn't描述喜好",
+        "图片练习：Read and circle + Write about you"
       ],
       "homework": [
-        "练习三个对话场景各5遍",
-        "用 Can I have some...? 句型造3个句子",
-        "复习元音I和A的双元音发音"
+        "作业本上截图的两个题目完成",
+        "🏠 家庭小餐厅：吃饭时，孩子用"Can I have some ___, please?"向家长点餐，家长用"Here you are."回应。可以准备真实食物增加趣味"
+      ],
+      "homeworkImages": [
+        "images/homework/2025-05-02-homework-1.png",
+        "images/homework/2025-05-02-homework-2.jpg"
       ]
     }
   ]

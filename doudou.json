@@ -2,7 +2,7 @@
   "courseName": "Power Up 1",
   "name": "兜兜",
   "totalHours": 20,
-  "usedHours": 4,
+  "usedHours": 3,
   "schedule": [
     {
       "dayOfWeek": 6,
@@ -20,14 +20,7 @@
     }
   ],
   "monthlyStats": [
-    {
-      "month": "2026-04",
-      "hours": 3
-    },
-    {
-      "month": "2026-05",
-      "hours": 1
-    }
+    {"month": "2026-04", "hours": 3}
   ],
   "records": [
     {
@@ -73,11 +66,7 @@
         "单数主语 → 动词+s（A cow gives us milk）",
         "复数主语 → 动词原形（Cows give us milk）",
         "可数名词 vs 不可数名词：bees可加s / milk不加s",
-        {
-          "type": "image",
-          "url": "https://emilyenstudio.github.io/lesson-tracker/images/whiteboard-0418.png",
-          "caption": "白板笔记：句子结构"
-        }
+        {"type": "image", "url": "https://emilyenstudio.github.io/lesson-tracker/images/whiteboard-0418.png", "caption": "白板笔记：句子结构"}
       ],
       "homework": [
         "写出5个完整句子（主语+动词+宾语），注意单复数动词变化",
@@ -89,17 +78,20 @@
       "date": "2026-05-02",
       "time": "周五",
       "courseName": "Power Up 1",
-      "lessonTitle": "Unit 4 对话练习",
+      "lessonTitle": "Unit 4 食物主题",
       "keyKnowledge": [
-        "对话1: Can I have some chocolate, please? — Here you are.",
-        "对话2: Would you like some ice cream? — Yes, please. / No, thank you.",
-        "对话3: I'm sorry, I haven't got any ___. / I don't have any",
-        "发音重点: 元音I和A的双元音发音"
+        "7个核心词汇：fruit, apple, grapes, orange, juice, sausage, meatballs",
+        "Can I have some ___, please? / Here you are. 点餐句型",
+        "用does/doesn't描述喜好",
+        "图片练习：Read and circle + Write about you"
       ],
       "homework": [
-        "练习三个对话场景各5遍",
-        "用 Can I have some...? 句型造3个句子",
-        "复习元音I和A的双元音发音"
+        "作业本上截图的两个题目完成",
+        "🏠 家庭小餐厅：吃饭时，孩子用"Can I have some ___, please?"向家长点餐，家长用"Here you are."回应。可以准备真实食物增加趣味"
+      ],
+      "homeworkImages": [
+        "images/homework/2025-05-02-homework-1.png",
+        "images/homework/2025-05-02-homework-2.jpg"
       ]
     }
   ]
