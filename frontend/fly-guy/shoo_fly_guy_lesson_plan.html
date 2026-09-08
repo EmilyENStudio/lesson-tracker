@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shoo, Fly Guy! — 精读教案 · 两课时</title>
+<style>
+:root {
+  --canvas: #FBF3E7;
+  --surface: #FFF9F1;
+  --surface-alt: #FFF3E0;
+  --ink: #31251B;
+  --ink-secondary: #8B7662;
+  --accent: #C96F3D;
+  --accent-light: #F5DCC8;
+  --green: #5A8F56;
+  --green-light: #E8F0E6;
+  --blue: #4A7FA5;
+  --blue-light: #E3EFF6;
+  --purple: #8B6DAF;
+  --purple-light: #F0EAF6;
+  --red: #C75A4A;
+  --red-light: #FCEAE7;
+  --divider: #E8DDD0;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-heading: Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.35rem;
+  --fs-2xl: 1.7rem;
+  --fs-3xl: 2.2rem;
+  --lh: 1.7;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(49,37,27,0.06);
+  --shadow: 0 2px 8px rgba(49,37,27,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* ── Header ── */
+.site-header {
+  background: linear-gradient(135deg, #C96F3D 0%, #B85A2E 100%);
+  color: #fff;
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2rem;
+}
+.site-header .page-wrap { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; }
+.header-text { flex: 1; min-width: 260px; }
+.header-text h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.3rem;
+}
+.header-text .subtitle {
+  font-size: var(--fs-lg);
+  opacity: 0.9;
+}
+.book-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.badge {
+  display: inline-block;
+  font-size: var(--fs-sm);
+  padding: 0.2em 0.7em;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+/* ── Lang toggle ── */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255,255,255,0.22);
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 24px;
+  padding: 2px;
+}
+.lang-toggle button {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  padding: 0.3em 0.9em;
+  border-radius: 20px;
+  cursor: pointer;
+  opacity: 0.75;
+}
+.lang-toggle button.active { background: rgba(255,255,255,0.9); color: var(--accent); opacity: 1; }
+
+/* ── Section ── */
+section { margin-bottom: 2.5rem; }
+.section-label {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+h4 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+p { margin-bottom: 0.8rem; }
+.text-secondary { color: var(--ink-secondary); }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.card-accent { border-left: 4px solid var(--accent); }
+.card-green { border-left: 4px solid var(--green); }
+.card-blue { border-left: 4px solid var(--blue); }
+.card-purple { border-left: 4px solid var(--purple); }
+
+/* ── LT Grid ── */
+.lt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.lt-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+.lt-card .lt-num {
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.lt-card h4 { margin-bottom: 0.5rem; font-size: var(--fs-base); }
+.lt-card ul { padding-left: 1.2em; }
+.lt-card li { margin-bottom: 0.3rem; font-size: var(--fs-sm); color: var(--ink-secondary); }
+
+/* ── Session Timeline ── */
+.session-block {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.session-header {
+  padding: 1.2rem 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.session-header.s1 { background: linear-gradient(135deg, #C96F3D, #A85A30); }
+.session-header.s2 { background: linear-gradient(135deg, #5A8F56, #3D7A3A); }
+.session-header h2 { color: #fff; margin: 0; font-size: var(--fs-xl); }
+.session-header .session-meta { font-size: var(--fs-sm); opacity: 0.9; }
+.session-body { padding: 1.5rem; }
+
+.phase {
+  position: relative;
+  padding-left: 1.8rem;
+  padding-bottom: 1.5rem;
+  border-left: 2px solid var(--divider);
+  margin-left: 0.5rem;
+}
+.phase:last-child { border-left-color: transparent; padding-bottom: 0; }
+.phase::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 0.3rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.phase.green-dot::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+.phase-blue-dot::before { background: var(--blue); box-shadow: 0 0 0 2px var(--blue); }
+.phase-purple-dot::before { background: var(--purple); box-shadow: 0 0 0 2px var(--purple); }
+
+.phase-label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+.phase.green-dot .phase-label { color: var(--green); }
+.phase-blue-dot .phase-label { color: var(--blue); }
+.phase-purple-dot .phase-label { color: var(--purple); }
+
+.phase-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  margin: 0.8rem 0;
+}
+th, td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--divider);
+  vertical-align: top;
+}
+th {
+  background: var(--surface-alt);
+  font-weight: 700;
+  white-space: nowrap;
+}
+td { color: var(--ink); }
+.wrap-word { overflow-wrap: break-word; word-break: break-word; }
+
+/* ── Vocab Table ── */
+.vocab-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  align-items: baseline;
+}
+.vocab-word {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--accent);
+}
+.vocab-ipa {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+}
+.vocab-pos {
+  font-size: var(--fs-sm);
+  color: var(--blue);
+  font-weight: 600;
+}
+.vocab-def { font-size: var(--fs-sm); }
+.vocab-example {
+  grid-column: 1 / -1;
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  border-top: 1px dashed var(--divider);
+  padding-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+/* ── Phonics ── */
+.phonics-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.8rem;
+  margin: 0.25rem;
+  font-size: var(--fs-sm);
+}
+.phonics-pattern {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* ── Sentence Pattern ── */
+.pattern-block {
+  background: var(--purple-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+.pattern-template {
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  color: var(--purple);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.pattern-example {
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+}
+
+/* ── Callout ── */
+.callout {
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: var(--fs-sm);
+}
+.callout-tip { background: var(--green-light); border-left: 3px solid var(--green); }
+.callout-warn { background: var(--red-light); border-left: 3px solid var(--red); }
+.callout-info { background: var(--blue-light); border-left: 3px solid var(--blue); }
+.callout strong { display: block; margin-bottom: 0.3rem; }
+
+/* ── Homework Section ── */
+.hw-section {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
+}
+.hw-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.hw-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--divider);
+}
+.hw-question {
+  margin-bottom: 1rem;
+  padding-left: 0.2rem;
+}
+.hw-question .q-num {
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 0.3rem;
+}
+.hw-blank {
+  display: inline-block;
+  min-width: 120px;
+  border-bottom: 1px solid var(--ink);
+  margin: 0 0.2rem;
+}
+.hw-lines {
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 1.8em,
+    var(--divider) 1.8em,
+    var(--divider) calc(1.8em + 1px)
+  );
+  min-height: 6em;
+}
+
+/* ── Answer Key ── */
+.answer-key {
+  background: var(--green-light);
+  border-left: 3px solid var(--green);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin-top: 1rem;
+  font-size: var(--fs-sm);
+}
+.answer-key strong { color: var(--green); display: block; margin-bottom: 0.3rem; }
+
+/* ── Sticky Nav ── */
+.toc {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(251,243,231,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--divider);
+  padding: 0.6rem 0;
+  margin-bottom: 1.5rem;
+}
+.toc .page-wrap {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.toc .page-wrap::-webkit-scrollbar { display: none; }
+.toc a {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.3em 0.8em;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.toc a:hover, .toc a:focus { background: var(--accent-light); color: var(--accent); }
+.toc a:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ── Divider ── */
+hr { border: none; border-top: 1px solid var(--divider); margin: 2rem 0; }
+
+/* ── Footer ── */
+.site-footer {
+  text-align: center;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--divider);
+  margin-top: 2rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .lt-grid { grid-template-columns: 1fr; }
+  .session-body { padding: 1rem; }
+  .phase { padding-left: 1.2rem; }
+  table { font-size: 0.8rem; }
+  th, td { padding: 0.4rem 0.5rem; }
+}
+
+/* ── Print ── */
+@media print {
+  .toc { display: none; }
+  .site-header { background: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .session-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card, .lt-card, .session-block, .hw-section, .vocab-card, .pattern-block, .callout, .phonics-item {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  body { font-size: 11pt; }
+  .page-wrap { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ── Push Modal ── */
+.push-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+}
+.push-modal {
+  background: white; border-radius: 16px; padding: 24px;
+  max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.push-modal h3 { margin: 0 0 8px; font-size: 18px; }
+.student-list { margin: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.student-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.student-item:hover { background: #f5f5f5; }
+.student-item input { width: 16px; height: 16px; }
+.push-confirm-btn {
+  width: 100%; padding: 12px; margin-top: 12px;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 10px;
+  font-weight: 700; cursor: pointer; font-size: 14px;
+}
+.push-cancel-btn {
+  width: 100%; padding: 10px; margin-top: 8px;
+  background: #f0f0f0; color: #666; border: none;
+  border-radius: 10px; cursor: pointer; font-size: 13px;
+}
+.push-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; margin: 4px 0;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 6px;
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  float: right;
+}
+.push-btn:hover { opacity: 0.9; transform: scale(1.05); }
+@media print { .push-btn { display: none !important; } }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header class="site-header">
+  <div class="page-wrap">
+    <div class="header-text">
+      <h1>Shoo, Fly Guy!</h1>
+      <p class="subtitle" data-i18n="subtitle">精读教案 · 两课时 · 100 分钟</p>
+      <div class="book-badges">
+        <span class="badge">Tedd Arnold</span>
+        <span class="badge">Lexile 270L</span>
+        <span class="badge">GRL Level I</span>
+        <span class="badge">Grade K–2</span>
+        <span class="badge">Fly Guy Series · Book 3</span>
+      </div>
+    </div>
+    <div class="lang-toggle" role="group" aria-label="Language switch">
+      <button type="button" id="btnZh" class="active" data-i18n="langZh">中文</button>
+      <button type="button" id="btnEn" data-i18n="langEn">EN</button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════ TOC ═══════ -->
+<nav class="toc" aria-label="页面导航">
+  <div class="page-wrap">
+    <a href="#overview" data-i18n="navOver">故事概览</a>
+    <a href="#lt-overview" data-i18n="navLT">LT 框架总览</a>
+    <a href="#session1" data-i18n="navS1">第一课时</a>
+    <a href="#session2" data-i18n="navS2">第二课时</a>
+    <a href="#homework" data-i18n="navHW">课后作业</a>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<section id="overview">
+  <div class="section-label">Overview</div>
+  <h2 data-i18n="overTitle">故事概览</h2>
+  <div class="card card-accent">
+    <h3>Story Summary</h3>
+    <p>Blessed with a pet fly named Fly Guy who can say his name — "BUZZ!" — Buzz plays with him, builds him a glass house, and feeds him. Fly Guy's favorite food is brown, oozy, lumpy, and smelly. One day Fly Guy goes flying all by himself, and when he comes home, Buzz is gone. Fly Guy is hungry, so off he flies to find something to eat.</p>
+    <p>Hungry as ever, Fly Guy keeps spotting food that "isn't oozy, lumpy, or smelly — but close enough!" He tries to land on a hamburger, a pizza, a pile of dog bones, and even a bird's roadkill — only to be chased away each time with a firm "Shoo, fly!" By nightfall he is very hungry, very tired, and very lost. Just as all hope seems gone, he spots something brown, oozy, lumpy, <em>and</em> smelly. "You found our picnic!" cries Buzz. "And here is your favorite Shoo Fly Pie!" Fly Guy is very happy — home, food, and Buzz, all in one place.</p>
+  </div>
+  <div class="lt-grid" style="margin-top:1rem;">
+    <div class="card" style="margin:0;">
+      <h4 data-i18n="txtFeat">📖 文本特征</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li>3 chapters, ~30 pages</li>
+        <li>重复句式：It wasn't ___, ___, or ___. But it was ___. Close enough!</li>
+        <li>关键修辞手法：反复 (repetition)、渐进句 (sequence)、双关 (Shoo Fly Pie)</li>
+        <li>核心主题词：hungry, lost, food, home, favorite</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4 data-i18n="goals">🎯 教学目标</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>Reading:</strong> 理解"找食物-被赶走-意外团聚"的故事循环，识别反复句式</li>
+        <li><strong>Language:</strong> 掌握感官形容词 (oozy/lumpy/smelly)、过去时、描述食物句型</li>
+        <li><strong>Speaking:</strong> 能按顺序复述、用形容词描述食物、表达喜好</li>
+        <li><strong>Writing:</strong> 完成 food description / opinion 写作</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LT FRAMEWORK OVERVIEW ═══════ -->
+<section id="lt-overview">
+  <div class="section-label">Language Target Framework</div>
+  <h2 data-i18n="ltTitle">LT 框架总览 — Shoo, Fly Guy!</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;" data-i18n="ltIntro">以下 8 个模块构成本书的完整语言目标体系，两个课时分工推进。</p>
+
+  <div class="lt-grid">
+    <div class="lt-card">
+      <div class="lt-num">LT01</div>
+      <h4>Vocabulary 词汇</h4>
+      <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.5rem;">12 个核心词，含 IPA、词性、搭配、例句、词族。</p>
+      <ul>
+        <li>shoo, fly, hungry, tired, lost</li>
+        <li>oozy, lumpy, smelly, favorite</li>
+        <li>shout, enough, picnic</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT02</div>
+      <h4>Phonics / Decoding 语音拼读</h4>
+      <ul>
+        <li><strong>sh-</strong> digraph: shoo, shout, shouted (书名核心!)</li>
+        <li><strong>-y</strong> 结尾形容词: hungry, oozy, lumpy, smelly, happy</li>
+        <li><strong>br-/gr-/fl-/sq-</strong> blends: brown, growl, flew, squawk</li>
+        <li><strong>-ed</strong> 过去式词尾: shouted, yelled, growled, squawked</li>
+        <li><strong>oo</strong> 元音组合: oozy, food</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT03</div>
+      <h4>Pronunciation 发音</h4>
+      <ul>
+        <li>音节切分：hun-gry (2), oo-zy (2), fa-vor-ite (3), pic-nic (2), e-nough (2)</li>
+        <li>-ed 词尾读音：/d/ growled · /t/ squawked · /ɪd/ shouted</li>
+        <li>-y 结尾读 /i/：happy, hungry, smelly, silly</li>
+        <li>句惯用语：Close enough! 连读与重音</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT04</div>
+      <h4>Sentence Patterns 句型</h4>
+      <ul>
+        <li>It wasn't ___, ___, or ___. But it was ___.</li>
+        <li>Fly Guy flew on until he saw something else.</li>
+        <li>A [animal/person] [report verb]-ed, "___."</li>
+        <li>Shoo, fly! (祈使句)</li>
+        <li>That is my ___. (展示/声明归属)</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT05</div>
+      <h4>Grammar 语法功能</h4>
+      <ul>
+        <li><strong>Simple past:</strong> flew, went, looked, saw, found, said</li>
+        <li><strong>be + adj 描述:</strong> It wasn't... But it was...</li>
+        <li><strong>Possession/my:</strong> my hamburger, my pizza, my bones</li>
+        <li><strong>Result (so):</strong> "So off he flew."</li>
+        <li><strong>Could (wonder):</strong> "Could it be? Yes!"</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT06</div>
+      <h4>Morphology 词形变化</h4>
+      <ul>
+        <li><strong>名词→-y 形容词:</strong> ooze→oozy, lump→lumpy, smell→smelly</li>
+        <li><strong>-ed 过去式:</strong> shout→shouted, yell→yelled, cry→cried (y→ied)</li>
+        <li><strong>不规则过去:</strong> see→saw, find→found, fly→flew, go→went</li>
+        <li><strong>复合词:</strong> road + kill = roadkill</li>
+        <li><strong>-ing:</strong> flying, looking</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT07</div>
+      <h4>Cohesion / Discourse 语篇衔接</h4>
+      <ul>
+        <li><strong>until</strong> (顺序): "flew on until he saw..."</li>
+        <li><strong>but</strong> (转折): "But it was brown. Close enough!" ×4</li>
+        <li><strong>so</strong> (结果): "So off he flew."</li>
+        <li><strong>and</strong> (并列/递进): "And here is your favorite Shoo Fly Pie!"</li>
+        <li><strong>代词 it</strong> (指代食物) · 惯用语 "Close enough!"</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT08</div>
+      <h4>Functional Communication 语用功能</h4>
+      <ul>
+        <li><strong>Describe:</strong> Describe Fly Guy's favorite food. What is it like?</li>
+        <li><strong>Retell:</strong> What did Fly Guy try first / next / at last?</li>
+        <li><strong>Sequencing:</strong> First... Then... Next... At last...</li>
+        <li><strong>Express preference:</strong> What is your favorite food? Why?</li>
+        <li><strong>Role-play:</strong> "Shoo, fly!" claims &amp; protests</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ SESSION 1 ═══════ -->
+<section id="session1">
+  <div class="section-label">Session 1 · 50 minutes</div>
+  <h2 data-i18n="s1Title">第一课时 — 基础阅读与语言输入</h2>
+  <p class="text-secondary" data-i18n="s1Sub">目标：建立背景知识，通读全文，掌握核心词汇与语音规律，完成基础理解。</p>
+
+  <div class="session-block">
+    <div class="session-header s1">
+      <div>
+        <h2>Lesson 1: Shoo, Fly Guy — A Hungry Adventure</h2>
+        <div class="session-meta">Focus: Pre-reading → Reading → Vocabulary → Phonics → Pronunciation</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–10 min · Warm-up &amp; Pre-reading</div>
+        <div class="phase-title">激活背景 · 图片讨论</div>
+
+        <h4>活动 1：Picture Talk (5 min)</h4>
+        <p>展示封面和内页插图，引导学生观察：</p>
+        <ul style="padding-left:1.2em;margin-bottom:1rem;">
+          <li>"Who do you see in the picture?" → Buzz and Fly Guy.</li>
+          <li>"What do flies like to eat?" → 引导学生说出：sweet things, crumbs, garbage...</li>
+          <li>"Look at the food. How does it look / smell?" → brown, oozy...</li>
+          <li>"What do you think the word 'Shoo' means?" → 用动作演示"赶走"。</li>
+        </ul>
+
+        <h4>活动 2：Key Concept — What Does "Shoo" Mean? (5 min)</h4>
+        <p>教师做"赶苍蝇"的动作，配台词 "Shoo, fly! Go away!" 让学生猜意思。然后在白板上列出感官词：</p>
+        <div class="callout callout-info">
+          <strong>🔑 Big Question</strong>
+          Fly Guy is hungry and looking for food. Will he find something to eat? What happens when he lands on other people's food?
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 教学提示</strong>
+          不急于给答案。整个故事就是"找食物被赶走"的循环，引导学生关注每页重复的 "Shoo, fly!"。
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase green-dot">
+        <div class="phase-label">⏱ 10–20 min · Read Aloud</div>
+        <div class="phase-title">通读全文 · 理解故事</div>
+
+        <h4>Chapter 1 精读 (4 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.1–3</td>
+              <td>"A boy had a pet fly. The boy called his pet Fly Guy. Fly Guy could say the boy's name — BUZZ!"</td>
+              <td>复习第一本书的核心设定；"could" 表示过去的能力</td>
+            </tr>
+            <tr>
+              <td>p.4–7</td>
+              <td>"Buzz played with Fly Guy. Buzz made him a glass house. Best of all, Buzz fed him."</td>
+              <td>预算结构 "Best of all..."；理解 Buzz 对 Fly Guy 有多好</td>
+            </tr>
+            <tr>
+              <td>p.8</td>
+              <td>"Fly Guy's <strong>favorite</strong> food was brown, <strong>oozy, lumpy, and smelly</strong>."</td>
+              <td>引出 4 个感官形容词；favorite 的概念</td>
+            </tr>
+            <tr>
+              <td>p.9–10</td>
+              <td>"One day Fly Guy went flying by himself. When he came home, Buzz was gone."</td>
+              <td>情节转折：Buzz 不见了！Fly Guy 会怎么办？</td>
+            </tr>
+            <tr>
+              <td>p.11</td>
+              <td>"Fly Guy was hungry. So off he flew."</td>
+              <td>"So off he flew" 的倒装表达；hungry 引出动机</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 2 精读 (4 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.12–14</td>
+              <td>"It wasn't oozy, lumpy, or smelly. But it was brown. Close enough!" / "That is my hamburger!"</td>
+              <td>引出核心句式型；"my" 归属表达；多次"被赶走"的第一幕</td>
+            </tr>
+            <tr>
+              <td>p.15–17</td>
+              <td>"It wasn't brown, lumpy, or smelly. But it was oozy. Close enough!" / "That is my pizza!" / "Shoo, fly!"</td>
+              <td>"Shoo, fly!" 首次出现；对比 was/wasn't</td>
+            </tr>
+            <tr>
+              <td>p.18–21</td>
+              <td>"It wasn't brown, oozy, or smelly. But it was lumpy. Close enough!" / "Those are my bones."</td>
+              <td>反复句式续；动物插话 (growled)</td>
+            </tr>
+            <tr>
+              <td>p.22–24</td>
+              <td>"It wasn't brown, oozy, or lumpy. But it was smelly. Close enough!" / "That is my roadkill." / "Shoo, fly!"</td>
+              <td>四次重复的完整呈现；讨论：为什么每次都"Close enough"？</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 3 精读 (4 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.25–27</td>
+              <td>"Fly Guy was very hungry. And he was very tired. He looked around. Fly Guy was very lost."</td>
+              <td>情绪升级：hungry → tired → lost；重复 "very" 强调</td>
+            </tr>
+            <tr>
+              <td>p.28</td>
+              <td>"Fly Guy saw something. Could it be? Yes! It was brown, oozy, lumpy, <strong>and</strong> smelly."</td>
+              <td>悬念与转折；四个形容词全到齐 = 完美食物!</td>
+            </tr>
+            <tr>
+              <td>p.29–30</td>
+              <td>"'You found our picnic!' cried Buzz. 'And here is your favorite Shoo Fly Pie!' Fly Guy was very happy!"</td>
+              <td>圆满结局：Buzz 一直都在野餐！双关 "Shoo Fly Pie"</td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase blue-dot" id="sec-lt01-vocab">
+        <div class="phase-label">⏱ 20–33 min · LT01 Vocabulary <button class="push-btn" onclick="openPushModal('LT01-Vocabulary','12 core words: shoo, fly, hungry, tired, lost, oozy, lumpy, smelly, favorite, shout, enough, picnic — with IPA, POS, definitions, examples, word families')">📤 Push to Students</button></div>
+        <div class="phase-title">核心词汇深度讲解（12 词）</div>
+
+        <div class="callout callout-info">
+          <strong>📋 词汇教学原则</strong>
+          每个词从 Recognize → Understand → Use 三个层次推进。先让学生听/看到词，再理解含义和用法，最后尝试产出。
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">shoo</span>
+            <span class="vocab-ipa">/ʃuː/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb (叹词/动词)</span>
+            <div class="vocab-def">to wave something away and tell it to go away</div>
+          </div>
+          <div class="vocab-example">"<strong>Shoo</strong>, fly!" → The farmer <strong>shooed</strong> the chickens out of the yard. (书名双关)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">fly</span>
+            <span class="vocab-ipa">/flaɪ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun / verb</span>
+            <div class="vocab-def">an insect with wings; to move through the air</div>
+          </div>
+          <div class="vocab-example">A boy had a pet <strong>fly</strong>. → Fly Guy <strong>flew</strong> on until he saw something. (noun vs. verb)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">hungry</span>
+            <span class="vocab-ipa">/ˈhʌŋɡri/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adjective</span>
+            <span class="vocab-pos" style="color:var(--purple);">noun: hunger · -er: hungrier</span>
+            <div class="vocab-def">wanting to eat food</div>
+          </div>
+          <div class="vocab-example">Fly Guy was very <strong>hungry</strong>. → Are you <strong>hungry</strong>? Let's get a snack.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">tired</span>
+            <span class="vocab-ipa">/ˈtaɪərd/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adjective</span>
+            <div class="vocab-def">needing rest or sleep</div>
+          </div>
+          <div class="vocab-example">He was very <strong>tired</strong> after flying all day. → We were <strong>tired</strong> after the long walk.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">lost</span>
+            <span class="vocab-ipa">/lɔːst/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adjective</span>
+            <div class="vocab-def">unable to find your way; not knowing where you are</div>
+          </div>
+          <div class="vocab-example">Fly Guy was very <strong>lost</strong>. → Help! I'm <strong>lost</strong>. I can't find the park.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">oozy</span>
+            <span class="vocab-ipa">/ˈuːzi/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adjective</span>
+            <span class="vocab-pos" style="color:var(--purple);">noun: ooze</span>
+            <div class="vocab-def">thick and dripping slowly, like soft mud</div>
+          </div>
+          <div class="vocab-example">It wasn't <strong>oozy</strong>... But it was <strong>oozy</strong>. Close enough! → The cake was soft and <strong>oozy</strong>.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">lumpy</span>
+            <span class="vocab-ipa">/ˈlʌmpi/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adjective</span>
+            <div class="vocab-def">full of lumps; not smooth or even</div>
+          </div>
+          <div class="vocab-example">It wasn't <strong>lumpy</strong>... But it was <strong>lumpy</strong>. → The mashed potatoes were a little <strong>lumpy</strong>.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">smelly</span>
+            <span class="vocab-ipa">/ˈsmeli/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adjective</span>
+            <span class="vocab-pos" style="color:var(--purple);">verb: smell</span>
+            <div class="vocab-def">having a strong (usually unpleasant) smell</div>
+          </div>
+          <div class="vocab-example">It was <strong>smelly</strong> — his favorite! → The garbage is <strong>smelly</strong>. Yuck!</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">favorite</span>
+            <span class="vocab-ipa">/ˈfeɪvərɪt/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adjective / noun</span>
+            <div class="vocab-def">liked better than anything else</div>
+          </div>
+          <div class="vocab-example">Fly Guy's <strong>favorite</strong> food was... → Here is your <strong>favorite</strong> Shoo Fly Pie!</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">shout</span>
+            <span class="vocab-ipa">/ʃaʊt/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <span class="vocab-pos" style="color:var(--purple);">同义: yell · 神情: growl, squawk</span>
+            <div class="vocab-def">to say something very loudly</div>
+          </div>
+          <div class="vocab-example">A boy <strong>shouted</strong>, "That is my hamburger!" → Don't <strong>shout</strong>; I can hear you.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">enough</span>
+            <span class="vocab-ipa">/ɪˈnʌf/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adverb / determiner</span>
+            <div class="vocab-def">as much or as many as is needed</div>
+          </div>
+          <div class="vocab-example">"But it was brown. Close <strong>enough</strong>!" → Do we have <strong>enough</strong> food for the picnic?</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">picnic</span>
+            <span class="vocab-ipa">/ˈpɪknɪk/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">an outdoor meal, often with friends or family</div>
+          </div>
+          <div class="vocab-example">"You found our <strong>picnic</strong>!" cried Buzz. → We had a <strong>picnic</strong> in the park.</div>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 词汇巩固活动 (3 min)</strong>
+          <strong>Close Enough!</strong> 出示不同食物的图片，让学生用 "It's / It isn't ___" 快速判断感官词：
+          看到巧克力→"It's brown and oozy!"；看到西瓜→"It isn't lumpy. Close enough!"
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase-purple-dot" id="sec-lt02-phonics">
+        <div class="phase-label">⏱ 33–43 min · LT02 Phonics + LT03 Pronunciation <button class="push-btn" onclick="openPushModal('LT02-Phonics','Consonant digraphs and blends: sh- (shoo, shout), -y adjectives (hungry, oozy, lumpy, smelly, happy), br-/gr-/fl-/sq- blends, -ed endings, oo vowel team with examples from Shoo Fly Guy')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT03-Pronunciation','Syllable counting and -ed endings: hungry(2), oozy(2), favorite(3), picnic(2), enough(2); -ed sounds shouted(/ɪd/), growled(/d/), squawked(/t/); -y ending /i/; Close enough! practice')">📤 Push</button></div>
+        <div class="phase-title">语音拼读与发音训练</div>
+
+        <h4>Phonics Focus (5 min)</h4>
+        <p>从本书中提取高频语音模式，引导学生发现规律：</p>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">sh- 二合字母 Digraph（书名核心）</h4>
+          <span class="phonics-item"><span class="phonics-pattern">sh-</span> shoo, shout, shouted</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">"Shoo, fly!" 是全书最常出现的句子。sh- 发 /ʃ/，双唇前伸，像让大家"嘘"。</p>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">-y 结尾形容词（全书高频）</h4>
+          <span class="phonics-item"><span class="phonics-pattern">-y</span> hungry, oozy, lumpy, smelly, happy, very</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">-y 结尾常读 /i/。这些形容食物的词在书中反复出现，是理解故事的关键。</p>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">辅音连缀 Consonant Blends</h4>
+          <span class="phonics-item"><span class="phonics-pattern">br-</span> brown</span>
+          <span class="phonics-item"><span class="phonics-pattern">gr-</span> growled</span>
+          <span class="phonics-item"><span class="phonics-pattern">fl-</span> flew, flying</span>
+          <span class="phonics-item"><span class="phonics-pattern">sq-</span> squawked</span>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">oo 元音组合 &amp; -ed 词尾</h4>
+          <span class="phonics-item"><span class="phonics-pattern">oo</span> /uː/ — oozy, food</span>
+          <span class="phonics-item"><span class="phonics-pattern">-ed</span> shouted · yelled · growled · squawked</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">-ed 有三个读音：/ɪd/ shouted, /d/ yelled·growled, /t/ squawked。</p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Pronunciation Focus (5 min)</h4>
+
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Word</th><th>Syllables</th><th>Stress</th><th>Practice</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>shoo</td><td>shoo (1)</td><td>1st</td><td><strong>SHOO</strong></td></tr>
+            <tr><td>hungry</td><td>hun·gry (2)</td><td>1st</td><td><strong>HUN</strong>-gry</td></tr>
+            <tr><td>tired</td><td>ti·red (2)</td><td>1st</td><td><strong>TI</strong>-red</td></tr>
+            <tr><td>oozy</td><td>oo·zy (2)</td><td>1st</td><td><strong>OO</strong>-zy</td></tr>
+            <tr><td>lumpy</td><td>lum·py (2)</td><td>1st</td><td><strong>LUM</strong>-py</td></tr>
+            <tr><td>smelly</td><td>smell·y (2)</td><td>1st</td><td><strong>SMEL</strong>-ly</td></tr>
+            <tr><td>favorite</td><td>fa·vor·ite (3)</td><td>1st</td><td><strong>FA</strong>-vor-ite</td></tr>
+            <tr><td>picnic</td><td>pic·nic (2)</td><td>1st</td><td><strong>PIC</strong>-nic</td></tr>
+            <tr><td>enough</td><td>e·nough (2)</td><td>2nd</td><td>e-<strong>NOUGH</strong></td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-tip">
+          <strong>💡 发音练习 (2 min)</strong>
+          <strong>回声游戏：</strong>教师读一个词，学生跟读并拍手打出音节数。
+          "fa-vor-ite!" → 拍手 3 次。"e-nough!" → 拍手 2 次。
+          齐声操练经典句："<strong>SHOO</strong>, fly! Close e-<strong>NOUGH</strong>!"
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase green-dot" id="sec-lt04-patterns">
+        <div class="phase-label">⏱ 43–50 min · LT04 Sentence Patterns + Wrap-up <button class="push-btn" onclick="openPushModal('LT04-Sentence-Patterns','Core patterns: It wasn\'t ___, ___, or ___. But it was ___. Close enough!; Fly Guy flew on until he saw something else; reporting verbs in dialogue (shouted/yelled/growled/squawked); possessive claims (That is my ___!)')">📤 Push to Students</button></div>
+        <div class="phase-title">核心句型初探 + 小结</div>
+
+        <p>引入本课核心句式，为第二课时深度语法做铺垫：</p>
+
+        <div class="pattern-block">
+          <div class="pattern-template">It wasn't ___, ___, or ___. But it was ___. Close enough!</div>
+          <div class="pattern-example">"It wasn't oozy, lumpy, or smelly. But it was brown. Close enough!"</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 全书最核心的反复句式，出现 4 次 — 每次强调一个缺失的感官要素。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">Fly Guy flew on until he saw something else.</div>
+          <div class="pattern-example">"Fly Guy flew on until he saw something else." (重复 3 次连接场景)</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 until 连接"动作延续"与"新发现"，是推动情节顺序的关键。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">A [person/animal] [report verb]-ed, "___."</div>
+          <div class="pattern-example">A boy <strong>shouted</strong>, "That is my hamburger!" · A dog <strong>growled</strong>, "Those are my bones!"</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 引述动词 (said, shouted, yelled, growled, squawked, cried) 让对话更生动。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">Shoo, [noun]! / That is my ___!</div>
+          <div class="pattern-example">"<strong>Shoo</strong>, fly!" · "That is <strong>my</strong> pizza!"</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 祈使句 (Shoo!) 表达命令/驱赶；所有格 (my) 表达拥有/占有。</p>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>📝 第一课时小结</strong>
+          回顾 Big Question: "Will Fly Guy find something to eat?"
+          让学生用一句式作答：
+          <br>"Fly Guy tried to eat ___, but ___ said, 'Shoo, fly!'"
+          <br>（为第二课时的 retelling 做铺垫。）
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ SESSION 2 ═══════ -->
+<section id="session2">
+  <div class="section-label">Session 2 · 50 minutes</div>
+  <h2 data-i18n="s2Title">第二课时 — 深度分析与语言输出</h2>
+  <p class="text-secondary" data-i18n="s2Sub">目标：深入语法、词形、语篇分析，完成口语输出和写作任务。</p>
+
+  <div class="session-block">
+    <div class="session-header s2">
+      <div>
+        <h2>Lesson 2: Lost &amp; Found</h2>
+        <div class="session-meta">Focus: Grammar → Morphology → Cohesion → Speaking → Writing</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–5 min · Review</div>
+        <div class="phase-title">快速复习</div>
+
+        <p>用 3 个快速问题回顾第一课时内容：</p>
+        <ol style="padding-left:1.5em;margin-bottom:0.8rem;">
+          <li>"What did Fly Guy go looking for?" → Something to eat.</li>
+          <li>"What did people and animals say when he landed on their food?" → "Shoo, fly!"</li>
+          <li>"Where did Fly Guy finally find his food?" → Buzz's picnic — Shoo Fly Pie!</li>
+        </ol>
+        <p>然后用 <strong>Story Mountain</strong> 快速梳理故事结构：</p>
+        <svg viewBox="0 0 700 200" style="width:100%;max-width:700px;height:auto;margin:0.5rem 0;" role="img" aria-label="Story Mountain for Shoo Fly Guy">
+          <title>Story Mountain — Shoo, Fly Guy!</title>
+          <desc>A mountain shape showing story structure: beginning, rising action, climax, falling action, ending</desc>
+          <polygon points="50,170 175,40 350,20 525,100 650,170" fill="none" stroke="#C96F3D" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="50" cy="170" r="6" fill="#C96F3D"/>
+          <circle cx="175" cy="40" r="6" fill="#C96F3D"/>
+          <circle cx="350" cy="20" r="6" fill="#C75A4A"/>
+          <circle cx="525" cy="100" r="6" fill="#C96F3D"/>
+          <circle cx="650" cy="170" r="6" fill="#C96F3D"/>
+          <text x="50" y="195" text-anchor="middle" font-size="11" fill="#31251B">Beginning</text>
+          <text x="50" y="160" text-anchor="middle" font-size="9" fill="#8B7662">Fly Guy flies; Buzz is gone</text>
+          <text x="175" y="30" text-anchor="middle" font-size="11" fill="#31251B">Rising</text>
+          <text x="175" y="58" text-anchor="middle" font-size="9" fill="#8B7662">Shoo! off the food</text>
+          <text x="350" y="12" text-anchor="middle" font-size="11" fill="#C75A4A" font-weight="700">Climax</text>
+          <text x="350" y="42" text-anchor="middle" font-size="9" fill="#8B7662">Hungry, tired, LOST</text>
+          <text x="525" y="90" text-anchor="middle" font-size="11" fill="#31251B">Falling</text>
+          <text x="525" y="60" text-anchor="middle" font-size="9" fill="#8B7662">Perfect food — could it be?</text>
+          <text x="650" y="195" text-anchor="middle" font-size="11" fill="#31251B">Ending</text>
+          <text x="650" y="160" text-anchor="middle" font-size="9" fill="#8B7662">Buzz's picnic + Shoo Fly Pie!</text>
+        </svg>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase blue-dot" id="sec-lt05-grammar">
+        <div class="phase-label">⏱ 5–18 min · LT05 Grammar <button class="push-btn" onclick="openPushModal('LT05-Grammar','Simple Past storytelling (flew, went, saw, found, said, cried); be + adjectives for describing food (was/wasn\'t... but it was); possession with my; result with so; wonder question Could it be?')">📤 Push to Students</button></div>
+        <div class="phase-title">语法功能深度分析</div>
+
+        <h4>① Simple Past Tense — 讲故事的核心时态 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base Form</th><th>Past Tense</th><th>Type</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>fly</td><td><strong>flew</strong></td><td style="color:var(--red);">irregular</td><td>"Fly Guy <em>flew</em> on until he saw..."</td></tr>
+            <tr><td>go</td><td><strong>went</strong></td><td style="color:var(--red);">irregular</td><td>"Fly Guy <em>went</em> flying by himself."</td></tr>
+            <tr><td>see</td><td><strong>saw</strong></td><td style="color:var(--red);">irregular</td><td>"Fly Guy <em>saw</em> something."</td></tr>
+            <tr><td>find</td><td><strong>found</strong></td><td style="color:var(--red);">irregular</td><td>"You <em>found</em> our picnic!"</td></tr>
+            <tr><td>say</td><td><strong>said</strong></td><td style="color:var(--red);">irregular</td><td>"...said the boy."</td></tr>
+            <tr><td>look</td><td><strong>looked</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"He <em>looked</em> around."</td></tr>
+            <tr><td>cry</td><td><strong>cried</strong></td><td style="color:var(--green);">regular (y→ied)</td><td>"...<em>cried</em> Buzz."</td></tr>
+            <tr><td>shout</td><td><strong>shouted</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"A boy <em>shouted</em>, 'That is my hamburger!'"</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-warn">
+          <strong>⚠️ 重点提示</strong>
+          本书多处使用不规则过去式（flew, went, saw, found, said）。建议用配对练习：给出 base form，学生快速说出 past tense。
+        </div>
+
+        <h4 style="margin-top:1rem;">② be + 形容词 — 描述食物 (4 min)</h4>
+        <div class="pattern-block">
+          <div class="pattern-template">It was / wasn't + [adjective]. But it was [adjective].</div>
+          <div class="pattern-example">"It <strong>wasn't</strong> oozy, lumpy, or smelly. But it <strong>was</strong> brown."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">was 描述事实，wasn't...but 制造"虽有缺憾却凑合"的幽默。</p>
+        </div>
+
+        <h4 style="margin-top:1rem;">③ Possession (my) + Result (so) + Wonder (could) (4 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>功能</th><th>原文句</th><th>结构</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>所有格 possession</td><td>"That is <strong>my</strong> pizza!" "Those are <strong>my</strong> bones!"</td><td>That/Those + be + my + 名词</td></tr>
+            <tr><td>结果 result</td><td>"Fly Guy was hungry. <strong>So</strong> off he flew."</td><td>原因, so + 结果 (倒装)</td></tr>
+            <tr><td>疑虑 wonder</td><td>"<strong>Could</strong> it be? Yes!"</td><td>Could + 主语 + be?</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-purple-dot" id="sec-lt06-morphology">
+        <div class="phase-label">⏱ 18–26 min · LT06 Morphology + LT07 Cohesion <button class="push-btn" onclick="openPushModal('LT06-Morphology','Word building: noun→-y adjective (ooze→oozy, lump→lumpy, smell→smelly); -ed endings incl. y→ied (cry→cried); irregular past (see→saw, find→found, fly→flew, go→went); compound word (roadkill = road + kill)')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT07-Cohesion','Cohesion devices: until (sequence), but (contrast ×4), so (result), and (addition); repeated refrain Close enough!; pronoun it referring to food')">📤 Push</button></div>
+        <div class="phase-title">词形变化与语篇衔接</div>
+
+        <h4>LT06 · Morphology 词形变化 (4 min)</h4>
+        <p>引导学生发现词族（word families）：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base / Noun</th><th>→ Adjective (-y)</th><th>→ Past (-ed)</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ooze (n)</td><td><strong>oozy</strong></td><td>—</td><td>名→-y 形容词</td></tr>
+            <tr><td>lump (n)</td><td><strong>lumpy</strong></td><td>—</td><td>名→-y 形容词</td></tr>
+            <tr><td>smell (n/v)</td><td><strong>smelly</strong></td><td>smelled</td><td>名→-y 形容词</td></tr>
+            <tr><td>cry</td><td>—</td><td><strong>cried</strong></td><td>辅音+y → 变 y 为 i 加 -ed</td></tr>
+            <tr><td>shout</td><td>—</td><td><strong>shouted</strong></td><td>规则 -ed</td></tr>
+            <tr><td>look</td><td>—</td><td><strong>looked</strong></td><td>规则 -ed</td></tr>
+            <tr><td>road</td><td colspan="2" rowspan="1">—</td><td>road + kill = <strong>roadkill</strong> (复合词)</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);"><strong>不规则过去式记忆重点：</strong> see→saw · find→found · fly→flew · go→went — 不能靠规则推导，需单独记忆！</p>
+
+        <h4 style="margin-top:1rem;">LT07 · Cohesion 语篇衔接 (4 min)</h4>
+        <p>分析本书中的衔接手段，理解作者如何连接场景、制造循环与幽默：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Connector</th><th>Function</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>until</strong></td>
+              <td>顺序 / 到达新发现</td>
+              <td>"Fly Guy flew on <strong>until</strong> he saw something else."</td>
+            </tr>
+            <tr>
+              <td><strong>but</strong></td>
+              <td>转折 contrast</td>
+              <td>"It wasn't oozy, lumpy, or smelly. <strong>But</strong> it was brown. Close enough!" (出现4次!)</td>
+            </tr>
+            <tr>
+              <td><strong>so</strong></td>
+              <td>结果 result</td>
+              <td>"Fly Guy was hungry. <strong>So</strong> off he flew."</td>
+            </tr>
+            <tr>
+              <td><strong>and</strong></td>
+              <td>并列/递进 addition</td>
+              <td>"<strong>And</strong> here is your favorite Shoo Fly Pie!"</td>
+            </tr>
+            <tr>
+              <td><strong>代词 it</strong></td>
+              <td>指代 reference — 指食物</td>
+              <td>"<strong>It</strong> wasn't oozy... <strong>it</strong> was brown." → it = 那个食物</td>
+            </tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-tip">
+          <strong>💡 讨论：Close Enough! 的幽默</strong>
+          为什么 Fly Guy 每次都说 "Close enough!"？
+          → 因为食物不完美，但 Fly Guy 太饿了，凑合着也能接受。这个反复 (refrain) 制造了幽默和节奏。
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase green-dot" id="sec-lt08-functional">
+        <div class="phase-label">⏱ 26–40 min · LT08 Functional Communication <button class="push-btn" onclick="openPushModal('LT08-Functional-Communication','Story retelling frame with sequencing; describe favorite food; opinion: Would you eat Shoo Fly Pie?; role-play the Shoo fly claims and protests')">📤 Push to Students</button></div>
+        <div class="phase-title">口语输出与写作任务</div>
+
+        <h4>Activity 1: Retell the Story (5 min)</h4>
+        <p>学生两人一组，用以下框架复述故事：</p>
+        <div class="card" style="background:var(--green-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Story Retelling Frame:</strong></p>
+          <p style="font-size:var(--fs-sm);">
+            First, Fly Guy went flying and found that Buzz was gone.<br>
+            Then, he got hungry and flew off to find something to eat.<br>
+            Next, he tried a hamburger, a pizza, some bones, and even roadkill — but everyone said, "Shoo, fly!"<br>
+            After that, he got very hungry, very tired, and very lost.<br>
+            In the end, he found Buzz's picnic — and his favorite Shoo Fly Pie!
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 2: Describe Your Favorite Food (5 min)</h4>
+        <div class="card" style="background:var(--purple-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Speaking Prompts:</strong></p>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li>"What is your <strong>favorite</strong> food? Describe it."</li>
+            <li>"Is it brown / oozy / lumpy / smelly / sweet?"</li>
+            <li>"Would you say 'Close enough!' about anything you eat? What?"</li>
+          </ul>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Language scaffold:</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            "My favorite food is ___.<br>
+            It is ___, ___, and ___.<br>
+            It is not ___, but it is ___. Close enough!"
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 3: Writing — Food Description / Opinion (4 min 指导 + 课后完成)</h4>
+        <div class="card" style="background:var(--surface-alt);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Writing Prompt:</strong></p>
+          <p style="font-size:var(--fs-base);font-weight:600;">Describe your favorite food. Use at least three describing words. At the end, write one sentence with "Close enough!"</p>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Writing Frame (scaffold):</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            My favorite food is ___.<br>
+            It is ___, ___, and ___.<br>
+            It is not ___, but it is ___.<br>
+            Close enough! It is ___. (finish)
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 40–50 min · Review &amp; Extension</div>
+        <div class="phase-title">总结回顾 + 拓展延伸</div>
+
+        <h4>Exit Ticket (5 min)</h4>
+        <p>每人回答 3 个问题后离开教室：</p>
+        <ol style="padding-left:1.5em;">
+          <li>说出 2 个形容食物的新单词。</li>
+          <li>用 was / wasn't 描述一样食物。</li>
+          <li>Fly Guy 最后在哪里找到了他的食物？（一句话）</li>
+        </ol>
+
+        <h4 style="margin-top:0.8rem;">Extension (5 min)</h4>
+        <div class="callout callout-tip">
+          <strong>🌟 拓展活动选择</strong>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li><strong>Draw &amp; Label:</strong> 画出 Shoo Fly Pie 或用英语标注一样"奇特的"食物。</li>
+            <li><strong>Role Play:</strong> 分角色表演"被赶走"场景（Buzz, Fly Guy, 男孩, 女孩, 狗, 鸟）。</li>
+            <li><strong>Sound Words:</strong> 表演并模仿 shouted / yelled / growled / squawked 的声音。</li>
+            <li><strong>Word Detective:</strong> 找出书中所有以 "sh-" 开头的词，写在纸上。</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ HOMEWORK ═══════ -->
+<section id="homework">
+  <div class="section-label">Homework Worksheet</div>
+  <h2 data-i18n="hwTitle">课后作业 · Shoo, Fly Guy!</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;" data-i18n="hwIntro">以下作业分为 6 个部分，覆盖 LT01–LT08 全部模块。可打印为 A4 纸质版。建议在第 1 课时后完成 Part A–D，第 2 课时后完成 Part E–F。</p>
+
+  <!-- Part A: Vocabulary -->
+  <div class="hw-section" id="sec-hw-partA">
+    <div class="hw-title">Part A · Vocabulary Match <button class="push-btn" onclick="openPushModal('HW-PartA','Vocabulary Match: match 6 words (oozy, lumpy, shoo, lost, picnic, favorite) with their meanings')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Draw a line to match each word with its meaning.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;font-size:var(--fs-sm);">
+      <div>
+        <p><strong>1.</strong> oozy &nbsp;________</p>
+        <p><strong>2.</strong> lumpy &nbsp;________</p>
+        <p><strong>3.</strong> shoo &nbsp;________</p>
+        <p><strong>4.</strong> lost &nbsp;________</p>
+        <p><strong>5.</strong> picnic &nbsp;________</p>
+        <p><strong>6.</strong> favorite &nbsp;________</p>
+      </div>
+      <div>
+        <p><strong>A.</strong> unable to find your way</p>
+        <p><strong>B.</strong> thick and dripping slowly, like soft mud</p>
+        <p><strong>C.</strong> liked more than anything else</p>
+        <p><strong>D.</strong> to wave something away and tell it to go</p>
+        <p><strong>E.</strong> full of lumps; not smooth or even</p>
+        <p><strong>F.</strong> a meal eaten outdoors</p>
+      </div>
+    </div>
+
+    <div class="answer-key">
+      <strong>✅ Answer Key</strong>
+      1–B&nbsp;&nbsp;2–E&nbsp;&nbsp;3–D&nbsp;&nbsp;4–A&nbsp;&nbsp;5–F&nbsp;&nbsp;6–C
+    </div>
+  </div>
+
+  <!-- Part B: Vocabulary in Context -->
+  <div class="hw-section" id="sec-hw-partB">
+    <div class="hw-title">Part B · Vocabulary in Context <button class="push-btn" onclick="openPushModal('HW-PartB','Vocabulary in Context: fill in the blanks with word bank (hungry, shouted, tired, lost, found, favorite)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Fill in the blanks with the correct word from the box.</div>
+
+    <div style="background:var(--surface-alt);border-radius:var(--radius);padding:0.6rem 1rem;margin-bottom:1rem;font-size:var(--fs-sm);">
+      <strong>Word Bank:</strong> &nbsp; hungry &nbsp; | &nbsp; shouted &nbsp; | &nbsp; tired &nbsp; | &nbsp; lost &nbsp; | &nbsp; found &nbsp; | &nbsp; favorite
+    </div>
+
+    <div class="hw-question"><span class="q-num">1.</span> When Fly Guy came home, Buzz was gone, so Fly Guy was very <span class="hw-blank"></span>.</div>
+    <div class="hw-question"><span class="q-num">2.</span> A boy <span class="hw-blank"></span>, "That is my hamburger!"</div>
+    <div class="hw-question"><span class="q-num">3.</span> After flying all day, Fly Guy was very <span class="hw-blank"></span>.</div>
+    <div class="hw-question"><span class="q-num">4.</span> At last Fly Guy was very <span class="hw-blank"></span> because he couldn't find his way home.</div>
+    <div class="hw-question"><span class="q-num">5.</span> Finally, Fly Guy <span class="hw-blank"></span> Buzz's picnic.</div>
+    <div class="hw-question"><span class="q-num">6.</span> "Here is your <span class="hw-blank"></span> Shoo Fly Pie!" cried Buzz.</div>
+
+    <div class="answer-key">
+      <strong>✅ Answer Key</strong>
+      1. hungry&nbsp;&nbsp;2. shouted&nbsp;&nbsp;3. tired&nbsp;&nbsp;4. lost&nbsp;&nbsp;5. found&nbsp;&nbsp;6. favorite
+    </div>
+  </div>
+
+  <!-- Part C: Phonics & Morphology -->
+  <div class="hw-section" id="sec-hw-partC">
+    <div class="hw-title">Part C · Word Builder <button class="push-btn" onclick="openPushModal('HW-PartC','Word Builder: -y adjectives from nouns (ooze, lump, smell); -ed past tenses including cry→cried; syllable/stress practice (hungry, oozy, favorite, picnic, enough).')">📤 Push</button></div>
+    <div class="hw-subtitle">LT02 + LT03 + LT06 · Build words and find syllable patterns.</div>
+
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th>Noun</th><th>→ Adjective (-y)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ooze</td><td><span class="hw-blank" style="min-width:80px;"></span></td></tr>
+        <tr><td>lump</td><td><span class="hw-blank" style="min-width:80px;"></span></td></tr>
+        <tr><td>smell</td><td><span class="hw-blank" style="min-width:80px;"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">Write the past tense of each verb.</h4>
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th>Base</th><th>Past</th><th>Base</th><th>Past</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>cry</td><td><span class="hw-blank"></span></td><td>shout</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>see</td><td><span class="hw-blank"></span></td><td>find</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>fly</td><td><span class="hw-blank"></span></td><td>go</td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="font-size:var(--fs-sm);margin-top:0.8rem;"><strong>Bonus:</strong> Count the syllables: hungry <span class="hw-blank" style="min-width:50px;"></span> · oozy <span class="hw-blank" style="min-width:50px;"></span> · favorite <span class="hw-blank" style="min-width:50px;"></span> · picnic <span class="hw-blank" style="min-width:50px;"></span> · enough <span class="hw-blank" style="min-width:50px;"></span></p>
+
+    <div class="answer-key">
+      <strong>✅ Answer Key</strong>
+      -y adjectives: oozy · lumpy · smelly<br>
+      Past tenses: cried · shouted · saw · found · flew · went<br>
+      Syllables (bonus): hungry (2) · oozy (2) · favorite (3) · picnic (2) · enough (2)
+    </div>
+  </div>
+
+  <!-- Part D: Grammar -->
+  <div class="hw-section" id="sec-hw-partD">
+    <div class="hw-title">Part D · Grammar Power <button class="push-btn" onclick="openPushModal('HW-PartD','Grammar Power: was/wasn\'t food descriptions; past tense base-to-past conversion; possessive my sentences')">📤 Push</button></div>
+    <div class="hw-subtitle">LT05 + LT06 · Was / Wasn't &amp; Past Tense</div>
+
+    <h4 style="font-size:var(--fs-base);margin-bottom:0.5rem;">D1: Fill in was or wasn't.</h4>
+    <div class="hw-question"><span class="q-num">1.</span> The hamburger <span class="hw-blank" style="min-width:60px;"></span> brown, but it wasn't oozy, lumpy, or smelly.</div>
+    <div class="hw-question"><span class="q-num">2.</span> Fly Guy's favorite food <span class="hw-blank" style="min-width:60px;"></span> brown, oozy, lumpy, and smelly.</div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">D2: Write the past tense of each verb.</h4>
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th>Base Form</th><th>Past Tense</th><th>Base Form</th><th>Past Tense</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>see</td><td><span class="hw-blank"></span></td><td>find</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>fly</td><td><span class="hw-blank"></span></td><td>cry</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>go</td><td><span class="hw-blank"></span></td><td>look</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>say</td><td><span class="hw-blank"></span></td><td>shout</td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">D3: Complete each sentence with my, your, or our.</h4>
+    <div class="hw-question"><span class="q-num">1.</span> "That is <span class="hw-blank" style="min-width:60px;"></span> pizza!" yelled the girl.</div>
+    <div class="hw-question"><span class="q-num">2.</span> "These are <span class="hw-blank" style="min-width:60px;"></span> bones," growled the dog.</div>
+    <div class="hw-question"><span class="q-num">3.</span> "You found <span class="hw-blank" style="min-width:60px;"></span> picnic!" cried Buzz.</div>
+
+    <div class="answer-key">
+      <strong>✅ Answer Key</strong>
+      D1: 1. was&nbsp;&nbsp;2. was<br>
+      D2: saw · found · flew · cried · went · looked · said · shouted<br>
+      D3: 1. my&nbsp;&nbsp;2. my&nbsp;&nbsp;3. our
+    </div>
+  </div>
+
+  <!-- Part E: Cohesion -->
+  <div class="hw-section" id="sec-hw-partE">
+    <div class="hw-title">Part E · Cohesion — How the Story Flows <button class="push-btn" onclick="openPushModal('HW-PartE','Cohesion: choose the right connector (until, but, so, and, Close enough); identify what the pronoun it refers to')">📤 Push</button></div>
+    <div class="hw-subtitle">LT07 · Choose the best connecting word for each sentence.</div>
+
+    <div class="hw-question"><span class="q-num">1.</span> Fly Guy flew on <span class="hw-blank" style="min-width:70px;"></span> he saw something else.</div>
+    <div class="hw-question"><span class="q-num">2.</span> It wasn't oozy, lumpy, or smelly, <span class="hw-blank" style="min-width:70px;"></span> it was brown.</div>
+    <div class="hw-question"><span class="q-num">3.</span> Fly Guy was hungry, <span class="hw-blank" style="min-width:70px;"></span> off he flew.</div>
+    <div class="hw-question"><span class="q-num">4.</span> "You found our picnic!" cried Buzz. "<span class="hw-blank" style="min-width:70px;"></span> here is your favorite Shoo Fly Pie!"</div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">What does "it" mean?</h4>
+    <p style="font-size:var(--fs-sm);">In the sentence "<em>It</em> wasn't oozy, lumpy, or smelly. But <em>it</em> was brown," what does <strong>it</strong> mean?</p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">Answer: <span class="hw-blank" style="min-width:300px;"></span></p>
+
+    <div class="answer-key">
+      <strong>✅ Answer Key</strong>
+      1. until&nbsp;&nbsp;2. but&nbsp;&nbsp;3. so&nbsp;&nbsp;4. And<br>
+      "It" means the food Fly Guy found (what he tried to eat) — here, the hamburger.
+    </div>
+  </div>
+
+  <!-- Part F: Writing -->
+  <div class="hw-section" id="sec-hw-partF">
+    <div class="hw-title">Part F · Food Report <button class="push-btn" onclick="openPushModal('HW-PartF','Food Report: Describe your favorite food using at least 3 describing words and a Close enough! sentence (scaffolded).')">📤 Push</button></div>
+    <div class="hw-subtitle">LT08 · Describe your favorite food. Use at least 3 describing words.</div>
+
+    <p style="font-size:var(--fs-sm);margin-bottom:0.5rem;"><strong>Use these sentence starters if you need help:</strong></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.8rem;">
+      My favorite food is ___.<br>
+      It is ___, ___, and ___.<br>
+      It is not ___, but it is ___.<br>
+      Close enough! It is ___.
+    </p>
+    <div class="hw-lines" style="min-height:12em;"></div>
+
+    <div class="answer-key">
+      <strong>✅ Sample Answer (参考)</strong>
+      My favorite food is a pizza. It is warm, cheesy, and yummy. It is not lumpy, but it is a little oozy. Close enough! It is the best food ever.
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════ TEACHER NOTES ═══════ -->
+<section>
+  <div class="section-label">Teacher Notes</div>
+  <h2 data-i18n="tnTitle">教师备注</h2>
+
+  <div class="lt-grid">
+    <div class="card">
+      <h4>📊 LT Coverage Map</h4>
+      <div style="overflow-x:auto"><table style="min-width:500px">
+        <thead>
+          <tr><th>LT Module</th><th>Session 1</th><th>Session 2</th><th>Homework</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LT01 Vocabulary</td><td>✅ 主教学</td><td>复习</td><td>✅ Part A–B</td></tr>
+          <tr><td>LT02 Phonics</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT03 Pronunciation</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT04 Sentence Patterns</td><td>✅ 初探</td><td>复习</td><td>—</td></tr>
+          <tr><td>LT05 Grammar</td><td>—</td><td>✅ 主教学</td><td>✅ Part D</td></tr>
+          <tr><td>LT06 Morphology</td><td>—</td><td>✅ 主教学</td><td>✅ Part C+D</td></tr>
+          <tr><td>LT07 Cohesion</td><td>—</td><td>✅ 主教学</td><td>✅ Part E</td></tr>
+          <tr><td>LT08 Functional</td><td>—</td><td>✅ 主教学</td><td>✅ Part F</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h4>🎯 CCSS Alignment (Grade 1–2)</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>RL.1.1</strong> Ask and answer questions about key details</li>
+        <li><strong>RL.1.2</strong> Retell stories, including key details</li>
+        <li><strong>RL.1.3</strong> Describe characters, settings, and major events</li>
+        <li><strong>RL.1.7</strong> Use illustrations and details to describe characters/events</li>
+        <li><strong>W.1.1</strong> Write opinion pieces, introduce topic, supply reason</li>
+        <li><strong>W.1.2</strong> Write informative/explanatory texts (food report)</li>
+        <li><strong>SL.1.1</strong> Participate in collaborative conversations</li>
+        <li><strong>SL.1.4</strong> Describe people, places, things, and events</li>
+        <li><strong>L.1.1</strong> Use common, proper, and possessive nouns</li>
+        <li><strong>L.1.4</strong> Determine meaning of words using context clues</li>
+        <li><strong>RF.1.3</strong> Know and apply grade-level phonics and word analysis skills</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="page-wrap">
+    <p>Shoo, Fly Guy! — 精读教案 · 两课时 · Emily's Reading Studio</p>
+    <p style="margin-top:0.3rem;">Language Target Framework · LT01–LT08 · CCSS Grade 1–2 Aligned</p>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll for TOC
+document.querySelectorAll('.toc a').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var id = this.getAttribute('href').slice(1);
+    var target = document.getElementById(id);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ═══════ CN / EN language toggle ═══════
+var I18N = {
+  'subtitle': { 'zh': '精读教案 · 两课时 · 100 分钟', 'en': 'Close Reading Lesson Plan · Two Sessions · 100 min' },
+  'langZh': { 'zh': '中文', 'en': '中文' },
+  'langEn': { 'zh': 'EN', 'en': 'EN' },
+  'navOver': { 'zh': '故事概览', 'en': 'Overview' },
+  'navLT': { 'zh': 'LT 框架总览', 'en': 'LT Framework' },
+  'navS1': { 'zh': '第一课时', 'en': 'Session 1' },
+  'navS2': { 'zh': '第二课时', 'en': 'Session 2' },
+  'navHW': { 'zh': '课后作业', 'en': 'Homework' },
+  'overTitle': { 'zh': '故事概览', 'en': 'Story Overview' },
+  'txtFeat': { 'zh': '📖 文本特征', 'en': '📖 Text Features' },
+  'goals': { 'zh': '🎯 教学目标', 'en': '🎯 Learning Goals' },
+  'ltTitle': { 'zh': 'LT 框架总览 — Shoo, Fly Guy!', 'en': 'LT Framework Overview — Shoo, Fly Guy!' },
+  'ltIntro': { 'zh': '以下 8 个模块构成本书的完整语言目标体系，两个课时分工推进。', 'en': 'These 8 modules form the complete language-target system for this book, split across two sessions.' },
+  's1Title': { 'zh': '第一课时 — 基础阅读与语言输入', 'en': 'Session 1 — Reading & Language Input' },
+  's1Sub': { 'zh': '目标：建立背景知识，通读全文，掌握核心词汇与语音规律，完成基础理解。', 'en': 'Goal: build background, read the whole book, and master core vocabulary and phonics.' },
+  's2Title': { 'zh': '第二课时 — 深度分析与语言输出', 'en': 'Session 2 — Analysis & Language Output' },
+  's2Sub': { 'zh': '目标：深入语法、词形、语篇分析，完成口语输出和写作任务。', 'en': 'Goal: analyze grammar, morphology and cohesion, then complete speaking and writing tasks.' },
+  'hwTitle': { 'zh': '课后作业 · Shoo, Fly Guy!', 'en': 'Homework · Shoo, Fly Guy!' },
+  'tnTitle': { 'zh': '教师备注', 'en': 'Teacher Notes' }
+};
+function applyLang(lang) {
+  document.documentElement.lang = (lang === 'zh') ? 'zh-CN' : 'en';
+  Object.keys(I18N).forEach(function(key) {
+    var el = document.querySelector('[data-i18n="' + key + '"]');
+    if (el && I18N[key][lang]) el.textContent = I18N[key][lang];
+  });
+  document.getElementById('btnZh').classList.toggle('active', lang === 'zh');
+  document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+}
+document.getElementById('btnZh').addEventListener('click', function() { applyLang('zh'); });
+document.getElementById('btnEn').addEventListener('click', function() { applyLang('en'); });
+
+
+// ═══════ Push to Students ═══════
+const sectionContentMap = {
+  'LT01-Vocabulary': '12 core vocabulary words with IPA, POS, definitions, examples, and word families: shoo, fly, hungry, tired, lost, oozy, lumpy, smelly, favorite, shout, enough, picnic',
+  'LT02-Phonics': 'Consonant digraphs and blends: sh- (shoo, shout), -y adjectives (hungry, oozy, lumpy, smelly, happy), br-/gr-/fl-/sq- blends, -ed endings, oo vowel team with examples from Shoo, Fly Guy!',
+  'LT03-Pronunciation': 'Syllable counting and -ed endings: hungry(2), oozy(2), favorite(3), picnic(2), enough(2); -ed sounds shouted(/ɪd/), growled(/d/), squawked(/t/); -y ending /i/; Close enough! practice',
+  'LT04-Sentence-Patterns': 'Core sentence patterns: It wasn\'t ___, ___, or ___. But it was ___. Close enough!; Fly Guy flew on until he saw something else; reporting verbs (shouted/yelled/growled/squawked); possessive (That is my ___!)',
+  'LT05-Grammar': 'Simple Past storytelling (flew, went, saw, found, said, cried); be + adjectives (was/wasn\'t... but it was); possession with my; result with so; wonder question Could it be?',
+  'LT06-Morphology': 'Word building: noun→-y adjective (ooze→oozy, lump→lumpy, smell→smelly); -ed endings incl. y→ied (cry→cried); irregular past (see→saw, find→found, fly→flew, go→went); compound word (roadkill)',
+  'LT07-Cohesion': 'Cohesion devices: until (sequence), but (contrast ×4), so (result), and (addition); repeated refrain Close enough!; pronoun it referring to food',
+  'LT08-Functional-Communication': 'Story retelling frame with sequencing; describe favorite food; opinion: Would you eat Shoo Fly Pie?; role-play the Shoo fly claims and protests',
+  'HW-PartA': 'Vocabulary Match: match 6 words (oozy, lumpy, shoo, lost, picnic, favorite) with their meanings',
+  'HW-PartB': 'Vocabulary in Context: fill in blanks using word bank (hungry, shouted, tired, lost, found, favorite)',
+  'HW-PartC': 'Word Builder: -y adjectives from nouns (ooze, lump, smell); past tenses incl. cry→cried, see→saw, fly→flew; syllable counting bonus',
+  'HW-PartD': 'Grammar Power: was/wasn\'t + past tense conversion + possessive (my/your/our) for 8 sentences',
+  'HW-PartE': 'Cohesion: choose the best connector (until, but, so, and); explain what the pronoun "it" means',
+  'HW-PartF': 'Food Report: describe your favorite food with at least 3 describing words and a Close enough! sentence'
+};
+
+function openPushModal(sectionId, sectionContent) {
+  var token = localStorage.getItem('authToken');
+  if (!token) {
+    window.location.href = '/lesson.html';
+    return;
+  }
+  var content = sectionContent || sectionContentMap[sectionId] || sectionId;
+
+  fetch('/api/students/list', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API error: ' + r.status);
+    return r.json();
+  })
+  .then(function(students) {
+    if (!Array.isArray(students) || students.length === 0) {
+      alert('No students found. Please add students first.');
+      return;
+    }
+    var existing = document.querySelector('.push-modal-overlay');
+    if (existing) existing.remove();
+
+    var modal = document.createElement('div');
+    modal.className = 'push-modal-overlay';
+    var studentListHtml = students.map(function(s) {
+      return '<label class="student-item"><input type="checkbox" value="' + s.id + '"><span>' + s.name + '</span></label>';
+    }).join('');
+    modal.innerHTML = '<div class="push-modal">' +
+      '<h3>\ud83d\udce4 Push to Students</h3>' +
+      '<p style="color:#666;font-size:13px;">' + sectionId + '</p>' +
+      '<p style="color:#888;font-size:11px;margin-bottom:8px;">' + content.substring(0, 120) + (content.length > 120 ? '...' : '') + '</p>' +
+      '<div class="student-list">' + studentListHtml + '</div>' +
+      '<button class="push-confirm-btn" id="pushConfirmBtn">\u2705 Confirm Push</button>' +
+      '<button class="push-cancel-btn" id="pushCancelBtn">\u2716 Cancel</button>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    document.getElementById('pushConfirmBtn').onclick = function() { doPush(sectionId, content, this); };
+    document.getElementById('pushCancelBtn').onclick = function() { modal.remove(); };
+    modal.onclick = function(e) { if (e.target === modal) modal.remove(); };
+  })
+  .catch(function(err) {
+    alert('Failed to load students: ' + err.message);
+  });
+}
+
+function doPush(sectionId, content, btn) {
+  var modal = document.querySelector('.push-modal-overlay');
+  if (!modal) return;
+  var checked = modal.querySelectorAll('input:checked');
+  if (checked.length === 0) {
+    alert('Please select at least one student.');
+    return;
+  }
+  var token = localStorage.getItem('authToken');
+  btn.textContent = 'Pushing...';
+  btn.disabled = true;
+
+  var emojiMap = {
+    'LT01': '\ud83d\udcd6', 'LT02': '\ud83d\udd24', 'LT03': '\ud83c\udfa4',
+    'LT04': '\u270f\ufe0f', 'LT05': '\ud83d\udd24', 'LT06': '\ud83e\udde9',
+    'LT07': '\ud83d\udd17', 'LT08': '\ud83d\udcac', 'HW': '\ud83d\udcdd'
+  };
+  var prefix = sectionId.split('-')[0];
+  var emoji = emojiMap[prefix] || '\ud83d\udccc';
+  var title = emoji + ' [Fly Guy] ' + sectionId;
+  var today = new Date();
+  var todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  var teacher = localStorage.getItem('currentUser') || localStorage.getItem('lesson_tracker_user') || 'emily_mo';
+
+  var taskDef = PUSH_TASKS[sectionId] || { renderer: 'checklist', prompt: content, required: true };
+  var taskId = 'flyguy-shoo-fly-guy-' + String(sectionId).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  var taskSnapshot = {
+    id: taskId,
+    title: title,
+    type: 'task',
+    series: 'Fly Guy',
+    book: 'Shoo, Fly Guy!',
+    lesson: sectionId,
+    part: sectionId,
+    sourceLessonUrl: '/frontend/fly-guy/shoo_fly_guy_lesson_plan.html',
+    studentRenderer: taskDef.renderer,
+    prompt: taskDef.prompt || content,
+    required: !!taskDef.required
+  };
+  if (taskDef.renderer === 'drag-match' && taskDef.pairs) taskSnapshot.pairs = taskDef.pairs;
+  if (taskDef.renderer === 'drag-order' && taskDef.items) taskSnapshot.items = taskDef.items;
+  if (taskDef.renderer === 'multiple-choice' && taskDef.options) taskSnapshot.options = taskDef.options;
+  if (taskDef.renderer === 'checklist') taskSnapshot.instructions = taskDef.prompt || content;
+
+  var assignments = [];
+  for (var i = 0; i < checked.length; i++) {
+    var studentId = checked[i].value;
+    assignments.push({
+      assignmentId: 'assign-' + Date.now() + '-' + Math.random().toString(16).slice(2) + '-' + i,
+      practiceId: 'lessonplan:' + sectionId,
+      title: title,
+      content: content,
+      sourceLessonUrl: '/frontend/fly-guy/shoo_fly_guy_lesson_plan.html',
+      sourceLessonId: 'flyguy-shoo-fly-guy',
+      taskIds: [taskId],
+      tasks: [taskSnapshot],
+      sourceBook: 'Fly Guy',
+      targetType: 'student',
+      targetIds: [studentId],
+      studentIds: [studentId],
+      classId: '',
+      relatedClassDate: todayStr,
+      assignedDate: todayStr,
+      dueDate: '',
+      teacherNote: '',
+      assignedBy: teacher,
+      status: 'active'
+    });
+  }
+
+  fetch('/api/practice/assignments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ assignments: assignments })
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    alert('\u2705 Pushed to ' + (data.count || assignments.length) + ' student(s)');
+    modal.remove();
+  })
+  .catch(function(err) {
+    alert('Push failed: ' + err.message);
+    btn.textContent = 'Push';
+    btn.disabled = false;
+  });
+}
+// ═══════ Task definitions for Practice push (task snapshot) ═══════
+var PUSH_TASKS = {
+  'LT01-Vocabulary': { renderer: 'checklist', prompt: 'Review the 12 core vocabulary words with IPA, definitions and word families.', required: true },
+  'LT02-Phonics': { renderer: 'checklist', prompt: 'Practice sh- digraph, -y adjectives (oozy, lumpy, smelly, hungry) and -ed endings.', required: true },
+  'LT03-Pronunciation': { renderer: 'checklist', prompt: 'Count syllables and practice -ed endings: shouted(/ɪd/), growled(/d/), squawked(/t/); echo "SHOO, fly! Close enough!"', required: true },
+  'LT04-Sentence-Patterns': { renderer: 'checklist', prompt: 'Practice patterns: It wasn\'t ___, ___, or ___. But it was ___. Close enough!', required: true },
+  'LT05-Grammar': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of "fly".', options: [
+    { label: 'fly → flew', value: 'flew', correct: true },
+    { label: 'fly → flyed', value: 'flyed', correct: false },
+    { label: 'fly → flown', value: 'flown', correct: false }
+  ], required: true },
+  'LT06-Morphology': { renderer: 'checklist', prompt: 'Review -y adjective building (ooze→oozy, lump→lumpy, smell→smelly) and irregular past (saw, found, flew, went).', required: true },
+  'LT07-Cohesion': { renderer: 'short-answer', prompt: 'In "It wasn\'t oozy, lumpy, or smelly. But it was brown," what does "it" mean? Write your answer.', required: true },
+  'LT08-Functional-Communication': { renderer: 'short-answer', prompt: 'Describe your favorite food using at least 3 describing words and one "Close enough!" sentence.', required: true },
+  'HW-PartA': { renderer: 'drag-match', prompt: 'Match each word with its meaning.', pairs: [
+    { left: 'oozy', right: 'thick and dripping' },
+    { left: 'lumpy', right: 'not smooth or even' },
+    { left: 'shoo', right: 'wave something away' },
+    { left: 'lost', right: "can't find your way" },
+    { left: 'picnic', right: 'an outdoor meal' },
+    { left: 'favorite', right: 'liked the most' }
+  ], required: true },
+  'HW-PartB': { renderer: 'drag-order', prompt: 'Put the words in the correct order to complete the sentences.', items: ['hungry', 'shouted', 'tired', 'lost', 'found', 'favorite'], required: true },
+  'HW-PartC': { renderer: 'multiple-choice', prompt: 'Which past tense is correct for "cry"?', options: [
+    { label: 'cry → cried', value: 'cried', correct: true },
+    { label: 'cry → cryed', value: 'cryed', correct: false },
+    { label: 'cry → cryed? no, cryd', value: 'cryd', correct: false }
+  ], required: true },
+  'HW-PartD': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of "see".', options: [
+    { label: 'see → saw', value: 'saw', correct: true },
+    { label: 'see → seed', value: 'seed', correct: false },
+    { label: 'see → seen', value: 'seen', correct: false }
+  ], required: true },
+  'HW-PartE': { renderer: 'short-answer', prompt: 'Choose the connector: Fly Guy flew on ___ he saw something else. Explain what "it" means.', required: true },
+  'HW-PartF': { renderer: 'short-answer', prompt: 'Describe your favorite food with at least 3 describing words and a "Close enough!" sentence.', required: true }
+};
+</script>
+</body>
+</html>

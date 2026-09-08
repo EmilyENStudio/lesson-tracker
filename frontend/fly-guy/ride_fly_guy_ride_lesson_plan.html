@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ride, Fly Guy, Ride! — 精读教案 · 两课时</title>
+<style>
+:root {
+  --canvas: #FBF3E7;
+  --surface: #FFF9F1;
+  --surface-alt: #FFF3E0;
+  --ink: #31251B;
+  --ink-secondary: #8B7662;
+  --accent: #C96F3D;
+  --accent-light: #F5DCC8;
+  --green: #5A8F56;
+  --green-light: #E8F0E6;
+  --blue: #4A7FA5;
+  --blue-light: #E3EFF6;
+  --purple: #8B6DAF;
+  --purple-light: #F0EAF6;
+  --red: #C75A4A;
+  --red-light: #FCEAE7;
+  --divider: #E8DDD0;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-heading: Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.35rem;
+  --fs-2xl: 1.7rem;
+  --fs-3xl: 2.2rem;
+  --lh: 1.7;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(49,37,27,0.06);
+  --shadow: 0 2px 8px rgba(49,37,27,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* ── Header ── */
+.site-header {
+  background: linear-gradient(135deg, #C96F3D 0%, #B85A2E 100%);
+  color: #fff;
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2rem;
+}
+.site-header .page-wrap { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; }
+.header-text { flex: 1; min-width: 260px; }
+.header-text h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.3rem;
+}
+.header-text .subtitle {
+  font-size: var(--fs-lg);
+  opacity: 0.9;
+}
+.book-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.badge {
+  display: inline-block;
+  font-size: var(--fs-sm);
+  padding: 0.2em 0.7em;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+/* ── Section ── */
+section { margin-bottom: 2.5rem; }
+.section-label {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+h4 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+p { margin-bottom: 0.8rem; }
+.text-secondary { color: var(--ink-secondary); }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.card-accent { border-left: 4px solid var(--accent); }
+.card-green { border-left: 4px solid var(--green); }
+.card-blue { border-left: 4px solid var(--blue); }
+.card-purple { border-left: 4px solid var(--purple); }
+
+/* ── LT Grid ── */
+.lt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.lt-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+.lt-card .lt-num {
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.lt-card h4 { margin-bottom: 0.5rem; font-size: var(--fs-base); }
+.lt-card ul { padding-left: 1.2em; }
+.lt-card li { margin-bottom: 0.3rem; font-size: var(--fs-sm); color: var(--ink-secondary); }
+
+/* ── Session Timeline ── */
+.session-block {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.session-header {
+  padding: 1.2rem 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.session-header.s1 { background: linear-gradient(135deg, #C96F3D, #A85A30); }
+.session-header.s2 { background: linear-gradient(135deg, #5A8F56, #3D7A3A); }
+.session-header h2 { color: #fff; margin: 0; font-size: var(--fs-xl); }
+.session-header .session-meta { font-size: var(--fs-sm); opacity: 0.9; }
+.session-body { padding: 1.5rem; }
+
+.phase {
+  position: relative;
+  padding-left: 1.8rem;
+  padding-bottom: 1.5rem;
+  border-left: 2px solid var(--divider);
+  margin-left: 0.5rem;
+}
+.phase:last-child { border-left-color: transparent; padding-bottom: 0; }
+.phase::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 0.3rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.phase.green-dot::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+.phase-blue-dot::before { background: var(--blue); box-shadow: 0 0 0 2px var(--blue); }
+.phase-purple-dot::before { background: var(--purple); box-shadow: 0 0 0 2px var(--purple); }
+
+.phase-label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+.phase.green-dot .phase-label { color: var(--green); }
+.phase-blue-dot .phase-label { color: var(--blue); }
+.phase-purple-dot .phase-label { color: var(--purple); }
+
+.phase-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  margin: 0.8rem 0;
+}
+th, td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--divider);
+  vertical-align: top;
+}
+th {
+  background: var(--surface-alt);
+  font-weight: 700;
+  white-space: nowrap;
+}
+td { color: var(--ink); }
+.wrap-word { overflow-wrap: break-word; word-break: break-word; }
+
+/* ── Vocab Table ── */
+.vocab-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  align-items: baseline;
+}
+.vocab-word {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--accent);
+}
+.vocab-ipa {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+}
+.vocab-pos {
+  font-size: var(--fs-sm);
+  color: var(--blue);
+  font-weight: 600;
+}
+.vocab-def { font-size: var(--fs-sm); }
+.vocab-example {
+  grid-column: 1 / -1;
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  border-top: 1px dashed var(--divider);
+  padding-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+/* ── Phonics ── */
+.phonics-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.8rem;
+  margin: 0.25rem;
+  font-size: var(--fs-sm);
+}
+.phonics-pattern {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* ── Sentence Pattern ── */
+.pattern-block {
+  background: var(--purple-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+.pattern-template {
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  color: var(--purple);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.pattern-example {
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+}
+
+/* ── Callout ── */
+.callout {
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: var(--fs-sm);
+}
+.callout-tip { background: var(--green-light); border-left: 3px solid var(--green); }
+.callout-warn { background: var(--red-light); border-left: 3px solid var(--red); }
+.callout-info { background: var(--blue-light); border-left: 3px solid var(--blue); }
+.callout strong { display: block; margin-bottom: 0.3rem; }
+
+/* ── Answer Key (teacher) ── */
+.answer-key {
+  background: var(--green-light);
+  border: 1px dashed var(--green);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  margin-top: 1rem;
+  font-size: var(--fs-sm);
+}
+.answer-key summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 0.3rem;
+}
+.answer-key .ak-item { margin-bottom: 0.25rem; }
+.answer-key code {
+  font-family: var(--font-mono);
+  color: var(--ink);
+}
+
+/* ── Homework Section ── */
+.hw-section {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
+}
+.hw-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.hw-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--divider);
+}
+.hw-question {
+  margin-bottom: 1rem;
+  padding-left: 0.2rem;
+}
+.hw-question .q-num {
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 0.3rem;
+}
+.hw-blank {
+  display: inline-block;
+  min-width: 120px;
+  border-bottom: 1px solid var(--ink);
+  margin: 0 0.2rem;
+}
+.hw-lines {
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 1.8em,
+    var(--divider) 1.8em,
+    var(--divider) calc(1.8em + 1px)
+  );
+  min-height: 6em;
+}
+
+/* ── Sticky Nav ── */
+.toc {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(251,243,231,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--divider);
+  padding: 0.6rem 0;
+  margin-bottom: 1.5rem;
+}
+.toc .page-wrap {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.toc .page-wrap::-webkit-scrollbar { display: none; }
+.toc a {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.3em 0.8em;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.toc a:hover, .toc a:focus { background: var(--accent-light); color: var(--accent); }
+.toc a:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ── Divider ── */
+hr { border: none; border-top: 1px solid var(--divider); margin: 2rem 0; }
+
+/* ── Footer ── */
+.site-footer {
+  text-align: center;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--divider);
+  margin-top: 2rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .lt-grid { grid-template-columns: 1fr; }
+  .session-body { padding: 1rem; }
+  .phase { padding-left: 1.2rem; }
+  table { font-size: 0.8rem; }
+  th, td { padding: 0.4rem 0.5rem; }
+}
+
+/* ── Print ── */
+@media print {
+  .toc { display: none; }
+  .site-header { background: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .session-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card, .lt-card, .session-block, .hw-section, .vocab-card, .pattern-block, .callout, .phonics-item, .answer-key {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  .answer-key { display: block; }
+  body { font-size: 11pt; }
+  .page-wrap { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ── Push Modal ── */
+.push-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+}
+.push-modal {
+  background: white; border-radius: 16px; padding: 24px;
+  max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.push-modal h3 { margin: 0 0 8px; font-size: 18px; }
+.student-list { margin: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.student-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.student-item:hover { background: #f5f5f5; }
+.student-item input { width: 16px; height: 16px; }
+.push-confirm-btn {
+  width: 100%; padding: 12px; margin-top: 12px;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 10px;
+  font-weight: 700; cursor: pointer; font-size: 14px;
+}
+.push-cancel-btn {
+  width: 100%; padding: 10px; margin-top: 8px;
+  background: #f0f0f0; color: #666; border: none;
+  border-radius: 10px; cursor: pointer; font-size: 13px;
+}
+.push-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; margin: 4px 0;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 6px;
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  float: right;
+}
+.push-btn:hover { opacity: 0.9; transform: scale(1.05); }
+@media print { .push-btn { display: none !important; } }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header class="site-header">
+  <div class="page-wrap">
+    <div class="header-text">
+      <h1>Ride, Fly Guy, Ride!</h1>
+      <p class="subtitle">精读教案 · 两课时 · 100 分钟</p>
+      <div class="book-badges">
+        <span class="badge">Tedd Arnold</span>
+        <span class="badge">Lexile 260L</span>
+        <span class="badge">GRL Level J</span>
+        <span class="badge">Grade K–2</span>
+        <span class="badge">Fly Guy Book #11</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════ TOC ═══════ -->
+<nav class="toc" aria-label="页面导航">
+  <div class="page-wrap">
+    <a href="#overview">故事概览</a>
+    <a href="#lt-overview">LT 框架总览</a>
+    <a href="#session1">第一课时</a>
+    <a href="#session2">第二课时</a>
+    <a href="#homework">课后作业</a>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<section id="overview">
+  <div class="section-label">Overview</div>
+  <h2>故事概览</h2>
+  <div class="card card-accent">
+    <h3>Story Summary</h3>
+    <p>Buzz has a pet fly named Fly Guy who can say the boy's name — "BUZZ!" One day Dad asks, "Who wants to go for a ride?" Buzz and Fly Guy climb in the car with the windows rolled down. Wind blows in, picks Fly Guy up, and carries him right out the window!</p>
+    <p>Buzz chases his little friend across every kind of transport: "Follow that truck!" Fly Guy tumbles into a truck driver's mouth, gets spit into a passing motorboat, jumps overboard onto a circus train, surprises a sleepy elephant, is blown onto an airplane, and just as the pilot turns on the wipers — a rocket roars up from the ground! "Follow that rocket!" But Fly Guy is safe: the rocket didn't take him to space. Dad says, "Let's ride home." And Fly Guy says — "MORE RIDEZZZ!"</p>
+  </div>
+  <div class="lt-grid" style="margin-top:1rem;">
+    <div class="card" style="margin:0;">
+      <h4>📖 文本特征</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li>3 chapters, structure by one chasing scene after another</li>
+        <li>重复句式：Follow that ___! (truck / boat / train / airplane / rocket)</li>
+        <li>关键修辞手法：反复 refrain、悬念 (will he survive?)、幽默结尾</li>
+        <li>核心主题词：transport, chase, going on a ride, prepositions of movement</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>🎯 教学目标</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>Reading:</strong> 按事件顺序理解追逐情节，提取每站的交通工具</li>
+        <li><strong>Language:</strong> 掌握祈使句 Follow that ___!、交通工具词、方向介词 (out of / into / onto / overboard)、过去时</li>
+        <li><strong>Speaking:</strong> 能下达指令、按顺序复述追逐过程</li>
+        <li><strong>Writing:</strong> 完成一段自创追逐小故事 (chase story)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LT FRAMEWORK OVERVIEW ═══════ -->
+<section id="lt-overview">
+  <div class="section-label">Language Target Framework</div>
+  <h2>LT 框架总览 — Ride, Fly Guy, Ride!</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;">以下 8 个模块构成本书的完整语言目标体系，两个课时分工推进。</p>
+
+  <div class="lt-grid">
+    <div class="lt-card">
+      <div class="lt-num">LT01</div>
+      <h4>Vocabulary 词汇</h4>
+      <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.5rem;">12 个核心词，含 IPA、词性、搭配、例句、词族。</p>
+      <ul>
+        <li>ride, follow, truck, boat, train</li>
+        <li>airplane, rocket, window, overboard</li>
+        <li>space, wind, survive</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT02</div>
+      <h4>Phonics / Decoding 语音拼读</h4>
+      <ul>
+        <li><strong>-air</strong>: airplane, air</li>
+        <li><strong>-ow</strong> /oʊ/: window, blow, follow</li>
+        <li><strong>-oa</strong> /oʊ/: boat, road</li>
+        <li><strong>cr-</strong>: cried &nbsp;<strong>bl-</strong>: blew, blown &nbsp;<strong>sp-</strong>: spit, space</li>
+        <li>r-controlled <strong>ar</strong>: car, start</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT03</div>
+      <h4>Pronunciation 发音</h4>
+      <ul>
+        <li>音节切分：follow (2), window (2), airplane (2), rocket (2)</li>
+        <li>重音模式：FOLLOW, WINdow, AIRplane, ROCKet, o-ver-BOARD? <em>(overboard 首重 OV-er-board)</em></li>
+        <li>祈使句句重音："<strong>FOLLOW</strong> that <strong>TRUCK</strong>!"</li>
+        <li>-ing 连音：pass-ing, go-ing, rid-ing</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT04</div>
+      <h4>Sentence Patterns 句型</h4>
+      <ul>
+        <li>Follow that [vehicle]! (祈使句)</li>
+        <li>[Wind] carried [obj] out of / into / onto ___.</li>
+        <li>[S] jumped overboard / blew him onto ___.</li>
+        <li>Will [s.o.] + verb? — "Will Fly Guy survive?"</li>
+        <li>重复 chaining: truck → boat → train → airplane → rocket</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT05</div>
+      <h4>Grammar 语法功能</h4>
+      <ul>
+        <li><strong>Imperatives:</strong> Follow that ___! / Buckle up! / Let's ride home.</li>
+        <li><strong>Simple past:</strong> blew, carried, cried, tumbled, jumped, surprised, roared, landed</li>
+        <li><strong>Prepositions of movement:</strong> out of, into, onto, overboard, up</li>
+        <li><strong>could</strong> (过去能力): "Fly Guy could say the boy's name"</li>
+        <li><strong>will</strong> (将来): "Will Fly Guy survive?"</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT06</div>
+      <h4>Morphology 词形变化</h4>
+      <ul>
+        <li><strong>-ing:</strong> passing, sleeping, going, riding</li>
+        <li><strong>-ed:</strong> tumbled, surprised, roared, landed, carried</li>
+        <li><strong>-er</strong> 名词: driver, pilot</li>
+        <li><strong>Irregular past:</strong> blow→blew, take→took, say→said, see→saw, go→went</li>
+        <li><strong>Compound:</strong> motor+boat, air+plane, over+board</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT07</div>
+      <h4>Cohesion / Discourse 语篇衔接</h4>
+      <ul>
+        <li><strong>Refrain:</strong> "Follow that ___!" unifies every scene</li>
+        <li><strong>Meanwhile:</strong> 切换场景 (Buzz 追逐 vs Fly Guy 的遭遇)</li>
+        <li><strong>Just then:</strong> 突发事件</li>
+        <li><strong>代词指代:</strong> he / him / his → Fly Guy</li>
+        <li><strong>顺序:
+
+ 保留链:</strong> truck → boat → train → airplane → rocket</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT08</div>
+      <h4>Functional Communication 语用功能</h4>
+      <ul>
+        <li><strong>Give commands:</strong> Follow that car! Stop! Let's go!</li>
+        <li><strong>Retell:</strong> First / Then / Next / In the end...</li>
+        <li><strong>Describe:</strong> vehicles &amp; their sounds/actions</li>
+        <li><strong>Predict:</strong> Will he be safe? Which ride next?</li>
+        <li><strong>Express opinion:</strong> Which ride would you take? Why?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ SESSION 1 ═══════ -->
+<section id="session1">
+  <div class="section-label">Session 1 · 50 minutes</div>
+  <h2>第一课时 — 基础阅读与语言输入</h2>
+  <p class="text-secondary">目标：建立背景知识，通读全文，掌握核心词汇与语音规律，完成基础理解。</p>
+
+  <div class="session-block">
+    <div class="session-header s1">
+      <div>
+        <h2>Lesson 1: Off We Go!</h2>
+        <div class="session-meta">Focus: Pre-reading → Reading → Vocabulary → Phonics → Pronunciation</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–10 min · Warm-up &amp; Pre-reading</div>
+        <div class="phase-title">激活背景 · 交通出行热身</div>
+
+        <h4>活动 1：Transport Brainstorm (5 min)</h4>
+        <p>在白板上画一条"出行线"，引导学生列举出行方式：</p>
+        <ul style="padding-left:1.2em;margin-bottom:1rem;">
+          <li>"How do we go to school?" → By car / bus / bike / on foot.</li>
+          <li>"What vehicles go on the road?" → truck, car, bus, van.</li>
+          <li>"What goes on the water? up in the sky? into space?" → boat, airplane, rocket.</li>
+        </ul>
+        <p>引出核心词族 <strong>transport / vehicles</strong>，并预告：今天的 Fly Guy 会坐上所有交通工具！</p>
+
+        <h4>活动 2：Big Question + 指令的语言 (5 min)</h4>
+        <p>向学生介绍经典追逐指令句式，并做一次 TPR 演练：</p>
+        <div class="callout callout-info">
+          <strong>🔑 Big Question</strong>
+          Where will the wind blow Fly Guy? Where will Buzz chase him? Can he survive every ride?
+        </div>
+        <p>TPR：老师说 "Follow that truck!"，全班做"快追"动作；"Stop!" 举手停下。感受祈使句的力量。</p>
+
+        <div class="callout callout-tip">
+          <strong>💡 教学提示</strong>
+          先不揭示结尾。让学生预测 Fly Guy 会一一落到哪些交通工具上，保留悬念到第二课时结尾。
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase green-dot">
+        <div class="phase-label">⏱ 10–20 min · Read Aloud</div>
+        <div class="phase-title">通读全文 · 理解追逐过程</div>
+
+        <h4>Chapter 1 精读 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.2–4</td>
+              <td>"A boy had a pet fly. He named him Fly Guy. And Fly Guy could say the boy's name — BUZZ!"</td>
+              <td>回顾角色关系；<em>could say</em> 表过去能力；"BUZZ!" 是名字也是苍蝇叫声的谐音</td>
+            </tr>
+            <tr>
+              <td>p.5–8</td>
+              <td>"Who wants to go for a ride?" "We do!" ... "Everyone buckle up! Then they hit the road with the windows down."</td>
+              <td>动词短语 <em>go for a ride / hit the road / buckle up</em>；window 拼读 -ow</td>
+            </tr>
+            <tr>
+              <td>p.9–12</td>
+              <td>"Buzz stuck his hand out the window and pretended it was an airplane. Suddenly, wind blew in the car and carried Fly Guy out the window..."</td>
+              <td><em>out the window</em> 方向介词；cause &amp; effect：wind → carried Fly Guy</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 2 精读 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.13–16</td>
+              <td>"Follow that truck!" ... Fly Guy tumbled into the truck driver's mouth. The driver spit Fly Guy out the window... into a passing motorboat.</td>
+              <td>首次引出祈使句 <em>Follow that ___!</em>；动词 <em>tumble into / spit out</em></td>
+            </tr>
+            <tr>
+              <td>p.17–20</td>
+              <td>"Follow that boat!" ... Fly Guy jumped overboard... and onto a passing circus train.</td>
+              <td>关键词 <em>overboard / onto</em>；跳船落火车</td>
+            </tr>
+            <tr>
+              <td>p.21–24</td>
+              <td>"Follow that train!" ... Fly Guy surprised a sleepy elephant. The elephant blew him off... and onto an airplane.</td>
+              <td>动词 <em>surprised / blew</em>；重复结构又一次</td>
+            </tr>
+            <tr>
+              <td>p.25–27</td>
+              <td>"Follow that airplane!" ... the pilot turned on the wipers. Just then, a rocket roared up from the ground.</td>
+              <td><em>Just then</em> 突发事件；(foretelling 火箭出现)</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 3 精读 (4 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.28–29</td>
+              <td>"Follow that rocket!" ... The rocket raced into space. "Will Fly Guy survive?" asked Buzz.</td>
+              <td>关键词 <em>space / survive</em>；将来疑问 <em>Will...?</em></td>
+            </tr>
+            <tr>
+              <td>p.30–31</td>
+              <td>"Fly Guy, you're here! The rocket didn't take you to space!" Dad said, "Let's ride home." Fly Guy said — MORE RIDEZZZ!</td>
+              <td>戏剧转折与幽默结尾；<em>Let's</em> 建议；结尾 gag "MORE RIDEZZZ!"</td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase blue-dot" id="sec-lt01-vocab">
+        <div class="phase-label">⏱ 20–33 min · LT01 Vocabulary <button class="push-btn" onclick="openPushModal('LT01-Vocabulary','12 core words: ride, follow, truck, boat, train, airplane, rocket, window, overboard, space, wind, survive — with IPA, POS, collocations, examples, word families')">📤 Push to Students</button></div>
+        <div class="phase-title">核心词汇深度讲解（12 词）</div>
+
+        <div class="callout callout-info">
+          <strong>📋 词汇教学原则</strong>
+          每个词从 Recognize → Understand → Use 三个层次推进。名词（交通工具）可用图片/声音，动词（follow, survive）用动作表演。
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">ride</span>
+            <span class="vocab-ipa">/raɪd/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun / verb</span>
+            <span class="vocab-pos" style="color:var(--purple);">collocate: go for a ride</span>
+            <div class="vocab-def">a trip in a car or vehicle; to travel in or on something</div>
+          </div>
+          <div class="vocab-example">"Who wants to go for a <strong>ride</strong>?" / Fly Guy said — MORE <strong>RIDE</strong>ZZZ! (noun ↔ verb)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">follow</span>
+            <span class="vocab-ipa">/ˈfɒloʊ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <span class="vocab-pos" style="color:var(--purple);">collocate: follow that ___</span>
+            <div class="vocab-def">to go behind and chase someone or something</div>
+          </div>
+          <div class="vocab-example">"<strong>Follow</strong> that truck!" cried Buzz. → The dog ran and <strong>followed</strong> me home.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">truck</span>
+            <span class="vocab-ipa">/trʌk/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">collocate: truck driver</span>
+            <div class="vocab-def">a large vehicle used for carrying goods</div>
+          </div>
+          <div class="vocab-example">"Follow that <strong>truck</strong>!" → The <strong>truck driver</strong> opened his mouth wide.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">boat</span>
+            <span class="vocab-ipa">/boʊt/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">collocate: a motorboat</span>
+            <div class="vocab-def">a small vehicle for traveling on water</div>
+          </div>
+          <div class="vocab-example">"...into a passing <strong>motorboat</strong>." → We go fishing in a little <strong>boat</strong>.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">train</span>
+            <span class="vocab-ipa">/treɪn/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">collocate: a circus train</span>
+            <div class="vocab-def">a line of railroad cars pulled by an engine</div>
+          </div>
+          <div class="vocab-example">"...onto a passing circus <strong>train</strong>." → The <strong>train</strong> goes choo-choo!</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">airplane</span>
+            <span class="vocab-ipa">/ˈerpleɪn/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">= plane / collocate: on the airplane</span>
+            <div class="vocab-def">a flying vehicle with wings and an engine</div>
+          </div>
+          <div class="vocab-example">"...and onto an <strong>airplane</strong>." → Buzz pretended his hand was an <strong>airplane</strong>.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">rocket</span>
+            <span class="vocab-ipa">/ˈrɑːkɪt/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">collocate: blast off</span>
+            <div class="vocab-def">a fast vehicle that travels up into space</div>
+          </div>
+          <div class="vocab-example">"Just then, a <strong>rocket</strong> roared up from the ground." → The <strong>rocket</strong> blasted off into space.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">window</span>
+            <span class="vocab-ipa">/ˈwɪndoʊ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">collocate: out the window</span>
+            <div class="vocab-def">an opening in a wall or a car, covered with glass</div>
+          </div>
+          <div class="vocab-example">"He stuck his hand out the <strong>window</strong>." / "Wind carried Fly Guy out the <strong>window</strong>."</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">overboard</span>
+            <span class="vocab-ipa">/ˈoʊvərbɔːrd/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adverb</span>
+            <span class="vocab-pos" style="color:var(--purple);">collocate: jump/fall overboard</span>
+            <div class="vocab-def">over the side of a boat and into the water</div>
+          </div>
+          <div class="vocab-example">"Fly Guy jumped <strong>overboard</strong>." → Don't lean over the boat or you may fall <strong>overboard</strong>!</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">space</span>
+            <span class="vocab-ipa">/speɪs/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">collocate: into space / outer space</span>
+            <div class="vocab-def">the area beyond Earth where stars and planets are</div>
+          </div>
+          <div class="vocab-example">"The rocket raced into <strong>space</strong>." → Astronauts travel to outer <strong>space</strong>.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">wind</span>
+            <span class="vocab-ipa">/wɪnd/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">collocate: strong wind (careful: verb "to wind" = /waɪnd/)</span>
+            <div class="vocab-def">moving air</div>
+          </div>
+          <div class="vocab-example">"<strong>Wind</strong> blew in the car and carried Fly Guy out the window." → The <strong>wind</strong> blew my hat off.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">survive</span>
+            <span class="vocab-ipa">/sərˈvaɪv/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <span class="vocab-pos" style="color:var(--purple);">collocate: survive a crash / will he survive?</span>
+            <div class="vocab-def">to stay alive after a dangerous situation</div>
+          </div>
+          <div class="vocab-example">"Will Fly Guy <strong>survive</strong>?" → The little bird <strong>survived</strong> the storm.</div>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 词汇巩固活动 (3 min)</strong>
+          <strong>Vehicle Charades:</strong> 教师做动作/拟声（truck honk, boat splash, train choo-choo, plane whoosh, rocket blast），学生猜出对应交通工具词并喊出 "Follow that ___!"。
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase-purple-dot" id="sec-lt02-phonics">
+        <div class="phase-label">⏱ 33–43 min · LT02 Phonics + LT03 Pronunciation <button class="push-btn" onclick="openPushModal('LT02-Phonics','Vowel teams -air (airplane), -ow (window, blow, follow), -oa (boat, road); blends cr- (cried), bl- (blew, blown), sp- (spit, space); r-controlled ar (car, start)')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT03-Pronunciation','Syllable counting and stress: follow(2,1st), window(2,1st), airplane(2,1st), motorboat(3,1st), elephant(3,1st), overboard(3,1st), survive(2,2nd); sentence stress on "Follow that TRUCK!"')">📤 Push</button></div>
+        <div class="phase-title">语音拼读与发音训练</div>
+
+        <h4>Phonics Focus (5 min)</h4>
+        <p>从本书中提取高频语音模式，引导学生发现规律：</p>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">长元音 Vowel Teams</h4>
+          <span class="phonics-item"><span class="phonics-pattern">-air</span> airplane, air</span>
+          <span class="phonics-item"><span class="phonics-pattern">-ow</span> window, blow, follow</span>
+          <span class="phonics-item"><span class="phonics-pattern">-oa</span> boat, road</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">-ow 和 -oa 都可读长 o /oʊ/；-air 读 /eər/。注意 wind（名词 /wɪnd/）vs 动词 to wind（/waɪnd/）——同形不同音。</p>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">辅音连缀 Consonant Blends</h4>
+          <span class="phonics-item"><span class="phonics-pattern">cr-</span> cried, crossed</span>
+          <span class="phonics-item"><span class="phonics-pattern">bl-</span> blew, blown</span>
+          <span class="phonics-item"><span class="phonics-pattern">sp-</span> spit, space</span>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">r 控制元音 R-controlled</h4>
+          <span class="phonics-item"><span class="phonics-pattern">ar</span> /ɑːr/ — car, start</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">"hit the road"、windows rolled down — r 会"吃掉"后面元音，ar 常读 /ɑːr/。</p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Pronunciation Focus (5 min)</h4>
+
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Word</th><th>Syllables</th><th>Stress</th><th>Practice</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>follow</td><td>fol·low (2)</td><td>1st</td><td><strong>FOL</strong>-low</td></tr>
+            <tr><td>window</td><td>win·dow (2)</td><td>1st</td><td><strong>WIN</strong>-dow</td></tr>
+            <tr><td>airplane</td><td>air·plane (2)</td><td>1st</td><td><strong>AIR</strong>-plane</td></tr>
+            <tr><td>rocket</td><td>rock·et (2)</td><td>1st</td><td><strong>ROCK</strong>-et</td></tr>
+            <tr><td>motorboat</td><td>mo·tor·boat (3)</td><td>1st</td><td><strong>MO</strong>-tor-boat</td></tr>
+            <tr><td>elephant</td><td>el·e·phant (3)</td><td>1st</td><td><strong>EL</strong>-e-phant</td></tr>
+            <tr><td>overboard</td><td>o·ver·board (3)</td><td>1st</td><td><strong>O</strong>-ver-board</td></tr>
+            <tr><td>survive</td><td>sur·vive (2)</td><td>2nd</td><td>sur-<strong>VIVE</strong></td></tr>
+            <tr><td>passing</td><td>pass·ing (2)</td><td>1st</td><td><strong>PASS</strong>-ing</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-tip">
+          <strong>💡 祈使句句重音 (2 min)</strong>
+          <strong>节拍朗读：</strong>老师击掌示范 "FOLLOW that TRUCK!" 重读 FOLLOW 和对象词 TRUCK。
+          学生分组轮读整条链：Follow that truck! → boat! → train! → airplane! → rocket! 越读越快，保持节奏。
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase green-dot" id="sec-lt04-patterns">
+        <div class="phase-label">⏱ 43–50 min · LT04 Sentence Patterns + Wrap-up <button class="push-btn" onclick="openPushModal('LT04-Sentence-Patterns','Core patterns: Follow that [vehicle]! (imperative); [wind] carried [obj] out of/into/onto ___; [S] jumped overboard/blew onto ___; Will [s.o.] survive?; refrain chaining')">📤 Push to Students</button></div>
+        <div class="phase-title">核心句型初探 + 小结</div>
+
+        <p>引入本课核心句式，为第二课时深度语法做铺垫：</p>
+
+        <div class="pattern-block">
+          <div class="pattern-template">Follow that [vehicle]!</div>
+          <div class="pattern-example">"Follow that truck!" / "Follow that boat!" / "Follow that rocket!"</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 全书最强句型 — 祈使句 (imperative) 用于下达"追"的指令，贯穿每一站。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">[Wind] carried [object] out of / into / onto ___.</div>
+          <div class="pattern-example">"Wind carried Fly Guy out the window." / "...tumbled into the driver's mouth." / "...blew him onto an airplane."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 方向介词组 out of / into / onto 决定 Fly Guy 的落点。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">Will [someone] + verb?</div>
+          <div class="pattern-example">"Will Fly Guy survive?" (将来疑问 — 制造悬念)</div>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>📝 第一课时小结</strong>
+          让学生按顺序说出追逐链，考验记忆：
+          <br>"Follow that ___! → truck → boat → train → airplane → rocket!"
+          <br>（为第二课时的复述与写作做最直接铺垫。)
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SESSION 2 ═══════ -->
+<section id="session2">
+  <div class="section-label">Session 2 · 50 minutes</div>
+  <h2>第二课时 — 深度分析与语言输出</h2>
+  <p class="text-secondary">目标：深入语法、词形、语篇分析，完成口语输出和写作任务。</p>
+
+  <div class="session-block">
+    <div class="session-header s2">
+      <div>
+        <h2>Lesson 2: Follow That Fly Guy!</h2>
+        <div class="session-meta">Focus: Grammar → Morphology → Cohesion → Speaking → Writing</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–5 min · Review</div>
+        <div class="phase-title">快速复习</div>
+
+        <p>用 3 个快速问题回顾第一课时内容：</p>
+        <ol style="padding-left:1.5em;margin-bottom:0.8rem;">
+          <li>"What carried Fly Guy out of the window?" → The wind.</li>
+          <li>"What did Buzz shout every time?" → "Follow that ___!"</li>
+          <li>"Put the rides in order: rocket, boat, train, truck, airplane." → truck → boat → train → airplane → rocket.</li>
+        </ol>
+        <p>然后用 <strong>Chase Map</strong> 快速梳理 Fly Guy 的旅程：</p>
+        <svg viewBox="0 0 700 210" style="width:100%;max-width:700px;height:auto;margin:0.5rem 0;" role="img" aria-label="Chase map for Ride Fly Guy Ride">
+          <title>Chase Map — Ride, Fly Guy, Ride!</title>
+          <desc>A step line showing Fly Guy travelling from the car through truck, boat, train, airplane and rocket</desc>
+          <polyline points="30,60 150,150 270,60 390,150 510,60 630,150" fill="none" stroke="#C96F3D" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="30" cy="60" r="7" fill="#C96F3D"/>
+          <circle cx="150" cy="150" r="7" fill="#5A8F56"/>
+          <circle cx="270" cy="60" r="7" fill="#5A8F56"/>
+          <circle cx="390" cy="150" r="7" fill="#5A8F56"/>
+          <circle cx="510" cy="60" r="7" fill="#5A8F56"/>
+          <circle cx="630" cy="150" r="7" fill="#C75A4A"/>
+          <text x="30" y="44" text-anchor="middle" font-size="11" fill="#31251B">car</text>
+          <text x="150" y="176" text-anchor="middle" font-size="11" fill="#31251B">truck</text>
+          <text x="270" y="44" text-anchor="middle" font-size="11" fill="#31251B">boat</text>
+          <text x="390" y="176" text-anchor="middle" font-size="11" fill="#31251B">train</text>
+          <text x="510" y="44" text-anchor="middle" font-size="11" fill="#31251B">airplane</text>
+          <text x="630" y="176" text-anchor="middle" font-size="12" fill="#C75A4A" font-weight="700">rocket</text>
+          <text x="330" y="202" text-anchor="middle" font-size="10" fill="#8B7662">"Follow that ___!" → Fly Guy lands safe = home ride</text>
+        </svg>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase blue-dot" id="sec-lt05-grammar">
+        <div class="phase-label">⏱ 5–18 min · LT05 Grammar <button class="push-btn" onclick="openPushModal('LT05-Grammar','Imperatives (Follow that ___!, Buckle up!, Let\'s ride home.); Simple Past narration (blew, carried, cried, tumbled, jumped, surprised, roared, landed); prepositions of movement (out of, into, onto, overboard, up); could (ability) and will (future)')">📤 Push to Students</button></div>
+        <div class="phase-title">语法功能深度分析</div>
+
+        <h4>① Imperatives 祈使句 — 下达指令 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>原文句</th><th>功能</th><th>结构</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>"<strong>Follow</strong> that truck!"</td><td>指令 / 指挥别人做事</td><td>动词原形开头 (Follow + that + noun)</td></tr>
+            <tr><td>"Everyone <strong>buckle up</strong>!"</td><td>命令 / 提醒</td><td>动词短语原形</td></tr>
+            <tr><td>"<strong>Let's</strong> ride home."</td><td>建议 (总是含说话者)</td><td>Let's + 动词原形</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">练习：两人一组，一人做动作/指图片，另一人用祈使句指挥："Follow that train!" "Stop!" "Let's go!"</p>
+
+        <h4 style="margin-top:1rem;">② Simple Past Tense — 追逐故事的核心时态 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base Form</th><th>Past Tense</th><th>Type</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>blow</td><td><strong>blew</strong></td><td style="color:var(--red);">irregular</td><td>"Wind <em>blew</em> in the car."</td></tr>
+            <tr><td>say</td><td><strong>said</strong></td><td style="color:var(--red);">irregular</td><td>"Dad <em>said</em>, let's ride home."</td></tr>
+            <tr><td>take</td><td><strong>took</strong></td><td style="color:var(--red);">irregular</td><td>"The rocket didn't <em>take</em> you to space."</td></tr>
+            <tr><td>see</td><td><strong>saw</strong></td><td style="color:var(--red);">irregular</td><td>"Fly Guy <em>saw</em> a man put a bug on a hook."</td></tr>
+            <tr><td>go</td><td><strong>went</strong></td><td style="color:var(--red);">irregular</td><td>"They <em>went</em> for a ride."</td></tr>
+            <tr><td>carry</td><td><strong>carried</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"Wind <em>carried</em> Fly Guy out the window."</td></tr>
+            <tr><td>tumble</td><td><strong>tumbled</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"Fly Guy <em>tumbled</em> into his mouth."</td></tr>
+            <tr><td>jump</td><td><strong>jumped</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"Fly Guy <em>jumped</em> overboard."</td></tr>
+            <tr><td>surprise</td><td><strong>surprised</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"Fly Guy <em>surprised</em> a sleepy elephant."</td></tr>
+            <tr><td>roar</td><td><strong>roared</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"A rocket <em>roared</em> up."</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-warn">
+          <strong>⚠️ 重点提示</strong>
+          本书集中出现大量动作类过去式，不规则动词（blew, said, took, saw, went）是高频易错点。建议用"base → past"闪卡配对快速操练。
+        </div>
+
+        <h4 style="margin-top:1rem;">③ Prepositions of Movement 方向介词 (3 min)</h4>
+        <div class="pattern-block">
+          <div class="pattern-template">out of / into / onto / overboard</div>
+          <div class="pattern-example">
+            carried him <strong>out of</strong> the window · tumbled <strong>into</strong> his mouth ·
+            spit him <strong>into</strong> the motorboat · jumped <strong>overboard</strong> · landed <strong>onto</strong> the train
+          </div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">
+            out of = 从内部到外部 · into = 到……里面 (朝向内部) · onto = 到……上面 · overboard = 越过船舷落水
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-purple-dot" id="sec-lt06-morphology">
+        <div class="phase-label">⏱ 18–26 min · LT06 Morphology + LT07 Cohesion <button class="push-btn" onclick="openPushModal('LT06-Morphology','Suffixes: -ing (passing, sleeping, riding), -ed (tumbled, surprised, roared), -er nouns (driver, pilot); irregular verbs (blow-blew, take-took, say-said, see-saw, go-went); compounds: motorboat, airplane, overboard')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT07-Cohesion','Refrain "Follow that ___!" as structural binder; meanwhile (scene switch); Just then (sudden event); pronoun reference (he/him/his = Fly Guy); sequence linking (truck → boat → train → airplane → rocket)')">📤 Push</button></div>
+        <div class="phase-title">词形变化与语篇衔接</div>
+
+        <h4>LT06 · Morphology 词形变化 (4 min)</h4>
+        <p>引导学生发现词族（word families）与词形变化：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base</th><th>+ ing</th><th>+ ed</th><th>+ er (noun)</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>pass</td><td>passing</td><td>passed</td><td>—</td><td>规则变化</td></tr>
+            <tr><td>sleep</td><td>sleeping</td><td>slept</td><td>—</td><td>不规则 past (slept)</td></tr>
+            <tr><td>ride</td><td>riding</td><td>rode</td><td>rider</td><td>去 e 加 -ing；不规则过去</td></tr>
+            <tr><td>tumble</td><td>tumbling</td><td>tumbled</td><td>—</td><td>去 e 加 -ed</td></tr>
+            <tr><td>surprise</td><td>surprising</td><td>surprised</td><td>—</td><td>去 e 加 -ing/-ed</td></tr>
+            <tr><td>roar</td><td>roaring</td><td>roared</td><td>—</td><td>规则变化</td></tr>
+            <tr><td>drive</td><td>driving</td><td>drove</td><td><strong>driver</strong></td><td>drive + er = 司机</td></tr>
+            <tr><td>pilot</td><td>—</td><td>—</td><td><strong>pilot</strong></td><td>职业名词 (无词缀)</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-info">
+          <strong>🔍 合成词 Compound Words</strong>
+          motor + boat = <strong>motorboat</strong> · air + plane = <strong>airplane</strong> · over + board = <strong>overboard</strong>
+          <br>两个单词合成一个新词。引导学生用手指"拼接"拆解合成词。
+        </div>
+
+        <h4 style="margin-top:1rem;">LT07 · Cohesion 语篇衔接 (4 min)</h4>
+        <p>分析本书如何用衔接手段串起一整个"追逐长镜头"：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Device</th><th>Function</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Refrain:</strong> "Follow that ___!"</td>
+              <td>反复结构 — 串联每一站，形成节奏</td>
+              <td>"Follow that truck! / boat! / train! / airplane! / rocket!"</td>
+            </tr>
+            <tr>
+              <td><strong>Meanwhile</strong></td>
+              <td>同时发生 — 从 Buzz 视角切到 Fly Guy 视角</td>
+              <td>"Meanwhile, in the truck, Fly Guy tumbled into..."</td>
+            </tr>
+            <tr>
+              <td><strong>Just then</strong></td>
+              <td>突发事件 — 引入火箭，推动高潮</td>
+              <td>"Just then, a rocket roared up from the ground."</td>
+            </tr>
+            <tr>
+              <td><strong>代词 he/him/his</strong></td>
+              <td>指代 — 通篇指 Fly Guy</td>
+              <td>"Wind carried <strong>him</strong> out the window." "Will <strong>he</strong> survive?"</td>
+            </tr>
+            <tr>
+              <td><strong>顺序链</strong></td>
+              <td>交通工具逐步升级</td>
+              <td>car → truck → boat → train → airplane → rocket</td>
+            </tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-tip">
+          <strong>💡 讨论：refrain 的力量</strong>
+          让学生找齐所有 "Follow that ___!"。讨论：这个短语每次都把情节向前推一站，制造"下一步会是什么车"的期待感。
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase green-dot" id="sec-lt08-functional">
+        <div class="phase-label">⏱ 26–40 min · LT08 Functional Communication <button class="push-btn" onclick="openPushModal('LT08-Functional-Communication','Give commands (Follow that ___!, Stop!, Let\'s go!); retell the chase in order (First/Then/Next/In the end); describe vehicles & sounds; predict (Will he be safe? Which ride next?); opinion (Which ride would you take? Why?)')">📤 Push to Students</button></div>
+        <div class="phase-title">口语输出与写作任务</div>
+
+        <h4>Activity 1: Retell the Chase (5 min)</h4>
+        <p>学生两人一组，用以下框架把整个追逐过程按顺序复述：</p>
+        <div class="card" style="background:var(--green-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Chase Retelling Frame:</strong></p>
+          <p style="font-size:var(--fs-sm);">
+            First, the wind carried Fly Guy out of the window.<br>
+            Then, Buzz cried, "Follow that truck!"<br>
+            Next, Fly Guy jumped overboard onto a circus train.<br>
+            After that, the elephant blew him onto an airplane.<br>
+            Finally, a rocket roared up — but Fly Guy was safe!<br>
+            In the end, they rode home, and Fly Guy said, "More rides!"
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 2: Give Commands (5 min)</h4>
+        <p>Directions Relay — 用祈使句指挥"逃生路线"：</p>
+        <div class="card" style="background:var(--purple-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Instruction Prompts:</strong></p>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li>"Follow that car!" / "Stop!" / "Run that way!" / "Let's go home!"</li>
+            <li>学生 A 指挥，学生 B 根据指令在教室移动 (TPR)。</li>
+          </ul>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Language scaffold:</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            "Follow that ___!"<br>
+            "Stop! / Let's go! / Wait for me!"<br>
+            "Turn left/right. Go faster! Go slower!"
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 3: Writing — My Own Chase Story (4 min 指导 + 课后完成)</h4>
+        <div class="card" style="background:var(--surface-alt);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Writing Prompt:</strong></p>
+          <p style="font-size:var(--fs-base);font-weight:600;">The wind blows your pet out the window! Write a short chase story. Use "Follow that ___!" and at least two prepositions (into, onto, out of, overboard).</p>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Writing Frame (scaffold):</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            One day, the wind blew my ___ out the window.<br>
+            I shouted, "Follow that ___!"<br>
+            It landed onto the ___.<br>
+            Then it jumped into the ___.<br>
+            In the end, I caught it, and it said, "___!"
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 40–50 min · Review &amp; Extension</div>
+        <div class="phase-title">总结回顾 + 拓展延伸</div>
+
+        <h4>Exit Ticket (5 min)</h4>
+        <p>每人回答 3 个问题后离开教室：</p>
+        <ol style="padding-left:1.5em;">
+          <li>说出 2 个你新学的交通工具词。</li>
+          <li>用 "Follow that ___!" 造一个指令句。</li>
+          <li>用 out of / into / onto 造一个句子。</li>
+        </ol>
+
+        <h4 style="margin-top:0.8rem;">Extension (5 min)</h4>
+        <div class="callout callout-tip">
+          <strong>🌟 拓展活动选择</strong>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li><strong>Transport Sound Designer:</strong> 给每种交通工具配上音效并复述它载 Fly Guy 的画面。</li>
+            <li><strong>Chase Charades:</strong> 一人表演某种交通工具，全班喊 "Follow that ___!"</li>
+            <li><strong>Creative Writing:</strong> Fly Guy 下一站如果坐上潜水艇/直升机/热气球，会发生什么？写 3-5 句。</li>
+            <li><strong>Word Detective:</strong> 找出书中所有含 -ow 或 -air 的词，写在纸上并标重音。</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ HOMEWORK ═══════ -->
+<section id="homework">
+  <div class="section-label">Homework Worksheet</div>
+  <h2>课后作业 · Ride, Fly Guy, Ride!</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;">以下作业分为 6 个部分，覆盖 LT01–LT08 全部模块。可打印为 A4 纸质版。建议在第 1 课时后完成 Part A–D，第 2 课时后完成 Part E–F。参考答案折叠于每部分底部（教师使用）。</p>
+
+  <!-- Part A: Vocabulary -->
+  <div class="hw-section" id="sec-hw-partA">
+    <div class="hw-title">Part A · Vocabulary Match <button class="push-btn" onclick="openPushModal('HW-PartA','Vocabulary Match: match 6 words (follow, ride, rocket, overboard, survive, window) with their definitions')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Draw a line to match each word with its meaning.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;font-size:var(--fs-sm);">
+      <div>
+        <p><strong>1.</strong> follow &nbsp;________</p>
+        <p><strong>2.</strong> ride &nbsp;________</p>
+        <p><strong>3.</strong> rocket &nbsp;________</p>
+        <p><strong>4.</strong> overboard &nbsp;________</p>
+        <p><strong>5.</strong> survive &nbsp;________</p>
+        <p><strong>6.</strong> window &nbsp;________</p>
+      </div>
+      <div>
+        <p><strong>A.</strong> a trip in a car or other vehicle</p>
+        <p><strong>B.</strong> to go behind and chase someone or something</p>
+        <p><strong>C.</strong> a fast vehicle that travels up into space</p>
+        <p><strong>D.</strong> over the side of a boat and into the water</p>
+        <p><strong>E.</strong> to stay alive after a dangerous situation</p>
+        <p><strong>F.</strong> a glass opening in a wall or a car</p>
+      </div>
+    </div>
+
+    <details class="answer-key">
+      <summary>📋 Answer Key (教师)</summary>
+      <p class="ak-item">1 → <code>B</code> (to go behind and chase)</p>
+      <p class="ak-item">2 → <code>A</code> (a trip in a car or other vehicle)</p>
+      <p class="ak-item">3 → <code>C</code> (a fast vehicle that travels up into space)</p>
+      <p class="ak-item">4 → <code>D</code> (over the side of a boat and into the water)</p>
+      <p class="ak-item">5 → <code>E</code> (to stay alive after a dangerous situation)</p>
+      <p class="ak-item">6 → <code>F</code> (a glass opening in a wall or a car)</p>
+    </details>
+  </div>
+
+  <!-- Part B: Vocabulary in Context -->
+  <div class="hw-section" id="sec-hw-partB">
+    <div class="hw-title">Part B · Vocabulary in Context <button class="push-btn" onclick="openPushModal('HW-PartB','Fill in the blanks with word bank (boat, overboard, train, airplane, rocket, space, survive, window)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Fill in the blanks with the correct word from the box.</div>
+
+    <div style="background:var(--surface-alt);border-radius:var(--radius);padding:0.6rem 1rem;margin-bottom:1rem;font-size:var(--fs-sm);">
+      <strong>Word Bank:</strong> &nbsp; boat &nbsp; | &nbsp; overboard &nbsp; | &nbsp; train &nbsp; | &nbsp; airplane &nbsp; | &nbsp; rocket &nbsp; | &nbsp; space &nbsp; | &nbsp; survive &nbsp; | &nbsp; window
+    </div>
+
+    <div class="hw-question"><span class="q-num">1.</span> Fly Guy flew right out the <span class="hw-blank"></span> of the car.</div>
+    <div class="hw-question"><span class="q-num">2.</span> Buzz cried, "Follow that <span class="hw-blank"></span>!" when Fly Guy landed in the motorboat.</div>
+    <div class="hw-question"><span class="q-num">3.</span> Fly Guy jumped <span class="hw-blank"></span> and landed on a passing circus <span class="hw-blank"></span>.</div>
+    <div class="hw-question"><span class="q-num">4.</span> "Follow that <span class="hw-blank"></span>!" Buzz yelled as Fly Guy reached the plane.</div>
+    <div class="hw-question"><span class="q-num">5.</span> Then a <span class="hw-blank"></span> roared up, and the rocket raced into <span class="hw-blank"></span>.</div>
+    <div class="hw-question"><span class="q-num">6.</span> Buzz asked, "Will Fly Guy <span class="hw-blank"></span>?"</div>
+
+    <details class="answer-key">
+      <summary>📋 Answer Key (教师)</summary>
+      <p class="ak-item">1 → <code>window</code> — "Fly Guy flew right out the window of the car."</p>
+      <p class="ak-item">2 → <code>boat</code> — "Follow that boat!" (Fly Guy landed in the motorboat)</p>
+      <p class="ak-item">3 → <code>overboard</code>, <code>train</code> — "jumped overboard and landed on a passing circus train."</p>
+      <p class="ak-item">4 → <code>airplane</code> — "Follow that airplane!" (reached the plane)</p>
+      <p class="ak-item">5 → <code>rocket</code>, <code>space</code> — "A rocket roared up, and the rocket raced into space."</p>
+      <p class="ak-item">6 → <code>survive</code> — "Will Fly Guy survive?"</p>
+    </details>
+  </div>
+
+  <!-- Part C: Phonics -->
+  <div class="hw-section" id="sec-hw-partC">
+    <div class="hw-title">Part C · Phonics Detective <button class="push-btn" onclick="openPushModal('HW-PartC','Phonics Detective: find story words matching -air, -ow, cr-, bl-, sp- patterns; bonus syllable/stress marking')">📤 Push</button></div>
+    <div class="hw-subtitle">LT02 + LT03 · Find words in the story that match each sound pattern.</div>
+
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th style="width:130px;">Sound Pattern</th><th>Find 2 words from the story</th><th>Pronunciation (IPA)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>-air</strong> (/eər/)</td><td>1. <span class="hw-blank" style="min-width:90px;"></span> 2. <span class="hw-blank" style="min-width:90px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>-ow</strong> (/oʊ/)</td><td>1. <span class="hw-blank" style="min-width:90px;"></span> 2. <span class="hw-blank" style="min-width:90px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>cr-</strong></td><td>1. <span class="hw-blank" style="min-width:90px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>bl-</strong></td><td>1. <span class="hw-blank" style="min-width:90px;"></span> 2. <span class="hw-blank" style="min-width:90px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>sp-</strong></td><td>1. <span class="hw-blank" style="min-width:90px;"></span></td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="font-size:var(--fs-sm);margin-top:0.8rem;"><strong>Bonus:</strong> Circle the syllables and mark the stress: follow &nbsp; window &nbsp; airplane &nbsp; rocket &nbsp; overboard &nbsp; survive</p>
+
+    <details class="answer-key">
+      <summary>📋 Answer Key (教师)</summary>
+      <p class="ak-item"><strong>-air:</strong> airplane, air → /ˈerpleɪn/, /er/</p>
+      <p class="ak-item"><strong>-ow:</strong> window, blow (also follow, showed) → /ˈwɪndoʊ/, /bloʊ/</p>
+      <p class="ak-item"><strong>cr-:</strong> cried → /kraɪd/</p>
+      <p class="ak-item"><strong>bl-:</strong> blew, blown → /bluː/, /bloʊn/</p>
+      <p class="ak-item"><strong>sp-:</strong> spit, space → /spɪt/, /speɪs/</p>
+      <p class="ak-item"><strong>Bonus:</strong> follow(2, 1st) · window(2, 1st) · airplane(2, 1st) · rocket(2, 1st) · overboard(3, 1st) · survive(2, 2nd)</p>
+    </details>
+  </div>
+
+  <!-- Part D: Grammar -->
+  <div class="hw-section" id="sec-hw-partD">
+    <div class="hw-title">Part D · Grammar Power <button class="push-btn" onclick="openPushModal('HW-PartD','Grammar Power: order the "Follow that ___!" chain; past tense base-to-past conversion (10 verbs); prepositions of movement (out of/into/onto/overboard)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT05 + LT06 · Imperatives · Past Tense · Prepositions</div>
+
+    <h4 style="font-size:var(--fs-base);margin-bottom:0.5rem;">D1: Put the "Follow that ___!" chain in the order of the story.</h4>
+    <div class="hw-question">rocket &nbsp; · &nbsp; boat &nbsp; · &nbsp; truck &nbsp; · &nbsp; airplane &nbsp; · &nbsp; train</div>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.6rem;">1.<span class="hw-blank" style="min-width:120px;"></span> &nbsp; 2.<span class="hw-blank" style="min-width:120px;"></span> &nbsp; 3.<span class="hw-blank" style="min-width:120px;"></span> &nbsp; 4.<span class="hw-blank" style="min-width:120px;"></span> &nbsp; 5.<span class="hw-blank" style="min-width:120px;"></span></p>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">D2: Past Tense — Write the past tense form.</h4>
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th>Base Form</th><th>Past Tense</th><th>Base Form</th><th>Past Tense</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>blow</td><td><span class="hw-blank"></span></td><td>say</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>carry</td><td><span class="hw-blank"></span></td><td>see</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>jump</td><td><span class="hw-blank"></span></td><td>take</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>surprise</td><td><span class="hw-blank"></span></td><td>go</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>roar</td><td><span class="hw-blank"></span></td><td>ride</td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">D3: Prepositions — Complete with out of / into / onto / overboard.</h4>
+    <div class="hw-question"><span class="q-num">1.</span> The wind carried Fly Guy <span class="hw-blank" style="min-width:60px;"></span> the window.</div>
+    <div class="hw-question"><span class="q-num">2.</span> Fly Guy tumbled <span class="hw-blank" style="min-width:60px;"></span> the truck driver's mouth.</div>
+    <div class="hw-question"><span class="q-num">3.</span> Fly Guy jumped <span class="hw-blank" style="min-width:60px;"></span> and landed <span class="hw-blank" style="min-width:60px;"></span> a circus train.</div>
+    <div class="hw-question"><span class="q-num">4.</span> The elephant blew him <span class="hw-blank" style="min-width:60px;"></span> an airplane.</div>
+
+    <details class="answer-key">
+      <summary>📋 Answer Key (教师)</summary>
+      <p class="ak-item"><strong>D1:</strong> 1. truck &nbsp; 2. boat &nbsp; 3. train &nbsp; 4. airplane &nbsp; 5. rocket</p>
+      <p class="ak-item"><strong>D2:</strong> blew, carried, jumped, surprised, roared, said, saw, took, went, rode</p>
+      <p class="ak-item"><strong>D3:</strong> 1. out of — "out of the window" · 2. into — "into the driver's mouth" · 3. overboard, onto — "jumped overboard and landed onto a circus train" · 4. onto — "blew him onto an airplane"</p>
+    </details>
+  </div>
+
+  <!-- Part E: Cohesion -->
+  <div class="hw-section" id="sec-hw-partE">
+    <div class="hw-title">Part E · Cohesion — Who Says What? <button class="push-btn" onclick="openPushModal('HW-PartE','Cohesion: who says "Follow that ___!"; meaning of meanwhile; order the chase chain; pronoun reference (he/him = Fly Guy); find "Just then"')">📤 Push</button></div>
+    <div class="hw-subtitle">LT07 · Read each question and answer about how the story holds together.</div>
+
+    <div class="hw-question"><span class="q-num">1.</span> Who says "Follow that ___!" every time? → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">2.</span> What word means "at the same time" and switches to Fly Guy's scene? → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">3.</span> In "Wind carried <strong>him</strong> out the window," who is <strong>him</strong>? → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">4.</span> Find the phrase that shows a sudden event when the rocket appears: → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">5.</span> Put the chase in order: <span class="hw-blank" style="min-width:250px;"></span> → <span class="hw-blank" style="min-width:250px;"></span></div>
+
+    <details class="answer-key">
+      <summary>📋 Answer Key (教师)</summary>
+      <p class="ak-item">1 → <strong>Buzz</strong> — he shouts the refrain to chase Fly Guy.</p>
+      <p class="ak-item">2 → <strong>Meanwhile</strong> — it shifts from Buzz chasing to what Fly Guy is doing.</p>
+      <p class="ak-item">3 → <strong>Fly Guy</strong> — "him" refers to Fly Guy throughout.</p>
+      <p class="ak-item">4 → <strong>"Just then"</strong> — "Just then, a rocket roared up from the ground."</p>
+      <p class="ak-item">5 → <strong>car → truck → boat → train → airplane → rocket</strong> (start with the car family ride, end at the rocket).</p>
+    </details>
+  </div>
+
+  <!-- Part F: Writing -->
+  <div class="hw-section" id="sec-hw-partF">
+    <div class="hw-title">Part F · My Own Chase Story <button class="push-btn" onclick="openPushModal('HW-PartF','Functional Writing: the wind blows your pet out the window; write a 4+ sentence chase story using "Follow that ___!" and two prepositions (into/onto/out of/overboard)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT08 · The wind blows your pet out the window! Write your own chase story. Use "Follow that ___!" and at least two prepositions (into, onto, out of, overboard).</div>
+
+    <p style="font-size:var(--fs-sm);margin-bottom:0.5rem;"><strong>Use these sentence starters if you need help:</strong></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.8rem;">
+      One day, the wind blew my ___ out the window.<br>
+      I shouted, "Follow that ___!"<br>
+      It landed onto the ___.<br>
+      Then it jumped into the ___.<br>
+      In the end, I caught it, and it said, "___!"
+    </p>
+    <div class="hw-lines" style="min-height:12em;"></div>
+
+    <details class="answer-key">
+      <summary>📋 Answer Key — Model Answer (教师)</summary>
+      <p class="ak-item"><strong>Model:</strong> "One day, the wind blew my dog out the window. I shouted, 'Follow that bus!' My dog landed onto a car. Then it jumped into an open truck. In the end, I caught it, and it said, 'More rides!'"</p>
+      <p class="ak-item"><strong>Check:</strong> story has "Follow that ___!", at least two prepositions (onto, into), and a logical beginning–middle–end.</p>
+    </details>
+  </div>
+
+</section>
+
+<!-- ═══════ TEACHER NOTES ═══════ -->
+<section>
+  <div class="section-label">Teacher Notes</div>
+  <h2>教师备注</h2>
+
+  <div class="lt-grid">
+    <div class="card">
+      <h4>📊 LT Coverage Map</h4>
+      <div style="overflow-x:auto"><table style="min-width:500px">
+        <thead>
+          <tr><th>LT Module</th><th>Session 1</th><th>Session 2</th><th>Homework</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LT01 Vocabulary</td><td>✅ 主教学</td><td>复习</td><td>✅ Part A–B</td></tr>
+          <tr><td>LT02 Phonics</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT03 Pronunciation</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT04 Sentence Patterns</td><td>✅ 初探</td><td>复习</td><td>—</td></tr>
+          <tr><td>LT05 Grammar</td><td>—</td><td>✅ 主教学</td><td>✅ Part D</td></tr>
+          <tr><td>LT06 Morphology</td><td>—</td><td>✅ 主教学</td><td>✅ Part C+D</td></tr>
+          <tr><td>LT07 Cohesion</td><td>—</td><td>✅ 主教学</td><td>✅ Part E</td></tr>
+          <tr><td>LT08 Functional</td><td>—</td><td>✅ 主教学</td><td>✅ Part F</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h4>🎯 CCSS Alignment (Grade 1–2)</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>RL.1.1</strong> Ask and answer questions about key details</li>
+        <li><strong>RL.1.2</strong> Retell stories, including key details</li>
+        <li><strong>RL.1.3</strong> Describe characters, settings, and major events</li>
+        <li><strong>RL.1.7</strong> Use illustrations and details to describe characters/events</li>
+        <li><strong>W.1.3</strong> Write narratives in which they recount a well-elaborated event</li>
+        <li><strong>SL.1.1</strong> Participate in collaborative conversations</li>
+        <li><strong>SL.1.4</strong> Describe people, places, things, and events</li>
+        <li><strong>L.1.1</strong> Produce complete sentences; use frequently occurring nouns and verbs</li>
+        <li><strong>L.1.4</strong> Determine meaning of words using context clues</li>
+        <li><strong>RF.1.3</strong> Know and apply grade-level phonics and word analysis skills</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="page-wrap">
+    <p>Ride, Fly Guy, Ride! — 精读教案 · 两课时 · Emily's Reading Studio</p>
+    <p style="margin-top:0.3rem;">Language Target Framework · LT01–LT08 · CCSS Grade 1–2 Aligned</p>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll for TOC
+document.querySelectorAll('.toc a').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var id = this.getAttribute('href').slice(1);
+    var target = document.getElementById(id);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+
+// ═══════ Push to Students ═══════
+const BOOK_TITLE = "Ride, Fly Guy, Ride!";
+const sourceLessonUrl = '/frontend/fly-guy/ride_fly_guy_ride_lesson_plan.html';
+const sourceLessonId = 'flyguy-ride-fly-guy-ride';
+
+const sectionContentMap = {
+  'LT01-Vocabulary': '12 core vocabulary words with IPA, POS, collocations, examples and word families: ride, follow, truck, boat, train, airplane, rocket, window, overboard, space, wind, survive',
+  'LT02-Phonics': 'Vowel teams -air (airplane/air), -ow (window/blow/follow), -oa (boat/road); blends cr- (cried), bl- (blew/blown), sp- (spit/space); r-controlled ar (car/start)',
+  'LT03-Pronunciation': 'Syllable counting and stress: follow(2,1st), window(2,1st), airplane(2,1st), motorboat(3,1st), elephant(3,1st), overboard(3,1st), survive(2,2nd); sentence stress on "Follow that TRUCK!"',
+  'LT04-Sentence-Patterns': 'Core patterns: Follow that [vehicle]! (imperative); [wind] carried [obj] out of/into/onto ___; [S] jumped overboard / blew onto ___; Will [someone] survive?; refrain chaining truck → boat → train → airplane → rocket',
+  'LT05-Grammar': 'Imperatives (Follow that ___!, Buckle up!, Let\'s ride home.); Simple Past narration (blew, carried, cried, tumbled, jumped, surprised, roared, landed); prepositions of movement (out of, into, onto, overboard, up); could (ability) and will (future)',
+  'LT06-Morphology': 'Suffixes: -ing (passing, sleeping, riding), -ed (tumbled, surprised, roared), -er nouns (driver, pilot); irregular verbs (blow-blew, take-took, say-said, see-saw, go-went, ride-rode); compound words: motorboat, airplane, overboard',
+  'LT07-Cohesion': 'Refrain "Follow that ___!" as structural binder; meanwhile (scene switch); Just then (sudden event); pronoun reference (he/him/his = Fly Guy); sequence linking (car → truck → boat → train → airplane → rocket)',
+  'LT08-Functional-Communication': 'Give commands (Follow that ___!, Stop!, Let\'s go!); retell the chase in order (First/Then/Next/In the end); describe vehicles & sounds; predict (Will he survive? Which ride next?); opinion (Which ride would you take? Why?)',
+  'HW-PartA': 'Vocabulary Match: match 6 words (follow, ride, rocket, overboard, survive, window) with their definitions',
+  'HW-PartB': 'Vocabulary in Context: fill in blanks using word bank (boat, overboard, train, airplane, rocket, space, survive, window)',
+  'HW-PartC': 'Phonics Detective: find story words matching -air, -ow, cr-, bl-, sp- patterns; syllable/stress marking bonus',
+  'HW-PartD': 'Grammar Power: order the "Follow that ___!" chain; past tense conversion (10 verbs); prepositions (out of/into/onto/overboard)',
+  'HW-PartE': 'Cohesion: who says "Follow that ___!"; meaning of meanwhile; order the chase chain; pronoun reference; find "Just then"',
+  'HW-PartF': 'Functional Writing: the wind blows your pet out the window; write a 4+ sentence chase story using "Follow that ___!" and two prepositions'
+};
+
+function openPushModal(sectionId, sectionContent) {
+  var token = localStorage.getItem('authToken');
+  if (!token) {
+    window.location.href = '/lesson.html';
+    return;
+  }
+  var content = sectionContent || sectionContentMap[sectionId] || sectionId;
+
+  fetch('/api/students/list', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API error: ' + r.status);
+    return r.json();
+  })
+  .then(function(students) {
+    if (!Array.isArray(students) || students.length === 0) {
+      alert('No students found. Please add students first.');
+      return;
+    }
+    var existing = document.querySelector('.push-modal-overlay');
+    if (existing) existing.remove();
+
+    var modal = document.createElement('div');
+    modal.className = 'push-modal-overlay';
+    var studentListHtml = students.map(function(s) {
+      return '<label class="student-item"><input type="checkbox" value="' + s.id + '"><span>' + s.name + '</span></label>';
+    }).join('');
+    modal.innerHTML = '<div class="push-modal">' +
+      '<h3>\ud83d\udce4 Push to Students</h3>' +
+      '<p style="color:#666;font-size:13px;">' + sectionId + ' · ' + BOOK_TITLE + '</p>' +
+      '<p style="color:#888;font-size:11px;margin-bottom:8px;">' + content.substring(0, 120) + (content.length > 120 ? '...' : '') + '</p>' +
+      '<div class="student-list">' + studentListHtml + '</div>' +
+      '<button class="push-confirm-btn" id="pushConfirmBtn">\u2705 Confirm Push</button>' +
+      '<button class="push-cancel-btn" id="pushCancelBtn">\u2716 Cancel</button>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    document.getElementById('pushConfirmBtn').onclick = function() { doPush(sectionId, content, this); };
+    document.getElementById('pushCancelBtn').onclick = function() { modal.remove(); };
+    modal.onclick = function(e) { if (e.target === modal) modal.remove(); };
+  })
+  .catch(function(err) {
+    alert('Failed to load students: ' + err.message);
+  });
+}
+
+function doPush(sectionId, content, btn) {
+  var modal = document.querySelector('.push-modal-overlay');
+  if (!modal) return;
+  var checked = modal.querySelectorAll('input:checked');
+  if (checked.length === 0) {
+    alert('Please select at least one student.');
+    return;
+  }
+  var token = localStorage.getItem('authToken');
+  btn.textContent = 'Pushing...';
+  btn.disabled = true;
+
+  var emojiMap = {
+    'LT01': '\ud83d\udcd6', 'LT02': '\ud83d\udd24', 'LT03': '\ud83c\udfa4',
+    'LT04': '\u270f\ufe0f', 'LT05': '\ud83d\udd24', 'LT06': '\ud83e\udde9',
+    'LT07': '\ud83d\udd17', 'LT08': '\ud83d\udcac', 'HW': '\ud83d\udcdd'
+  };
+  var prefix = sectionId.split('-')[0];
+  var emoji = emojiMap[prefix] || '\ud83d\udccc';
+  var title = emoji + ' [Fly Guy] ' + sectionId;
+  var today = new Date();
+  var todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  var teacher = localStorage.getItem('currentUser') || localStorage.getItem('lesson_tracker_user') || 'emily_mo';
+
+  // Build a Practice assignment (backend-persisted) for each selected student.
+  // Push a TASK SNAPSHOT (not the whole lesson HTML) so the student renders
+  // only the selected task interactively.
+  var taskDef = PUSH_TASKS[sectionId] || { renderer: 'checklist', prompt: content, required: true };
+  var taskId = 'flyguy-ride-fly-guy-ride-' + String(sectionId).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  var taskSnapshot = {
+    id: taskId,
+    title: title,
+    type: 'task',
+    series: 'Fly Guy',
+    book: BOOK_TITLE,
+    lesson: sectionId,
+    part: sectionId,
+    sourceLessonUrl: sourceLessonUrl,
+    studentRenderer: taskDef.renderer,
+    prompt: taskDef.prompt || content,
+    required: !!taskDef.required
+  };
+  if (taskDef.renderer === 'drag-match' && taskDef.pairs) taskSnapshot.pairs = taskDef.pairs;
+  if (taskDef.renderer === 'drag-order' && taskDef.items) taskSnapshot.items = taskDef.items;
+  if (taskDef.renderer === 'multiple-choice' && taskDef.options) taskSnapshot.options = taskDef.options;
+  if (taskDef.renderer === 'checklist') taskSnapshot.instructions = taskDef.prompt || content;
+
+  var assignments = [];
+  for (var i = 0; i < checked.length; i++) {
+    var studentId = checked[i].value;
+    assignments.push({
+      assignmentId: 'assign-' + Date.now() + '-' + Math.random().toString(16).slice(2) + '-' + i,
+      practiceId: 'lessonplan:' + sectionId,
+      title: title,
+      content: content,
+      sourceLessonUrl: sourceLessonUrl,
+      sourceLessonId: sourceLessonId,
+      taskIds: [taskId],
+      tasks: [taskSnapshot],
+      sourceBook: 'Fly Guy',
+      targetType: 'student',
+      targetIds: [studentId],
+      studentIds: [studentId],
+      classId: '',
+      relatedClassDate: todayStr,
+      assignedDate: todayStr,
+      dueDate: '',
+      teacherNote: '',
+      assignedBy: teacher,
+      status: 'active'
+    });
+  }
+
+  fetch('/api/practice/assignments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ assignments: assignments })
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    alert('\u2705 Pushed to ' + (data.count || assignments.length) + ' student(s)');
+    modal.remove();
+  })
+  .catch(function(err) {
+    alert('Push failed: ' + err.message);
+    btn.textContent = 'Push';
+    btn.disabled = false;
+  });
+}
+// ═══════ Task definitions for Practice push (task snapshot) ═══════
+// Each pushable section maps to an interactive task. Reasonable defaults:
+// LT*  → checklist (teacher marks completion of that learning phase)
+// HW-A → drag-match, HW-B/C → drag-order, HW-D → multiple-choice,
+// HW-E → short-answer, HW-F → short-answer (writing)
+var PUSH_TASKS = {
+  'LT01-Vocabulary': { renderer: 'checklist', prompt: 'Review the 12 core words with IPA, collocations, examples and word families: ride, follow, truck, boat, train, airplane, rocket, window, overboard, space, wind, survive.', required: true },
+  'LT02-Phonics': { renderer: 'checklist', prompt: 'Practice vowel teams (-air, -ow, -oa) and blends (cr-, bl-, sp-) with examples from Ride, Fly Guy, Ride!.', required: true },
+  'LT03-Pronunciation': { renderer: 'checklist', prompt: 'Count syllables and practice stress: follow(2), window(2), airplane(2), motorboat(3), elephant(3), overboard(3), survive(2). Chains: Follow that truck! boat! train! airplane! rocket!', required: true },
+  'LT04-Sentence-Patterns': { renderer: 'checklist', prompt: 'Practice sentence patterns: Follow that [vehicle]! (imperative); [wind] carried [obj] out of/into/onto ___; Will [someone] survive?', required: true },
+  'LT05-Grammar': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of the verb "blow".', options: [
+    { label: 'blow → blew', value: 'blew', correct: true },
+    { label: 'blow → blowed', value: 'blowed', correct: false },
+    { label: 'blow → bluen', value: 'bluen', correct: false }
+  ], required: true },
+  'LT06-Morphology': { renderer: 'checklist', prompt: 'Review suffixes (-ing, -ed, -er nouns) and irregular verbs (blew, took, said, saw, went, rode); compound words: motorboat, airplane, overboard.', required: true },
+  'LT07-Cohesion': { renderer: 'short-answer', prompt: 'In the story, who says "Follow that ___!" every time, and what does "him" refer to in "Wind carried him out the window"?', required: true },
+  'LT08-Functional-Communication': { renderer: 'short-answer', prompt: 'Give a command and retell the chase: Use "Follow that ___!" and tell what happened first, next, and in the end.', required: true },
+  'HW-PartA': { renderer: 'drag-match', prompt: 'Match each word with its meaning.', pairs: [
+    { left: 'follow', right: 'to go behind and chase' },
+    { left: 'ride', right: 'a trip in a vehicle' },
+    { left: 'rocket', right: 'a spaceship that blasts off' },
+    { left: 'overboard', right: 'into the water off a boat' },
+    { left: 'survive', right: 'to stay alive after danger' },
+    { left: 'window', right: 'a glass opening in a car' }
+  ], required: true },
+  'HW-PartB': { renderer: 'drag-order', prompt: 'Put the words in the correct order to complete the story blanks.', items: ['window', 'boat', 'overboard', 'train', 'airplane', 'rocket', 'space', 'survive'], required: true },
+  'HW-PartC': { renderer: 'multiple-choice', prompt: 'Which phonics pattern is in "airplane"?', options: [
+    { label: '-air vowel team', value: 'air', correct: true },
+    { label: '-ow vowel team', value: 'ow', correct: false },
+    { label: 'cr- blend', value: 'cr', correct: false }
+  ], required: true },
+  'HW-PartD': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of "blow".', options: [
+    { label: 'blow → blew', value: 'blew', correct: true },
+    { label: 'blow → blowed', value: 'blowed', correct: false },
+    { label: 'blow → blew → blows', value: 'blows', correct: false }
+  ], required: true },
+  'HW-PartE': { renderer: 'short-answer', prompt: 'Who says "Follow that ___!"? What word means "at the same time"? Put the chase in order.', required: true },
+  'HW-PartF': { renderer: 'short-answer', prompt: 'Write a chase story using "Follow that ___!" and at least two prepositions (into, onto, out of, overboard).', required: true }
+};
+</script>
+</body>
+</html>

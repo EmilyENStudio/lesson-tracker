@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hooray for Fly Guy! — 精读教案 · 两课时</title>
+<style>
+:root {
+  --canvas: #FBF3E7;
+  --surface: #FFF9F1;
+  --surface-alt: #FFF3E0;
+  --ink: #31251B;
+  --ink-secondary: #8B7662;
+  --accent: #C96F3D;
+  --accent-light: #F5DCC8;
+  --green: #5A8F56;
+  --green-light: #E8F0E6;
+  --blue: #4A7FA5;
+  --blue-light: #E3EFF6;
+  --purple: #8B6DAF;
+  --purple-light: #F0EAF6;
+  --red: #C75A4A;
+  --red-light: #FCEAE7;
+  --divider: #E8DDD0;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-heading: Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.35rem;
+  --fs-2xl: 1.7rem;
+  --fs-3xl: 2.2rem;
+  --lh: 1.7;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(49,37,27,0.06);
+  --shadow: 0 2px 8px rgba(49,37,27,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* ── Header ── */
+.site-header {
+  background: linear-gradient(135deg, #C96F3D 0%, #B85A2E 100%);
+  color: #fff;
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2rem;
+}
+.site-header .page-wrap { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; }
+.header-text { flex: 1; min-width: 260px; }
+.header-text h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.3rem;
+}
+.header-text .subtitle {
+  font-size: var(--fs-lg);
+  opacity: 0.9;
+}
+.book-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.badge {
+  display: inline-block;
+  font-size: var(--fs-sm);
+  padding: 0.2em 0.7em;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+/* ── Language Toggle ── */
+.lang-toggle {
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--accent);
+  background: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.4em 1em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  white-space: nowrap;
+}
+.lang-toggle:hover { opacity: 0.92; }
+/* i18n visibility: default CN */
+body.lang-cn .en { display: none; }
+body.lang-en .cn { display: inline; }
+.en { display: none; }
+body.lang-en .en { display: inline; }
+body.lang-en .cn { display: none !important; }
+
+/* ── Section ── */
+section { margin-bottom: 2.5rem; }
+.section-label {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+h4 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+p { margin-bottom: 0.8rem; }
+.text-secondary { color: var(--ink-secondary); }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.card-accent { border-left: 4px solid var(--accent); }
+.card-green { border-left: 4px solid var(--green); }
+.card-blue { border-left: 4px solid var(--blue); }
+.card-purple { border-left: 4px solid var(--purple); }
+
+/* ── LT Grid ── */
+.lt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.lt-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+.lt-card .lt-num {
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.lt-card h4 { margin-bottom: 0.5rem; font-size: var(--fs-base); }
+.lt-card ul { padding-left: 1.2em; }
+.lt-card li { margin-bottom: 0.3rem; font-size: var(--fs-sm); color: var(--ink-secondary); }
+
+/* ── Session Timeline ── */
+.session-block {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.session-header {
+  padding: 1.2rem 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.session-header.s1 { background: linear-gradient(135deg, #C96F3D, #A85A30); }
+.session-header.s2 { background: linear-gradient(135deg, #5A8F56, #3D7A3A); }
+.session-header h2 { color: #fff; margin: 0; font-size: var(--fs-xl); }
+.session-header .session-meta { font-size: var(--fs-sm); opacity: 0.9; }
+.session-body { padding: 1.5rem; }
+
+.phase {
+  position: relative;
+  padding-left: 1.8rem;
+  padding-bottom: 1.5rem;
+  border-left: 2px solid var(--divider);
+  margin-left: 0.5rem;
+}
+.phase:last-child { border-left-color: transparent; padding-bottom: 0; }
+.phase::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 0.3rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.phase.green-dot::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+.phase-blue-dot::before { background: var(--blue); box-shadow: 0 0 0 2px var(--blue); }
+.phase-purple-dot::before { background: var(--purple); box-shadow: 0 0 0 2px var(--purple); }
+
+.phase-label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+.phase.green-dot .phase-label { color: var(--green); }
+.phase-blue-dot .phase-label { color: var(--blue); }
+.phase-purple-dot .phase-label { color: var(--purple); }
+
+.phase-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  margin: 0.8rem 0;
+}
+th, td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--divider);
+  vertical-align: top;
+}
+th {
+  background: var(--surface-alt);
+  font-weight: 700;
+  white-space: nowrap;
+}
+td { color: var(--ink); }
+.wrap-word { overflow-wrap: break-word; word-break: break-word; }
+
+/* ── Vocab Table ── */
+.vocab-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  align-items: baseline;
+}
+.vocab-word {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--accent);
+}
+.vocab-ipa {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+}
+.vocab-pos {
+  font-size: var(--fs-sm);
+  color: var(--blue);
+  font-weight: 600;
+}
+.vocab-def { font-size: var(--fs-sm); }
+.vocab-example {
+  grid-column: 1 / -1;
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  border-top: 1px dashed var(--divider);
+  padding-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+/* ── Phonics ── */
+.phonics-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.8rem;
+  margin: 0.25rem;
+  font-size: var(--fs-sm);
+}
+.phonics-pattern {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* ── Sentence Pattern ── */
+.pattern-block {
+  background: var(--purple-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+.pattern-template {
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  color: var(--purple);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.pattern-example {
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+}
+
+/* ── Callout ── */
+.callout {
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: var(--fs-sm);
+}
+.callout-tip { background: var(--green-light); border-left: 3px solid var(--green); }
+.callout-warn { background: var(--red-light); border-left: 3px solid var(--red); }
+.callout-info { background: var(--blue-light); border-left: 3px solid var(--blue); }
+.callout strong { display: block; margin-bottom: 0.3rem; }
+
+/* ── Homework Section ── */
+.hw-section {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
+}
+.hw-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.hw-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--divider);
+}
+.hw-question {
+  margin-bottom: 1rem;
+  padding-left: 0.2rem;
+}
+.hw-question .q-num {
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 0.3rem;
+}
+.hw-blank {
+  display: inline-block;
+  min-width: 120px;
+  border-bottom: 1px solid var(--ink);
+  margin: 0 0.2rem;
+}
+.hw-lines {
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 1.8em,
+    var(--divider) 1.8em,
+    var(--divider) calc(1.8em + 1px)
+  );
+  min-height: 6em;
+}
+
+/* ── Answer Key ── */
+.answer-key {
+  margin-top: 1.2rem;
+  padding: 0.9rem 1rem;
+  background: var(--green-light);
+  border-left: 3px solid var(--green);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+}
+.answer-key strong { color: var(--green); }
+
+/* ── Sticky Nav ── */
+.toc {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(251,243,231,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--divider);
+  padding: 0.6rem 0;
+  margin-bottom: 1.5rem;
+}
+.toc .page-wrap {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.toc .page-wrap::-webkit-scrollbar { display: none; }
+.toc a {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.3em 0.8em;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.toc a:hover, .toc a:focus { background: var(--accent-light); color: var(--accent); }
+.toc a:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ── Divider ── */
+hr { border: none; border-top: 1px solid var(--divider); margin: 2rem 0; }
+
+/* ── Footer ── */
+.site-footer {
+  text-align: center;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--divider);
+  margin-top: 2rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .lt-grid { grid-template-columns: 1fr; }
+  .session-body { padding: 1rem; }
+  .phase { padding-left: 1.2rem; }
+  table { font-size: 0.8rem; }
+  th, td { padding: 0.4rem 0.5rem; }
+}
+
+/* ── Print ── */
+@media print {
+  .toc { display: none; }
+  .site-header { background: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .session-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card, .lt-card, .session-block, .hw-section, .vocab-card, .pattern-block, .callout, .phonics-item {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  body { font-size: 11pt; }
+  .page-wrap { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ── Push Modal ── */
+.push-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+}
+.push-modal {
+  background: white; border-radius: 16px; padding: 24px;
+  max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.push-modal h3 { margin: 0 0 8px; font-size: 18px; }
+.student-list { margin: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.student-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.student-item:hover { background: #f5f5f5; }
+.student-item input { width: 16px; height: 16px; }
+.push-confirm-btn {
+  width: 100%; padding: 12px; margin-top: 12px;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 10px;
+  font-weight: 700; cursor: pointer; font-size: 14px;
+}
+.push-cancel-btn {
+  width: 100%; padding: 10px; margin-top: 8px;
+  background: #f0f0f0; color: #666; border: none;
+  border-radius: 10px; cursor: pointer; font-size: 13px;
+}
+.push-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; margin: 4px 0;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 6px;
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  float: right;
+}
+.push-btn:hover { opacity: 0.9; transform: scale(1.05); }
+@media print { .push-btn { display: none !important; } }
+
+</style>
+</head>
+<body class="lang-cn">
+
+<!-- ═══════ HEADER ═══════ -->
+<header class="site-header">
+  <div class="page-wrap">
+    <div class="header-text">
+      <h1>Hooray for Fly Guy!</h1>
+      <p class="subtitle"><span class="cn">精读教案 · 两课时 · 100 分钟</span><span class="en">Close-Reading Lesson Plan · Two Sessions · 100 Minutes</span></p>
+      <div class="book-badges">
+        <span class="badge">Tedd Arnold</span>
+        <span class="badge">Fly Guy #6</span>
+        <span class="badge">Lexile 430L</span>
+        <span class="badge">GRL Level I</span>
+        <span class="badge">Grade K–2</span>
+        <span class="badge">Scholastic Cartwheel</span>
+      </div>
+    </div>
+    <button class="lang-toggle" id="langToggle" onclick="toggleLang()">EN</button>
+  </div>
+</header>
+
+<!-- ═══════ TOC ═══════ -->
+<nav class="toc" aria-label="页面导航">
+  <div class="page-wrap">
+    <a href="#overview"><span class="cn">故事概览</span><span class="en">Overview</span></a>
+    <a href="#lt-overview">LT 框架总览</a>
+    <a href="#session1"><span class="cn">第一课时</span><span class="en">Session 1</span></a>
+    <a href="#session2"><span class="cn">第二课时</span><span class="en">Session 2</span></a>
+    <a href="#homework"><span class="cn">课后作业</span><span class="en">Homework</span></a>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<section id="overview">
+  <div class="section-label">Overview</div>
+  <h2><span class="cn">故事概览</span><span class="en">Story Overview</span></h2>
+  <div class="card card-accent">
+    <h3>Story Summary</h3>
+    <p>Buzz has a pet fly named Fly Guy, who can say the boy's name — "BUZZ!" One day Fly Guy goes with Buzz to play football. Coach says, "We need one more player for the big game." Buzz proudly announces, "Fly Guy can play!" Coach laughs, "Flies can't play football." But Fly Guy shows what he can do — he kicks the ball, goes out for a pass, and even tries to tackle Buzz. Coach finally admits, "I was right. Flies can't play football. But he can come to the game."</p>
+    <p>The day before the big game, Buzz makes Fly Guy a tiny helmet. The team plays football, does jumping jacks, plans a secret play, and makes up a touchdown dance. At the big game, Fly Guy sits on the bench and cheers. It looks bad — with one second left, the other team is about to score again, and the team's new player gets hurt. Coach says, "Okay, Fly Guy. You can play now. The game is lost anyway." Buzz calls out, "It's time for our secret play!" Fly Guy flies fast and straight — right up the quarterback's nose! The quarterback drops the ball, Buzz picks it up and runs for a touchdown, and Fly Guy and Buzz do their touchdown dance. The whole team cheers: "We won! Hooray for Fly Guy!"</p>
+  </div>
+  <div class="lt-grid" style="margin-top:1rem;">
+    <div class="card" style="margin:0;">
+      <h4>📖 <span class="cn">文本特征</span><span class="en">Text Features</span></h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li>2 chapters, ~30 pages</li>
+        <li><span class="cn">重复/平行句式</span><span class="en">Repetition:</span> "Fly Guy can play." / "Flies can't play football."</li>
+        <li><span class="cn">并列动作序列</span><span class="en">Parallel action:</span> They played / did / planned / made up...</li>
+        <li><span class="cn">核心主题</span><span class="en">Theme:</span> teamwork, never judging by size, believing in a friend</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>🎯 <span class="cn">教学目标</span><span class="en">Learning Goals</span></h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>Reading:</strong> <span class="cn">理解故事结构与顺序</span><span class="en">understand story sequence and key details</span></li>
+        <li><strong>Language:</strong> <span class="cn">掌握核心词汇、can/can't 能力表达、过去时态</span><span class="en">core vocabulary, can/can't, past tense</span></li>
+        <li><strong>Speaking:</strong> <span class="cn">能复述关键情节、表达观点</span><span class="en">retell key events and share opinions</span></li>
+        <li><strong>Writing:</strong> <span class="cn">完成观点写作：Can a fly play football?</span><span class="en">opinion writing: Can a fly play football?</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LT FRAMEWORK OVERVIEW ═══════ -->
+<section id="lt-overview">
+  <div class="section-label">Language Target Framework</div>
+  <h2>LT 框架总览 — Hooray for Fly Guy!</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;"><span class="cn">以下 8 个模块构成本书的完整语言目标体系，两个课时分工推进。</span><span class="en">These 8 modules make up the complete language-target framework for this book, delivered across two sessions.</span></p>
+
+  <div class="lt-grid">
+    <div class="lt-card">
+      <div class="lt-num">LT01</div>
+      <h4>Vocabulary 词汇</h4>
+      <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.5rem;">12 个核心词，含 IPA、词性、搭配、例句、词族。</p>
+      <ul>
+        <li>football, team, coach, kick, score, cheer</li>
+        <li>worry, helmet, quarterback, pass, tackle</li>
+        <li>touchdown, secret, hooray</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT02</div>
+      <h4>Phonics / Decoding 语音拼读</h4>
+      <ul>
+        <li><strong>fl-</strong> blend: fly, flew, flies</li>
+        <li><strong>-all</strong> rime: ball, football</li>
+        <li><strong>-ay</strong> vowel team: play, day, today</li>
+        <li><strong>oa</strong> long-o: coach, goal, road</li>
+        <li><strong>qu-</strong>: quarterback, quick</li>
+        <li><strong>or-</strong>: worry / wor</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT03</div>
+      <h4>Pronunciation 发音</h4>
+      <ul>
+        <li>音节切分：hel-met (2), foot-ball (2), touch-down (2), quar-ter-back (3)</li>
+        <li>重音模式：<em>HEL</em>met, <em>FOOT</em>ball, <em>TOUCH</em>down, <em>QUAR</em>terback</li>
+        <li><strong>wor-</strong> 词首：worry 的 /wɜː/ 音</li>
+        <li>连读：kick_the ball, picked_it up, went_out</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT04</div>
+      <h4>Sentence Patterns 句型</h4>
+      <ul>
+        <li>___ can / can't [verb]. —"Fly Guy can play."</li>
+        <li>"Flies can't play football." (否定分类)</li>
+        <li>The team [verb] and [verb]. —"They planned / made up..."</li>
+        <li>"It's time for [noun]." —"It's time for our secret play."</li>
+        <li>习惯用语：Hooray for ___!</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT05</div>
+      <h4>Grammar 语法功能</h4>
+      <ul>
+        <li><strong>Ability:</strong> can / can't — "Fly Guy can play."</li>
+        <li><strong>Simple past (regular):</strong> kicked, scored, cheered, planned, worried</li>
+        <li><strong>Simple past (irregular):</strong> went, said, made, did, ran, flew, won, got</li>
+        <li><strong>Future intent:</strong> "They were about to score again."</li>
+        <li><strong>Imperatives/cheers:</strong> "Hooray for Fly Guy!"</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT06</div>
+      <h4>Morphology 词形变化</h4>
+      <ul>
+        <li><strong>-ed 规则过去式:</strong> kick→kicked, play→played, cheer→cheered</li>
+        <li><strong>双写辅音 + ed:</strong> plan→planned, snap→snapped</li>
+        <li><strong>-y → -ied:</strong> worry→worried</li>
+        <li><strong>不规则过去式:</strong> go→went, fly→flew, run→ran, win→won</li>
+        <li><strong>复合词:</strong> foot+ball, touch+down, quarter+back</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT07</div>
+      <h4>Cohesion / Discourse 语篇衔接</h4>
+      <ul>
+        <li><strong>but</strong> (转折): "Flies can't play football. But he can come to the game."</li>
+        <li><strong>and</strong> (并列/顺承): "picked it up and ran"</li>
+        <li><strong>时间词:</strong> Finally, The game started, Then</li>
+        <li><strong>代词指代:</strong> "he" 指 Fly Guy / Buzz / quarterback?</li>
+        <li><strong>感叹呼应:</strong> "Hooray for Fly Guy!" 首尾呼应</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT08</div>
+      <h4>Functional Communication 语用功能</h4>
+      <ul>
+        <li><strong>Describe:</strong> Describe Fly Guy the football player.</li>
+        <li><strong>Retell:</strong> What happened first / next / at the end?</li>
+        <li><strong>Predict:</strong> What is the secret play?</li>
+        <li><strong>Express opinion:</strong> Can a fly really play football?</li>
+        <li><strong>Cheer/celebrate:</strong> Make up your own cheer with "Hooray for ___!"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ SESSION 1 ═══════ -->
+<section id="session1">
+  <div class="section-label">Session 1 · 50 minutes</div>
+  <h2><span class="cn">第一课时 — 基础阅读与语言输入</span><span class="en">Session 1 — Reading &amp; Language Input</span></h2>
+  <p class="text-secondary"><span class="cn">目标：建立背景知识，通读全文，掌握核心词汇与语音规律，完成基础理解。</span><span class="en">Goals: build background, read the whole book, master core vocabulary and phonics, and check basic comprehension.</span></p>
+
+  <div class="session-block">
+    <div class="session-header s1">
+      <div>
+        <h2>Lesson 1: Can a Fly Play Football?</h2>
+        <div class="session-meta">Focus: Pre-reading → Reading → Vocabulary → Phonics → Pronunciation</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–10 min · Warm-up &amp; Pre-reading</div>
+        <div class="phase-title"><span class="cn">激活背景 · 图片讨论</span><span class="en">Activate Background · Picture Talk</span></div>
+
+        <h4>Activity 1: Picture Talk (5 min)</h4>
+        <p><span class="cn">展示封面和内页插图，引导学生观察</span><span class="en">Show the cover and inside illustrations; guide observation:</span></p>
+        <ul style="padding-left:1.2em;margin-bottom:1rem;">
+          <li>"What game are they playing?" → Football.</li>
+          <li>"Where is Fly Guy?" → On the field / in the helmet / on the bench.</li>
+          <li>"What do you think will happen?" → <span class="cn">引导预测。</span><span class="en">Guide predictions.</span></li>
+        </ul>
+
+        <h4>Activity 2: Key Concept — Team Sports (5 min)</h4>
+        <p><span class="cn">在白板上列出足球相关动作词</span><span class="en">Brainstorm football action words on the board:</span> <strong>kick, run, catch, pass, tackle, score, cheer</strong>. <span class="cn">用动作演示每个词，然后引出核心问题</span><span class="en">Act each one out, then pose the big question:</span></p>
+        <div class="callout callout-info">
+          <strong>🔑 Big Question</strong>
+          Can a fly really play football? Let's read and find out!
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 <span class="cn">教学提示</span><span class="en">Teaching Tip</span></strong>
+          <span class="cn">不急于给答案。将这个问题保留到第二课时讨论。</span><span class="en">Don't answer yet. Save the question for Session 2.</span>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase green-dot">
+        <div class="phase-label">⏱ 10–20 min · Read Aloud</div>
+        <div class="phase-title"><span class="cn">通读全文 · 理解故事</span><span class="en">Read Through · Build Comprehension</span></div>
+
+        <h4>Chapter 1 精读 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th><span class="cn">页面</span><span class="en">Page</span></th><th><span class="cn">原文</span><span class="en">Text</span></th><th><span class="cn">教学重点</span><span class="en">Teaching Point</span></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>opens</td>
+              <td>"A boy had a pet fly. He named him Fly Guy. Fly Guy could say the boy's name — BUZZ!"</td>
+              <td><span class="cn">回顾前情；理解系列背景（Fly Guy 会说名字）</span><span class="en">recap; Fly Guy can say Buzz's name</span></td>
+            </tr>
+            <tr>
+              <td>ch.1</td>
+              <td>"Fly Guy went with Buzz to play football."</td>
+              <td><span class="cn">核心场景设定；football 语境</span><span class="en">setting; football context</span></td>
+            </tr>
+            <tr>
+              <td>ch.1</td>
+              <td>"Coach said, 'We need one more player for the big game.'"</td>
+              <td><span class="cn">理解 coach / player / big game</span><span class="en">understand coach, player, big game</span></td>
+            </tr>
+            <tr>
+              <td>ch.1</td>
+              <td>"Coach laughed. 'Flies can't play football.'"</td>
+              <td><span class="cn">核心句式 can't；Coach 一开始不信任</span><span class="en">core can't; doubt begins</span></td>
+            </tr>
+            <tr>
+              <td>ch.1</td>
+              <td>"Fly Guy kicked the ball. Fly Guy went out for a pass. Fly Guy tried to tackle Buzz."</td>
+              <td><span class="cn">关键词：kick, pass, tackle</span><span class="en">key words: kick, pass, tackle</span></td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 2 精读 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th><span class="cn">页面</span><span class="en">Page</span></th><th><span class="cn">原文 / 情节</span><span class="en">Text / Event</span></th><th><span class="cn">教学重点</span><span class="en">Teaching Point</span></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ch.2</td>
+              <td>"Buzz made a helmet for Fly Guy."</td>
+              <td><span class="cn">helmet 词汇；Buzz 的用心</span><span class="en">helmet; Buzz cares about his friend</span></td>
+            </tr>
+            <tr>
+              <td>ch.2</td>
+              <td>"They played football. They did jumping jacks. They planned a secret play. They made up a touchdown dance."</td>
+              <td><span class="cn">并列动作句式；secret play / touchdown</span><span class="en">parallel verbs; secret play, touchdown</span></td>
+            </tr>
+            <tr>
+              <td>ch.2</td>
+              <td>"Fly Guy sat on the bench. The game started. His team scored. Fly Guy cheered."</td>
+              <td><span class="cn">时间顺序；score / cheer 词汇</span><span class="en">sequence; score, cheer</span></td>
+            </tr>
+            <tr>
+              <td>ch.2</td>
+              <td>"The other team scored a lot! Fly Guy worried. Finally, there was one second left."</td>
+              <td><span class="cn">worry 情绪词；finally 衔接</span><span class="en">worry; finally connector</span></td>
+            </tr>
+            <tr>
+              <td>ch.2</td>
+              <td>"Coach said, 'You can play now. The game is lost anyway.' Buzz said, 'It's time for our secret play.'"</td>
+              <td><span class="cn">It's time for... 句式；转折（看似无望）</span><span class="en">pattern; the game seems lost</span></td>
+            </tr>
+            <tr>
+              <td>ch.2</td>
+              <td>"Fly Guy flew right up the quarterback's nose! The boy dropped the ball. Buzz picked it up and ran."</td>
+              <td><span class="cn">高潮；quarterback / dropped / ran</span><span class="en">climax; quarterback, dropped, ran</span></td>
+            </tr>
+            <tr>
+              <td>ch.2</td>
+              <td>"We won! Hooray for Fly Guy!"</td>
+              <td><span class="cn">结局与欢呼；hooray 感叹词</span><span class="en">ending; hooray! cheer</span></td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase blue-dot" id="sec-lt01-vocab">
+        <div class="phase-label">⏱ 20–33 min · LT01 Vocabulary <button class="push-btn" onclick="openPushModal('LT01-Vocabulary','Football vocabulary: 12 core words with IPA, POS, definitions, examples, and word families: kick, score, cheer, worry, helmet, quarterback, tackle, touchdown, team, coach, football, pass')">📤 Push to Students</button></div>
+        <div class="phase-title"><span class="cn">核心词汇深度讲解（12 词）</span><span class="en">Core Vocabulary in Depth (12 words)</span></div>
+
+        <div class="callout callout-info">
+          <strong>📋 Vocabulary Teaching Principle</strong>
+          <span class="cn">每个词从 Recognize → Understand → Use 三个层次推进。先让学生听/看到词，再理解含义和用法，最后尝试产出。</span><span class="en">Move each word through Recognize → Understand → Use. Let students hear and see it, grasp meaning and usage, then produce it.</span>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">kick</span>
+            <span class="vocab-ipa">/kɪk/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <span class="vocab-pos" style="color:var(--red);">past: kicked</span>
+            <div class="vocab-def">to hit something with your foot</div>
+          </div>
+          <div class="vocab-example">Fly Guy <strong>kicked</strong> the ball. → Can you <strong>kick</strong> the ball far? (word family: kicker, kick-off)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">score</span>
+            <span class="vocab-ipa">/skɔːr/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb / noun</span>
+            <span class="vocab-pos" style="color:var(--red);">past: scored</span>
+            <div class="vocab-def">to get points in a game; points you earn</div>
+          </div>
+          <div class="vocab-example">His team <strong>scored</strong>. → The final <strong>score</strong> was close. (word family: scorer, scoreboard)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">cheer</span>
+            <span class="vocab-ipa">/tʃɪr/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb / noun</span>
+            <span class="vocab-pos" style="color:var(--red);">past: cheered</span>
+            <div class="vocab-def">to shout happily to support someone</div>
+          </div>
+          <div class="vocab-example">Fly Guy <strong>cheered</strong>. The team <strong>cheered</strong>. → A big <strong>cheer</strong> went up. (word family: cheering, cheerful)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">worry</span>
+            <span class="vocab-ipa">/ˈwɜːri/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <span class="vocab-pos" style="color:var(--red);">past: worried</span>
+            <div class="vocab-def">to feel nervous or troubled about something</div>
+          </div>
+          <div class="vocab-example">Fly Guy <strong>worried</strong> when the other team scored. → Don't <strong>worry</strong>! (word family: worried, worrying)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">helmet</span>
+            <span class="vocab-ipa">/ˈhelmɪt/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a hard hat that protects your head</div>
+          </div>
+          <div class="vocab-example">Buzz made a <strong>helmet</strong> for Fly Guy. → Bikers wear a <strong>helmet</strong>.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">quarterback</span>
+            <span class="vocab-ipa">/ˈkwɔːrtərbæk/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">quarter + back</span>
+            <div class="vocab-def">the football player who throws or passes the ball</div>
+          </div>
+          <div class="vocab-example">The other team snapped the ball to their <strong>quarterback</strong>. → The <strong>quarterback</strong> threw the ball downfield.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">tackle</span>
+            <span class="vocab-ipa">/ˈtækəl/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb / noun</span>
+            <div class="vocab-def">to try to bring down a player with the ball</div>
+          </div>
+          <div class="vocab-example">Fly Guy tried to <strong>tackle</strong> Buzz. → He made a big <strong>tackle</strong>. (word family: tackler)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">touchdown</span>
+            <span class="vocab-ipa">/ˈtʌtʃdaʊn/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">touch + down</span>
+            <div class="vocab-def">to carry or catch the ball into the goal area to score</div>
+          </div>
+          <div class="vocab-example">They made up a <strong>touchdown</strong> dance. → Buzz ran straight for a <strong>touchdown</strong>.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">team</span>
+            <span class="vocab-ipa">/tiːm/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a group of people who play or work together</div>
+          </div>
+          <div class="vocab-example">The <strong>team</strong> cheered. → Our <strong>team</strong> won the game. (word family: teammate, teamwork)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">coach</span>
+            <span class="vocab-ipa">/koʊtʃ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun / verb</span>
+            <div class="vocab-def">a person who trains and leads a team</div>
+          </div>
+          <div class="vocab-example"><strong>Coach</strong> said, "We need one more player." → She will <strong>coach</strong> us this year.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">football</span>
+            <span class="vocab-ipa">/ˈfʊtbɔːl/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">foot + ball</span>
+            <div class="vocab-def">a game played with a ball and teams</div>
+          </div>
+          <div class="vocab-example">Fly Guy went to play <strong>football</strong>. → We play <strong>football</strong> after school.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">pass</span>
+            <span class="vocab-ipa">/pæs/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun / verb</span>
+            <div class="vocab-def">to throw the ball to a teammate; a thrown ball</div>
+          </div>
+          <div class="vocab-example">Fly Guy went out for a <strong>pass</strong>. → <strong>Pass</strong> the ball to me!</div>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 <span class="cn">词汇巩固活动 (3 min)</span><span class="en">Vocabulary Consolidation (3 min)</span></strong>
+          <strong>Act It Out!</strong> <span class="cn">教师说出动词，学生做出动作（kick, score, cheer, worry, tackle, pass）。然后反过来：学生表演，全班猜词。</span><span class="en">Say a verb and students act it out (kick, score, cheer, worry, tackle, pass), then switch roles.</span>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase-purple-dot" id="sec-lt02-phonics">
+        <div class="phase-label">⏱ 33–43 min · LT02 Phonics + LT03 Pronunciation <button class="push-btn" onclick="openPushModal('LT02-Phonics','Phonics patterns: fl- blends (fly, flew, flies); -all rime (ball, football); -ay vowel team (play, day, today); oa long-o (coach, goal); qu- (quarterback, quick); wor- (worry)')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT03-Pronunciation','Syllable counting and stress: helmet(2), football(2), touchdown(2), quarterback(3), cheer(1), tackle(2), worry(2), pass(1); wor- /wɜː/ sound; linking')">📤 Push</button></div>
+        <div class="phase-title"><span class="cn">语音拼读与发音训练</span><span class="en">Phonics &amp; Pronunciation</span></div>
+
+        <h4>Phonics Focus (5 min)</h4>
+        <p><span class="cn">从本书中提取高频语音模式，引导学生发现规律</span><span class="en">Extract high-frequency sound patterns and guide students to discover them:</span></p>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">辅音连缀 Consonant Blend</h4>
+          <span class="phonics-item"><span class="phonics-pattern">fl-</span> fly, flew, flies</span>
+          <span class="phonics-item"><span class="phonics-pattern">qu-</span> quarterback, quick</span>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">押韵 Rimes</h4>
+          <span class="phonics-item"><span class="phonics-pattern">-all</span> /ɔːl/ — ball, football</span>
+          <span class="phonics-item"><span class="phonics-pattern">-ay</span> /eɪ/ — play, day, today</span>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">长元音组合 Long-vowel Teams</h4>
+          <span class="phonics-item"><span class="phonics-pattern">oa</span> /oʊ/ — coach, goal, road</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;"><span class="cn">对比：coach / coast；注意 oa 发长 o。</span><span class="en">Compare coach/goat; oa makes the long-o sound.</span></p>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">词首 wor-</h4>
+          <span class="phonics-item"><span class="phonics-pattern">wor-</span> /wɜː/ — worry, worth, word</span>
+        </div>
+
+        <h4 style="margin-top:1rem;">Pronunciation Focus (5 min)</h4>
+
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Word</th><th>Syllables</th><th>Stress</th><th>Practice</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>helmet</td><td>hel·met (2)</td><td>1st</td><td><strong>HEL</strong>-met</td></tr>
+            <tr><td>football</td><td>foot·ball (2)</td><td>1st</td><td><strong>FOOT</strong>-ball</td></tr>
+            <tr><td>touchdown</td><td>touch·down (2)</td><td>1st</td><td><strong>TOUCH</strong>-down</td></tr>
+            <tr><td>quarterback</td><td>quar·ter·back (3)</td><td>1st</td><td><strong>QUAR</strong>-ter-back</td></tr>
+            <tr><td>cheer</td><td>cheer (1)</td><td>1st</td><td><strong>CHEER</strong></td></tr>
+            <tr><td>tackle</td><td>tack·le (2)</td><td>1st</td><td><strong>TACK</strong>-le</td></tr>
+            <tr><td>worry</td><td>wor·ry (2)</td><td>1st</td><td><strong>WOR</strong>-ry</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-tip">
+          <strong>💡 <span class="cn">发音练习 (2 min)</span><span class="en">Pronunciation Practice (2 min)</span></strong>
+          <strong><span class="cn">回声游戏：</span><span class="en">Echo game:</span></strong> <span class="cn">教师读一个词，学生跟读并拍手打出音节数。</span><span class="en">Teacher says a word; students echo and clap the syllables.</span>
+          "quar-ter-back!" → <span class="cn">拍手 3 次</span><span class="en">3 claps</span>."foot-ball!" → <span class="cn">拍手 2 次</span><span class="en">2 claps</span>.
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase green-dot" id="sec-lt04-patterns">
+        <div class="phase-label">⏱ 43–50 min · LT04 Sentence Patterns + Wrap-up <button class="push-btn" onclick="openPushModal('LT04-Sentence-Patterns','Core patterns: ___ can/can\'t [verb]; They [verb] / [verb] / [verb] (parallel actions); It\'s time for [noun]; cheer with Hooray for ___!')">📤 Push to Students</button></div>
+        <div class="phase-title"><span class="cn">核心句型初探 + 小结</span><span class="en">Core Sentence Patterns + Wrap-up</span></div>
+
+        <p><span class="cn">引入本课核心句式，为第二课时深度语法做铺垫</span><span class="en">Introduce the core patterns as preparation for deeper grammar in Session 2:</span></p>
+
+        <div class="pattern-block">
+          <div class="pattern-template">___ can / can't [verb].</div>
+          <div class="pattern-example">"Fly Guy can play." / "Flies can't play football."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 <span class="cn">全书反复出现，是核心语法功能。</span><span class="en">Repeated throughout — the heart of this book's grammar.</span></p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">They [verb] / [verb] / [verb]... (parallel actions)</div>
+          <div class="pattern-example">"They played football. They did jumping jacks. They planned a secret play. They made up a touchdown dance."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 <span class="cn">并列动作推进故事，节奏轻快。</span><span class="en">A quick, repeating rhythm that moves the story forward.</span></p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">It's time for [noun].</div>
+          <div class="pattern-example">"It's time for our secret play."</div>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>📝 <span class="cn">第一课时小结</span><span class="en">Session 1 Wrap-up</span></strong>
+          <span class="cn">回顾 Big Question: "Can a fly really play football?" 让学生用一句话表态：</span><span class="en">Return to the Big Question. Have students take a one-line stand:</span>
+          <br>"I think a fly ___ play football because ___."
+          <br><span class="cn">（为第二课时的 opinion writing 做铺垫。）</span><span class="en">(Preps the opinion writing in Session 2.)</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SESSION 2 ═══════ -->
+<section id="session2">
+  <div class="section-label">Session 2 · 50 minutes</div>
+  <h2><span class="cn">第二课时 — 深度分析与语言输出</span><span class="en">Session 2 — Deep Analysis &amp; Language Output</span></h2>
+  <p class="text-secondary"><span class="cn">目标：深入语法、词形、语篇分析，完成口语输出和写作任务。</span><span class="en">Goals: deeper grammar, morphology and cohesion analysis, plus speaking and writing output.</span></p>
+
+  <div class="session-block">
+    <div class="session-header s2">
+      <div>
+        <h2>Lesson 2: Hooray for Teamwork!</h2>
+        <div class="session-meta">Focus: Grammar → Morphology → Cohesion → Speaking → Writing</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–5 min · Review</div>
+        <div class="phase-title"><span class="cn">快速复习</span><span class="en">Quick Review</span></div>
+
+        <p><span class="cn">用 3 个快速问题回顾第一课时内容</span><span class="en">Review Session 1 with three quick questions:</span></p>
+        <ol style="padding-left:1.5em;margin-bottom:0.8rem;">
+          <li>"What game does Fly Guy play?" → Football.</li>
+          <li>"Why wouldn't Coach let Fly Guy play at first?" → "Flies can't play football."</li>
+          <li>"What is the secret play?" → Fly Guy flies up the quarterback's nose!</li>
+        </ol>
+        <p><span class="cn">然后用 <strong>Story Mountain</strong> 快速梳理故事结构</span><span class="en">Then quickly map the story with a <strong>Story Mountain</strong>:</span></p>
+        <svg viewBox="0 0 700 200" style="width:100%;max-width:700px;height:auto;margin:0.5rem 0;" role="img" aria-label="Story Mountain for Hooray for Fly Guy">
+          <title>Story Mountain — Hooray for Fly Guy!</title>
+          <desc>A mountain shape showing story structure: beginning, rising action, climax, falling action, ending</desc>
+          <polygon points="50,170 175,40 350,20 525,100 650,170" fill="none" stroke="#C96F3D" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="50" cy="170" r="6" fill="#C96F3D"/>
+          <circle cx="175" cy="40" r="6" fill="#C96F3D"/>
+          <circle cx="350" cy="20" r="6" fill="#C75A4A"/>
+          <circle cx="525" cy="100" r="6" fill="#C96F3D"/>
+          <circle cx="650" cy="170" r="6" fill="#C96F3D"/>
+          <text x="50" y="195" text-anchor="middle" font-size="11" fill="#31251B">Beginning</text>
+          <text x="50" y="160" text-anchor="middle" font-size="9" fill="#8B7662">Buzz wants Fly Guy to play</text>
+          <text x="175" y="30" text-anchor="middle" font-size="11" fill="#31251B">Rising</text>
+          <text x="175" y="58" text-anchor="middle" font-size="9" fill="#8B7662">Coach says flies can't play</text>
+          <text x="350" y="12" text-anchor="middle" font-size="11" fill="#C75A4A" font-weight="700">Climax</text>
+          <text x="350" y="42" text-anchor="middle" font-size="9" fill="#8B7662">Secret play wins the game</text>
+          <text x="525" y="90" text-anchor="middle" font-size="11" fill="#31251B">Falling</text>
+          <text x="525" y="118" text-anchor="middle" font-size="9" fill="#8B7662">Touchdown dance</text>
+          <text x="650" y="195" text-anchor="middle" font-size="11" fill="#31251B">Ending</text>
+          <text x="650" y="160" text-anchor="middle" font-size="9" fill="#8B7662">Hooray for Fly Guy!</text>
+        </svg>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase blue-dot" id="sec-lt05-grammar">
+        <div class="phase-label">⏱ 5–18 min · LT05 Grammar <button class="push-btn" onclick="openPushModal('LT05-Grammar','can/can\'t ability: Fly Guy can play / Flies can\'t play football; Simple Past regular (kicked, scored, cheered, planned, worried) and irregular (went, said, made, did, ran, flew, won); future intent: about to score')">📤 Push to Students</button></div>
+        <div class="phase-title"><span class="cn">语法功能深度分析</span><span class="en">Grammar Functions in Depth</span></div>
+
+        <h4>① can / can't — <span class="cn">表达能力</span><span class="en">Ability (5 min)</span></h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th><span class="cn">原文句</span><span class="en">From the text</span></th><th><span class="cn">功能</span><span class="en">Function</span></th><th><span class="cn">结构</span><span class="en">Structure</span></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>"Fly Guy <strong>can</strong> play."</td><td><span class="cn">能力（肯定）</span><span class="en">ability (affirmative)</span></td><td>主语 + can + 动词原形</td></tr>
+            <tr><td>"Flies <strong>can't</strong> play football."</td><td><span class="cn">能力/可能性（否定）</span><span class="en">ability (negative)</span></td><td>主语 + can't + 动词原形</td></tr>
+            <tr><td>"Fly Guy <strong>can</strong> say the boy's name."</td><td><span class="cn">能力（肯定）</span><span class="en">ability (affirmative)</span></td><td>主语 + can + 动词原形</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);"><span class="cn">练习：用 can/can't 描述 Fly Guy 的能力。</span><span class="en">Practice: describe Fly Guy with can/can't.</span><br>
+        "Fly Guy can ___. A real fly can't ___."</p>
+
+        <h4 style="margin-top:1rem;">② Simple Past Tense — <span class="cn">讲故事的核心时态</span><span class="en">the storytelling tense (5 min)</span></h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base Form</th><th>Past Tense</th><th>Type</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>go</td><td><strong>went</strong></td><td style="color:var(--red);">irregular</td><td>"Fly Guy <em>went</em> with Buzz."</td></tr>
+            <tr><td>say</td><td><strong>said</strong></td><td style="color:var(--red);">irregular</td><td>"Buzz <em>said</em>, 'Fly Guy can play.'"</td></tr>
+            <tr><td>fly</td><td><strong>flew</strong></td><td style="color:var(--red);">irregular</td><td>"Fly Guy <em>flew</em> fast and straight."</td></tr>
+            <tr><td>make</td><td><strong>made</strong></td><td style="color:var(--red);">irregular</td><td>"Buzz <em>made</em> a helmet."</td></tr>
+            <tr><td>do</td><td><strong>did</strong></td><td style="color:var(--red);">irregular</td><td>"They <em>did</em> jumping jacks."</td></tr>
+            <tr><td>run</td><td><strong>ran</strong></td><td style="color:var(--red);">irregular</td><td>"Buzz <em>ran</em> for a touchdown."</td></tr>
+            <tr><td>win</td><td><strong>won</strong></td><td style="color:var(--red);">irregular</td><td>"We <em>won</em>!"</td></tr>
+            <tr><td>kick</td><td><strong>kicked</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"Fly Guy <em>kicked</em> the ball."</td></tr>
+            <tr><td>cheer</td><td><strong>cheered</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"The team <em>cheered</em>."</td></tr>
+            <tr><td>plan</td><td><strong>planned</strong></td><td style="color:var(--green);">double n + ed</td><td>"They <em>planned</em> a secret play."</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-warn">
+          <strong>⚠️ <span class="cn">重点提示</span><span class="en">Key Warning</span></strong>
+          <span class="cn">本书有大量不规则过去式（went, said, flew, made, did, ran, won），且规则动词含特殊拼写（plan→planned, worry→worried）。建议配对练习。</span><span class="en">This book is packed with irregular past forms and tricky spellings (plan→planned, worry→worried). Use rapid base→past drills.</span>
+        </div>
+
+        <h4 style="margin-top:1rem;">③ Future Intent (2 min)</h4>
+        <div class="pattern-block">
+          <div class="pattern-template">be about to [verb] — 即将要做</div>
+          <div class="pattern-example">"They were about to score again."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;"><span class="cn">表示"正要做某事的瞬间"，制造紧张感。</span><span class="en">Shows an action about to happen — builds suspense.</span></p>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-purple-dot" id="sec-lt06-morphology">
+        <div class="phase-label">⏱ 18–26 min · LT06 Morphology + LT07 Cohesion <button class="push-btn" onclick="openPushModal('LT06-Morphology','Past-tense word building: -ed (kicked, cheered, scored), double consonant +ed (planned, snapped), -y→-ied (worried), irregular (went, flew, ran, won); compounds: football, touchdown, quarterback')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT07-Cohesion','Cohesion: but (contrast), and (sequence), finally; pronoun reference (he=Fly Guy/Buzz/quarterback); time words; the cheer Hooray for Fly Guy! as a refrain')">📤 Push</button></div>
+        <div class="phase-title"><span class="cn">词形变化与语篇衔接</span><span class="en">Morphology &amp; Cohesion</span></div>
+
+        <h4>LT06 · Morphology <span class="cn">词形变化</span><span class="en">(4 min)</span></h4>
+        <p><span class="cn">引导学生发现过去式的拼写规律</span><span class="en">Guide students to discover past-tense spelling rules:</span></p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base</th><th>+ ed (rule)</th><th>Change</th><th>Why?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>kick</td><td>kicked</td><td>kick → kicked</td><td>直接加 -ed</td></tr>
+            <tr><td>cheer</td><td>cheered</td><td>cheer → cheered</td><td>直接加 -ed</td></tr>
+            <tr><td>plan</td><td>planned</td><td>plan → planned</td><td>重读闭音节，双写 n</td></tr>
+            <tr><td>snap</td><td>snapped</td><td>snap → snapped</td><td>重读闭音节，双写 p</td></tr>
+            <tr><td>worry</td><td>worried</td><td>worry → worried</td><td>辅音 + y → 变 i 加 -ed</td></tr>
+            <tr><td>go / fly / run / win</td><td>went / flew / ran / won</td><td class="wrap-word">不规则</td><td>需单独记忆</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-info">
+          <strong>🔍 <span class="cn">复合词 Compound Words</span><span class="en">Let's build compound words!</span></strong>
+          foot + ball = <strong>football</strong> · touch + down = <strong>touchdown</strong> · quarter + back = <strong>quarterback</strong>
+          <br><span class="cn">两个小词合成一个意思全新的词。</span><span class="en">Two small words join to make one new word.</span>
+        </div>
+
+        <h4 style="margin-top:1rem;">LT07 · Cohesion <span class="cn">语篇衔接</span><span class="en">(4 min)</span></h4>
+        <p><span class="cn">分析本书中的衔接手段，理解作者如何连接句子和推动故事</span><span class="en">Analyze how the author connects sentences and drives the story:</span></p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Connector</th><th>Function</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>but</strong></td>
+              <td><span class="cn">转折 contrast</span><span class="en">contrast</span></td>
+              <td>"Flies can't play football. <strong>But</strong> he can come to the game."</td>
+            </tr>
+            <tr>
+              <td><strong>and</strong></td>
+              <td><span class="cn">顺承/并列 sequence</span><span class="en">sequence</span></td>
+              <td>"Buzz picked it up <strong>and</strong> ran."</td>
+            </tr>
+            <tr>
+              <td><strong>finally</strong></td>
+              <td><span class="cn">时间 finally</span><span class="en">time</span></td>
+              <td>"<strong>Finally</strong>, there was one second left in the game."</td>
+            </tr>
+            <tr>
+              <td><strong>代词 he</strong></td>
+              <td><span class="cn">指代 reference — 需看上下文</span><span class="en">reference — read the context</span></td>
+              <td>"<strong>He</strong> flew right up the quarterback's nose." → He = Fly Guy<br>"<strong>He</strong> dropped the ball." → He = the quarterback</td>
+            </tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-tip">
+          <strong>💡 <span class="cn">讨论：but 的力量</span><span class="en">Talk: the power of "but"</span></strong>
+          <span class="cn">让学生找出含 "but" 的句子，讨论 "but" 前后发生了什么转变。</span><span class="en">Have students find the "but" sentences and discuss what changes after "but".</span>
+          <br>→ "but" <span class="cn">总带来转折与希望，推动故事走向胜利。</span><span class="en">always signals a turn and pushes the story toward victory.</span>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase green-dot" id="sec-lt08-functional">
+        <div class="phase-label">⏱ 26–40 min · LT08 Functional Communication <button class="push-btn" onclick="openPushModal('LT08-Functional-Communication','Story retelling frame; opinion prompts: Can a fly really play football?; make-your-own cheer with Hooray for ___!')">📤 Push to Students</button></div>
+        <div class="phase-title"><span class="cn">口语输出与写作任务</span><span class="en">Speaking &amp; Writing Tasks</span></div>
+
+        <h4>Activity 1: Retell the Story (5 min)</h4>
+        <p><span class="cn">学生两人一组，用以下框架复述故事</span><span class="en">In pairs, students retell with this frame:</span></p>
+        <div class="card" style="background:var(--green-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Story Retelling Frame:</strong></p>
+          <p style="font-size:var(--fs-sm);">
+            First, Fly Guy went with Buzz to play football.<br>
+            Then, Coach said, "Flies can't play football."<br>
+            Next, Fly Guy kicked the ball and showed what he could do.<br>
+            After that, Buzz made Fly Guy a helmet, and they made up a secret play.<br>
+            In the end, Fly Guy flew up the quarterback's nose, Buzz scored, and the team cheered, "Hooray for Fly Guy!"
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 2: Express Your Opinion (5 min)</h4>
+        <p><span class="cn">回到 Big Question，进行 mini-debate</span><span class="en">Return to the Big Question for a mini-debate:</span></p>
+        <div class="card" style="background:var(--purple-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Discussion Prompts:</strong></p>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li>"Can a fly really play football? Why or why not?"</li>
+            <li>"Was Coach right or wrong to doubt Fly Guy?"</li>
+            <li>"What would you do to help a small friend join a big game?"</li>
+          </ul>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Language scaffold:</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            "I think a fly ___ play football because ___."<br>
+            "I agree / disagree because ___."<br>
+            "In my opinion, ___."
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 3: Writing — Opinion Piece (4 min <span class="cn">指导</span><span class="en">guidance</span> + 课后完成)</h4>
+        <div class="card" style="background:var(--surface-alt);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Writing Prompt:</strong></p>
+          <p style="font-size:var(--fs-base);font-weight:600;">Can a fly really play football? Write your opinion. Give at least two reasons.</p>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Writing Frame (scaffold):</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            I think a fly ___ play football because ___.<br>
+            First, ___.<br>
+            Also, ___.<br>
+            In conclusion, ___. Hooray for Fly Guy!
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 40–50 min · Review &amp; Extension</div>
+        <div class="phase-title"><span class="cn">总结回顾 + 拓展延伸</span><span class="en">Review &amp; Extension</span></div>
+
+        <h4>Exit Ticket (5 min)</h4>
+        <p><span class="cn">每人回答 3 个问题后离开教室</span><span class="en">Answer three questions before leaving:</span></p>
+        <ol style="padding-left:1.5em;">
+          <li><span class="cn">说出 2 个你新学的单词。</span><span class="en">Name two new words you learned.</span></li>
+          <li><span class="cn">用 can 或 can't 造一个句子。</span><span class="en">Make one sentence with can or can't.</span></li>
+          <li><span class="cn">Fly Guy 是怎么赢得比赛的？（一句话）</span><span class="en">How did Fly Guy help win the game? (one sentence)</span></li>
+        </ol>
+
+        <h4 style="margin-top:0.8rem;">Extension (5 min)</h4>
+        <div class="callout callout-tip">
+          <strong>🌟 <span class="cn">拓展活动选择</span><span class="en">Extension Choices</span></strong>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li><strong>Make a Cheer:</strong> <span class="cn">用 "Hooray for ___!" 为同学或自己编一句欢呼。</span><span class="en">Create a cheer using "Hooray for ___!" for a friend.</span></li>
+            <li><strong>Draw &amp; Label:</strong> <span class="cn">画出 Fly Guy 的 secret play，用英文标注 3 个动作词。</span><span class="en">Draw the secret play and label 3 action words.</span></li>
+            <li><strong>Role Play:</strong> <span class="cn">3 人一组表演比赛结尾（Fly Guy, Buzz, Coach）。</span><span class="en">Act out the ending in groups of three.</span></li>
+            <li><strong>Word Detective:</strong> <span class="cn">找出书中所有以 "-all" 和 "-ay" 结尾的词。</span><span class="en">Find all words ending in "-all" and "-ay".</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ HOMEWORK ═══════ -->
+<section id="homework">
+  <div class="section-label">Homework Worksheet</div>
+  <h2><span class="cn">课后作业 · Hooray for Fly Guy!</span><span class="en">Homework · Hooray for Fly Guy!</span></h2>
+  <p class="text-secondary" style="margin-bottom:1rem;"><span class="cn">以下作业分为 6 个部分，覆盖 LT01–LT08 全部模块。可打印为 A4 纸质版。建议在第 1 课时后完成 Part A–D，第 2 课时后完成 Part E–F。</span><span class="en">Six parts covering all of LT01–LT08. Print on A4. Do Parts A–D after Session 1 and Parts E–F after Session 2.</span></p>
+
+  <!-- Part A: Vocabulary -->
+  <div class="hw-section" id="sec-hw-partA">
+    <div class="hw-title">Part A · Vocabulary Match <button class="push-btn" onclick="openPushModal('HW-PartA','Vocabulary Match: match 6 football words (tackle, score, worry, helmet, cheer, touchdown) with their definitions')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · <span class="cn">连线，将单词与释义匹配。</span><span class="en">Draw a line to match each word with its meaning.</span></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;font-size:var(--fs-sm);">
+      <div>
+        <p><strong>1.</strong> tackle &nbsp;________</p>
+        <p><strong>2.</strong> score &nbsp;________</p>
+        <p><strong>3.</strong> worry &nbsp;________</p>
+        <p><strong>4.</strong> helmet &nbsp;________</p>
+        <p><strong>5.</strong> cheer &nbsp;________</p>
+        <p><strong>6.</strong> touchdown &nbsp;________</p>
+      </div>
+      <div>
+        <p><strong>A.</strong> to get points in a game</p>
+        <p><strong>B.</strong> a hard hat that protects your head</p>
+        <p><strong>C.</strong> to shout happily to support someone</p>
+        <p><strong>D.</strong> to try to bring down a player with the ball</p>
+        <p><strong>E.</strong> to feel nervous or troubled about something</p>
+        <p><strong>F.</strong> to carry the ball into the goal area to score</p>
+      </div>
+    </div>
+
+    <div class="answer-key">
+      <strong><span class="cn">✅ 参考答案 / Answer Key</span><span class="en">Answer Key</span></strong>
+      <div style="overflow-x:auto;margin-top:0.4rem;"><table style="min-width:500px;margin:0;">
+        <thead><tr><th>Word</th><th>Definition</th></tr></thead>
+        <tbody>
+          <tr><td>1. tackle</td><td>D. to try to bring down a player with the ball</td></tr>
+          <tr><td>2. score</td><td>A. to get points in a game</td></tr>
+          <tr><td>3. worry</td><td>E. to feel nervous or troubled about something</td></tr>
+          <tr><td>4. helmet</td><td>B. a hard hat that protects your head</td></tr>
+          <tr><td>5. cheer</td><td>C. to shout happily to support someone</td></tr>
+          <tr><td>6. touchdown</td><td>F. to carry the ball into the goal area to score</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- Part B: Vocabulary in Context -->
+  <div class="hw-section" id="sec-hw-partB">
+    <div class="hw-title">Part B · Vocabulary in Context <button class="push-btn" onclick="openPushModal('HW-PartB','Vocabulary in Context: fill blanks using word bank (kicked, cheered, worried, helmet, quarterback, touchdown)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · <span class="cn">用方框中的词填空。</span><span class="en">Fill in the blanks with the correct word from the box.</span></div>
+
+    <div style="background:var(--surface-alt);border-radius:var(--radius);padding:0.6rem 1rem;margin-bottom:1rem;font-size:var(--fs-sm);">
+      <strong>Word Bank:</strong> &nbsp; kicked &nbsp; | &nbsp; cheered &nbsp; | &nbsp; worried &nbsp; | &nbsp; helmet &nbsp; | &nbsp; quarterback &nbsp; | &nbsp; touchdown
+    </div>
+
+    <div class="hw-question"><span class="q-num">1.</span> Fly Guy <span class="hw-blank"></span> the ball.</div>
+    <div class="hw-question"><span class="q-num">2.</span> Buzz made Fly Guy a <span class="hw-blank"></span>.</div>
+    <div class="hw-question"><span class="q-num">3.</span> The other team snapped the ball to their <span class="hw-blank"></span>.</div>
+    <div class="hw-question"><span class="q-num">4.</span> Fly Guy <span class="hw-blank"></span> when the other team scored a lot.</div>
+    <div class="hw-question"><span class="q-num">5.</span> The team <span class="hw-blank"></span>, "Hooray for Fly Guy!"</div>
+    <div class="hw-question"><span class="q-num">6.</span> Buzz ran all the way for a <span class="hw-blank"></span>.</div>
+
+    <div class="answer-key">
+      <strong><span class="cn">✅ 参考答案 / Answer Key</span><span class="en">Answer Key</span></strong>
+      <p style="margin-top:0.4rem;">1. kicked &nbsp; 2. helmet &nbsp; 3. quarterback &nbsp; 4. worried &nbsp; 5. cheered &nbsp; 6. touchdown</p>
+    </div>
+  </div>
+
+  <!-- Part C: Phonics -->
+  <div class="hw-section" id="sec-hw-partC">
+    <div class="hw-title">Part C · Phonics Detective <button class="push-btn" onclick="openPushModal('HW-PartC','Phonics Detective: find story words matching fl-, -all, -ay, oa, qu- patterns; bonus syllable counting and stress marking')">📤 Push</button></div>
+    <div class="hw-subtitle">LT02 + LT03 · <span class="cn">找出书中符合每个音型特征的词。</span><span class="en">Find words in the story that match each sound pattern.</span></div>
+
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th style="width:120px;">Sound Pattern</th><th>Find words from the story</th><th>Pronunciation (IPA)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>fl-</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>-all</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>-ay</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>oa</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>qu-</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="font-size:var(--fs-sm);margin-top:0.8rem;"><strong>Bonus:</strong> <span class="cn">划出音节并标出重音：</span><span class="en">Circle the syllables and mark the stress:</span> hel-met &nbsp; foot-ball &nbsp; touch-down &nbsp; quar-ter-back</p>
+
+    <div class="answer-key">
+      <strong><span class="cn">✅ 参考答案 / Answer Key</span><span class="en">Answer Key</span></strong>
+      <p style="margin-top:0.4rem;"><strong>fl-</strong>: fly, flew, flies &nbsp; <strong>-all</strong>: ball, football &nbsp; <strong>-ay</strong>: play, day, today &nbsp; <strong>oa</strong>: coach, goal &nbsp; <strong>qu-</strong>: quarterback</p>
+      <p style="margin-top:0.4rem;"><strong>Bonus:</strong> hel·met (1st) / foot·ball (1st) / touch·down (1st) / quar·ter·back (1st)</p>
+    </div>
+  </div>
+
+  <!-- Part D: Grammar -->
+  <div class="hw-section" id="sec-hw-partD">
+    <div class="hw-title">Part D · Grammar Power <button class="push-btn" onclick="openPushModal('HW-PartD','Grammar Power: can/can\'t sentence completion; past tense base-to-past conversion (12 verbs including irregulars and spelling changes)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT05 + LT06 · Can / Can't &amp; Past Tense</div>
+
+    <h4 style="font-size:var(--fs-base);margin-bottom:0.5rem;">D1: Can or Can't? <span class="cn">完成句子。</span><span class="en">Complete the sentences.</span></h4>
+    <div class="hw-question"><span class="q-num">1.</span> Fly Guy <span class="hw-blank" style="min-width:60px;"></span> play football, says Buzz.</div>
+    <div class="hw-question"><span class="q-num">2.</span> Real flies <span class="hw-blank" style="min-width:60px;"></span> play football, says Coach.</div>
+    <div class="hw-question"><span class="q-num">3.</span> Fly Guy <span class="hw-blank" style="min-width:60px;"></span> fly fast and straight.</div>
+    <div class="hw-question"><span class="q-num">4.</span> A fly <span class="hw-blank" style="min-width:60px;"></span> kick a huge ball, but he helped anyway.</div>
+    <div class="hw-question"><span class="q-num">5.</span> Fly Guy <span class="hw-blank" style="min-width:60px;"></span> say the boy's name: "BUZZ!"</div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">D2: Past Tense — <span class="cn">写出过去式。</span><span class="en">Write the past tense form.</span></h4>
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th>Base Form</th><th>Past Tense</th><th>Base Form</th><th>Past Tense</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>go</td><td><span class="hw-blank"></span></td><td>kick</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>fly</td><td><span class="hw-blank"></span></td><td>cheer</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>run</td><td><span class="hw-blank"></span></td><td>plan</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>say</td><td><span class="hw-blank"></span></td><td>worry</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>win</td><td><span class="hw-blank"></span></td><td>snap</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>make</td><td><span class="hw-blank"></span></td><td>drop</td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="answer-key">
+      <strong><span class="cn">✅ 参考答案 / Answer Key</span><span class="en">Answer Key</span></strong>
+      <p style="margin-top:0.4rem;"><strong>D1:</strong> 1. can &nbsp; 2. can't &nbsp; 3. can &nbsp; 4. can't &nbsp; 5. can</p>
+      <p style="margin-top:0.4rem;"><strong>D2:</strong> go→went / fly→flew / run→ran / say→said / win→won / make→made / kick→kicked / cheer→cheered / plan→planned / worry→worried / snap→snapped / drop→dropped</p>
+    </div>
+  </div>
+
+  <!-- Part E: Cohesion -->
+  <div class="hw-section" id="sec-hw-partE">
+    <div class="hw-title">Part E · Cohesion — Who Does "He" Mean? <button class="push-btn" onclick="openPushModal('HW-PartE','Cohesion: identify pronoun reference (he=Fly Guy/Buzz/quarterback/Coach); find and analyze the but-sentence')">📤 Push</button></div>
+    <div class="hw-subtitle">LT07 · <span class="cn">读句子，写出 "he" 指的是谁：Fly Guy、Buzz、Coach 还是 quarterback。</span><span class="en">Read each sentence. Write who "he" refers to: Fly Guy, Buzz, Coach, or quarterback.</span></div>
+
+    <div class="hw-question"><span class="q-num">1.</span> "<strong>He</strong> named him Fly Guy." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">2.</span> "<strong>He</strong> flew right up the quarterback's nose!" → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">3.</span> "<strong>He</strong> dropped the ball." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">4.</span> "<strong>He</strong> picked it up and ran for a touchdown." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">5.</span> "<strong>He</strong> said, 'Okay, Fly Guy. You can play now.'" → <span class="hw-blank"></span></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">Find the "but"!</h4>
+    <p style="font-size:var(--fs-sm);"><span class="cn">写出书中含 <strong>but</strong> 的句子。"but" 之后发生了什么变化？</span><span class="en">Write one sentence from the story that uses <strong>but</strong>. What changes after "but"?</span></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">Sentence: <span class="hw-blank" style="min-width:300px;"></span></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);"><span class="cn">变化</span><span class="en">What changes</span>: <span class="hw-blank" style="min-width:300px;"></span></p>
+
+    <div class="answer-key">
+      <strong><span class="cn">✅ 参考答案 / Answer Key</span><span class="en">Answer Key</span></strong>
+      <p style="margin-top:0.4rem;">1. Buzz &nbsp; 2. Fly Guy &nbsp; 3. quarterback &nbsp; 4. Buzz &nbsp; 5. Coach</p>
+      <p style="margin-top:0.4rem;"><strong>Find the "but"!:</strong> "Flies can't play football. <strong>But</strong> he can come to the game." — After "but", Coach gives Fly Guy a chance to join, which turns doubt into hope.</p>
+    </div>
+  </div>
+
+  <!-- Part F: Writing -->
+  <div class="hw-section" id="sec-hw-partF">
+    <div class="hw-title">Part F · Opinion Writing <button class="push-btn" onclick="openPushModal('HW-PartF','Opinion Writing: Can a fly really play football? Write at least 4 sentences using scaffold starters, and end with a cheer')">📤 Push</button></div>
+    <div class="hw-subtitle">LT08 · <span class="cn">Can a fly really play football? 写出你的观点。至少 4 句话，可用引导句。</span><span class="en">Can a fly really play football? Write your opinion in at least 4 sentences using the starters.</span></div>
+
+    <p style="font-size:var(--fs-sm);margin-bottom:0.5rem;"><strong><span class="cn">需要帮助时可以使用这些句子开头：</span><span class="en">Use these sentence starters if you need help:</span></strong></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.8rem;">
+      I think a fly ___ play football because ___.<br>
+      First, ___.<br>
+      Also, ___.<br>
+      In conclusion, ___. Hooray for ___!
+    </p>
+    <div class="hw-lines" style="min-height:12em;"></div>
+
+    <div class="answer-key">
+      <strong><span class="cn">✅ 参考答案 / Sample Model Answer</span><span class="en">Answer Key (Sample Model)</span></strong>
+      <p style="margin-top:0.4rem;">I think a fly <em>can</em> play football because Fly Guy is clever and fast. First, he kicked the ball and went out for a pass. Also, he flew right up the quarterback's nose and made him drop the ball. In conclusion, even a tiny fly can help his team win the game. Hooray for Fly Guy!</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════ TEACHER NOTES ═══════ -->
+<section>
+  <div class="section-label">Teacher Notes</div>
+  <h2><span class="cn">教师备注</span><span class="en">Teacher Notes</span></h2>
+
+  <div class="lt-grid">
+    <div class="card">
+      <h4>📊 LT Coverage Map</h4>
+      <div style="overflow-x:auto"><table style="min-width:500px">
+        <thead>
+          <tr><th>LT Module</th><th>Session 1</th><th>Session 2</th><th>Homework</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LT01 Vocabulary</td><td>✅ <span class="cn">主教学</span><span class="en">main</span></td><td><span class="cn">复习</span><span class="en">review</span></td><td>✅ Part A–B</td></tr>
+          <tr><td>LT02 Phonics</td><td>✅ <span class="cn">主教学</span><span class="en">main</span></td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT03 Pronunciation</td><td>✅ <span class="cn">主教学</span><span class="en">main</span></td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT04 Sentence Patterns</td><td>✅ <span class="cn">初探</span><span class="en">intro</span></td><td><span class="cn">复习</span><span class="en">review</span></td><td>—</td></tr>
+          <tr><td>LT05 Grammar</td><td>—</td><td>✅ <span class="cn">主教学</span><span class="en">main</span></td><td>✅ Part D</td></tr>
+          <tr><td>LT06 Morphology</td><td>—</td><td>✅ <span class="cn">主教学</span><span class="en">main</span></td><td>✅ Part C+D</td></tr>
+          <tr><td>LT07 Cohesion</td><td>—</td><td>✅ <span class="cn">主教学</span><span class="en">main</span></td><td>✅ Part E</td></tr>
+          <tr><td>LT08 Functional</td><td>—</td><td>✅ <span class="cn">主教学</span><span class="en">main</span></td><td>✅ Part F</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h4>🎯 CCSS Alignment (Grade 1–2)</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>RL.1.1</strong> Ask and answer questions about key details</li>
+        <li><strong>RL.1.2</strong> Retell stories, including key details</li>
+        <li><strong>RL.1.3</strong> Describe characters, settings, and major events</li>
+        <li><strong>RL.1.7</strong> Use illustrations and details to describe characters/events</li>
+        <li><strong>W.1.1</strong> Write opinion pieces, introduce topic, supply reason</li>
+        <li><strong>SL.1.1</strong> Participate in collaborative conversations</li>
+        <li><strong>SL.1.4</strong> Describe people, places, things, and events</li>
+        <li><strong>L.1.1</strong> Print all upper- and lowercase letters; use conventions</li>
+        <li><strong>L.1.4</strong> Determine meaning of words using context clues</li>
+        <li><strong>RF.1.3</strong> Know and apply grade-level phonics and word analysis skills</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="page-wrap">
+    <p>Hooray for Fly Guy! — <span class="cn">精读教案 · 两课时</span><span class="en">Close-Reading Lesson Plan · Two Sessions</span> · Emily's Reading Studio</p>
+    <p style="margin-top:0.3rem;">Language Target Framework · LT01–LT08 · CCSS Grade 1–2 Aligned</p>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll for TOC
+document.querySelectorAll('.toc a').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var id = this.getAttribute('href').slice(1);
+    var target = document.getElementById(id);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ═══════ CN / EN Language Toggle ═══════
+var staticLang = localStorage.getItem('flyguy_hooray_lang') || 'cn';
+function applyLang(lang) {
+  document.body.classList.remove('lang-cn', 'lang-en');
+  document.body.classList.add('lang-' + lang);
+  document.getElementById('langToggle').textContent = (lang === 'cn') ? 'EN' : '中文';
+  localStorage.setItem('flyguy_hooray_lang', lang);
+}
+function toggleLang() {
+  var next = document.body.classList.contains('lang-cn') ? 'en' : 'cn';
+  applyLang(next);
+}
+applyLang(staticLang);
+
+const BOOK_TITLE = 'Hooray for Fly Guy!';
+
+// ═══════ Push to Students ═══════
+const sectionContentMap = {
+  'LT01-Vocabulary': '12 core vocabulary words with IPA, POS, definitions, examples, and word families: kick, score, cheer, worry, helmet, quarterback, tackle, touchdown, team, coach, football, pass',
+  'LT02-Phonics': 'Phonics patterns: fl- blends (fly, flew, flies); -all rime (ball, football); -ay vowel team (play, day, today); oa long-o (coach, goal); qu- (quarterback, quick); wor- (worry)',
+  'LT03-Pronunciation': 'Syllable counting and stress: helmet(2), football(2), touchdown(2), quarterback(3), cheer(1), tackle(2), worry(2), pass(1); wor- /wɜː/ sound; linking in story phrases',
+  'LT04-Sentence-Patterns': 'Core sentence patterns: ___ can/can\'t [verb]; They [verb]/[verb]/[verb] parallel actions; It\'s time for [noun]; cheer with Hooray for ___!',
+  'LT05-Grammar': 'can/can\'t ability expression; Simple Past tense regular (kicked, scored, cheered, planned, worried) and irregular (went, said, made, did, ran, flew, won); be about to + verb, future intent',
+  'LT06-Morphology': 'Past-tense word building: -ed (kicked, cheered), double-consonant +ed (planned, snapped), -y→-ied (worried), irregular (went, flew, ran, won); compound words: football, touchdown, quarterback',
+  'LT07-Cohesion': 'Cohesion devices: but (contrast), and (sequence), finally (time); pronoun reference (he = Fly Guy/Buzz/quarterback); the refrain Hooray for Fly Guy!',
+  'LT08-Functional-Communication': 'Story retelling frame; opinion prompts: Can a fly really play football?; write your own cheer with Hooray for ___!',
+  'HW-PartA': 'Vocabulary Match: match 6 football words (tackle, score, worry, helmet, cheer, touchdown) with their definitions',
+  'HW-PartB': 'Vocabulary in Context: fill in blanks using word bank (kicked, cheered, worried, helmet, quarterback, touchdown)',
+  'HW-PartC': 'Phonics Detective: find story words matching fl-, -all, -ay, oa, qu- patterns; syllable counting bonus',
+  'HW-PartD': 'Grammar Power: can/can\'t completion + past tense conversion (12 verbs including irregulars and spelling changes)',
+  'HW-PartE': 'Cohesion: identify who "he" refers to in 5 sentences; find and analyze the but-sentence',
+  'HW-PartF': 'Opinion Writing: Can a fly really play football? Write 4+ sentences with scaffold and end with a cheer'
+};
+
+function openPushModal(sectionId, sectionContent) {
+  var token = localStorage.getItem('authToken');
+  if (!token) {
+    window.location.href = '/lesson.html';
+    return;
+  }
+  var content = sectionContent || sectionContentMap[sectionId] || sectionId;
+
+  fetch('/api/students/list', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API error: ' + r.status);
+    return r.json();
+  })
+  .then(function(students) {
+    if (!Array.isArray(students) || students.length === 0) {
+      alert('No students found. Please add students first.');
+      return;
+    }
+    var existing = document.querySelector('.push-modal-overlay');
+    if (existing) existing.remove();
+
+    var modal = document.createElement('div');
+    modal.className = 'push-modal-overlay';
+    var studentListHtml = students.map(function(s) {
+      return '<label class="student-item"><input type="checkbox" value="' + s.id + '"><span>' + s.name + '</span></label>';
+    }).join('');
+    modal.innerHTML = '<div class="push-modal">' +
+      '<h3>\ud83d\udce4 Push to Students</h3>' +
+      '<p style="color:#666;font-size:13px;">' + sectionId + '</p>' +
+      '<p style="color:#888;font-size:11px;margin-bottom:8px;">' + content.substring(0, 120) + (content.length > 120 ? '...' : '') + '</p>' +
+      '<div class="student-list">' + studentListHtml + '</div>' +
+      '<button class="push-confirm-btn" id="pushConfirmBtn">\u2705 Confirm Push</button>' +
+      '<button class="push-cancel-btn" id="pushCancelBtn">\u2716 Cancel</button>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    document.getElementById('pushConfirmBtn').onclick = function() { doPush(sectionId, content, this); };
+    document.getElementById('pushCancelBtn').onclick = function() { modal.remove(); };
+    modal.onclick = function(e) { if (e.target === modal) modal.remove(); };
+  })
+  .catch(function(err) {
+    alert('Failed to load students: ' + err.message);
+  });
+}
+
+function doPush(sectionId, content, btn) {
+  var modal = document.querySelector('.push-modal-overlay');
+  if (!modal) return;
+  var checked = modal.querySelectorAll('input:checked');
+  if (checked.length === 0) {
+    alert('Please select at least one student.');
+    return;
+  }
+  var token = localStorage.getItem('authToken');
+  btn.textContent = 'Pushing...';
+  btn.disabled = true;
+
+  var emojiMap = {
+    'LT01': '\ud83d\udcd6', 'LT02': '\ud83d\udd24', 'LT03': '\ud83c\udfa4',
+    'LT04': '\u270f\ufe0f', 'LT05': '\ud83d\udd24', 'LT06': '\ud83e\udde9',
+    'LT07': '\ud83d\udd17', 'LT08': '\ud83d\udcac', 'HW': '\ud83d\udcdd'
+  };
+  var prefix = sectionId.split('-')[0];
+  var emoji = emojiMap[prefix] || '\ud83d\udccc';
+  var title = emoji + ' [Fly Guy] ' + sectionId;
+  var today = new Date();
+  var todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  var teacher = localStorage.getItem('currentUser') || localStorage.getItem('lesson_tracker_user') || 'emily_mo';
+
+  var taskDef = PUSH_TASKS[sectionId] || { renderer: 'checklist', prompt: content, required: true };
+  var sourceUrl = '/frontend/fly-guy/hooray_for_fly_guy_lesson_plan.html';
+  var taskId = 'flyguy-hooray-' + String(sectionId).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  var taskSnapshot = {
+    id: taskId,
+    title: title,
+    type: 'task',
+    series: 'Fly Guy',
+    book: BOOK_TITLE,
+    lesson: sectionId,
+    part: sectionId,
+    sourceLessonUrl: sourceUrl,
+    studentRenderer: taskDef.renderer,
+    prompt: taskDef.prompt || content,
+    required: !!taskDef.required
+  };
+  if (taskDef.renderer === 'drag-match' && taskDef.pairs) taskSnapshot.pairs = taskDef.pairs;
+  if (taskDef.renderer === 'drag-order' && taskDef.items) taskSnapshot.items = taskDef.items;
+  if (taskDef.renderer === 'multiple-choice' && taskDef.options) taskSnapshot.options = taskDef.options;
+  if (taskDef.renderer === 'checklist') taskSnapshot.instructions = taskDef.prompt || content;
+
+  var assignments = [];
+  for (var i = 0; i < checked.length; i++) {
+    var studentId = checked[i].value;
+    assignments.push({
+      assignmentId: 'assign-' + Date.now() + '-' + Math.random().toString(16).slice(2) + '-' + i,
+      practiceId: 'lessonplan:' + sectionId,
+      title: title,
+      content: content,
+      sourceLessonUrl: sourceUrl,
+      sourceLessonId: 'flyguy-hooray-for-fly-guy',
+      taskIds: [taskId],
+      tasks: [taskSnapshot],
+      sourceBook: 'Fly Guy',
+      targetType: 'student',
+      targetIds: [studentId],
+      studentIds: [studentId],
+      classId: '',
+      relatedClassDate: todayStr,
+      assignedDate: todayStr,
+      dueDate: '',
+      teacherNote: '',
+      assignedBy: teacher,
+      status: 'active'
+    });
+  }
+
+  fetch('/api/practice/assignments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ assignments: assignments })
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    alert('\u2705 Pushed to ' + (data.count || assignments.length) + ' student(s)');
+    modal.remove();
+  })
+  .catch(function(err) {
+    alert('Push failed: ' + err.message);
+    btn.textContent = 'Push';
+    btn.disabled = false;
+  });
+}
+// ═══════ Task definitions for Practice push (task snapshot) ═══════
+var PUSH_TASKS = {
+  'LT01-Vocabulary': { renderer: 'checklist', prompt: 'Review the 12 football vocabulary words with IPA, definitions and word families.', required: true },
+  'LT02-Phonics': { renderer: 'checklist', prompt: 'Practice phonics patterns: fl-, -all, -ay, oa, qu-, wor-.', required: true },
+  'LT03-Pronunciation': { renderer: 'checklist', prompt: 'Count syllables and practice stress: helmet(2), football(2), touchdown(2), quarterback(3), tackle(2), worry(2).', required: true },
+  'LT04-Sentence-Patterns': { renderer: 'checklist', prompt: 'Practice sentence patterns: ___ can/can\'t [verb]; It\'s time for [noun].', required: true },
+  'LT05-Grammar': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of "fly".', options: [
+    { label: 'fly → flew', value: 'flew', correct: true },
+    { label: 'fly → flyed', value: 'flyed', correct: false },
+    { label: 'fly → flown', value: 'flown', correct: false }
+  ], required: true },
+  'LT06-Morphology': { renderer: 'checklist', prompt: 'Review past-tense spelling rules (-ed, double consonant +ed, -y→-ied) and irregulars, plus compound words.', required: true },
+  'LT07-Cohesion': { renderer: 'short-answer', prompt: 'In "He flew right up the quarterback\'s nose!", who does "he" refer to? Write the name.', required: true },
+  'LT08-Functional-Communication': { renderer: 'short-answer', prompt: 'Can a fly really play football? Write 4+ sentences with "I think... because..." and end with a cheer.', required: true },
+  'HW-PartA': { renderer: 'drag-match', prompt: 'Match each word with its meaning.', pairs: [
+    { left: 'tackle', right: 'to bring down a player' },
+    { left: 'score', right: 'to get points' },
+    { left: 'worry', right: 'to feel nervous' },
+    { left: 'helmet', right: 'a head protector' },
+    { left: 'cheer', right: 'to shout support' },
+    { left: 'touchdown', right: 'to score in the goal area' }
+  ], required: true },
+  'HW-PartB': { renderer: 'drag-order', prompt: 'Put the words in the correct order to complete the sentences.', items: ['kicked', 'helmet', 'quarterback', 'worried', 'cheered', 'touchdown'], required: true },
+  'HW-PartC': { renderer: 'multiple-choice', prompt: 'Which phonics pattern does "quarterback" start with?', options: [
+    { label: 'qu-', value: 'qu', correct: true },
+    { label: 'fl-', value: 'fl', correct: false },
+    { label: 'oa', value: 'oa', correct: false }
+  ], required: true },
+  'HW-PartD': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of "run".', options: [
+    { label: 'run → ran', value: 'ran', correct: true },
+    { label: 'run → runned', value: 'runned', correct: false },
+    { label: 'run → runs', value: 'runs', correct: false }
+  ], required: true },
+  'HW-PartE': { renderer: 'short-answer', prompt: 'For each sentence, write who "he" refers to: Fly Guy, Buzz, Coach, or quarterback.', required: true },
+  'HW-PartF': { renderer: 'short-answer', prompt: 'Can a fly really play football? Write at least 4 sentences using the scaffold starters.', required: true }
+};
+</script>
+</body>
+</html>

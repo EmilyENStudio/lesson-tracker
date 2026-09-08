@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practice 作业中心 · 教师端</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#F5F3EE;color:#2B2A26;padding:24px}
+.practice-shell{display:grid;grid-template-columns:280px 1fr 360px;gap:20px;max-width:1500px;margin:0 auto}
+aside,section{background:#fff;border-radius:14px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+h1{font-size:20px;margin-bottom:16px;color:#244F38}
+h2{font-size:15px;margin-bottom:12px;color:#244F38;border-bottom:1px solid #EEE9E0;padding-bottom:8px}
+input,select,textarea{width:100%;padding:10px 12px;margin-bottom:10px;border:1px solid #DCD6CA;border-radius:8px;font-size:14px;background:#FCFBF9}
+textarea{min-height:60px;resize:vertical}
+button{cursor:pointer;border:none;border-radius:8px;padding:10px 14px;font-size:14px;background:#244F38;color:#fff}
+button:hover{background:#1D3F2D}
+button.small{font-size:12px;padding:6px 10px}
+button.red{background:#B4452C}
+.empty{color:#8A8678;padding:20px 0;text-align:center}
+.hint{color:#8A8678;font-size:12px}
+.login-prompt{background:#fff;border-radius:14px;padding:40px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.login-prompt p{margin-bottom:16px;color:#6E6A5E}
+.hidden{display:none}
+
+/* 预览弹窗 */
+.pv-mask{position:fixed;inset:0;background:rgba(20,25,20,.45);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+.pv-mask.hidden{display:none}
+.pv-modal{background:#fff;border-radius:14px;max-width:720px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,.2)}
+.pv-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #EEE9E0;font-size:15px;font-weight:700;color:#244F38}
+.pv-close{cursor:pointer;color:#8A8678;font-size:16px;padding:0 2px}
+.pv-close:hover{color:#B4452C}
+.pv-body{padding:16px 18px;overflow:auto;font-size:13px;color:#3A3A36}
+.pv-body .pv-tag{font-size:11px;color:#8A8678;margin-bottom:8px}
+.pv-body .pv-q{border:1px solid #EEE9E0;border-radius:8px;padding:8px 10px;margin-bottom:8px;background:#FCFBF9}
+.pv-body .pv-q .pv-qn{font-weight:600;color:#244F38;margin-bottom:4px}
+.pv-body .pv-opt{display:flex;align-items:center;gap:6px;padding:2px 0}
+.pv-body .pv-opt .pv-correct{color:#1D7A3F;font-weight:700}
+.pv-body .pv-note{margin-top:10px;font-size:12px;color:#8A8678;border-top:1px dashed #EEE9E0;padding-top:8px}
+
+/* 资源分组 */
+.series-block{margin-bottom:16px}
+.series-label{font-size:14px;font-weight:700;color:#244F38;margin:6px 0 4px}
+.book-label{font-size:13px;color:#6E6A5E;margin:4px 0 4px;padding-left:10px;border-left:3px solid #D4E0D6}
+.lesson-label{font-size:12px;color:#8A8678;margin:6px 0 4px;padding-left:14px;font-weight:600}
+.task-row{display:flex;align-items:flex-start;gap:8px;border:1px solid #EEE9E0;border-radius:8px;padding:8px 10px;margin:0 0 6px 14px;font-size:13px;background:#FCFBF9}
+.task-row input{width:16px;height:16px;margin:2px 0 0 0;accent-color:#244F38;flex:none}
+.task-row .t-title{font-weight:600}
+.badge{display:inline-block;font-size:11px;background:#EEF3EF;color:#244F38;border-radius:10px;padding:1px 8px;margin-left:6px}
+.preview-btn{display:inline-block;margin-left:6px;border:1px solid #D8D0C2;background:#fff;color:#244F38;border-radius:12px;padding:1px 10px;font-size:11px;cursor:pointer;vertical-align:middle}
+.preview-btn:hover{background:#F4F1EA}
+.filters input{margin-bottom:10px}
+
+/* 推送配置 */
+.students-pick{margin-bottom:10px}
+.students-pick label{display:flex;align-items:center;gap:8px;font-size:13px;padding:5px 8px;border:1px solid #EEE9E0;border-radius:8px;margin-bottom:6px;cursor:pointer}
+.students-pick input{width:16px;height:16px;margin:0;accent-color:#244F38;flex:none}
+.push-panel h2:not(:first-of-type){margin-top:18px}
+.push-panel .selected-count{font-size:12px;color:#244F38;margin-bottom:8px}
+
+/* 推送记录 */
+.assignment-card{border:1px solid #EEE9E0;border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;color:#3A3A36}
+.assignment-card strong{font-size:13px;color:#244F38}
+.assignment-card a{color:#1D7A3F;text-decoration:none;font-weight:600}
+.assignment-card .row{margin:3px 0}
+.rec-filter{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.rec-filter input,.rec-filter select{flex:1;min-width:110px;padding:6px 8px;border:1px solid #E0D9CC;border-radius:6px;font-size:12px;background:#fff;color:#3A3A36}
+.rec-filter input:focus,.rec-filter select:focus{outline:none;border-color:#244F38}
+.rec-select-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:6px 0 10px}
+.rec-select-bar .rec-sel-all{display:flex;align-items:center;gap:6px;font-size:12px;color:#244F38;cursor:pointer}
+.rec-select-bar .rec-sel-all input{width:14px;height:14px;margin:0;accent-color:#244F38}
+.rec-select-bar .del-btn{border:1px solid #E6C4BC;background:#FFF6F4;color:#B4452C;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer}
+.rec-select-bar .del-btn:hover{background:#FBE4E0}
+.assignment-card .rec-card-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:4px}
+.assignment-card .rec-check{width:14px;height:14px;margin:2px 0 0 0;accent-color:#244F38;flex:none;cursor:pointer}
+.assignment-card .rec-check-title{flex:1}
+.rec-more{text-align:center;margin:6px 0}
+.rec-more button{background:none;border:1px solid #D8D0C2;color:#244F38;border-radius:16px;padding:5px 16px;font-size:12px;cursor:pointer}
+.rec-more button:hover{background:#F4F1EA}
+.assignment-card .rec-actions{display:flex;justify-content:flex-end;margin-top:6px}
+.assignment-card .del-btn{border:1px solid #E6C4BC;background:#FFF6F4;color:#B4452C;border-radius:6px;padding:3px 10px;font-size:11px;cursor:pointer}
+.assignment-card .del-btn:hover{background:#FBE4E0}
+
+/* 批改台 */
+.submission-card{border:1px solid #EEE9E0;border-radius:10px;padding:12px;margin-bottom:12px;background:#FCFBF9}
+.submission-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.submission-head strong{font-size:14px;color:#244F38}
+.status-pill{font-size:11px;padding:2px 8px;border-radius:10px}
+.status-pill.submitted{background:#F4E9D7;color:#9A6B1F}
+.status-pill.checked{background:#E2EFE6;color:#1D7A3F}
+.status-pill.needredo{background:#FBE4E0;color:#B4452C}
+.answer-line{border-top:1px dashed #EEE9E0;padding:6px 0;font-size:13px}
+.answer-line .q{color:#6E6A5E}
+.answer-line .a{color:#2B2A26;margin-top:2px;white-space:pre-wrap}
+.answer-line .ok{color:#1D7A3F;font-weight:600}
+.answer-line .bad{color:#B4452C;font-weight:600}
+.answer-line .part{color:#9A6B1F;font-weight:600}
+.fb-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.fb-row input{flex:1;min-width:120px;margin:0;width:auto}
+.fb-row .scorebox{width:70px;flex:none}
+.fb-row button{flex:none}
+.resource-filters{display:grid;grid-template-columns:1fr 1fr;gap:8px}.resource-filters select{min-width:0}
+.resource-actions{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:8px 0 12px}.resource-actions label{display:flex;gap:6px;align-items:center;font-size:13px}.resource-actions input{width:16px;margin:0}
+.task-excerpt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:4px}.book-group{margin:12px 0}.book-group summary{cursor:pointer;padding:10px 6px;font-weight:600;background:#eef3ef}.selected-count{font-size:13px;margin:8px 0}.resource-panel,.push-panel,.grade-panel{min-width:0}.task-row>div{min-width:0;overflow-wrap:anywhere}.pv-body{white-space:pre-wrap}.pv-q{white-space:normal}button:disabled{opacity:.5;cursor:wait}
+@media(max-width:1180px){.practice-shell{grid-template-columns:1fr}}
+@media(max-width:600px){body{padding:12px}.resource-filters{grid-template-columns:1fr}.practice-shell{gap:12px}aside,section{padding:14px}}
+</style>
+</head>
+<body>
+<main class="practice-shell">
+  <div id="loginBox" class="login-prompt" style="grid-column:1/-1">
+    <p>教师身份登录后才能管理推送与批改（emily_mo）。</p>
+    <button type="button" onclick="app.relogin()">重新登录</button>
+  </div>
+
+  <aside class="push-panel hidden" id="pushPanel">
+    <h1>Practice 作业中心</h1>
+
+    <h2>选择学生</h2>
+    <div class="students-pick" id="studentsPick"><p class="empty">加载中…</p></div>
+
+    <h2>推送配置</h2>
+    <input id="courseName" placeholder="课程名称，如 Fly Guy 精读" />
+    <input id="relatedClassDate" type="date" />
+    <input id="dueDate" type="date" />
+    <textarea id="teacherNote" placeholder="老师备注（可选）"></textarea>
+    <button id="pushBtn" type="button">推送所选 Task</button>
+
+    <h2>推送记录</h2>
+    <div class="rec-filter">
+      <input id="recFStudent" placeholder="按学员名搜索" />
+      <input id="recFCourse" placeholder="按课程名搜索" />
+      <select id="recFMonth"><option value="">全部年月</option></select>
+    </div>
+    <div class="rec-select-bar">
+      <label class="rec-sel-all"><input type="checkbox" id="recSelectAll" onchange="toggleRecSelectAll(this.checked)"> 全选</label>
+      <button type="button" class="del-btn" onclick="deleteSelectedRecs()">删除选中（<span id="recSelCount">0</span>）</button>
+    </div>
+    <div id="assignmentList"><p class="empty">暂无推送记录。</p></div>
+    <div id="recMoreBox"></div>
+  </aside>
+
+  <section class="resource-panel hidden" id="resourcePanel">
+    <h2>练习资源库</h2>
+    <div class="resource-filters">
+      <select id="filterBook" aria-label="书目"><option value="">全部书目</option></select>
+      <select id="filterLesson" aria-label="章节"><option value="">全部章节</option></select>
+      <select id="filterKind" aria-label="资源类型"><option value="">全部类型</option><option>Quiz</option><option>Worksheet</option><option>Homework</option></select>
+    </div>
+    <input id="filterKeyword" placeholder="搜索书目、课程、题型" />
+    <div class="resource-actions"><label><input type="checkbox" id="selectVisible"> 全选筛选结果</label><button type="button" id="clearTasks" class="small">清空所选</button></div>
+    <div id="selectedCount"></div>
+    <div id="catalogList"><p class="empty">加载中…</p></div>
+  </section>
+
+  <aside class="grade-panel hidden" id="gradePanel" style="background:#fff;border-radius:14px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.04)">
+    <h2>作业批改台</h2>
+    
+    <div class="sub-filter" style="margin:10px 0 12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <input id="subFStudent" placeholder="按学员名搜索" style="min-width:110px;width:120px">
+      <input id="subFCourse" placeholder="按课程/作业名搜索" style="min-width:130px;width:150px">
+      <select id="subFMonth"><option value="">全部年月</option></select>
+      <select id="subFStatus">
+        <option value="">全部状态</option>
+        <option value="submitted">已提交</option>
+        <option value="checked">已批改</option>
+        <option value="needredo">需重做</option>
+        <option value="unchecked">未批改（已提交+需重做）</option>
+      </select>
+      <span style="font-size:12px;color:#993">显示最近 3 条，更多自动折叠</span>
+    </div>
+    <div id="subMoreBox" style="margin:6px 0"></div>
+
+    <div id="submissionList"><p class="empty">加载中…</p></div>
+  </aside>
+</main>
+
+<!-- 预览弹窗 -->
+<div class="pv-mask hidden" id="pvMask" onclick="closePreview()">
+  <div class="pv-modal" onclick="event.stopPropagation()">
+    <div class="pv-head"><span id="pvTitle">预览</span><span class="pv-close" onclick="closePreview()">✕</span></div>
+    <div id="pvBody" class="pv-body"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(id){return document.getElementById(id);};
+  function esc(s){
+    if(s==null) return '';
+    return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});
+  }
+  function norm(s){ return s==null?'':String(s).trim().toLowerCase(); }
+
+  // ---------- 认证 ----------
+  var TEACHER='emily_mo';
+  function getToken(){ return localStorage.getItem('authToken')||''; }
+  function authHeaders(t){ return {'Authorization':'Bearer '+(t||getToken())}; }
+  async function ensureToken(username,role){
+    var t=getToken();
+    if(t){
+      try{
+        var chk=await fetch('/api/students/list',{headers:authHeaders(t)});
+        if(chk.ok) return t;
+      }catch(e){}
+      localStorage.removeItem('authToken'); t='';
+    }
+    var res=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:username,password:'000',role:role||'teacher'})});
+    if(!res.ok){ var e=await res.json().catch(function(){return{};}); throw new Error((e&&e.error)||'登录失败'); }
+    var d=await res.json(); localStorage.setItem('authToken',d.token); return d.token;
+  }
+
+  // ---------- 数据 ----------
+  var catalog=[];
+  var students=[];
+  var assignments=[];
+  var submissions=[];
+  var selectedTaskIds=[];   // catalog id 列表
+  var selectedStudentIds=[];
+
+  async function init(){
+    try{
+      await ensureToken(TEACHER,'teacher');
+      $('loginBox').classList.add('hidden');
+      ['pushPanel','resourcePanel','gradePanel'].forEach(function(id){$(id).classList.remove('hidden');});
+      var _hz=location.hash;if(_hz==='#pushPanel'||_hz==='#gradePanel'||_hz==='#resourcePanel'){var _el=document.getElementById(_hz.slice(1));if(_el)setTimeout(function(){_el.scrollIntoView({behavior:'smooth',block:'start'});},80);}
+      await loadAll();
+    }catch(e){
+      $('loginBox').classList.remove('hidden');
+      console.error('auth/load error',e);
+    }
+  }
+
+  async function loadAll(){
+    var token=getToken();
+    // catalog
+    var cr=await fetch('/data/practice-catalog.json',{credentials:'include',cache:'no-store'});
+    if(!cr.ok || !(cr.headers.get('content-type')||'').includes('json')) throw new Error('练习资源加载失败，请重新登录后重试。');
+    catalog=await cr.json();
+    if(window.PracticeAuthoring) catalog=catalog.concat(await window.PracticeAuthoring.getResources());
+    // students
+    try{
+      var st=await fetch('/api/students/list',{headers:authHeaders(token)});
+      if(st.ok) students=await st.json();
+    }catch(e){ students=[]; }
+    // assignments
+    try{
+      var ar=await fetch('/api/practice/assignments',{headers:authHeaders(token)});
+      if(ar.ok) assignments=await ar.json();
+    }catch(e){ assignments=[]; }
+    // submissions
+    try{
+      var sr=await fetch('/api/practice/submissions',{headers:authHeaders(token)});
+      if(sr.ok) submissions=await sr.json();
+    }catch(e){ submissions=[]; }
+
+    renderStudents();
+    populateResourceFilters();
+    renderCatalog();
+    renderAssignments();
+    renderSubmissions();
+    renderRecFilterMonths();
+    bindRecFilters();
+  }
+
+  // ---------- 可推送 task 分组渲染 ----------
+  function pushableTasks(){
+    return catalog.filter(function(x){ return x.studentRenderer && x.status==='active'; });
+  }
+
+  function populateResourceFilters(){
+    var book=$('filterBook').value;
+    var books=Array.from(new Set(pushableTasks().map(function(t){return t.book||'';}))).filter(Boolean).sort();
+    $('filterBook').innerHTML='<option value="">全部书目</option>'+books.map(function(b){return '<option>'+esc(b)+'</option>';}).join('');
+    $('filterBook').value=book;
+    populateLessonFilter();
+  }
+  function populateLessonFilter(){
+    var book=$('filterBook').value;
+    var lessons=Array.from(new Set(pushableTasks().filter(function(t){return !book||t.book===book;}).map(function(t){return t.lesson||'';}))).filter(Boolean).sort(function(a,b){return a.localeCompare(b,'en',{numeric:true});});
+    $('filterLesson').innerHTML='<option value="">全部章节</option>'+lessons.map(function(l){return '<option>'+esc(l)+'</option>';}).join('');
+  }
+  function filteredTasks(){
+    var keyword=norm($('filterKeyword').value);
+    return pushableTasks().filter(function(x){
+      return (!$('filterBook').value||x.book===$('filterBook').value)
+        && (!$('filterLesson').value||x.lesson===$('filterLesson').value)
+        && (!$('filterKind').value||x.resourceKind===$('filterKind').value)
+        && (!keyword||norm([x.series,x.book,x.lesson,x.course,x.title,x.part,x.studentRenderer].join(' ')).includes(keyword));
+    });
+  }
+
+  function renderCatalog(){
+    var keyword=norm($('filterKeyword').value).trim();
+    var list=$('catalogList');
+    var items=filteredTasks();
+    // 分组 series -> book -> lesson
+    var seriesOrder=[]; var bySeries={};
+    items.forEach(function(t){
+      var s=t.series||'其他';
+      if(!bySeries[s]){ bySeries[s]={}; seriesOrder.push(s); }
+      var b=t.book||'—';
+      if(!bySeries[s][b]) bySeries[s][b]={};
+      var l=t.lesson||t.part||'—';
+      if(!bySeries[s][b][l]) bySeries[s][b][l]=[];
+      bySeries[s][b][l].push(t);
+    });
+    seriesOrder.sort(function(a,b){return a.localeCompare(b,'zh');});
+    list.innerHTML=seriesOrder.map(function(s){
+      var books=Object.keys(bySeries[s]);
+      books.sort(function(a,b){return a.localeCompare(b,'zh');});
+      var inner=books.map(function(b){
+        var lessons=Object.keys(bySeries[s][b]);
+        lessons.sort(function(a,b){return a.localeCompare(b,'en',{numeric:true});});
+        var rows=lessons.map(function(l){
+          return '<div class="lesson-label">'+esc(l)+'</div>'+bySeries[s][b][l].map(function(t){
+            var checked=selectedTaskIds.indexOf(t.id)>=0;
+            return '<div class="task-row">'
+              +'<input type="checkbox" '+(checked?'checked':'')+' onchange="app.toggleTask(\''+esc(t.id)+'\',this.checked)">'
+              +'<div><div class="t-title">'+esc(t.title)+'<span class="badge">'+esc(t.studentRenderer)+'</span>'
+              +'<button type="button" class="preview-btn" onclick="previewTask(\''+esc(t.id)+'\')">👁 预览</button></div>'
+              +'<div class="hint task-excerpt">'+esc(t.prompt||'')+'</div></div></div>';
+          }).join('');
+        }).join('');
+        return '<details class="book-group" '+($('filterBook').value||keyword?'open':'')+'><summary class="book-label">'+esc(b)+'</summary>'+rows+'</details>';
+      }).join('');
+      return '<div class="series-block"><div class="series-label">'+esc(s)+'</div>'+inner+'</div>';
+    }).join('')||'<p class="empty">没有匹配的可推送 Task。</p>';
+    renderSelectedCount();
+  }
+
+  function renderSelectedCount(){
+    var n=selectedTaskIds.length;
+    var visible=filteredTasks(), selected=visible.filter(function(t){return selectedTaskIds.includes(t.id);}).length;
+    $('selectedCount').innerHTML='<p class="selected-count">筛选结果 '+visible.length+' 项 · 已选 <b>'+n+'</b> 项'+(n>selected?'（含其他筛选下的 '+(n-selected)+' 项）':'')+'</p>';
+    $('selectVisible').checked=visible.length>0&&visible.length===selected;
+    $('selectVisible').indeterminate=selected>0&&selected<visible.length;
+  }
+
+  // ---------- 学生选择 ----------
+  function renderStudents(){
+    var box=$('studentsPick');
+    if(!students.length){ box.innerHTML='<p class="empty">无学生数据。</p>'; return; }
+    box.innerHTML=students.map(function(st){
+      var checked=selectedStudentIds.indexOf(st.id)>=0;
+      var label=st.name?st.name+' ('+st.id+')':st.id;
+      return '<label><input type="checkbox" '+(checked?'checked':'')+' onchange="app.toggleStudent(\''+esc(st.id)+'\',this.checked)"><span>'+esc(label)+'</span></label>';
+    }).join('');
+  }
+
+  // ---------- 推送 ----------
+  function buildTaskSnapshot(t){
+    var snapshot=JSON.parse(JSON.stringify(t));
+    snapshot.type='task';
+    snapshot.required = snapshot.required!==undefined ? snapshot.required : true;
+    if(!snapshot.prompt && snapshot.studentRenderer==='checklist') snapshot.instructions=snapshot.instructions||snapshot.prompt||'完成本任务';
+    return snapshot;
+  }
+  function taskTitle(t){ return [t.book||t.series,t.lesson,t.title||t.part||t.id].filter(Boolean).join(' · '); }
+
+  async function pushSelected(){
+    if(!selectedTaskIds.length){ alert('请先勾选要推送的 Task。'); return; }
+    if(!selectedStudentIds.length){ alert('请选择至少一名学生。'); return; }
+    var courseName=$('courseName').value.trim();
+    var relatedClassDate=$('relatedClassDate').value;
+    var dueDate=$('dueDate').value;
+    var teacherNote=$('teacherNote').value.trim();
+    var today=new Date(); var todayStr=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+
+    var chosenTasks=pushableTasks().filter(function(t){ return selectedTaskIds.indexOf(t.id)>=0; });
+    if(chosenTasks.length!==selectedTaskIds.length){alert('所选练习状态已变化，请重新选择。');return;}
+    var assignmentsPayload=[];
+    selectedStudentIds.forEach(function(sid){
+      chosenTasks.forEach(function(t,idx){
+        var taskSnap=buildTaskSnapshot(t);
+        assignmentsPayload.push({
+          assignmentId:'assign-'+Date.now()+'-'+Math.random().toString(16).slice(2)+'-'+idx,
+          practiceId:'lessonplan:'+t.id,
+          title: taskTitle(t),
+          courseName:courseName,
+          sourceLessonUrl:t.sourceLessonUrl||'',
+          sourceLessonId:t.sourceLessonId||'',
+          taskIds:[t.id],
+          tasks:[taskSnap],
+          studentIds:[sid],
+          relatedClassDate:relatedClassDate,
+          assignedDate:todayStr,
+          dueDate:dueDate,
+          teacherNote:teacherNote,
+          assignedBy:TEACHER,
+          status:'active'
+        });
+      });
+    });
+
+    var token=getToken();
+    if($('pushBtn').disabled)return;
+    $('pushBtn').disabled=true;
+    try{
+      var res=await fetch('/api/practice/assignments',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({assignments:assignmentsPayload})});
+      if(res.ok){
+        assignments=assignments.concat(assignmentsPayload);
+        clearPushForm();
+        renderAssignments();
+        alert('已推送 '+assignmentsPayload.length+' 条作业 ✅');
+      }else alert('推送失败：'+res.status);
+    }catch(e){ alert('推送失败：'+e.message); }
+    finally{$('pushBtn').disabled=false;}
+  }
+
+  function clearPushForm(){
+    selectedTaskIds=[];
+    selectedStudentIds=[];
+    renderCatalog(); renderStudents();
+  }
+
+  // ---------- 推送记录 ----------
+  function studentDisplay(id){
+    var f=students.filter(function(s){return s.id===id;})[0];
+    return f?(f.name?f.name+' ('+f.id+')':f.id):id;
+  }
+  // ---------- 推送记录（搜索 / 折叠 / 删除） ----------
+  var recState={student:'',course:'',month:'',expanded:false};
+  var recFiltersBound=false;
+  var recSelected={}; // assignmentId -> true
+  function recMonthOf(a){var d=a.assignedDate||a.relatedClassDate||'';return d?String(d).slice(0,7):'';}
+  function renderRecFilterMonths(){
+    var sel=$('recFMonth'); if(!sel)return; var cur=sel.value;
+    var months=[]; assignments.forEach(function(a){var m=recMonthOf(a); if(m&&months.indexOf(m)<0)months.push(m);});
+    months.sort().reverse();
+    sel.innerHTML='<option value="">全部年月</option>'+months.map(function(m){return '<option value="'+esc(m)+'">'+esc(m)+'</option>';}).join('');
+    sel.value=cur;
+  }
+  function applyRecFilter(){
+    var qs=recState.student.toLowerCase(), qc=recState.course.toLowerCase();
+    return assignments.slice().reverse().filter(function(a){
+      var st=((a.studentIds||[]).join(' ')+' '+(a.targetIds||[]).join(' '))||'';
+      if(qs && st.toLowerCase().indexOf(qs)<0) return false;
+      if(qc && String(a.courseName||'').toLowerCase().indexOf(qc)<0) return false;
+      if(recState.month && recMonthOf(a)!==recState.month) return false;
+      return true;
+    });
+  }
+  function refreshAfterDelete(ids){
+    var idSet={}; ids.forEach(function(x){idSet[x]=1;});
+    assignments=assignments.filter(function(a){return !idSet[(a.assignmentId||'')];});
+    submissions=submissions.filter(function(s){return !idSet[(s.assignmentId||'')];});
+    ids.forEach(function(x){ delete recSelected[x]; });
+    renderRecFilterMonths(); renderAssignments(); renderSubmissions(); renderRecSelBar();
+  }
+  function doDeleteAssignment(id){
+    return fetch('/api/practice/assignments/'+encodeURIComponent(id),{method:'DELETE',headers:{'Authorization':'Bearer '+getToken()}})
+      .then(function(r){ if(!r.ok)throw new Error('HTTP '+r.status); return true; });
+  }
+  function deleteAssignment(id){
+    if(!confirm('确定删除这条推送记录？关联的待批改作业也会一并删除。该操作不可恢复。'))return;
+    doDeleteAssignment(id)
+      .then(function(){ refreshAfterDelete([id]); })
+      .catch(function(e){ alert('删除失败：'+(e&&e.message||'请重试')); });
+  }
+  function toggleRecSelect(id,checked){
+    if(checked) recSelected[id]=true; else delete recSelected[id];
+    renderAssignments(); renderRecSelBar();
+  }
+  function deleteSelectedRecs(){
+    var ids=Object.keys(recSelected);
+    if(!ids.length){ alert('请先勾选要删除的推送记录。'); return; }
+    if(!confirm('确定删除选中的 '+ids.length+' 条推送记录？关联的待批改作业也会一并删除。该操作不可恢复。'))return;
+    var token=getToken();
+    Promise.all(ids.map(function(id){
+      return doDeleteAssignment(id).catch(function(){ return false; });
+    })).then(function(res){
+      var ok=res.filter(Boolean).length;
+      refreshAfterDelete(ids);
+      if(ok<ids.length) alert('已删除 '+ok+' 条，其余 '+ (ids.length-ok) +' 条删除失败，请重试。');
+      else if(ok>0) alert('已删除 '+ok+' 条推送记录及关联待批改作业 ✅');
+    });
+  }
+  function toggleRecSelectAll(checked){
+    var filtered=applyRecFilter();
+    filtered.forEach(function(a){ if(checked) recSelected[(a.assignmentId||'')]=true; else delete recSelected[(a.assignmentId||'')]; });
+    renderAssignments(); renderRecSelBar();
+  }
+  function renderRecSelBar(){
+    var n=$('recSelCount'); if(n)n.textContent=Object.keys(recSelected).length;
+    var all=$('recSelectAll'); if(!all)return;
+    var filtered=applyRecFilter();
+    var on=filtered.filter(function(a){return recSelected[(a.assignmentId||'')];});
+    all.checked = filtered.length>0 && on.length===filtered.length;
+    all.indeterminate = on.length>0 && on.length<filtered.length;
+  }
+  function bindRecFilters(){
+    if(recFiltersBound)return; recFiltersBound=true;
+    var si=$('recFStudent'),ci=$('recFCourse'),mi=$('recFMonth');
+    if(si)si.addEventListener('input',function(){recState.student=this.value;recState.expanded=false;renderAssignments();});
+    if(ci)ci.addEventListener('input',function(){recState.course=this.value;recState.expanded=false;renderAssignments();});
+    if(mi)mi.addEventListener('change',function(){recState.month=this.value;recState.expanded=false;renderAssignments();});
+  }
+  function renderAssignments(){
+    var box=$('assignmentList');
+    var filtered=applyRecFilter();
+    if(!filtered.length){
+      box.innerHTML='<p class="empty">'+(assignments.length?'未找到匹配的推送记录。':'暂无推送记录。')+'</p>';
+      var mb0=$('recMoreBox'); if(mb0)mb0.innerHTML='';
+      return;
+    }
+    var shown=filtered, more=0;
+    if(filtered.length>3 && !recState.expanded){ shown=filtered.slice(0,3); more=filtered.length-3; }
+    box.innerHTML=shown.map(function(a){
+      var lessonLink=a.sourceLessonUrl
+        ?'<a href="'+esc(a.sourceLessonUrl)+'" target="_blank" rel="noopener">查看教案 →</a>':'(无教案链接)';
+      var checked=recSelected[(a.assignmentId||'')]?'checked':'';
+      return '<div class="assignment-card">'
+        +'<div class="rec-card-head"><input type="checkbox" class="rec-check" '+(checked?'checked':'')+' onchange="toggleRecSelect(\''+esc(a.assignmentId||'')+'\',this.checked)"><div class="rec-check-title"><strong>'+esc(a.title||a.assignmentId)+'</strong></div></div>'
+        +'<div class="row">学生：'+esc((a.studentIds||[]).map(studentDisplay).join(', ')||(a.targetIds||[]).join(', ')||'—')+'</div>'
+        +(a.courseName?'<div class="row">课程：'+esc(a.courseName)+'</div>':'')
+        +'<div class="row">上课：'+(a.relatedClassDate||'未填')+' · 截止：'+(a.dueDate||'未填')+' · 状态：'+esc(a.status||'')+'</div>'
+        +(a.teacherNote?'<div class="row">备注：'+esc(a.teacherNote)+'</div>':'')
+        +'<div class="row">来源教案：'+lessonLink+'</div>'
+        +'<div class="rec-actions"><button type="button" class="del-btn" onclick="deleteAssignment(\''+esc(a.assignmentId||'')+'\')">删除</button></div>'
+        +'</div>';
+    }).join('');
+    var mb=$('recMoreBox');
+    if(mb) mb.innerHTML = more>0
+      ? '<div class="rec-more"><button type="button" onclick="recState.expanded=true;renderAssignments()">展开剩余 '+more+' 条</button></div>'
+      : (recState.expanded ? '<div class="rec-more"><button type="button" onclick="recState.expanded=false;renderAssignments()">收起</button></div>' : '');
+  }
+
+  // ---------- 批改台 ----------
+  function formatAnswer(ans){
+    var v=ans&&ans.value;
+    var type=ans&&ans.type;
+    if(type==='worksheet'&&v&&typeof v==='object')return Object.keys(v).map(function(k,i){return (i+1)+'. '+((ans.fieldLabels||{})[k]||k)+'\n'+(v[k]||'（未作答）');}).join('\n\n');
+    if(Array.isArray(v)){
+      if(type==='drag-order') return v.join(' → ');
+      if(type==='drag-match') return '配对结果：\n'+v.map(function(r,i){return (i+1)+') '+r;}).join('\n');
+      if(type==='multiple-choice') return v.map(function(x,i){return (i+1)+') '+((ans.questionLabels||[])[i]||'')+'\n'+(x==null?'未作答':((ans.choiceLabels||[])[i]||{})[x]||x);}).join('\n\n');
+      return v.join('、');
+    }
+    if(type==='checklist') return v==='done'?'已完成 ✓':(v?'':'（未完成）');
+    if(type==='upload') return '（上传功能建设中）';
+    if(v==null||v==='') return '（未作答）';
+    return String(v);
+  }
+  function assignOf(s){ var id=(s&&s.assignmentId); if(!id) return null; for(var i=0;i<assignments.length;i++){ if(assignments[i].assignmentId===id) return assignments[i]; } return null; }
+  // 逐题比对：返回每题 {nol,q,her,correct,wrong}
+  function answerItems(a,t){
+    var type=a.type; var val=a.value;
+    if(type==='multiple-choice'){
+      var qs=t.questions||[]; var n=qs.length;
+      if(!n){ qs=[t]; n=1; }
+      var out=[];
+      for(var i=0;i<n;i++){
+        var q=qs[i]; var co=(q.options||[]).filter(function(o){return o.correct;})[0];
+        var cv=co?co.value:null;
+        var her=Array.isArray(val)?val[i]:(i===0?val:null);
+        var herL=(a.choiceLabels&&a.choiceLabels[i]&&a.choiceLabels[i][her]!=null)?a.choiceLabels[i][her]:her;
+        var ql=(a.questionLabels&&a.questionLabels[i])||(q&&q.prompt)||'';
+        var wrong = cv!=null && her!=null && norm(her)!==norm(cv);
+        out.push({nol:i+1, q:ql, her:(herL==null?'未作答':String(herL)), correct:(wrong&&co)?co.label:'', wrong:wrong});
+      }
+      return out;
+    }
+    if(type==='drag-match'){
+      var rights=(t.pairs||[]).map(function(p){return p.right;});
+      var lefts=(t.pairs||[]).map(function(p){return p.left;});
+      var arr=[];
+      (val||[]).forEach(function(r,i){
+        var correct=rights[i]; var wrong= correct!=null && r!=null && norm(r)!==norm(correct);
+        arr.push({nol:i+1, q:(i<lefts.length?String(lefts[i]):''), her:(r==null?'未作答':String(r)), correct:(wrong?correct:''), wrong:wrong});
+      });
+      return arr;
+    }
+    if(type==='worksheet' && val && typeof val==='object'){
+      return (t.fields||[]).map(function(f,fi){
+        var hs=val[f.id]!=null?val[f.id]:'';
+        var acc=f.acceptedAnswers||[]; var wrong= acc.length? !acc.some(function(x){return norm(x)===norm(hs);}) : false;
+        return {nol:fi+1, q:f.label||'', her:(String(hs)===''?'未作答':String(hs)), correct:(wrong?acc.join(' / '):''), wrong:wrong};
+      });
+    }
+    if(type==='short-answer'){
+      var acc2=t.acceptedAnswers||[]; var hs2=val!=null?val:''; var wrong2= acc2.length? !acc2.some(function(x){return norm(x)===norm(hs2);}) : false;
+      return [{nol:1, q:(t.prompt||''), her:(String(hs2)===''?'未作答':String(hs2)), correct:(wrong2?acc2.join(' / '):''), wrong:wrong2}];
+    }
+    return null;
+  }
+  // 带逐题对错的答案展示（返回 HTML）
+  
+  function formatAnswerMarked(a, assignment, subId){
+    var t=(assignment&&assignment.tasks)?assignment.tasks.filter(function(x){return x.id===a.taskId;})[0]:null;
+    if(!t) return '<div style="white-space:pre-wrap">'+esc(formatAnswer(a))+'</div>';
+    var items=answerItems(a,t);
+    if(!items) return '<div style="white-space:pre-wrap">'+esc(formatAnswer(a))+'</div>';
+    return items.map(function(it){
+      var nol=it.nol||'';
+      var flag=it.wrong? '<span style="color:#B4452C;font-weight:700">✕</span>' : '<span style="color:#1D7A3F;font-weight:700">✓</span>';
+      var hint= (it.wrong && it.correct)? ' · <span style="color:#B4452C">正确：<b>'+esc(it.correct)+'</b></span>' : '';
+      var ql= it.q? esc(it.q)+' — ' : '';
+      var bg= it.wrong? 'background:#FDF0ED;border-radius:6px;padding-left:6px;' : '';
+      var ck='';
+      if(it.wrong && subId){
+        var txt=(nol?nol+'、':'')+(it.q?esc(it.q)+' 题目':'')+' 答成「'+(it.her||'未作答')+'」'+(it.correct?'，正确答案「'+it.correct+'」':'');
+        ck=' <label class="pf-ck" style="cursor:pointer;color:#B4452C;font-size:12px;user-select:none" title="勾选后写入反馈">'
+          +'<input type="checkbox" style="vertical-align:-1px;margin-right:2px" data-wrong="1" data-code="'+encodeURIComponent(txt)+'">勾</label>';
+      }
+      return '<div style="padding:3px 0;font-size:12.5px;'+bg+'">'
+        +flag+' '+nol+') '+ql
+        +'<span'+(it.wrong?' style="text-decoration:underline;text-decoration-color:#B4452C"':'')+'>'+esc(it.her)+'</span>'
+        +hint+ck+'</div>';
+    }).join('');
+  }
+
+
+  
+  
+  // ---------- 批改台筛选（学员/课程/年月/状态 + 折叠） ----------
+  var subState={student:'',course:'',month:'',status:'',expanded:false};
+  var subFiltersBound=false;
+  function subMonthOf(s){return String(s.submittedAt||'').slice(0,7);}
+  function renderSubFilterMonths(){
+    var sel=$('subFMonth'); if(!sel)return; var cur=sel.value;
+    var months=[]; submissions.forEach(function(s){var m=subMonthOf(s); if(m&&months.indexOf(m)<0)months.push(m);});
+    months.sort().reverse();
+    sel.innerHTML='<option value="">全部年月</option>'+months.map(function(m){return '<option value="'+esc(m)+'">'+esc(m)+'</option>';}).join('');
+    sel.value=cur;
+  }
+  function applySubFilter(){
+    var qs=subState.student.toLowerCase(), qc=subState.course.toLowerCase();
+    return submissions.slice().reverse().filter(function(s){
+      if(qs && String(studentDisplay(s.studentId)).toLowerCase().indexOf(qs)<0) return false;
+      if(qc && String(s.practiceTitle||s.practiceId||'').toLowerCase().indexOf(qc)<0) return false;
+      if(subState.month && subMonthOf(s)!==subState.month) return false;
+      if(subState.status){
+        if(subState.status==='unchecked'){ if(s.status==='checked') return false; }
+        else if(String(s.status||'submitted')!==subState.status) return false;
+      }
+      return true;
+    });
+  }
+  function bindSubFilters(){
+    if(subFiltersBound)return; subFiltersBound=true;
+    var map=[['subFStudent','student'],['subFCourse','course']];
+    map.forEach(function(p){
+      var el=$(p[0]); if(!el)return;
+      el.addEventListener('input',function(){subState[p[1]]=this.value;subState.expanded=false;renderSubmissions();});
+    });
+    [['subFMonth','month'],['subFStatus','status']].forEach(function(p){
+      var el=$(p[0]); if(!el)return;
+      el.addEventListener('change',function(){subState[p[1]]=this.value;subState.expanded=false;renderSubmissions();});
+    });
+  }
+  function renderSubmissions(){
+    var box=$('submissionList'); bindSubFilters(); renderSubFilterMonths();
+    var filtered=applySubFilter();
+    if(!filtered.length){
+      box.innerHTML='<p class="empty">'+(submissions.length?'未找到匹配的提交。':'暂无学生提交。')+'</p>';
+      var sb0=$('subMoreBox'); if(sb0)sb0.innerHTML='';
+      return;
+    }
+    var shown=filtered, more=0;
+    if(filtered.length>3 && !subState.expanded){ shown=filtered.slice(0,3); more=filtered.length-3; }
+    box.innerHTML=shown.map(function(s){
+      var pill='<span class="status-pill '+esc(s.status||'submitted')+'">'+(s.status==='checked'?'已批改':(s.status==='needredo'?'需重做':'已提交'))+'</span>';
+      var source=s.practiceTitle||s.practiceId||'作业';
+      var assign=assignOf(s);
+      var answersHtml=(s.answers||[]).map(function(a,i){
+        var auto=a.autoScore;
+        var scoreTag = auto==null?''
+          :(auto===1?'<span class="ok">✓ 自动正确</span>':(auto>0&&auto<1?'<span class="part">◐ 部分正确 '+Math.round(auto*100)+'%</span>':'<span class="bad">✕ 自动错误</span>'));
+        return '<div class="answer-line"><div class="q">'+(i+1)+'. '+esc(a.taskTitle||a.taskId||'')+'</div>'
+          +'<div class="a">'+formatAnswerMarked(a, assign, s.submissionId)+'</div>'
+          +(scoreTag?'<div>'+scoreTag+'</div>':'')
+          +'</div>';
+      }).join('');
+      var fb=s.teacherFeedback?'<div class="feedback" style="margin-top:6px;background:#E2EFE6;border-radius:6px;padding:6px 8px;font-size:12px"><b>反馈：</b>'+esc(s.teacherFeedback)+'</div>':'';
+      return '<div class="submission-card" id="subcard_'+esc(s.submissionId)+'">'
+        +'<div class="submission-head"><strong>'+esc(studentDisplay(s.studentId))+'</strong>'+pill+'</div>'
+        +'<div class="hint">来源：'+esc(source)+' · 提交于：'+esc((s.submittedAt||'').slice(0,10))+'</div>'
+        +answersHtml+fb
+        +'<div class="mergebar" style="margin:6px 0 2px;display:flex;gap:8px;align-items:center">'
+        +'<button class="small act-btn" data-sid="'+esc(s.submissionId)+'" data-act="merge">✓ 勾选错题写入反馈</button>'
+        +'<span style="font-size:11px;color:#999">在错题旁打勾后点击，自动填入反馈框</span>'
+        +'</div>'
+        +'<div class="fb-row">'
+        +'<input class="scorebox" type="number" id="score_'+esc(s.submissionId)+'" placeholder="分" value="'+(s.score!=null?esc(s.score):'')+'">'
+        +'<input type="text" id="fb_'+esc(s.submissionId)+'" placeholder="老师反馈…" value="'+esc(s.teacherFeedback||'')+'">'
+        +'<button class="small act-btn" data-sid="'+esc(s.submissionId)+'" data-act="checked">标记已批改</button>'
+        +'<button class="small red act-btn" data-sid="'+esc(s.submissionId)+'" data-act="needredo">需要重做</button>'
+        +'</div></div>';
+    }).join('');
+    var mb=$('subMoreBox');
+    if(mb) mb.innerHTML = more>0
+      ? '<div class="rec-more"><button type="button" onclick="subState.expanded=true;renderSubmissions()">展开剩余 '+more+' 条</button></div>'
+      : (subState.expanded ? '<div class="rec-more"><button type="button" onclick="subState.expanded=false;renderSubmissions()">收起</button></div>' : '');
+  }
+
+
+
+  async function mark(submissionId,status){
+    var s=submissions.filter(function(x){return x.submissionId===submissionId;})[0];
+    if(!s) return;
+    var feedback=$('fb_'+submissionId).value.trim();
+    var scoreRaw=$('score_'+submissionId).value.trim();
+    var score=scoreRaw===''?null:Number(scoreRaw);
+    var payload={status:status, teacherFeedback:feedback, score:score, checkedAt:new Date().toISOString()};
+    var token=getToken();
+    try{
+      var res=await fetch('/api/practice/submissions/'+encodeURIComponent(submissionId),{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(payload)});
+      if(res.ok){
+        submissions=submissions.map(function(x){return x.submissionId===submissionId?Object.assign({},x,payload):x;});
+        renderSubmissions();
+      }else alert('操作失败：'+res.status);
+    }catch(e){ alert('操作失败：'+e.message); }
+  }
+
+  
+  function mergeWrongFeedback(submissionId){
+    var checks=document.querySelectorAll('#subcard_'+submissionId+' input[data-wrong="1"]:checked');
+    var list=[]; for(var i=0;i<checks.length;i++){ list.push(decodeURIComponent(checks[i].getAttribute('data-code')||'')); }
+    var card=$('fb_'+submissionId);
+    if(!list.length){ alert('请先在错题旁勾选要写入的题目'); return; }
+    var merged='错题：'+list.join('；');
+    card.value= card.value.trim()? card.value.trim()+'\n'+merged : merged;
+    for(var j=0;j<checks.length;j++){ checks[j].checked=false; }
+    try{ card.focus(); }catch(e){}
+  }
+  document.addEventListener('click', function(ev){
+    var t=ev.target, b=null;
+    while(t && t!==document && !b){ if(t.classList && t.classList.contains('act-btn')) b=t; t=t.parentNode; }
+    if(!b) return;
+    var sid=b.getAttribute('data-sid'); var act=b.getAttribute('data-act');
+    if(act==='merge'){ mergeWrongFeedback(sid); }
+    else if(act==='checked'||act==='needredo'){ mark(sid, act); }
+  });
+
+// ---------- 暴露 ----------
+  window.app={
+    relogin:function(){ localStorage.removeItem('authToken'); location.reload(); },
+    toggleTask:function(id,checked){
+      if(checked){ if(selectedTaskIds.indexOf(id)<0) selectedTaskIds.push(id); }
+      else selectedTaskIds=selectedTaskIds.filter(function(x){return x!==id;});
+      renderSelectedCount();
+    },
+    toggleStudent:function(id,checked){
+      if(checked){ if(selectedStudentIds.indexOf(id)<0) selectedStudentIds.push(id); }
+      else selectedStudentIds=selectedStudentIds.filter(function(x){return x!==id;});
+    },
+    mark:mark
+  };
+
+  // ---------- 预览弹窗 ----------
+  function previewTask(id){
+    var t=catalog.filter(function(x){return x.id===id;})[0];
+    if(!t){ alert('未找到该任务'); return; }
+    var renderer=t.studentRenderer||t.type||'';
+    var body='<div class="pv-tag">'+esc(t.series||'')+' / '+esc(t.book||'')+' / '+esc(t.lesson||t.part||'')+' · 题型：'+esc(renderer)+'</div>';
+    body+='<div style="margin-bottom:10px">'+esc(t.prompt||'')+'</div>';
+    var rendererLabel={ 'multiple-choice':'选择题','drag-match':'配对','drag-order':'排序','checklist':'打卡','short-answer':'简答','upload':'上传' };
+    // multiple-choice（questions 多题 或 options 单题）
+    if(renderer==='multiple-choice'){
+      var qs=t.questions||[];
+      if(qs.length){
+        body+=qs.map(function(q,qi){
+          return '<div class="pv-q"><div class="pv-qn">'+(qi+1)+'. '+esc(q.prompt||'')+'</div>'
+            +(q.options||[]).map(function(o,i){
+              var mark=o.correct?' <span class="pv-correct">✔</span>':'';
+              return '<div class="pv-opt"><span>'+esc(String.fromCharCode(65+i))+'.</span><span>'+esc(o.label)+'</span>'+mark+'</div>';
+            }).join('')+'</div>';
+        }).join('');
+      }else{
+        body+='<div class="pv-q"><div class="pv-qn">'+esc(t.prompt||'选择题')+'</div>'
+          +(t.options||[]).map(function(o,i){
+            var mark=o.correct?' <span class="pv-correct">✔</span>':'';
+            return '<div class="pv-opt"><span>'+esc(String.fromCharCode(65+i))+'.</span><span>'+esc(o.label)+'</span>'+mark+'</div>';
+          }).join('')+'</div>';
+      }
+    }else if(renderer==='drag-match'){
+      body+=(t.pairs||[]).map(function(p,i){
+        return '<div class="pv-q"><div class="pv-qn">'+(i+1)+'. '+esc(p.left)+'</div><div class="pv-opt"><span>→ '+esc(p.right)+'</span></div></div>';
+      }).join('')||'<p class="empty">无配对内容。</p>';
+    }else if(renderer==='drag-order'){
+      body+='<div class="pv-q"><div class="pv-qn">正确顺序</div>'+(t.correctOrder||t.items||[]).map(function(it,i){return '<div class="pv-opt"><span>'+(i+1)+'.</span><span>'+esc(it)+'</span></div>';}).join('')+'</div>';
+    }else if(renderer==='checklist'){
+      body+='<div class="pv-q"><div class="pv-opt"><span>'+esc(t.instructions||t.prompt||'点击完成')+'</span></div></div>';
+    }else if(renderer==='worksheet'){
+      body+=(t.fields||[]).map(function(f,i){return '<div class="pv-q"><div class="pv-qn">'+(i+1)+'. '+esc(f.label)+'</div><div class="hint">学生填写答案'+(f.acceptedAnswers?' · 参考：'+esc(f.acceptedAnswers.join(' / ')):' · 教师批改')+'</div></div>';}).join('');
+    }else if(renderer==='short-answer'){
+      body+='<div class="pv-q"><div class="pv-qn">开放作答（需老师批改）</div></div>';
+    }
+    if(t.teacherReview && t.teacherReview.needsManualReview){
+      body+='<div class="pv-note">📌 本题需老师手动批改'+(t.teacherReview.rubric&&t.teacherReview.rubric.length?('（参考标准：'+t.teacherReview.rubric.join('；')+'）'):'')+'</div>';
+    }
+    body+='<div class="pv-note">✔ 表示系统自动判分时的正确答案。确认无误后再勾选推送。</div>';
+    $('pvTitle').textContent=t.title||t.id;
+    $('pvBody').innerHTML=body;
+    $('pvMask').classList.remove('hidden');
+  }
+  function closePreview(){ var m=$('pvMask'); if(m)m.classList.add('hidden'); }
+
+  $('filterKeyword').addEventListener('input',renderCatalog);
+  $('filterBook').addEventListener('change',function(){populateLessonFilter();renderCatalog();});
+  $('filterLesson').addEventListener('change',renderCatalog);
+  $('filterKind').addEventListener('change',renderCatalog);
+  $('selectVisible').addEventListener('change',function(){var on=this.checked;filteredTasks().forEach(function(t){if(on&&!selectedTaskIds.includes(t.id))selectedTaskIds.push(t.id);if(!on)selectedTaskIds=selectedTaskIds.filter(function(id){return id!==t.id;});});renderCatalog();});
+  $('clearTasks').addEventListener('click',function(){selectedTaskIds=[];renderCatalog();});
+  $('pushBtn').addEventListener('click',pushSelected);
+  window.addEventListener('practice-resources-changed',function(e){
+    catalog=catalog.filter(function(t){return !t.customResource;}).concat(e.detail);
+    selectedTaskIds=selectedTaskIds.filter(function(id){return catalog.some(function(t){return t.id===id&&t.status==='active';});});
+    populateResourceFilters();renderCatalog();
+  });
+  document.addEventListener('DOMContentLoaded',init);
+  // 供内联按钮暴露到 window（IIFE 内函数/变量不暴露则 onclick 找不到）
+  window.deleteAssignment = deleteAssignment;
+  window.deleteSelectedRecs = deleteSelectedRecs;
+  window.toggleRecSelect = toggleRecSelect;
+  window.toggleRecSelectAll = toggleRecSelectAll;
+  window.renderAssignments = renderAssignments;
+  window.renderRecSelBar = renderRecSelBar;
+  window.recState = recState;
+  window.previewTask = previewTask;
+  window.closePreview = closePreview;
+})();
+</script>
+<link rel="stylesheet" href="/practice-authoring.css?v=20260906-1">
+<script src="/practice-authoring.js?v=20260906-1"></script>
+</body>
+</html>

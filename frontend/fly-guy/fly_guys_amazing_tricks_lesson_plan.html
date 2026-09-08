@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fly Guy's Amazing Tricks — 精读教案 · 两课时</title>
+<style>
+:root {
+  --canvas: #FBF3E7;
+  --surface: #FFF9F1;
+  --surface-alt: #FFF3E0;
+  --ink: #31251B;
+  --ink-secondary: #8B7662;
+  --accent: #C96F3D;
+  --accent-light: #F5DCC8;
+  --green: #5A8F56;
+  --green-light: #E8F0E6;
+  --blue: #4A7FA5;
+  --blue-light: #E3EFF6;
+  --purple: #8B6DAF;
+  --purple-light: #F0EAF6;
+  --red: #C75A4A;
+  --red-light: #FCEAE7;
+  --divider: #E8DDD0;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-heading: Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.35rem;
+  --fs-2xl: 1.7rem;
+  --fs-3xl: 2.2rem;
+  --lh: 1.7;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(49,37,27,0.06);
+  --shadow: 0 2px 8px rgba(49,37,27,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* ── Header ── */
+.site-header {
+  background: linear-gradient(135deg, #C96F3D 0%, #B85A2E 100%);
+  color: #fff;
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2rem;
+}
+.site-header .page-wrap { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; }
+.header-text { flex: 1; min-width: 260px; }
+.header-text h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.3rem;
+}
+.header-text .subtitle {
+  font-size: var(--fs-lg);
+  opacity: 0.9;
+}
+.book-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.badge {
+  display: inline-block;
+  font-size: var(--fs-sm);
+  padding: 0.2em 0.7em;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+/* ── Section ── */
+section { margin-bottom: 2.5rem; }
+.section-label {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+h4 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+p { margin-bottom: 0.8rem; }
+.text-secondary { color: var(--ink-secondary); }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.card-accent { border-left: 4px solid var(--accent); }
+.card-green { border-left: 4px solid var(--green); }
+.card-blue { border-left: 4px solid var(--blue); }
+.card-purple { border-left: 4px solid var(--purple); }
+
+/* ── LT Grid ── */
+.lt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.lt-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+.lt-card .lt-num {
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.lt-card h4 { margin-bottom: 0.5rem; font-size: var(--fs-base); }
+.lt-card ul { padding-left: 1.2em; }
+.lt-card li { margin-bottom: 0.3rem; font-size: var(--fs-sm); color: var(--ink-secondary); }
+
+/* ── Session Timeline ── */
+.session-block {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.session-header {
+  padding: 1.2rem 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.session-header.s1 { background: linear-gradient(135deg, #C96F3D, #A85A30); }
+.session-header.s2 { background: linear-gradient(135deg, #5A8F56, #3D7A3A); }
+.session-header h2 { color: #fff; margin: 0; font-size: var(--fs-xl); }
+.session-header .session-meta { font-size: var(--fs-sm); opacity: 0.9; }
+.session-body { padding: 1.5rem; }
+
+.phase {
+  position: relative;
+  padding-left: 1.8rem;
+  padding-bottom: 1.5rem;
+  border-left: 2px solid var(--divider);
+  margin-left: 0.5rem;
+}
+.phase:last-child { border-left-color: transparent; padding-bottom: 0; }
+.phase::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 0.3rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.phase.green-dot::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+.phase-blue-dot::before { background: var(--blue); box-shadow: 0 0 0 2px var(--blue); }
+.phase-purple-dot::before { background: var(--purple); box-shadow: 0 0 0 2px var(--purple); }
+
+.phase-label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+.phase.green-dot .phase-label { color: var(--green); }
+.phase-blue-dot .phase-label { color: var(--blue); }
+.phase-purple-dot .phase-label { color: var(--purple); }
+
+.phase-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  margin: 0.8rem 0;
+}
+th, td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--divider);
+  vertical-align: top;
+}
+th {
+  background: var(--surface-alt);
+  font-weight: 700;
+  white-space: nowrap;
+}
+td { color: var(--ink); }
+.wrap-word { overflow-wrap: break-word; word-break: break-word; }
+
+/* ── Vocab Table ── */
+.vocab-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  align-items: baseline;
+}
+.vocab-word {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--accent);
+}
+.vocab-ipa {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+}
+.vocab-pos {
+  font-size: var(--fs-sm);
+  color: var(--blue);
+  font-weight: 600;
+}
+.vocab-def { font-size: var(--fs-sm); }
+.vocab-example {
+  grid-column: 1 / -1;
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  border-top: 1px dashed var(--divider);
+  padding-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+/* ── Phonics ── */
+.phonics-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.8rem;
+  margin: 0.25rem;
+  font-size: var(--fs-sm);
+}
+.phonics-pattern {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* ── Sentence Pattern ── */
+.pattern-block {
+  background: var(--purple-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+.pattern-template {
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  color: var(--purple);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.pattern-example {
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+}
+
+/* ── Callout ── */
+.callout {
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: var(--fs-sm);
+}
+.callout-tip { background: var(--green-light); border-left: 3px solid var(--green); }
+.callout-warn { background: var(--red-light); border-left: 3px solid var(--red); }
+.callout-info { background: var(--blue-light); border-left: 3px solid var(--blue); }
+.callout strong { display: block; margin-bottom: 0.3rem; }
+
+/* ── Homework Section ── */
+.hw-section {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
+}
+.hw-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.hw-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--divider);
+}
+.hw-question {
+  margin-bottom: 1rem;
+  padding-left: 0.2rem;
+}
+.hw-question .q-num {
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 0.3rem;
+}
+.hw-blank {
+  display: inline-block;
+  min-width: 120px;
+  border-bottom: 1px solid var(--ink);
+  margin: 0 0.2rem;
+}
+.hw-lines {
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 1.8em,
+    var(--divider) 1.8em,
+    var(--divider) calc(1.8em + 1px)
+  );
+  min-height: 6em;
+}
+
+/* ── Answer Key (collapsible) ── */
+.hw-answer {
+  margin-top: 1.2rem;
+  background: var(--green-light);
+  border: 1px dashed var(--green);
+  border-radius: var(--radius);
+  padding: 0 1rem;
+}
+.hw-answer summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--green);
+  padding: 0.6rem 0;
+  font-size: var(--fs-sm);
+}
+.hw-answer ol, .hw-answer ul { padding-left: 1.4em; font-size: var(--fs-sm); margin-bottom: 0.6rem; }
+.hw-answer li { margin-bottom: 0.25rem; }
+
+/* ── Sticky Nav ── */
+.toc {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(251,243,231,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--divider);
+  padding: 0.6rem 0;
+  margin-bottom: 1.5rem;
+}
+.toc .page-wrap {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.toc .page-wrap::-webkit-scrollbar { display: none; }
+.toc a {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.3em 0.8em;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.toc a:hover, .toc a:focus { background: var(--accent-light); color: var(--accent); }
+.toc a:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ── Divider ── */
+hr { border: none; border-top: 1px solid var(--divider); margin: 2rem 0; }
+
+/* ── Footer ── */
+.site-footer {
+  text-align: center;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--divider);
+  margin-top: 2rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .lt-grid { grid-template-columns: 1fr; }
+  .session-body { padding: 1rem; }
+  .phase { padding-left: 1.2rem; }
+  table { font-size: 0.8rem; }
+  th, td { padding: 0.4rem 0.5rem; }
+}
+
+/* ── Print ── */
+@media print {
+  .toc { display: none; }
+  .site-header { background: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .session-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card, .lt-card, .session-block, .hw-section, .vocab-card, .pattern-block, .callout, .phonics-item {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  body { font-size: 11pt; }
+  .page-wrap { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ── Push Modal ── */
+.push-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+}
+.push-modal {
+  background: white; border-radius: 16px; padding: 24px;
+  max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.push-modal h3 { margin: 0 0 8px; font-size: 18px; }
+.student-list { margin: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.student-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.student-item:hover { background: #f5f5f5; }
+.student-item input { width: 16px; height: 16px; }
+.push-confirm-btn {
+  width: 100%; padding: 12px; margin-top: 12px;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 10px;
+  font-weight: 700; cursor: pointer; font-size: 14px;
+}
+.push-cancel-btn {
+  width: 100%; padding: 10px; margin-top: 8px;
+  background: #f0f0f0; color: #666; border: none;
+  border-radius: 10px; cursor: pointer; font-size: 13px;
+}
+.push-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; margin: 4px 0;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 6px;
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  float: right;
+}
+.push-btn:hover { opacity: 0.9; transform: scale(1.05); }
+@media print { .push-btn { display: none !important; } }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header class="site-header">
+  <div class="page-wrap">
+    <div class="header-text">
+      <h1>Fly Guy's Amazing Tricks</h1>
+      <p class="subtitle">精读教案 · 两课时 · 100 分钟</p>
+      <div class="book-badges">
+        <span class="badge">Tedd Arnold</span>
+        <span class="badge">Book #14</span>
+        <span class="badge">Lexile 380L</span>
+        <span class="badge">GRL Level I</span>
+        <span class="badge">Grade K–2</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════ TOC ═══════ -->
+<nav class="toc" aria-label="页面导航">
+  <div class="page-wrap">
+    <a href="#overview">故事概览</a>
+    <a href="#lt-overview">LT 框架总览</a>
+    <a href="#session1">第一课时</a>
+    <a href="#session2">第二课时</a>
+    <a href="#homework">课后作业</a>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<section id="overview">
+  <div class="section-label">Overview</div>
+  <h2>故事概览</h2>
+  <div class="card card-accent">
+    <h3>Story Summary</h3>
+    <p>Fly Guy has learned three amazing new tricks — The Backstroke, The Dizzy Doozie, and The Big Booger. Buzz puts on a show for his friends called <em>The Amazing Fly Guy Circus</em> and calls out each trick with the signal word "Now!"</p>
+    <p>But when supper comes, Fly Guy shows off the same tricks in Mom's milk, around Dad's head, and on the dinner table — making a terrible mess. So Buzz gives Fly Guy a simple rule: <em>"Do your tricks only when you hear the word NOW."</em> That night, a big kid tries to bully Buzz and teases him, "Bug got your tongue?" Fly Guy hears the magic word "NOW!" and lets loose the full circus — scaring the kid away. Buzz finishes with a brand-new trick: <strong>"High Fivezzz!"</strong></p>
+  </div>
+  <div class="lt-grid" style="margin-top:1rem;">
+    <div class="card" style="margin:0;">
+      <h4>📖 文本特征</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li>3 chapters, ~30 pages</li>
+        <li>重复指令："Now," said Buzz ×3 — 同一句式反复驱动情节</li>
+        <li>三个命名的把戏 (tricks) 反复出现：Backstroke / Dizzy Doozie / Big Booger</li>
+        <li>关键信号词：NOW — 把"混乱"和"受控"两半故事连接起来</li>
+        <li>口语习语："Bug got your tongue?" / "Get out of my face!"</li>
+        <li>文字游戏 -zz 结尾：BUZZ! / YEZZZ! / High Fivezzz!</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>🎯 教学目标</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>Reading:</strong> 理清故事顺序（First / Then / And then）与"NOW 规则"的因果逻辑</li>
+        <li><strong>Language:</strong> 掌握祈使句、命令、"didn't + 动词原形"、-zz 拼读规律</li>
+        <li><strong>Speaking:</strong> 能用指令词发令、复述三个把戏、回应挑衅</li>
+        <li><strong>Writing:</strong> 完成 opinion / recount 写作：Should Fly Guy follow Buzz's rule?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LT FRAMEWORK OVERVIEW ═══════ -->
+<section id="lt-overview">
+  <div class="section-label">Language Target Framework</div>
+  <h2>LT 框架总览 — Fly Guy's Amazing Tricks</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;">以下 8 个模块构成本书的完整语言目标体系，两个课时分工推进。</p>
+
+  <div class="lt-grid">
+    <div class="lt-card">
+      <div class="lt-num">LT01</div>
+      <h4>Vocabulary 词汇</h4>
+      <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.5rem;">12 个核心词，含 IPA、词性、搭配、例句、词族。</p>
+      <ul>
+        <li>trick, circus, backstroke, dizzy, booger</li>
+        <li>supper, mess, idea, answer, yell, chase, tongue</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT02</div>
+      <h4>Phonics / Decoding 语音拼读</h4>
+      <ul>
+        <li><strong>fl-</strong> blend: fly, flew, flying</li>
+        <li><strong>-zz</strong> buzz sound: BUZZ, YEZZZ, Fivezzz</li>
+        <li><strong>st-</strong> blend: stop, started</li>
+        <li><strong>ow</strong> diphthong: now, how</li>
+        <li><strong>-ing</strong>: talking, flying</li>
+        <li>Short <strong>a / e / i</strong>: back, mess, dizzy</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT03</div>
+      <h4>Pronunciation 发音</h4>
+      <ul>
+        <li>音节切分：back-stroke (2), diz-zy (2), cir-cus (2)</li>
+        <li>重音模式：<em>BACK</em>-stroke, <em>CIR</em>-cus, <em>YEZZZ</em></li>
+        <li>信号词强调：重读 "NOW!"，声调上扬</li>
+        <li>单词尾 -zz 的连读与延长音</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT04</div>
+      <h4>Sentence Patterns 句型</h4>
+      <ul>
+        <li>"Now," said Buzz, "The Backstroke!" (say 倒装)</li>
+        <li>Do your tricks only when [条件].</li>
+        <li>___ didn't answer. (过去否定)</li>
+        <li>"Time for supper," said Mom.</li>
+        <li>反复：Now, now, and now!</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT05</div>
+      <h4>Grammar 语法功能</h4>
+      <ul>
+        <li><strong>Imperative 祈使:</strong> "Stop!" "Answer me!" "Let's clean up."</li>
+        <li><strong>过去否定:</strong> didn't + 动词原形 (Buzz didn't answer ×3)</li>
+        <li><strong>say-句倒装:</strong> "Now," said Buzz</li>
+        <li><strong>条件指令:</strong> only when you hear</li>
+        <li><strong>代词:</strong> him — 有的指 Buzz，有的指 Fly Guy</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT06</div>
+      <h4>Morphology 词形变化</h4>
+      <ul>
+        <li><strong>-s 复数:</strong> trick→tricks, friend→friends</li>
+        <li><strong>f→ves 特殊复:</strong> fly→flies</li>
+        <li><strong>-ed 过去式:</strong> learn→learned, yell→yelled, chased</li>
+        <li><strong>不规则过去式:</strong> hear→heard, say→said, catch→caught</li>
+        <li><strong>-zz 拟声:</strong> BUZZ, YEZZZ, Fivezzz</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT07</div>
+      <h4>Cohesion / Discourse 语篇衔接</h4>
+      <ul>
+        <li><strong>顺序词:</strong> First / Then / And then (三把戏顺序)</li>
+        <li><strong>信号重复:</strong> "Now," said Buzz 串起整个演出</li>
+        <li><strong>代词指代:</strong> him = Buzz / Fly Guy 需推断</li>
+        <li><strong>句式节奏:</strong> "Buzz didn't answer." ×3 制造张力</li>
+        <li><strong>因果:</strong> NOW 规则 → 受控表演 → 吓跑大孩子</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT08</div>
+      <h4>Functional Communication 语用功能</h4>
+      <ul>
+        <li><strong>Give commands:</strong> "Stop!" "Do your trick!"</li>
+        <li><strong>Retell:</strong> What happened first / next / at the end?</li>
+        <li><strong>Follow a signal word:</strong> listen for NOW!</li>
+        <li><strong>Respond to teasing:</strong> What could Buzz say to the big kid?</li>
+        <li><strong>Express opinion:</strong> Should Fly Guy do tricks only on "NOW"?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ SESSION 1 ═══════ -->
+<section id="session1">
+  <div class="section-label">Session 1 · 50 minutes</div>
+  <h2>第一课时 — 基础阅读与语言输入</h2>
+  <p class="text-secondary">目标：建立背景知识，通读全文，掌握核心词汇、把戏名称与语音规律，完成基础理解。</p>
+
+  <div class="session-block">
+    <div class="session-header s1">
+      <div>
+        <h2>Lesson 1: The Amazing Fly Guy Circus</h2>
+        <div class="session-meta">Focus: Pre-reading → Reading → Vocabulary → Phonics → Pronunciation</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–10 min · Warm-up &amp; Pre-reading</div>
+        <div class="phase-title">激活背景 · 图片讨论</div>
+
+        <h4>活动 1：Picture Talk (5 min)</h4>
+        <p>展示封面与内页插图，引导学生观察：</p>
+        <ul style="padding-left:1.2em;margin-bottom:1rem;">
+          <li>"Who do you see in the pictures?" → Buzz and Fly Guy.</li>
+          <li>"What is Fly Guy wearing or doing?" → He does tricks / flies in circles.</li>
+          <li>"What does the word 'circus' make you think of?" → clowns, acrobats, shows.</li>
+          <li>"What do you predict Fly Guy will do?" → 引导预测。</li>
+        </ul>
+
+        <h4>活动 2：Key Concept — What is a "trick"? (5 min)</h4>
+        <p>在白板上写出 <strong>TRICK</strong> (a clever or amazing thing you learn to do)，让学生分享：<em>"What tricks can you do?"</em>（ride a bike, whistle, do a cartwheel…），引出三个把戏名称的预测。</p>
+        <div class="callout callout-info">
+          <strong>🔑 Big Question</strong>
+          Why does Buzz say the word "NOW" over and over? Let's read and find out!
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 教学提示</strong>
+          把重点放在「信号词 NOW」上。不急于解释，保留悬念到第二课时。
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase green-dot">
+        <div class="phase-label">⏱ 10–20 min · Read Aloud</div>
+        <div class="phase-title">通读全文 · 理解故事</div>
+
+        <h4>Chapter 1 精读 (4 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.1–2</td>
+              <td>"A boy had a pet fly. He named him Fly Guy. And Fly Guy could say the boy's name — BUZZ!"</td>
+              <td>回顾：Fly Guy 会叫 Buz 的名字；复述核心事实</td>
+            </tr>
+            <tr>
+              <td>p.3–4</td>
+              <td>"THE AMAZING FLY GUY CIRCUS TODAY!"</td>
+              <td>预示 circus 主题；猜测会发生什么</td>
+            </tr>
+            <tr>
+              <td>p.5–6</td>
+              <td>"Buzz's friends came to see The Amazing Fly Guy Circus."</td>
+              <td>理解 came to see</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 1 circus 演出 (4 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.7–8</td>
+              <td>"Get ready for Fly Guy's amazing new tricks!"</td>
+              <td>核心词 trick；性 "Get ready for..."</td>
+            </tr>
+            <tr>
+              <td>p.9–14</td>
+              <td>"Now," said Buzz, "The Backstroke!" ... "The Dizzy Doozie!" ... "And now, The Big Booger!"</td>
+              <td>反复句式 <em>"Now," said Buzz</em>；三个把戏名称</td>
+            </tr>
+            <tr>
+              <td>p.15–16</td>
+              <td>"Time for supper," said Mom. Buzz's friends all went home.</td>
+              <td>supper = 晚饭；理解朋友散去</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 2 精读 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.17–18</td>
+              <td>"Fly Guy learned new tricks." — in Mom's milk</td>
+              <td>learned (learn 的过去式)</td>
+            </tr>
+            <tr>
+              <td>p.19–22</td>
+              <td>"Stop, Fly Guy!" But Fly Guy didn't hear him.</td>
+              <td>祈使句 Stop! + 过去否定 didn't hear</td>
+            </tr>
+            <tr>
+              <td>p.23–24</td>
+              <td>The Dizzy Doozie around Dad's head.</td>
+              <td>理解 around / head</td>
+            </tr>
+            <tr>
+              <td>p.25–28</td>
+              <td>The Big Booger. Buzz caught him. "Let's clean up this mess."</td>
+              <td>过去式 caught；祈使 Let's clean up</td>
+            </tr>
+            <tr>
+              <td>p.29–30</td>
+              <td>"I have an idea. Do your tricks only when you hear the word NOW."</td>
+              <td>关键规则 (the NOW rule)；信号词</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 3 精读 (3 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.31–34</td>
+              <td>"Are you talking to a bug?" "Do you have bug brains?" "Bug got your tongue?" — Buzz didn't answer.</td>
+              <td>挑衅三连问；习语 Bug got your tongue?</td>
+            </tr>
+            <tr>
+              <td>p.35–40</td>
+              <td>Fly Guy heard "NOW!" First...Then...And then — three tricks.</td>
+              <td>顺序词 First/Then/And then</td>
+            </tr>
+            <tr>
+              <td>p.41–44</td>
+              <td>"Get out of my face!" He bumped into a garbage can. A zillion angry flies chased the big kid away.</td>
+              <td>习语 Get out of my face!; bump/chase/chased</td>
+            </tr>
+            <tr>
+              <td>p.45–46</td>
+              <td>"Fly Guy, here's a new trick for you." "High Fivezzz!"</td>
+              <td>结尾反转 — 新把戏 High Fivezzz!</td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase blue-dot" id="sec-lt01-vocab">
+        <div class="phase-label">⏱ 20–33 min · LT01 Vocabulary <button class="push-btn" onclick="openPushModal('LT01-Vocabulary','12 core words: trick, circus, backstroke, dizzy, booger, supper, mess, idea, answer, yell, chase, tongue — with IPA, POS, definitions, examples, word families')">📤 Push to Students</button></div>
+        <div class="phase-title">核心词汇深度讲解（12 词）</div>
+
+        <div class="callout callout-info">
+          <strong>📋 词汇教学原则</strong>
+          每个词从 Recognize → Understand → Use 三个层次推进。先让学生听/看到词，再理解含义和用法，最后尝试产出。
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">trick</span>
+            <span class="vocab-ipa">/trɪk/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a clever, surprising, or amazing thing that you learn to do</div>
+          </div>
+          <div class="vocab-example">Fly Guy's amazing new <strong>tricks</strong>. → He can do a magic <strong>trick</strong>. (collocation: do a trick, learn a new trick)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">circus</span>
+            <span class="vocab-ipa">/ˈsɜːrkəs/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">a show with performers</span>
+            <div class="vocab-def">a traveling show with performers, animals, and tricks</div>
+          </div>
+          <div class="vocab-example">"The Amazing Fly Guy <strong>Circus</strong>!" → We saw clowns at the <strong>circus</strong>.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">backstroke</span>
+            <span class="vocab-ipa">/ˈbækstroʊk/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">back + stroke</span>
+            <div class="vocab-def">a swimming style done on your back; here, a flying trick on Fly Guy's back</div>
+          </div>
+          <div class="vocab-example">"Now," said Buzz, "The <strong>Backstroke</strong>!" → He swam the <strong>backstroke</strong> in the pool.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">dizzy</span>
+            <span class="vocab-ipa">/ˈdɪzi/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adj</span>
+            <div class="vocab-def">feeling like everything is spinning around you</div>
+          </div>
+          <div class="vocab-example">"The <strong>Dizzy</strong> Doozie!" → Spinning around makes me <strong>dizzy</strong>. (word family: dizziness)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">booger</span>
+            <span class="vocab-ipa">/ˈbuːɡər/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a funny, joking name Buzz gives to a silly trick (a playful, informal word)</div>
+          </div>
+          <div class="vocab-example">"And now, The Big <strong>Booger</strong>!" → It's a silly <strong>booger</strong> trick. (informal / humorous)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">supper</span>
+            <span class="vocab-ipa">/ˈsʌpər/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">an evening meal</div>
+          </div>
+          <div class="vocab-example">"Time for <strong>supper</strong>," said Mom. → We eat <strong>supper</strong> at six.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">mess</span>
+            <span class="vocab-ipa">/mes/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a dirty or untidy state; things out of place</div>
+          </div>
+          <div class="vocab-example">"Let's clean up this <strong>mess</strong>." → My room is a big <strong>mess</strong>. (collocation: make a mess / clean up a mess)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">idea</span>
+            <span class="vocab-ipa">/aɪˈdiːə/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a thought or plan about what to do</div>
+          </div>
+          <div class="vocab-example">"I have an <strong>idea</strong>." → What a great <strong>idea</strong>! (collocation: have an idea / good idea)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">answer</span>
+            <span class="vocab-ipa">/ˈænsər/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb / noun</span>
+            <div class="vocab-def">to reply to a question; a reply</div>
+          </div>
+          <div class="vocab-example">Buzz didn't <strong>answer</strong>. → Please <strong>answer</strong> my question. (collocation: answer a question)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">yell</span>
+            <span class="vocab-ipa">/jel/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <div class="vocab-def">to shout very loudly</div>
+          </div>
+          <div class="vocab-example">"Answer me!" <strong>yelled</strong> the kid. → Don't <strong>yell</strong> at me! (word family: yeller, yelling)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">chase</span>
+            <span class="vocab-ipa">/tʃeɪs/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <span class="vocab-pos" style="color:var(--red);">past: chased</span>
+            <div class="vocab-def">to run after someone or something to catch them</div>
+          </div>
+          <div class="vocab-example">A zillion flies <strong>chased</strong> the big kid away. → The cat <strong>chased</strong> the mouse. (collocation: chase...away)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">tongue</span>
+            <span class="vocab-ipa">/tʌŋ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">the soft part inside your mouth that you use to talk</div>
+          </div>
+          <div class="vocab-example">"Bug got your <strong>tongue</strong>?" → Stick out your <strong>tongue</strong>. (idiom: bug got your tongue? = why aren't you talking?)</div>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 词汇巩固活动 (3 min)</strong>
+          <strong>Do a Trick!</strong> 教师念出一个词（trick / circus / dizzy / mess…），学生做动作表示；如 <em>dizzy</em> → 原地转圈，<em>yell</em> → 假装大声喊，<em>chase</em> → 原地跑。
+          巩固三个把戏名：老师说"The Backstroke"，学生做动作。
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase-purple-dot" id="sec-lt02-phonics">
+        <div class="phase-label">⏱ 33–43 min · LT02 Phonics + LT03 Pronunciation <button class="push-btn" onclick="openPushModal('LT02-Phonics','Sound patterns: fl- blend (fly, flew, flying); -zz buzz sound (BUZZ, YEZZZ, Fivezzz); st- blend (stop); ow diphthong (now, how); -ing (talking, flying)')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT03-Pronunciation','Syllable counting and stress: trick(1), circus(2), backstroke(2), dizzy(2), booger(2), idea(3), answer(2), tongue(1); signal-word emphasis on NOW!')">📤 Push</button></div>
+        <div class="phase-title">语音拼读与发音训练</div>
+
+        <h4>Phonics Focus (5 min)</h4>
+        <p>从本书中提取高频语音模式，引导学生发现规律：</p>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">辅音连缀 fl-</h4>
+          <span class="phonics-item"><span class="phonics-pattern">fl-</span> fly, flew, flying</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">Fly Guy 名字都与 fl- 相关。</p>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">-zz 拟声词（嗡嗡声）</h4>
+          <span class="phonics-item"><span class="phonics-pattern">-zz</span> /z/ — BUZZ, YEZZZ, High Fivezzz</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">Buzz 的名字就是一个 -zz 词！双 z 表示强烈、拖长的嗡嗡声。</p>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">st- 连缀 与 ow 双元音</h4>
+          <span class="phonics-item"><span class="phonics-pattern">st-</span> stop, started</span>
+          <span class="phonics-item"><span class="phonics-pattern">ow</span> /aʊ/ — now, how</span>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">-ing 后缀</h4>
+          <span class="phonics-item"><span class="phonics-pattern">-ing</span> /ɪŋ/ — talking, flying</span>
+        </div>
+
+        <h4 style="margin-top:1rem;">Pronunciation Focus (5 min)</h4>
+
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Word</th><th>Syllables</th><th>Stress</th><th>Practice</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>trick</td><td>trick (1)</td><td>1st</td><td><strong>TRICK</strong></td></tr>
+            <tr><td>circus</td><td>cir·cus (2)</td><td>1st</td><td><strong>CIR</strong>-cus</td></tr>
+            <tr><td>backstroke</td><td>back·stroke (2)</td><td>1st</td><td><strong>BACK</strong>-stroke</td></tr>
+            <tr><td>dizzy</td><td>diz·zy (2)</td><td>1st</td><td><strong>DIZ</strong>-zy</td></tr>
+            <tr><td>booger</td><td>boo·ger (2)</td><td>1st</td><td><strong>BOO</strong>-ger</td></tr>
+            <tr><td>idea</td><td>i·de·a (3)</td><td>2nd</td><td>i-<strong>DE</strong>-a</td></tr>
+            <tr><td>answer</td><td>an·swer (2)</td><td>1st</td><td><strong>AN</strong>-swer</td></tr>
+            <tr><td>tongue</td><td>tongue (1)</td><td>1st</td><td><strong>TONGUE</strong></td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-tip">
+          <strong>💡 发音练习 (2 min)</strong>
+          <strong>信号词游戏：</strong>教师读出把戏名，学生拍手打音节，然后全班一起用夸张音重读信号词：
+          "Now!"（大声、短促、上扬）。再齐读一圈：BUZZ — YEZZZ — High Five<strong>zzz</strong>（延长 -zz）。
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase green-dot" id="sec-lt04-patterns">
+        <div class="phase-label">⏱ 43–50 min · LT04 Sentence Patterns + Wrap-up <button class="push-btn" onclick="openPushModal('LT04-Sentence-Patterns','Core patterns: "Now," said Buzz, "The [Trick]!"; Do your tricks only when [condition]; ___ didn\'t answer; say-quote reversal')">📤 Push to Students</button></div>
+        <div class="phase-title">核心句型初探 + 小结</div>
+
+        <p>引入本课核心句式，为第二课时深度语法做铺垫：</p>
+
+        <div class="pattern-block">
+          <div class="pattern-template">"Now," said [speaker], "[Trick]!"</div>
+          <div class="pattern-example">"Now," said Buzz, "The Backstroke!"</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 say-句倒装：说话内容放前面，said + 人名。反复出现 3 次驱动演出。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">Do your tricks only when [条件].</div>
+          <div class="pattern-example">"Do your tricks only when you hear the word NOW."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 "only when" 表条件限制 —— 本书的核心规则句。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">___ didn't answer.</div>
+          <div class="pattern-example">"Buzz didn't answer."（连续 3 次！）</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 过去否定 → didn't + 动词原形。</p>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>📝 第一课时小结</strong>
+          回顾 Big Question: "Why does Buzz say the word NOW over and over?"
+          让学生用一句话表态：
+          <br>"I think Buzz says NOW because ___."
+          <br>（为第二课时理解 NOW 规则的作用做铺垫。）
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SESSION 2 ═══════ -->
+<section id="session2">
+  <div class="section-label">Session 2 · 50 minutes</div>
+  <h2>第二课时 — 深度分析与语言输出</h2>
+  <p class="text-secondary">目标：深入语法、词形、语篇分析，完成口语输出和写作任务，理解 NOW 规则如何让演出受控。</p>
+
+  <div class="session-block">
+    <div class="session-header s2">
+      <div>
+        <h2>Lesson 2: Heard the Word NOW!</h2>
+        <div class="session-meta">Focus: Grammar → Morphology → Cohesion → Speaking → Writing</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–5 min · Review</div>
+        <div class="phase-title">快速复习</div>
+
+        <p>用 3 个快速问题回顾第一课时内容：</p>
+        <ol style="padding-left:1.5em;margin-bottom:0.8rem;">
+          <li>"What are Fly Guy's three magic tricks?" → The Backstroke, The Dizzy Doozie, The Big Booger.</li>
+          <li>"What word does Buzz use again and again during the show?" → NOW!</li>
+          <li>"What happened when Fly Guy did the tricks at supper?" → He made a mess.</li>
+        </ol>
+        <p>然后用 <strong>Three-Trick Sequence</strong> 快速梳理故事中的事件顺序：</p>
+        <svg viewBox="0 0 700 200" style="width:100%;max-width:700px;height:auto;margin:0.5rem 0;" role="img" aria-label="Sequence map for Fly Guy's Amazing Tricks">
+          <title>Sequence — Fly Guy's Amazing Tricks</title>
+          <desc>Flow showing the sequence: circus show, supper mess, NOW rule, big kid, three tricks, happy ending</desc>
+          <polyline points="50,170 175,40 350,20 525,100 650,170" fill="none" stroke="#C96F3D" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="50" cy="170" r="6" fill="#C96F3D"/>
+          <circle cx="175" cy="40" r="6" fill="#C96F3D"/>
+          <circle cx="350" cy="20" r="6" fill="#C75A4A"/>
+          <circle cx="525" cy="100" r="6" fill="#4A7FA5"/>
+          <circle cx="650" cy="170" r="6" fill="#C96F3D"/>
+          <text x="50" y="195" text-anchor="middle" font-size="11" fill="#31251B">Circus show</text>
+          <text x="50" y="160" text-anchor="middle" font-size="9" fill="#8B7662">Tricks on stage</text>
+          <text x="175" y="30" text-anchor="middle" font-size="11" fill="#31251B">Mess at supper</text>
+          <text x="175" y="58" text-anchor="middle" font-size="9" fill="#8B7662">Time &amp; place</text>
+          <text x="350" y="12" text-anchor="middle" font-size="11" fill="#C75A4A" font-weight="700">The NOW rule</text>
+          <text x="350" y="42" text-anchor="middle" font-size="9" fill="#8B7662">Only on "NOW"</text>
+          <text x="525" y="90" text-anchor="middle" font-size="11" fill="#4A7FA5">Big kid teased</text>
+          <text x="525" y="118" text-anchor="middle" font-size="9" fill="#8B7662">Bug got your tongue?</text>
+          <text x="650" y="195" text-anchor="middle" font-size="11" fill="#31251B">Happy ending</text>
+          <text x="650" y="160" text-anchor="middle" font-size="9" fill="#8B7662">High Fivezzz!</text>
+        </svg>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase blue-dot" id="sec-lt05-grammar">
+        <div class="phase-label">⏱ 5–18 min · LT05 Grammar <button class="push-btn" onclick="openPushModal('LT05-Grammar','Grammar functions: imperatives (Stop! Let\'s clean up! Answer me!); past negative didn\'t + base verb (Buzz didn\'t answer); say-quote reversal ("Now," said Buzz); conditional only-when instruction')">📤 Push to Students</button></div>
+        <div class="phase-title">语法功能深度分析</div>
+
+        <h4>① Imperative 祈使句 — 发出命令 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>原文句</th><th>功能</th><th>结构</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>"<strong>Stop</strong>, Fly Guy!"</td><td>发出命令（最简祈使）</td><td>动词原形开头</td></tr>
+            <tr><td>"<strong>Answer</strong> me!"</td><td>命令 / 命令语气</td><td>动词原形 + me</td></tr>
+            <tr><td>"Let's <strong>clean</strong> up this mess."</td><td>建议一起做 (Let's)</td><td>Let's + 动词原形</td></tr>
+            <tr><td>"<strong>Get</strong> ready for..."</td><td>命令</td><td>动词原形 + 介词短语</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">练习：用祈使句给指令。"____ your hands." (wash) / "____ your book." (open)</p>
+
+        <h4 style="margin-top:1rem;">② didn't + 动词原形 — 过去否定 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>肯定句</th><th>否定句</th><th>含义</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Buzz answered.</td><td>Buzz <strong>didn't answer</strong>.</td><td>过去没有回答</td></tr>
+            <tr><td>Fly Guy heard him.</td><td>Fly Guy <strong>didn't hear</strong> him.</td><td>过去没听到</td></tr>
+            <tr><td>The kid talked.</td><td>The kid <strong>didn't talk</strong>.</td><td>过去没说话</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-warn">
+          <strong>⚠️ 重点提示</strong>
+          "Buzz didn't answer." 在书中出现 3 次，是制造张力的核心句式。注意 didn't 后面必须用动词原形，不变化。
+        </div>
+
+        <h4 style="margin-top:1rem;">③ say-句倒装 + only-when 条件 (3 min)</h4>
+        <div class="pattern-block">
+          <div class="pattern-template">"... ," said [speaker]</div>
+          <div class="pattern-example">"Now," said Buzz, "The Backstroke!"</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">
+            说明放在 said 前，主谓倒装。"said Mom" / "said Buzz"。
+          </p>
+        </div>
+        <div class="pattern-block">
+          <div class="pattern-template">Do [verb] only when [条件]</div>
+          <div class="pattern-example">"Do your tricks only when you hear the word NOW."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">only when 表达"只有在……的时候"。这是让演出受控的关键规则。</p>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-purple-dot" id="sec-lt06-morphology">
+        <div class="phase-label">⏱ 18–26 min · LT06 Morphology + LT07 Cohesion <button class="push-btn" onclick="openPushModal('LT06-Morphology','Word forms: plural -s (tricks, friends); f→ves (fly→flies); regular -ed (learned, yelled, chased, bumped); irregular past (hear→heard, say→said, catch→caught); -zz buzz words')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT07-Cohesion','Cohesion: sequence words First/Then/And then; repeated NOW call; pronoun reference (him = Buzz/Fly Guy); repeated "Buzz didn\'t answer"; cause-effect of the NOW rule')">📤 Push</button></div>
+        <div class="phase-title">词形变化与语篇衔接</div>
+
+        <h4>LT06 · Morphology 词形变化 (4 min)</h4>
+        <p>引导学生发现词形变化（word forms）：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base</th><th>Plural</th><th>Past (-ed)</th><th>Irregular Past</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>trick</td><td>tricks</td><td>—</td><td>—</td><td>直接加 -s</td></tr>
+            <tr><td>friend</td><td>friends</td><td>—</td><td>—</td><td>直接加 -s</td></tr>
+            <tr><td>fly</td><td>flies</td><td>—</td><td>—</td><td>f → v + ies（特殊复数）</td></tr>
+            <tr><td>learn</td><td>—</td><td>learned</td><td>—</td><td>规则 +ed</td></tr>
+            <tr><td>yell</td><td>—</td><td>yelled</td><td>—</td><td>规则 +ed</td></tr>
+            <tr><td>chase</td><td>—</td><td>chased</td><td>—</td><td>去 e 加 -d</td></tr>
+            <tr><td>bump</td><td>—</td><td>bumped</td><td>—</td><td>规则 +ed</td></tr>
+            <tr><td>hear</td><td>—</td><td>—</td><td>heard</td><td>不规则</td></tr>
+            <tr><td>say</td><td>—</td><td>—</td><td>said</td><td>不规则</td></tr>
+            <tr><td>catch</td><td>—</td><td>—</td><td>caught</td><td>不规则</td></tr>
+            <tr><td>buzz</td><td>—</td><td>—</td><td>BUZZ / YEZZZ / Fivezzz</td><td>-zz 拟声词形</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-info">
+          <strong>🔍 不规则变化重点</strong>
+          hear → heard (不是 heared) · say → said (不是 sayed) · catch → caught (不是 catched)
+          <br>这些词不能靠规则推导，需要单独记忆！fly → flies 是特殊复数，不是 flys。
+        </div>
+
+        <h4 style="margin-top:1rem;">LT07 · Cohesion 语篇衔接 (4 min)</h4>
+        <p>分析本书中的衔接手段，理解作者如何组织故事、制造张力：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Device</th><th>Function</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>顺序词</strong></td>
+              <td>sequence — 按顺序推进演出</td>
+              <td>"<strong>First</strong> The Backstroke. <strong>Then</strong> The Dizzy Doozie. <strong>And then</strong> The Big Booger."</td>
+            </tr>
+            <tr>
+              <td><strong>信号重复</strong></td>
+              <td>repetition — 用同一句连贯演出</td>
+              <td>"<strong>Now</strong>," said Buzz ×3</td>
+            </tr>
+            <tr>
+              <td><strong>代词 him</strong></td>
+              <td>reference — 需看上下文推断</td>
+              <td>"Fly Guy didn't <em>hear him</em>." → him = Buzz<br>"Buzz <em>caught him</em>." → him = Fly Guy</td>
+            </tr>
+            <tr>
+              <td><strong>反复短句</strong></td>
+              <td>rhythm — 制造张力</td>
+              <td>"<strong>Buzz didn't answer.</strong>" ×3</td>
+            </tr>
+            <tr>
+              <td><strong>因果</strong></td>
+              <td>cause &amp; effect — 规则 → 结局</td>
+              <td>NOW 规则 → 受控表演 → 吓跑大孩子</td>
+            </tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-tip">
+          <strong>💡 讨论：NOW 的力量</strong>
+          让学生找书里所有的 "Now" 并讨论：每次重复 "Now" 前后发生了什么？
+          <br>→ 台上有序、台下乱——NOW 让把戏只在"该做的时候"出现。
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase green-dot" id="sec-lt08-functional">
+        <div class="phase-label">⏱ 26–40 min · LT08 Functional Communication <button class="push-btn" onclick="openPushModal('LT08-Functional-Communication','Functional tasks: give commands; retell the three tricks in order; role-play the circus with "NOW!"; respond to teasing; opinion scaffold')">📤 Push to Students</button></div>
+        <div class="phase-title">口语输出与写作任务</div>
+
+        <h4>Activity 1: Retell the Three Tricks (5 min)</h4>
+        <p>学生两人一组，用以下框架复述演出顺序：</p>
+        <div class="card" style="background:var(--green-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Sequence Frame:</strong></p>
+          <p style="font-size:var(--fs-sm);">
+            First, Buzz said, "The Backstroke!"<br>
+            Then, Buzz said, "The Dizzy Doozie!"<br>
+            And then, Buzz said, "The Big Booger!"<br>
+            At supper, Fly Guy did the tricks again — but this time nobody said "NOW!"<br>
+            So Buzz said, "Do your tricks only when you hear the word NOW."<br>
+            In the end, Fly Guy heard "NOW" and chased the big kid away. High Fivezzz!
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 2: Give a Command — Follow the Signal (5 min)</h4>
+        <p>让学生做"小小导演"：一人用祈使句发令，另一人表演：</p>
+        <div class="card" style="background:var(--purple-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Role-Play Prompts:</strong></p>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li>"Stop, Fly Guy!" → Stop moving.</li>
+            <li>"Clean up this mess!" → Pretend to tidy up.</li>
+            <li>"Answer me!" → Say a word.</li>
+            <li>"Now! The Backstroke!" → Do a swimming motion.</li>
+          </ul>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Practice question:</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            "Why does Fly Guy only do his tricks when he hears the word NOW?"
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 3: Responding to Teasing + Opinion (4 min 指导 + 课后完成)</h4>
+        <div class="card" style="background:var(--surface-alt);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Talk about it:</strong></p>
+          <p style="font-size:var(--fs-sm);">"Bug got your tongue?" — What does the big kid mean? How does Buzz stay calm? What could Buzz say back?</p>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Opinion prompt (for homework):</strong></p>
+          <p style="font-size:var(--fs-base);font-weight:600;">Should Fly Guy do his tricks only when he hears the word NOW? Write your opinion.</p>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 40–50 min · Review &amp; Extension</div>
+        <div class="phase-title">总结回顾 + 拓展延伸</div>
+
+        <h4>Exit Ticket (5 min)</h4>
+        <p>每人回答 3 个问题后离开教室：</p>
+        <ol style="padding-left:1.5em;">
+          <li>说出 Fly Guy 的两个把戏名称。</li>
+          <li>用一个祈使句给老师下个"命令"（如 "Stop!" / "Clap your hands!"）。</li>
+          <li>Why does Buzz make the "NOW rule" for Fly Guy?（一句话）</li>
+        </ol>
+
+        <h4 style="margin-top:0.8rem;">Extension (5 min)</h4>
+        <div class="callout callout-tip">
+          <strong>🌟 拓展活动选择</strong>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li><strong>Draw &amp; Label:</strong> 画出你最爱的把戏（Backstroke / Dizzy Doozie / Big Booger），用英文标注。</li>
+            <li><strong>Role Play:</strong> 3 人一组表演第三章（Buzz 被嘲笑 → Fly Guy 听到 NOW → 吓跑大孩子）。</li>
+            <li><strong>Creative Writing:</strong> 给 Fly Guy 发明一个新把戏并起名字（如 "The Super Spin"），写 3–5 句介绍。</li>
+            <li><strong>Word Detective:</strong> 找出书中所有以 fl- 开头或以 -zz 结尾的词，写在纸上。</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ HOMEWORK ═══════ -->
+<section id="homework">
+  <div class="section-label">Homework Worksheet</div>
+  <h2>课后作业 · Fly Guy's Amazing Tricks</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;">以下作业分为 6 个部分，覆盖 LT01–LT08 全部模块。可打印为 A4 纸质版。建议在第 1 课时后完成 Part A–D，第 2 课时后完成 Part E–F。每部分下方有折叠参考答案（供教师使用）。</p>
+
+  <!-- Part A: Vocabulary -->
+  <div class="hw-section" id="sec-hw-partA">
+    <div class="hw-title">Part A · Vocabulary Match <button class="push-btn" onclick="openPushModal('HW-PartA','Vocabulary Match: match 6 words (trick, dizzy, booger, mess, supper, chase) with their definitions')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Draw a line to match each word with its meaning.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;font-size:var(--fs-sm);">
+      <div>
+        <p><strong>1.</strong> trick &nbsp;________</p>
+        <p><strong>2.</strong> dizzy &nbsp;________</p>
+        <p><strong>3.</strong> booger &nbsp;________</p>
+        <p><strong>4.</strong> mess &nbsp;________</p>
+        <p><strong>5.</strong> supper &nbsp;________</p>
+        <p><strong>6.</strong> chase &nbsp;________</p>
+      </div>
+      <div>
+        <p><strong>F.</strong> to run after someone or something</p>
+        <p><strong>A.</strong> a clever or amazing action you learn to do</p>
+        <p><strong>D.</strong> a dirty or untidy state</p>
+        <p><strong>B.</strong> feeling like everything is spinning around you</p>
+        <p><strong>E.</strong> an evening meal</p>
+        <p><strong>C.</strong> a silly, joking word Buzz uses for a funny trick</p>
+      </div>
+    </div>
+
+    <details class="hw-answer">
+      <summary>✅ Answer Key</summary>
+      <ol>
+        <li><strong>1–A</strong> (trick → a clever or amazing action)</li>
+        <li><strong>2–B</strong> (dizzy → feeling like everything is spinning)</li>
+        <li><strong>3–C</strong> (booger → a silly, joking word)</li>
+        <li><strong>4–D</strong> (mess → a dirty or untidy state)</li>
+        <li><strong>5–E</strong> (supper → an evening meal)</li>
+        <li><strong>6–F</strong> (chase → to run after someone or something)</li>
+      </ol>
+    </details>
+  </div>
+
+  <!-- Part B: Vocabulary in Context -->
+  <div class="hw-section" id="sec-hw-partB">
+    <div class="hw-title">Part B · Vocabulary in Context <button class="push-btn" onclick="openPushModal('HW-PartB','Vocabulary in Context: fill in blanks with word bank (circus, now, caught, clean, mess, idea)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Fill in the blanks with the correct word from the box.</div>
+
+    <div style="background:var(--surface-alt);border-radius:var(--radius);padding:0.6rem 1rem;margin-bottom:1rem;font-size:var(--fs-sm);">
+      <strong>Word Bank:</strong> &nbsp; circus &nbsp; | &nbsp; now &nbsp; | &nbsp; caught &nbsp; | &nbsp; clean &nbsp; | &nbsp; mess &nbsp; | &nbsp; idea
+    </div>
+
+    <div class="hw-question"><span class="q-num">1.</span> Buzz's friends came to watch the fly <span class="hw-blank"></span>.</div>
+    <div class="hw-question"><span class="q-num">2.</span> "Do your tricks only when you hear the word <span class="hw-blank"></span>," said Buzz.</div>
+    <div class="hw-question"><span class="q-num">3.</span> When Fly Guy did the Big Booger, Buzz <span class="hw-blank"></span> him.</div>
+    <div class="hw-question"><span class="q-num">4.</span> "Let's <span class="hw-blank"></span> up this mess," said Buzz.</div>
+    <div class="hw-question"><span class="q-num">5.</span> After supper there were crumbs everywhere — what a <span class="hw-blank"></span>!</div>
+    <div class="hw-question"><span class="q-num">6.</span> Buzz had an <span class="hw-blank"></span>: "Do tricks only on the word NOW!"</div>
+
+    <details class="hw-answer">
+      <summary>✅ Answer Key</summary>
+      <ol>
+        <li>circus</li>
+        <li>now</li>
+        <li>caught</li>
+        <li>clean</li>
+        <li>mess</li>
+        <li>idea</li>
+      </ol>
+    </details>
+  </div>
+
+  <!-- Part C: Phonics -->
+  <div class="hw-section" id="sec-hw-partC">
+    <div class="hw-title">Part C · Phonics Detective <button class="push-btn" onclick="openPushModal('HW-PartC','Phonics Detective: find story words matching fl-, -zz, st-, ow patterns; bonus syllable counting and stress marking')">📤 Push</button></div>
+    <div class="hw-subtitle">LT02 + LT03 · Find words in the story that match each sound pattern.</div>
+
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th style="width:120px;">Sound Pattern</th><th>Find 2 words from the story</th><th>Pronunciation (IPA)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>fl-</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>-zz</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>st-</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>ow</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="font-size:var(--fs-sm);margin-top:0.8rem;"><strong>Bonus:</strong> Circle the syllables and mark the stress: back-stroke &nbsp; diz-zy &nbsp; cir-cus &nbsp; i-de-a</p>
+
+    <details class="hw-answer">
+      <summary>✅ Answer Key</summary>
+      <ol>
+        <li><strong>fl-</strong>: fly, flew, flying (any two)</li>
+        <li><strong>-zz</strong>: BUZZ, YEZZZ, Fivezzz (any two)</li>
+        <li><strong>st-</strong>: stop (or started)</li>
+        <li><strong>ow</strong>: now (or how)</li>
+      </ol>
+      <p style="font-size:var(--fs-sm);margin-top:0.4rem;"><strong>Bonus stress:</strong> <strong>BACK</strong>-stroke (2), <strong>DIZ</strong>-zy (2), <strong>CIR</strong>-cus (2), i-<strong>DE</strong>-a (3)</p>
+    </details>
+  </div>
+
+  <!-- Part D: Grammar -->
+  <div class="hw-section" id="sec-hw-partD">
+    <div class="hw-title">Part D · Grammar Power <button class="push-btn" onclick="openPushModal('HW-PartD','Grammar Power: write command verbs (imperatives); convert verbs to past tense including irregulars (heard, said, caught, yelled, bumped)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT05 + LT06 · Imperatives &amp; Past Tense</div>
+
+    <h4 style="font-size:var(--fs-base);margin-bottom:0.5rem;">D1: Make a Command! Complete the imperatives from the story.</h4>
+    <div class="hw-question"><span class="q-num">1.</span> "<span class="hw-blank" style="min-width:60px;"></span>, Fly Guy!" Buzz cried. (stop)</div>
+    <div class="hw-question"><span class="q-num">2.</span> "Let's <span class="hw-blank" style="min-width:60px;"></span> up this mess." (clean)</div>
+    <div class="hw-question"><span class="q-num">3.</span> "<span class="hw-blank" style="min-width:60px;"></span> me!" yelled the kid. (answer)</div>
+    <div class="hw-question"><span class="q-num">4.</span> "<span class="hw-blank" style="min-width:60px;"></span> ready for the new tricks!" said Buzz. (get)</div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">D2: Past Tense — Write the past tense form of each verb.</h4>
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th>Base Form</th><th>Past Tense</th><th>Base Form</th><th>Past Tense</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>hear</td><td><span class="hw-blank"></span></td><td>yell</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>say</td><td><span class="hw-blank"></span></td><td>bump</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>catch</td><td><span class="hw-blank"></span></td><td>learn</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>go</td><td><span class="hw-blank"></span></td><td>chase</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>come</td><td><span class="hw-blank"></span></td><td>clean</td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <details class="hw-answer">
+      <summary>✅ Answer Key</summary>
+      <p><strong>D1:</strong> 1. Stop &nbsp; 2. clean &nbsp; 3. Answer &nbsp; 4. Get</p>
+      <p style="font-size:var(--fs-sm);margin-top:0.4rem;"><strong>D2:</strong> hear→heard, say→said, catch→caught, go→went, come→came, yell→yelled, bump→bumped, learn→learned, chase→chased, clean→cleaned</p>
+    </details>
+  </div>
+
+  <!-- Part E: Cohesion -->
+  <div class="hw-section" id="sec-hw-partE">
+    <div class="hw-title">Part E · Cohesion — Sequencing &amp; Reference <button class="push-btn" onclick="openPushModal('HW-PartE','Cohesion: order the three tricks with First/Then/And then; identify who "him" refers to; explain the idiom "Bug got your tongue?"')">📤 Push</button></div>
+    <div class="hw-subtitle">LT07 · Put the tricks in order, then figure out who "him" means.</div>
+
+    <h4 style="font-size:var(--fs-base);margin-bottom:0.5rem;">E1: Number the tricks 1-3 in the order Fly Guy performed them.</h4>
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th>Trick</th><th>Order (1–3)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>The Dizzy Doozie</td><td><span class="hw-blank" style="min-width:60px;"></span></td></tr>
+        <tr><td>The Big Booger</td><td><span class="hw-blank" style="min-width:60px;"></span></td></tr>
+        <tr><td>The Backstroke</td><td><span class="hw-blank" style="min-width:60px;"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">E2: Who does "him" refer to? Write <strong>Buzz</strong> or <strong>Fly Guy</strong>.</h4>
+    <div class="hw-question"><span class="q-num">1.</span> "Stop, Fly Guy!" But Fly Guy didn't hear <strong>him</strong>. → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">2.</span> Fly Guy did The Big Booger. Buzz caught <strong>him</strong>. → <span class="hw-blank"></span></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">E3: Idiom detective</h4>
+    <p style="font-size:var(--fs-sm);">What does the big kid mean when he says, <em>"Bug got your tongue?"</em> Write your guess.</p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">My guess: <span class="hw-blank" style="min-width:320px;"></span></p>
+
+    <details class="hw-answer">
+      <summary>✅ Answer Key</summary>
+      <p><strong>E1:</strong> The Dizzy Doozie = 2, The Big Booger = 3, The Backstroke = 1</p>
+      <p style="font-size:var(--fs-sm);margin-top:0.4rem;"><strong>E2:</strong> 1. Buzz &nbsp; 2. Fly Guy</p>
+      <p style="font-size:var(--fs-sm);margin-top:0.4rem;"><strong>E3:</strong> Sample answer: The big kid is teasing Buzz for not talking — "Bug got your tongue?" is a funny idiom that means "Why aren't you saying anything?" / "Cat got your tongue?" is the common form; here it jokes about a bug because Buzz talks to a fly.</p>
+    </details>
+  </div>
+
+  <!-- Part F: Writing -->
+  <div class="hw-section" id="sec-hw-partF">
+    <div class="hw-title">Part F · Opinion Writing <button class="push-btn" onclick="openPushModal('HW-PartF','Opinion Writing: Should Fly Guy do tricks only when he hears the word NOW? Write your opinion with at least 4 sentences using the scaffold')">📤 Push</button></div>
+    <div class="hw-subtitle">LT08 · Should Fly Guy do his tricks only when he hears the word NOW? Write your opinion. Use at least 4 sentences.</div>
+
+    <p style="font-size:var(--fs-sm);margin-bottom:0.5rem;"><strong>Use these sentence starters if you need help:</strong></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.8rem;">
+      I think the NOW rule is a good idea because ___.<br>
+      First, ___.<br>
+      Also, ___.<br>
+      In conclusion, ___.
+    </p>
+    <div class="hw-lines" style="min-height:12em;"></div>
+
+    <details class="hw-answer">
+      <summary>✅ Answer Key</summary>
+      <p style="font-size:var(--fs-sm);"><strong>Sample answer:</strong></p>
+      <p style="font-size:var(--fs-sm);">I think the NOW rule is a good idea because Fly Guy made a big mess at supper. First, he did his tricks in Mom's milk and around Dad's head. Also, nobody knew when the tricks would happen, so it was chaos. In conclusion, doing tricks only on the word NOW is the smart and tidy way to win the circus show.</p>
+    </details>
+  </div>
+
+</section>
+
+<!-- ═══════ TEACHER NOTES ═══════ -->
+<section>
+  <div class="section-label">Teacher Notes</div>
+  <h2>教师备注</h2>
+
+  <div class="lt-grid">
+    <div class="card">
+      <h4>📊 LT Coverage Map</h4>
+      <div style="overflow-x:auto"><table style="min-width:500px">
+        <thead>
+          <tr><th>LT Module</th><th>Session 1</th><th>Session 2</th><th>Homework</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LT01 Vocabulary</td><td>✅ 主教学</td><td>复习</td><td>✅ Part A–B</td></tr>
+          <tr><td>LT02 Phonics</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT03 Pronunciation</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT04 Sentence Patterns</td><td>✅ 初探</td><td>复习</td><td>—</td></tr>
+          <tr><td>LT05 Grammar</td><td>—</td><td>✅ 主教学</td><td>✅ Part D</td></tr>
+          <tr><td>LT06 Morphology</td><td>—</td><td>✅ 主教学</td><td>✅ Part D</td></tr>
+          <tr><td>LT07 Cohesion</td><td>—</td><td>✅ 主教学</td><td>✅ Part E</td></tr>
+          <tr><td>LT08 Functional</td><td>—</td><td>✅ 主教学</td><td>✅ Part F</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h4>🎯 CCSS Alignment (Grade 1–2)</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>RL.1.1</strong> Ask and answer questions about key details</li>
+        <li><strong>RL.1.2</strong> Retell stories, including key details</li>
+        <li><strong>RL.1.3</strong> Describe characters, settings, and major events</li>
+        <li><strong>RL.1.7</strong> Use illustrations and details to describe characters/events</li>
+        <li><strong>W.1.1</strong> Write opinion pieces, introduce topic, supply reason</li>
+        <li><strong>SL.1.1</strong> Participate in collaborative conversations</li>
+        <li><strong>SL.1.4</strong> Describe people, places, things, and events</li>
+        <li><strong>L.1.1</strong> Print all upper- and lowercase letters; use conventions</li>
+        <li><strong>L.1.4</strong> Determine meaning of words using context clues</li>
+        <li><strong>RF.1.3</strong> Know and apply grade-level phonics and word analysis skills</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="page-wrap">
+    <p>Fly Guy's Amazing Tricks — 精读教案 · 两课时 · Emily's Reading Studio</p>
+    <p style="margin-top:0.3rem;">Language Target Framework · LT01–LT08 · CCSS Grade 1–2 Aligned</p>
+  </div>
+</footer>
+
+<script>
+// ═══════ Book info for push ═══════
+const BOOK_TITLE = "Fly Guy's Amazing Tricks";
+const SOURCE_LESSON_URL = '/frontend/fly-guy/fly_guys_amazing_tricks_lesson_plan.html';
+const TASK_PREFIX = 'flyguy-amazing-tricks';
+
+// Smooth scroll for TOC
+document.querySelectorAll('.toc a').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var id = this.getAttribute('href').slice(1);
+    var target = document.getElementById(id);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ═══════ Push to Students ═══════
+const sectionContentMap = {
+  'LT01-Vocabulary': '12 core vocabulary words with IPA, POS, definitions, examples, and word families: trick, circus, backstroke, dizzy, booger, supper, mess, idea, answer, yell, chase, tongue',
+  'LT02-Phonics': 'Sound patterns: fl- blend (fly, flew, flying); -zz buzz sound (BUZZ, YEZZZ, Fivezzz); st- blend (stop, started); ow diphthong (now); -ing (talking, flying)',
+  'LT03-Pronunciation': 'Syllable counting and stress patterns: trick(1), circus(2), backstroke(2), dizzy(2), booger(2), idea(3), answer(2), tongue(1); emphasize the signal word NOW!',
+  'LT04-Sentence-Patterns': 'Core sentence patterns: "Now," said Buzz, "The [Trick]!"; Do your tricks only when [condition]; Buzz didn\'t answer; say-quote reversal',
+  'LT05-Grammar': 'Grammar functions: Imperatives (Stop! Let\'s clean up! Answer me!); past negative didn\'t + base verb; say-quote reversal; only-when condition',
+  'LT06-Morphology': 'Word forms: plural -s (tricks, friends); fly→flies; regular past -ed (learned, yelled, chased, bumped); irregular past (heard, said, caught); -zz buzz words',
+  'LT07-Cohesion': 'Cohesion devices: sequence words First/Then/And then; repeated NOW call; pronoun reference (him = Buzz/Fly Guy); repeated "Buzz didn\'t answer"; cause-effect of the NOW rule',
+  'LT08-Functional-Communication': 'Functional tasks: give commands; retell the three tricks in order; role-play the circus with "NOW!"; respond to teasing; opinion scaffold',
+  'HW-PartA': 'Vocabulary Match: match 6 words (trick, dizzy, booger, mess, supper, chase) with their definitions',
+  'HW-PartB': 'Vocabulary in Context: fill in blanks using word bank (circus, now, caught, clean, mess, idea)',
+  'HW-PartC': 'Phonics Detective: find story words matching sound patterns fl-, -zz, st-, ow; syllable counting bonus',
+  'HW-PartD': 'Grammar Power: write command verbs (imperatives) + past tense conversion for 10 verbs including irregulars',
+  'HW-PartE': 'Cohesion: order the three tricks; identify who him refers to; explain the idiom Bug got your tongue?',
+  'HW-PartF': 'Opinion Writing: Should Fly Guy do tricks only on "NOW"? Write 4+ sentences with scaffold'
+};
+
+function openPushModal(sectionId, sectionContent) {
+  var token = localStorage.getItem('authToken');
+  if (!token) {
+    window.location.href = '/lesson.html';
+    return;
+  }
+  var content = sectionContent || sectionContentMap[sectionId] || sectionId;
+
+  fetch('/api/students/list', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API error: ' + r.status);
+    return r.json();
+  })
+  .then(function(students) {
+    if (!Array.isArray(students) || students.length === 0) {
+      alert('No students found. Please add students first.');
+      return;
+    }
+    var existing = document.querySelector('.push-modal-overlay');
+    if (existing) existing.remove();
+
+    var modal = document.createElement('div');
+    modal.className = 'push-modal-overlay';
+    var studentListHtml = students.map(function(s) {
+      return '<label class="student-item"><input type="checkbox" value="' + s.id + '"><span>' + s.name + '</span></label>';
+    }).join('');
+    modal.innerHTML = '<div class="push-modal">' +
+      '<h3>\ud83d\udce4 Push to Students</h3>' +
+      '<p style="color:#666;font-size:13px;">' + sectionId + '</p>' +
+      '<p style="color:#888;font-size:11px;margin-bottom:8px;">' + content.substring(0, 120) + (content.length > 120 ? '...' : '') + '</p>' +
+      '<div class="student-list">' + studentListHtml + '</div>' +
+      '<button class="push-confirm-btn" id="pushConfirmBtn">\u2705 Confirm Push</button>' +
+      '<button class="push-cancel-btn" id="pushCancelBtn">\u2716 Cancel</button>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    document.getElementById('pushConfirmBtn').onclick = function() { doPush(sectionId, content, this); };
+    document.getElementById('pushCancelBtn').onclick = function() { modal.remove(); };
+    modal.onclick = function(e) { if (e.target === modal) modal.remove(); };
+  })
+  .catch(function(err) {
+    alert('Failed to load students: ' + err.message);
+  });
+}
+
+function doPush(sectionId, content, btn) {
+  var modal = document.querySelector('.push-modal-overlay');
+  if (!modal) return;
+  var checked = modal.querySelectorAll('input:checked');
+  if (checked.length === 0) {
+    alert('Please select at least one student.');
+    return;
+  }
+  var token = localStorage.getItem('authToken');
+  btn.textContent = 'Pushing...';
+  btn.disabled = true;
+
+  var emojiMap = {
+    'LT01': '\ud83d\udcd6', 'LT02': '\ud83d\udd24', 'LT03': '\ud83c\udfa4',
+    'LT04': '\u270f\ufe0f', 'LT05': '\ud83d\udd24', 'LT06': '\ud83e\udde9',
+    'LT07': '\ud83d\udd17', 'LT08': '\ud83d\udcac', 'HW': '\ud83d\udcdd'
+  };
+  var prefix = sectionId.split('-')[0];
+  var emoji = emojiMap[prefix] || '\ud83d\udccc';
+  var title = emoji + ' [' + BOOK_TITLE + '] ' + sectionId;
+  var today = new Date();
+  var todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  var teacher = localStorage.getItem('currentUser') || localStorage.getItem('lesson_tracker_user') || 'emily_mo';
+
+  var taskDef = PUSH_TASKS[sectionId] || { renderer: 'checklist', prompt: content, required: true };
+  var taskId = TASK_PREFIX + '-' + String(sectionId).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  var taskSnapshot = {
+    id: taskId,
+    title: title,
+    type: 'task',
+    series: 'Fly Guy',
+    book: BOOK_TITLE,
+    lesson: sectionId,
+    part: sectionId,
+    sourceLessonUrl: SOURCE_LESSON_URL,
+    studentRenderer: taskDef.renderer,
+    prompt: taskDef.prompt || content,
+    required: !!taskDef.required
+  };
+  if (taskDef.renderer === 'drag-match' && taskDef.pairs) taskSnapshot.pairs = taskDef.pairs;
+  if (taskDef.renderer === 'drag-order' && taskDef.items) taskSnapshot.items = taskDef.items;
+  if (taskDef.renderer === 'multiple-choice' && taskDef.options) taskSnapshot.options = taskDef.options;
+  if (taskDef.renderer === 'checklist') taskSnapshot.instructions = taskDef.prompt || content;
+
+  var assignments = [];
+  for (var i = 0; i < checked.length; i++) {
+    var studentId = checked[i].value;
+    assignments.push({
+      assignmentId: 'assign-' + Date.now() + '-' + Math.random().toString(16).slice(2) + '-' + i,
+      practiceId: 'lessonplan:' + sectionId,
+      title: title,
+      content: content,
+      sourceLessonUrl: SOURCE_LESSON_URL,
+      sourceLessonId: 'flyguy-amazing-tricks-' + String(sectionId).toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      taskIds: [taskId],
+      tasks: [taskSnapshot],
+      sourceBook: 'Fly Guy',
+      targetType: 'student',
+      targetIds: [studentId],
+      studentIds: [studentId],
+      classId: '',
+      relatedClassDate: todayStr,
+      assignedDate: todayStr,
+      dueDate: '',
+      teacherNote: '',
+      assignedBy: teacher,
+      status: 'active'
+    });
+  }
+
+  fetch('/api/practice/assignments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ assignments: assignments })
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    alert('\u2705 Pushed to ' + (data.count || assignments.length) + ' student(s)');
+    modal.remove();
+  })
+  .catch(function(err) {
+    alert('Push failed: ' + err.message);
+    btn.textContent = 'Push';
+    btn.disabled = false;
+  });
+}
+
+// ═══════ Task definitions for Practice push (task snapshot) ═══════
+var PUSH_TASKS = {
+  'LT01-Vocabulary': { renderer: 'checklist', prompt: 'Review the 12 core vocabulary words with IPA, definitions and word families.', required: true },
+  'LT02-Phonics': { renderer: 'checklist', prompt: 'Practice sound patterns: fl-, -zz, st-, ow, -ing with words from the story.', required: true },
+  'LT03-Pronunciation': { renderer: 'checklist', prompt: 'Count syllables and practice stress: circus(2), backstroke(2), dizzy(2), idea(3), answer(2); emphasize NOW!', required: true },
+  'LT04-Sentence-Patterns': { renderer: 'checklist', prompt: 'Practice sentence patterns: "Now," said Buzz, "The [Trick]!"; Do your tricks only when [condition].', required: true },
+  'LT05-Grammar': { renderer: 'multiple-choice', prompt: 'Choose the correct past negative form of "answer".', options: [
+    { label: 'didn\'t answer', value: 'didnt-answer', correct: true },
+    { label: 'didn\'t answered', value: 'didnt-answered', correct: false },
+    { label: 'don\'t answer', value: 'dont-answer', correct: false }
+  ], required: true },
+  'LT06-Morphology': { renderer: 'checklist', prompt: 'Review word forms: plural -s, fly→flies, regular -ed, irregular past (heard, said, caught).', required: true },
+  'LT07-Cohesion': { renderer: 'short-answer', prompt: 'In "Buzz caught him", who does "him" refer to? Write your answer and explain why.', required: true },
+  'LT08-Functional-Communication': { renderer: 'short-answer', prompt: 'Give three commands Buzz says in the story and retell what Fly Guy does on "NOW!".', required: true },
+  'HW-PartA': { renderer: 'drag-match', prompt: 'Match each word with its meaning.', pairs: [
+    { left: 'trick', right: 'a clever amazing action' },
+    { left: 'dizzy', right: 'feeling like spinning' },
+    { left: 'booger', right: 'a silly funny word' },
+    { left: 'mess', right: 'a dirty untidy state' },
+    { left: 'supper', right: 'an evening meal' },
+    { left: 'chase', right: 'run after something' }
+  ], required: true },
+  'HW-PartB': { renderer: 'drag-order', prompt: 'Put the words in the correct order to complete the sentences.', items: ['circus', 'now', 'caught', 'clean', 'mess', 'idea'], required: true },
+  'HW-PartC': { renderer: 'multiple-choice', prompt: 'Which sound pattern does "YEZZZ" use at the end?', options: [
+    { label: '-zz buzz sound', value: 'zz', correct: true },
+    { label: 'fl- blend', value: 'fl', correct: false },
+    { label: '-ing suffix', value: 'ing', correct: false }
+  ], required: true },
+  'HW-PartD': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of "hear".', options: [
+    { label: 'hear → heard', value: 'heard', correct: true },
+    { label: 'hear → heared', value: 'heared', correct: false },
+    { label: 'hear → heards', value: 'heards', correct: false }
+  ], required: true },
+  'HW-PartE': { renderer: 'short-answer', prompt: 'Put the three tricks in order and write who "him" refers to in each sentence.', required: true },
+  'HW-PartF': { renderer: 'short-answer', prompt: 'Should Fly Guy do tricks only on the word NOW? Write at least 4 sentences using the scaffold.', required: true }
+};
+</script>
+</body>
+</html>

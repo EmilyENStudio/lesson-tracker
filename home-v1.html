@@ -1,0 +1,3624 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emily Kids Reader · 登录后首页</title>
+  <style>
+    :root {
+      --green: #244f38;
+      --green-2: #386b4c;
+      --cream: #fff8ea;
+      --paper: #f7efe2;
+      --ink: #203027;
+      --muted: #637264;
+      --line: rgba(36, 79, 56, 0.14);
+      --gold: #d8a23f;
+      --coral: #a9503d;
+      --blue: #28627a;
+      --white: #fffdf8;
+      --shadow: 0 18px 48px rgba(55, 43, 28, 0.12);
+      color: var(--ink);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--paper);
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; background: var(--paper); }
+    button, a { font: inherit; }
+    button { border: 0; cursor: pointer; color: inherit; }
+    a { color: inherit; text-decoration: none; }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+      background:
+        linear-gradient(135deg, rgba(255, 252, 244, .94), rgba(232, 243, 234, .86)),
+        var(--paper);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 22px 16px;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 251, 244, .82);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      padding: 10px 10px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      color: var(--cream);
+      background: var(--green);
+      font-weight: 900;
+      font-family: Georgia, serif;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.2;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.4;
+    }
+
+    .nav {
+      display: grid;
+      gap: 7px;
+      padding: 18px 0;
+    }
+
+    .nav button {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+      border-radius: 8px;
+      background: transparent;
+      text-align: left;
+      font-weight: 780;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      color: var(--cream);
+      background: var(--green);
+    }
+
+    .nav small {
+      margin-left: auto;
+      color: inherit;
+      opacity: .72;
+      font-size: .72rem;
+      font-weight: 800;
+    }
+
+    .role-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      padding: 5px;
+      border-radius: 999px;
+      background: #e8decd;
+    }
+
+    .role-switch button {
+      min-height: 36px;
+      border-radius: 999px;
+      background: transparent;
+      font-weight: 850;
+      font-size: .88rem;
+    }
+
+    .role-switch button.active {
+      color: var(--cream);
+      background: var(--green);
+    }
+
+    .main {
+      min-width: 0;
+      padding: 26px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .page-title h2 {
+      margin: 0;
+      color: var(--green);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .page-title p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 660px;
+      line-height: 1.5;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: var(--green);
+      background: #e7f2e8;
+      font-size: .82rem;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    /* 学生页顶栏右侧：课时 pill + 退出按钮 同一行靠右 */
+    .student-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .student-top-actions .ghost-btn {
+      min-height: 34px;
+      padding: 0 12px;
+      font-size: .82rem;
+      font-weight: 850;
+      border-radius: 999px;
+      color: var(--coral);
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .cols-2 { grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr); }
+    .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .panel,
+    .card,
+    .book-card {
+      border: 1px solid rgba(36, 79, 56, .1);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, .94);
+      box-shadow: var(--shadow);
+    }
+
+    .panel { padding: 18px; }
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      color: var(--green);
+      font-size: 1.02rem;
+      line-height: 1.2;
+    }
+
+    .section-head p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .ghost-btn,
+    .primary-btn,
+    .danger-btn,
+    .icon-btn {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 8px;
+      padding: 0 13px;
+      font-weight: 850;
+      background: rgba(255, 251, 244, .9);
+      box-shadow: inset 0 0 0 1px rgba(36, 79, 56, .16);
+    }
+
+    .primary-btn { color: var(--cream); background: var(--green); box-shadow: none; }
+    .danger-btn { color: var(--cream); background: var(--coral); box-shadow: none; }
+    .icon-btn { width: 40px; padding: 0; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 15px;
+      border-radius: 8px;
+      background: #fffdf8;
+      border: 1px solid var(--line);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--green);
+      font-size: 1.55rem;
+      line-height: 1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 760;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f7f0e4;
+      border: 1px solid rgba(36, 79, 56, .08);
+    }
+
+    .row button { white-space: nowrap; }
+
+    .avatar,
+    .book-no {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--cream);
+      background: var(--green);
+      font-weight: 900;
+    }
+
+    .row h4 {
+      margin: 0;
+      font-size: .96rem;
+      line-height: 1.25;
+    }
+
+    .row p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.35;
+    }
+
+    .tagline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 9px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      color: var(--green);
+      background: #e7f2e8;
+      font-size: .74rem;
+      font-weight: 850;
+    }
+
+    .tag.warn { color: #7c4a14; background: #fff0cc; }
+    .tag.lock { color: #744238; background: #f7dfd8; }
+    .tag.blue { color: var(--blue); background: #e4f1f4; }
+    .tag.red { color: #8a2e2e; background: #fde2dc; }
+
+    .schedule-tabs,
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .schedule-tabs button,
+    .filter-row button,
+    .filter-row select {
+      min-height: 38px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--green);
+      background: rgba(255,253,248,.92);
+      font-weight: 850;
+    }
+
+    .schedule-tabs button.active,
+    .filter-row button.active {
+      color: var(--cream);
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .student-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 9px;
+    }
+
+    .student-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 9px;
+      border-radius: 999px;
+      color: var(--green);
+      background: #e7f2e8;
+      font-size: .78rem;
+      font-weight: 850;
+    }
+
+    .student-chip.absent {
+      color: #8a2e2e;
+      background: #fde2dc;
+    }
+
+    .series-detail {
+      display: none;
+      margin-top: 16px;
+    }
+
+    .series-detail.open {
+      display: block;
+    }
+
+    .series-books {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .series-books a {
+      min-height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #f7f0e4;
+      box-shadow: inset 0 0 0 1px var(--line);
+      font-weight: 850;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 12px;
+      padding-left: 18px;
+    }
+
+    .timeline:before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: linear-gradient(var(--green), rgba(36, 79, 56, .12));
+      border-radius: 999px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 14px;
+      border-radius: 8px;
+      background: #fffdf8;
+      border: 1px solid var(--line);
+    }
+
+    .timeline-item:before {
+      content: "";
+      position: absolute;
+      left: -18px;
+      top: 18px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 4px #fff8ea;
+    }
+
+    .timeline-item h4 { margin: 0; color: var(--green); }
+    .timeline-item p { margin: 6px 0 0; color: var(--muted); line-height: 1.45; }
+
+    .timeline-item.note { cursor: default; }
+    .timeline-item.note p { color: var(--muted); }
+
+    .resource-grid,
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 16px;
+    }
+
+    .book-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 280px;
+      display: grid;
+      grid-template-rows: 180px 1fr;
+    }
+
+    .book-card.is-link { cursor: pointer; }
+    .book-card.is-link:focus-visible { outline: 2px solid var(--green); }
+
+    .cover {
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, rgba(36,79,56,.18), rgba(216,162,63,.24)),
+        #e8decd;
+    }
+
+    .cover:before {
+      content: "";
+      width: 84px;
+      height: 116px;
+      border-radius: 4px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.32), transparent 28%),
+        var(--cream);
+      box-shadow: 0 16px 34px rgba(55, 43, 28, .18);
+      transform: rotate(-4deg);
+    }
+
+    .book-no {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      font-size: .78rem;
+    }
+
+    .book-body {
+      padding: 13px;
+    }
+
+    .book-body h4 {
+      margin: 0;
+      min-height: 40px;
+      font-size: .96rem;
+      line-height: 1.25;
+    }
+
+    .book-body p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .locked .cover:after {
+      content: "Locked";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: var(--cream);
+      background: rgba(32, 48, 39, .58);
+      font-weight: 900;
+    }
+
+    /* ═══ v1.3 Library 动态书架：封面渐变 + 系列子书 + 锁 ═══ */
+    .book-card.locked { cursor: pointer; }
+    .cover.cover-fg { background: linear-gradient(145deg, #3d6b4f, #8fb270); }
+    .cover.cover-ft { background: linear-gradient(145deg, #00838f, #5fc0c4); }
+    .cover.cover-dahl { background: linear-gradient(145deg, #a9503d, #e0a13a); }
+    .cover.cover-story { background: linear-gradient(145deg, #28627a, #7fb6cf); }
+    .cover .cover-emoji { font-size: 2.6rem; filter: drop-shadow(0 6px 10px rgba(30,40,32,.28)); }
+    .cover .cover-mark { position:absolute; left:10px; bottom:10px; font-weight:900; color:rgba(255,255,255,.9); font-size:.82rem; letter-spacing:.03em; text-shadow:0 1px 3px rgba(0,0,0,.35); }
+    .locked .cover .cover-emoji { filter: grayscale(.35) drop-shadow(0 6px 10px rgba(30,40,32,.28)); }
+    .lib-detail-head { display:flex; align-items:flex-start; gap:14px; }
+    .lib-detail-thumb { flex:0 0 auto; width:88px; height:120px; border-radius:8px; display:grid; place-items:center; font-size:2rem; color:#fff; box-shadow:0 8px 20px rgba(55,43,28,.2); }
+    .lib-subgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:12px; margin-top:14px; }
+    .lib-sub { display:block; text-align:center; color:inherit; text-decoration:none; }
+    .lib-sub .mini-cover { position:relative; height:150px; border-radius:8px; display:grid; place-items:center; font-size:2rem; color:#fff; overflow:hidden; box-shadow:inset 0 0 0 1px rgba(0,0,0,.08); }
+    .lib-sub .mini-cover b { position:absolute; left:8px; bottom:8px; font-size:.7rem; text-shadow:0 1px 3px rgba(0,0,0,.4); max-width:90%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .lib-sub .mini-cover .mini-lock { position:absolute; right:6px; top:6px; width:24px; height:24px; border-radius:50%; background:rgba(20,28,24,.62); color:#fff; display:grid; place-items:center; font-size:.9rem; }
+    .lib-sub span.t { display:block; margin-top:6px; font-size:.78rem; font-weight:750; color:var(--ink); line-height:1.3; }
+    .lib-locknote { margin-top:0; color:#8a2e2e; font-weight:750; }
+
+    /* ═══ v1.3 Reader 下「充值记录 / 家长留言」tab ═══ */
+    .tabpanel { display: none; }
+    .tabpanel.active { display: block; }
+    .track-overview { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:18px; }
+    .track-box { background:#f7f0e4; border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+    .track-box .lb { font-size:.8rem; color:var(--muted); font-weight:750; }
+    .track-box .vl { font-size:1.55rem; font-weight:900; color:var(--green); margin-top:6px; font-family:Georgia,serif; }
+    .track-box .vl small { font-size:.8rem; color:var(--muted); font-weight:700; }
+    .pm-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; }
+    .pm-card { position:relative; background:#fffdf8; border:1px solid var(--line); border-radius:14px; padding:16px 18px 14px; overflow:hidden; }
+    .pm-card:before { content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--green); }
+    .pm-card .pm-course { font-weight:900; color:var(--green); font-size:1.05rem; }
+    .pm-badge { margin-left:8px; font-size:.66rem; font-weight:800; border-radius:8px; padding:2px 6px; white-space:nowrap; }
+    .pm-badge.done { color:#244F38; background:#e7f2e6; border:1px solid #cfe0cf; }
+    .pm-badge.ongoing { color:#8a6d1a; background:#faf3da; border:1px solid #e8d9a8; }
+    .pm-card .pm-date { color:var(--muted); font-size:.8rem; margin-top:4px; }
+    .pm-row { display:flex; align-items:baseline; gap:8px; margin-top:12px; }
+    .pm-row .amt { font-size:1.5rem; font-weight:900; color:var(--coral); font-family:Georgia,serif; }
+    .pm-row .hrs { font-size:.9rem; font-weight:850; color:var(--ink); }
+    .pm-rem { display:inline-block; margin-top:12px; font-size:.76rem; font-weight:800; color:#2e6b38; background:#e7f2e6; border-radius:20px; padding:4px 11px; }
+    .pm-rem.zero { color:#a4503a; background:#f7e2dc; }
+    .msg-form { background:#f7f0e4; border:1px solid var(--line); border-radius:14px; padding:18px; margin-bottom:20px; }
+    .msg-form .gf { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-top:14px; }
+    .msg-form label { display:block; font-size:.82rem; font-weight:800; color:var(--muted); margin-bottom:5px; }
+    .msg-form select, .msg-form input, .msg-form textarea { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:#fffdf8; font-size:.9rem; color:var(--ink); }
+    .msg-form textarea { resize:vertical; min-height:64px; }
+    .msg-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:14px; }
+    .msg-item { display:flex; gap:12px; padding:13px 14px; border:1px solid var(--line); border-radius:12px; background:#fffdf8; margin-bottom:10px; align-items:flex-start; }
+    .msg-item .mi-av { flex:0 0 auto; width:36px; height:36px; border-radius:50%; background:var(--green); color:var(--cream); display:grid; place-items:center; font-weight:900; }
+    .msg-item .mi-body { flex:1 1 auto; min-width:0; }
+    .msg-item .mi-head { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+    .msg-item .mi-title { font-weight:850; color:var(--green); }
+    .msg-item .mi-meta { color:var(--muted); font-size:.78rem; margin-top:3px; }
+    .msg-item .mi-reason { margin-top:6px; color:var(--ink); font-size:.86rem; line-height:1.5; }
+    .st-pending { color:#7c4a14; background:#fff0cc; }
+    .st-approved { color:#2e6b38; background:#e7f2e6; }
+    .st-cancelled { color:#744238; background:#f3e2dc; }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tabs button {
+      min-height: 38px;
+      padding: 0 13px;
+      border-radius: 999px;
+      background: rgba(255,253,248,.92);
+      box-shadow: inset 0 0 0 1px var(--line);
+      font-weight: 850;
+    }
+
+    .tabs button.active {
+      color: var(--cream);
+      background: var(--green);
+      box-shadow: none;
+    }
+
+    .reader-shell {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr) 300px;
+      min-height: 640px;
+      overflow: hidden;
+    }
+
+    .reader-side,
+    .reader-words {
+      padding: 16px;
+      background: rgba(255, 251, 244, .72);
+    }
+
+    .reader-side { border-right: 1px solid var(--line); }
+    .reader-words { border-left: 1px solid var(--line); }
+    .reader-stage { padding: 18px; }
+
+    .reading-surface {
+      display: grid;
+      grid-template-columns: minmax(280px, .9fr) minmax(320px, 1.1fr);
+      gap: 16px;
+      min-height: 530px;
+    }
+
+    .page-image {
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .page-image div {
+      width: min(70%, 300px);
+      aspect-ratio: 4 / 5.35;
+      border-radius: 6px;
+      background:
+        linear-gradient(145deg, rgba(36,79,56,.18), rgba(216,162,63,.26)),
+        var(--cream);
+      box-shadow: 0 20px 44px rgba(55, 43, 28, .18);
+    }
+
+    .text-pane {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(24px, 4vw, 48px);
+      border-radius: 8px;
+      background: #fffdf8;
+      box-shadow: var(--shadow);
+    }
+
+    .story-text {
+      display: grid;
+      gap: 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 2.4vw, 2.35rem);
+      line-height: 1.25;
+    }
+
+    .word {
+      display: inline;
+      color: #1f7349;
+      font-family: inherit;
+      font-weight: 900;
+      background: linear-gradient(transparent 62%, rgba(125, 191, 135, .34) 62%);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(28, 38, 32, .68);
+    }
+
+    .modal.open { display: grid; }
+
+    .modal-box {
+      width: min(520px, 94vw);
+      padding: 22px;
+      border-radius: 8px;
+      background: #fffdf8;
+      box-shadow: 0 30px 90px rgba(20,28,24,.38);
+    }
+
+    .modal-box h3 {
+      margin: 0 0 8px;
+      color: var(--green);
+      font-family: Georgia, serif;
+      font-size: 1.45rem;
+    }
+
+    .modal-box p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .modal-field {
+      display: block;
+      width: 100%;
+      margin-top: 14px;
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffef9;
+      color: var(--ink);
+      font: inherit;
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .modal-meta {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #e7f2e8;
+      color: var(--green);
+      font-size: .9rem;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+    .hidden { display: none !important; }
+
+    .banner {
+      display: none;
+      margin: 0 0 18px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: #7c4a14;
+      background: #fff0cc;
+      border: 1px solid rgba(216, 162, 63, .35);
+      font-size: .9rem;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+    .banner.show { display: block; }
+
+    .empty-state {
+      color: var(--muted);
+      padding: 18px;
+      text-align: center;
+      font-size: .88rem;
+    }
+
+    .notice {
+      margin: 16px 0 0;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #fffef9;
+      border: 1px dashed var(--line);
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.5;
+    }
+
+    .student-grid-block {
+      padding: 13px;
+      border-radius: 8px;
+      background: #f7f0e4;
+      border: 1px solid rgba(36, 79, 56, .1);
+    }
+    .student-grid-block h4 { margin: 0; color: var(--ink); }
+    .student-grid-block p { margin: 6px 0 0; color: var(--muted); font-size: .82rem; }
+    .student-grid-block .remaining.danger { color: #8a2e2e; font-weight: 850; }
+    .student-grid-block .remaining.warning { color: #7c4a14; font-weight: 850; }
+    .teacher-student-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 34px;
+      z-index: 60;
+      transform: translateX(-50%) translateY(20px);
+      padding: 12px 18px;
+      border-radius: 999px;
+      color: var(--cream);
+      background: var(--green);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s;
+      font-weight: 800;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.error { background: var(--coral); }
+
+    @media (max-width: 1060px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; }
+      .cols-2, .cols-3, .cols-4, .reader-shell, .reading-surface { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .reader-words { border-left: 0; border-top: 1px solid var(--line); }
+      .reader-side { border-right: 0; border-bottom: 1px solid var(--line); }
+    }
+
+    @media (max-width: 620px) {
+      .main { padding: 16px; }
+      .topbar { flex-direction: column; }
+      .stats { grid-template-columns: 1fr; }
+      .row { grid-template-columns: auto minmax(0, 1fr); }
+      .row .ghost-btn, .row .primary-btn, .row .danger-btn { grid-column: 1 / -1; }
+    }
+
+    /* 上课记录全览 */
+    .records-box { width: min(880px, 96vw); max-height: 88vh; display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+    .records-box > .section-head { padding: 18px 20px; border-bottom: 1px solid var(--line); }
+    .records-toolbar {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      padding: 12px 20px; border-bottom: 1px solid var(--line); background: rgba(247,239,226,.55);
+    }
+    .records-toolbar label { display: inline-flex; align-items: center; gap: 7px; font-size: .85rem; color: var(--muted); font-weight: 700; }
+    .records-toolbar select { min-width: 132px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 7px; background: #fffdf8; color: var(--ink); font-weight: 600; }
+    .records-list { flex: 1 1 auto; overflow: auto; padding: 8px 20px 20px; min-height: 180px; }
+    .records-group-title { margin: 14px 0 6px; color: var(--green); font-weight: 850; font-size: .86rem; letter-spacing: .02em; }
+    .records-card {
+      display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; align-items: start;
+      padding: 12px 14px; margin-bottom: 8px; border: 1px solid var(--line); border-radius: 8px; background: #fffdf8;
+    }
+    .records-card .rec-date { text-align: center; }
+    .records-card .rec-date strong { display: block; color: var(--coral); font-size: 1.15rem; line-height: 1; }
+    .records-card .rec-date span { color: var(--muted); font-size: .72rem; }
+    .records-card h4 { margin: 0; color: var(--green); font-size: 1rem; }
+    .records-card .rec-meta { margin-top: 6px; font-size: .8rem; color: var(--muted); line-height: 1.5; }
+    .records-card .rec-kv { margin-top: 6px; font-size: .78rem; color: var(--ink); }
+    .records-card .rec-kv b { color: var(--green); font-weight: 800; }
+    .records-card .rec-kv li { margin: 1px 0 1px 16px; list-style: disc; }
+    .records-pager { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 20px 16px; border-top: 1px solid var(--line); }
+    .records-pager button {
+      min-width: 34px; height: 32px; padding: 0 10px; border-radius: 7px; border: 1px solid var(--line);
+      background: transparent; color: var(--ink); font-weight: 750; font-size: .84rem;
+    }
+    .records-pager button.active { background: var(--green); color: var(--cream); border-color: var(--green); }
+    .records-pager button:disabled { opacity: .4; cursor: not-allowed; }
+    .records-card { cursor: pointer; }
+    .records-card:hover { border-color: var(--green); box-shadow: 0 2px 12px rgba(60,102,62,.08); }
+    .records-card .rec-open { margin-top: 8px; color: var(--green); font-size: .74rem; font-weight: 750; }
+    /* 单条完整记录详情 */
+    .record-detail { flex: 1 1 auto; overflow: auto; padding: 8px 20px 22px; min-height: 180px; }
+    .record-detail .detail-back { margin-bottom: 14px; font-weight: 750; }
+    .record-detail .rec-d-head { padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #fffdf8; }
+    .record-detail .rec-d-date { font-size: .78rem; color: var(--muted); font-weight: 700; letter-spacing: .02em; }
+    .record-detail .rec-d-course { color: var(--green); font-size: 1.25rem; font-weight: 850; margin-top: 6px; }
+    .record-detail .rec-d-lesson { margin-top: 4px; color: var(--ink); font-size: .9rem; font-weight: 650; }
+    .record-detail .rec-d-meta { margin-top: 8px; font-size: .78rem; color: var(--muted); }
+    .record-detail .rec-d-section { margin-top: 16px; }
+    .record-detail .rec-d-section-title { font-weight: 850; color: var(--green); font-size: .95rem; margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
+    .record-detail .rec-d-block { background: #fffdf8; border: 1px solid var(--line); border-left: 4px solid var(--green); border-radius: 8px; padding: 11px 14px; margin-bottom: 10px; line-height: 1.65; color: var(--ink); font-size: .86rem; white-space: normal; word-break: break-word; }
+    .record-detail .rec-d-block.kv { border-left-color: var(--coral); }
+    .record-detail .rec-d-book { margin-top: 3px; font-weight: 700; color: var(--coral); font-size: .9rem; }
+
+    .rec-d-vtab { width: 100%; border-collapse: collapse; margin-bottom: 10px; background:#fffdf8; border:1px solid var(--line); border-radius:8px; overflow:hidden; font-size:.86rem; }
+    .rec-d-vtab th { background: var(--coral); color:#fff; text-align:left; padding:8px 12px; font-weight:700; }
+    .rec-d-vtab td { padding:8px 12px; border-top:1px solid var(--line); vertical-align:top; }
+    .rec-d-vtab td.c-w { font-weight:700; color: var(--ink); white-space:nowrap; }
+    .rec-d-vtab td.c-p { color:#8a6d46; white-space:nowrap; }
+    .rec-d-vtab td.c-m { color: var(--ink); }
+    .record-detail .rec-d-imgs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+    .record-detail .rec-d-imgs img { max-width: 160px; border-radius: 8px; border: 1px solid var(--line); cursor: zoom-in; }
+    .timeline-item.rec { cursor: pointer; }
+    .timeline-item.rec:hover { border-color: var(--green); }
+    .timeline-item.rec:hover h4 { color: var(--green); }
+
+    /* ═══ v1.2 修复：上课记录弹窗列表独立滚动（修复底部被裁、只能看到顶部几条） ═══ */
+    #recordsListPane { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow: hidden; }
+    .records-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+    .record-detail { min-height: 0; }
+    /* hidden 属性必须强制覆盖上面的 display:flex，否则列表/详情切换时详情会被列表盖住 */
+    #recordsListPane[hidden], #recordDetailPane[hidden] { display: none !important; }
+
+    /* 快捷入口：操作按钮内嵌 bar 右侧，窄屏不换行（用 flex 强制同一行） */
+    .row.quick { display: flex; align-items: center; gap: 12px; text-align: left; }
+    .row.quick > .avatar, .row.quick > .book-no { flex: 0 0 auto; }
+    .row.quick > div:nth-child(2) { flex: 1 1 auto; min-width: 0; }
+    .row.quick .ghost-btn, .row.quick .primary-btn { grid-column: auto; white-space: nowrap; margin-left: auto; flex: 0 0 auto; }
+
+    /* 学习路线图阶段条（通用模板 · 图1样式） */
+    .rm-stage {
+      display: flex; align-items: center; gap: 14px;
+      padding: 13px 14px; margin-bottom: 10px;
+      background: #faf4e8; border: 1px solid var(--line); border-radius: 12px;
+    }
+    .rm-stage:hover { border-color: var(--green); box-shadow: 0 2px 12px rgba(60,102,62,.08); }
+    .rm-num {
+      flex: 0 0 auto; width: 42px; height: 42px; border-radius: 12px;
+      background: var(--green); color: var(--cream);
+      display: grid; place-items: center; font-size: 1.2rem; font-weight: 850; font-family: Georgia, serif;
+    }
+    .rm-num.done { background: #b9c6b8; }
+    .rm-body { flex: 1 1 auto; min-width: 0; }
+    .rm-body h4 { margin: 0; color: var(--green); font-size: 1.05rem; font-weight: 850; }
+    .rm-body .rm-desc { margin: 3px 0 0; color: var(--muted); font-size: .78rem; }
+    .rm-body .rm-prog { margin-top: 6px; font-size: .76rem; color: var(--ink); font-weight: 700; }
+    .rm-books { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+    .rm-books span { background: #eef3e7; color: var(--green); border: 1px solid #d8e3cc; border-radius: 20px; padding: 2px 9px; font-size: .7rem; font-weight: 700; }
+    .rm-bar { height: 6px; border-radius: 6px; background: #e8e0d0; overflow: hidden; margin-top: 8px; max-width: 320px; }
+    .rm-bar i { display: block; height: 100%; background: var(--green); border-radius: 6px; }
+    .rm-badge {
+      flex: 0 0 auto; font-size: .72rem; font-weight: 800; padding: 4px 10px; border-radius: 20px;
+      background: #dff0e2; color: #2e6b38; white-space: nowrap;
+    }
+    .rm-badge.lock { background: #f3e2dc; color: #a4503a; }
+    .rm-manualtag { margin-top: 6px; font-size: .72rem; color: #a4503a; font-weight: 700; }
+  
+  /* ===== 教师运营首页 (v1.3 方案A) ===== */
+  #teacher .page-head { margin: 0 0 6px; }
+  #teacher .page-head h1 { margin:0; color:var(--green); font-family:Georgia,"Times New Roman",serif; font-size:clamp(1.8rem,3vw,2.6rem); line-height:1; }
+  #teacher .page-head .subtitle { margin:8px 0 18px; color:var(--ink); opacity:.75; font-size:.98rem; }
+  #teacher .metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:18px; }
+  #teacher .metric { background:var(--cream); border:1px solid var(--line); border-radius:16px; padding:16px; text-align:center; }
+  #teacher .metric-num { font-size:2rem; font-weight:700; color:var(--green); line-height:1.1; }
+  #teacher .metric-label { display:block; margin-top:4px; color:var(--ink); font-size:.85rem; opacity:.8; }
+  #teacher .card { background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:18px; margin-bottom:16px; }
+  #teacher .section-title { margin:0 0 12px; font-family:Georgia,serif; font-size:1.15rem; color:var(--green-2); }
+  #teacher .student-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; }
+  #teacher .toolbar-row { margin-top:16px; text-align:right; }
+
+  /* Fly Guy 子书封面 img + RAZ 分级卡 (v1.3) */
+  .mini-cover.has-img { background:#ece6da; }
+  .mini-cover img { display:block; width:100%; height:150px; object-fit:cover; border-radius:8px; }
+  .lib-subgrid .lib-level { gap:12px; }
+  .lib-level { display:flex; align-items:center; gap:12px; padding:12px; background:var(--paper); border:1px solid var(--line); border-radius:14px; margin-bottom:10px; }
+  .lib-level.lit { border-color:var(--green-2); background:var(--cream); }
+  .lib-level-cover { width:56px; height:70px; border-radius:8px; display:grid; place-items:center; font-family:Georgia,serif; font-size:1.6rem; font-weight:700; color:#fff; background:linear-gradient(145deg,#b06a3a,#e0b04a); box-shadow:inset 0 0 0 1px rgba(0,0,0,.08); flex:0 0 auto; }
+  .lib-level-body h4 { margin:0; font-size:1.05rem; color:var(--green); }
+  .lib-level-body p { margin:4px 0 6px; font-size:.9rem; color:var(--ink); opacity:.85; }
+  .cover-raz { background: linear-gradient(145deg,#a9503d,#e0b04a); }
+
+  /* ===== 教师运营台新版 UI（tree green, namespaced .td）===== */
+  .td{display:block}
+  .td-nav{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px;padding:10px;background:rgba(255,248,234,.6);border:1px solid rgba(36,79,56,.14);border-radius:12px}
+  .td-nav a{font-size:13px;font-weight:600;color:#244F38;padding:6px 12px;border-radius:999px;text-decoration:none;transition:background .12s}
+  .td-nav a:hover{background:#E7DCC9}
+  .td-nav a.active{background:#D8A23F;color:#1B3D2C;font-weight:800}
+  .td-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:0 0 18px}
+  .td-metric{background:#FFFDF8;border:1px solid rgba(36,79,56,.14);border-radius:14px;padding:14px}
+  .td-metric .td-num{font-size:26px;font-weight:800;color:#1B3D2C}
+  .td-metric .td-num.warn{color:#A9503D}
+  .td-metric .td-lbl{font-size:12.5px;color:#637264;margin-top:2px}
+  .td-card{background:#FFFDF8;border:1px solid rgba(36,79,56,.14);border-radius:16px;padding:20px;margin-bottom:18px}
+  .td-card-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+  .td-card-head h3{margin:0;font-size:16px;color:#1B3D2C}
+  .td-card-head p{margin:3px 0 0;font-size:13px;color:#7A7468}
+  .td-grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  .td-class{border:1px solid rgba(36,79,56,.16);border-radius:12px;padding:14px 16px;margin-bottom:12px;background:#FDFBF5;cursor:pointer;transition:box-shadow .15s,background .15s}
+  .td-class:hover{box-shadow:0 4px 14px rgba(36,79,56,.12);background:#FBF7EC}
+  .td-class-time{font-size:16px;font-weight:800;color:#1B3D2C;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .td-time{color:#1B3D2C}
+  .td-badge{background:#D8A23F;color:#1B3D2C;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px}
+  .td-class-meta{font-size:13px;color:#7A7468;margin:6px 0 10px}
+  .td-class-meta b{color:#203027}
+  .td-student-list{display:flex;flex-wrap:wrap;gap:8px}
+  .td-chip{background:#EEF3EE;color:#244F38;font-size:13px;padding:4px 11px;border-radius:999px}
+  .td-chip.absent{background:#FDF1F0;color:#A9503D;font-weight:600}
+  .td-abs{opacity:.7;font-weight:400}
+  .td-hint{font-size:11.5px;color:#D8A23F;font-weight:700;margin-top:8px}
+  .td-row{display:flex;gap:12px;align-items:flex-start;padding:11px 4px;border-bottom:1px solid #F1E9DA;cursor:pointer;border-radius:8px}
+  .td-row:hover{background:#FBF7EC}
+  .td-avatar{width:36px;height:36px;border-radius:10px;background:#244F38;color:#FFF8EA;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+  .td-avatar.coral{background:#A9503D}
+  .td-avatar.gold{background:#D8A23F;color:#1B3D2C}
+  .td-row-body{flex:1}
+  .td-row-body h4{margin:0;font-size:14.5px}
+  .td-row-body p{margin:2px 0 0;font-size:13px;color:#7A7468}
+  .td-status{font-size:12px;padding:2px 8px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .td-status.pending{background:#FDF1F0;color:#A9503D}
+  .td-empty{background:#FBF7EC;border:1px dashed #E7DCC9;border-radius:12px;padding:16px;color:#7A7468;font-size:13.5px}
+  .td-empty,.td-note{line-height:1.55}
+  .td-co-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:12px}
+  .td-co-cell{background:#FBF7EC;border:1px solid rgba(36,79,56,.14);border-radius:12px;padding:12px}
+  .td-co-cell .td-cname{font-size:13px;font-weight:700;color:#244F38}
+  .td-status-sel{font-size:11px;font-weight:700;margin-left:4px;padding:2px 4px;border-radius:8px;border:1px solid #c9c2b2;background:#fff;color:#244F38;vertical-align:middle;cursor:pointer}
+  .td-co-cell .td-hours{font-size:20px;font-weight:800;color:#A9503D;margin:2px 0}
+  .td-co-cell .td-sub{font-size:12px;color:#7A7468}
+  .td-hour-row{display:flex;gap:10px;align-items:center;padding:8px 8px;border-bottom:1px solid #F1E9DA;font-size:13.5px;cursor:pointer;border-radius:8px}
+  .td-hour-row:hover{background:#FBF7EC}
+  .td-hour-row:last-child{border:none}
+  .td-hflag{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+  .td-hflag.ok{background:#EAEFEA;color:#3E7C4F}
+  .td-hflag.warn{background:#FBF3DC;color:#8A6418}
+  .td-hflag.danger{background:#FDF1F0;color:#A9503D}
+  .td-res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:12px}
+  .td-res{background:#FFFDF8;border:1px solid rgba(36,79,56,.14);border-radius:14px;padding:16px;text-decoration:none;color:inherit;display:block;cursor:pointer;border:none;text-align:left;font-family:inherit;font-size:15px;transition:box-shadow .15s,transform .15s}
+  .td-res:hover{box-shadow:0 6px 18px rgba(36,79,56,.12);transform:translateY(-2px)}
+  .td-rlabel{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 9px;border-radius:6px;margin-bottom:8px}
+  .td-rlabel.op{background:#244F38;color:#FFF8EA}
+  .td-rlabel.lib{background:#F6E9CE;color:#8A6418}
+  .td-rlabel.tool{background:#EAEFEA;color:#3E7C4F}
+  .td-res h4{margin:0;font-size:15px;color:#1B3D2C}
+  .td-res p{margin:4px 0 0;font-size:12.5px;color:#7A7468;line-height:1.45}
+  .td-note{background:#FFF8EA;border-left:4px solid #D8A23F;padding:10px 14px;font-size:13px;color:#7A7468;border-radius:0 10px 10px 0;margin-top:10px}
+  .td-modal-mask{position:fixed;inset:0;background:rgba(27,61,44,.5);display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity .18s}
+  .td-modal-mask.show{opacity:1;pointer-events:auto}
+  .td-modal{background:#FFFDF8;border-radius:16px;width:min(560px,90vw);max-height:82vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:0}
+  .td-modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(36,79,56,.14);position:sticky;top:0;background:#FFFDF8}
+  .td-modal-head h3{margin:0;font-size:17px;color:#1B3D2C}
+  .td-mclose{background:none;border:none;font-size:22px;color:#7A7468;cursor:pointer;line-height:1;padding:4px 8px}
+  .td-mclose:hover{color:#A9503D}
+  .td-modal-body{padding:18px 20px}
+  .td-msec{margin-bottom:16px}
+  .td-msec h4{margin:0 0 8px;font-size:13px;color:#7A7468;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+  .td-mstudents{display:flex;flex-wrap:wrap;gap:8px}
+  .td-mrec{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #F1E9DA;font-size:13.5px}
+  .td-mrec:last-child{border:none}
+  .td-maction{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}
+  .td-btn{display:inline-block;text-decoration:none;font-size:13.5px;font-weight:700;padding:9px 16px;border-radius:9px;border:1px solid rgba(36,79,56,.16);background:#FFFDF8;color:#1B3D2C;cursor:pointer}
+  .td-btn:hover{background:#F6F1E5}
+  .td-btn.primary{background:#244F38;border-color:#244F38;color:#FFF8EA}
+  .td-btn.primary:hover{background:#1B3D2C}
+  .td-btn.gold{background:#D8A23F;border-color:#D8A23F;color:#1B3D2C}
+  .td-btn.gold:hover{background:#C9982F}
+  .td-co-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .td-co-cell.dim{opacity:.55;background:#F1EDE3}
+  .td-status.ok{background:#EAEFEA;color:#3E7C4F}
+  .td-status.done{background:#EFEBE2;color:#8A8678}
+  .td-hour-row{flex-wrap:wrap}
+  .td-student{font-weight:700;color:#1B3D2C;white-space:nowrap}
+  .td-chips{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 auto}
+
+  /* ---- 教师运营台：编辑/添加表单 与 付款详情 ---- */
+  .td-form label{display:block;font-size:12px;color:#7A7468;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin:10px 0 4px}
+  .td-form .td-f{width:100%;box-sizing:border-box;padding:9px 11px;border:1px solid rgba(36,79,56,.22);border-radius:8px;background:#FFFDF8;font-size:13.5px;color:#1B3D2C}
+  .td-form textarea.td-f{resize:vertical;min-height:52px}
+  .td-picks{display:flex;flex-wrap:wrap;gap:8px}
+  .td-pick{display:inline-flex;align-items:center;gap:5px;background:#EEF3EE;border-radius:999px;padding:5px 12px;font-size:13px;color:#244F38;cursor:pointer}
+  .td-pick input{margin:0}
+  .td-edrec{border:1px solid rgba(36,79,56,.14);border-radius:10px;padding:10px;margin-bottom:10px;background:#FBF7EC}
+  .td-edrec-head{font-weight:700;font-size:12px;color:#7A7468;margin-bottom:6px;text-transform:uppercase}
+  .td-pay-block{border:1px solid rgba(36,79,56,.12);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+  .td-pay-block .td-cname{font-size:13px;font-weight:800;color:#244F38;margin-bottom:6px}
+  .td-pay-row{display:flex;gap:12px;align-items:center;padding:6px 0;border-bottom:1px dashed #EFE7D6;font-size:13px}
+  .td-pay-row:last-child{border:none}
+  .td-pay-cell{white-space:nowrap}
+  .td-cchip{font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#EAEFEA;color:#3E7C4F;white-space:nowrap}
+  .td-cchip.done{background:#EFEBE2;color:#8A8678}
+  .td-cchip.warn{background:#FBF3DC;color:#8A6418}
+  .td-cchip.danger{background:#FDF1F0;color:#A9503D}
+  .td-msg-list{display:flex;flex-direction:column}
+  .td-msg{display:flex;align-items:flex-start;gap:10px;padding:10px 8px;border-bottom:1px solid #F1E9DA;cursor:pointer}
+  .td-msg:hover{background:#FBF7EC}
+  .td-msg:last-child{border:none}
+  .td-msg .td-row-body{flex:1;min-width:0}
+  .td-msg .td-row-body h4{margin:0;font-size:14px;color:#1B3D2C}
+  .td-msg .td-row-body p{margin:2px 0 0;font-size:12.5px;color:#7A7468}
+  .td-msg-kind{color:#A9503D;font-weight:600}
+  .td-msg-content{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60vw}
+  .td-msg-more{display:block;width:100%;margin-top:10px;padding:9px;border:1px dashed #D8B26E;border-radius:10px;background:transparent;color:#8A6A2D;font-size:13px;cursor:pointer;text-align:center}
+  .td-msg-more:hover{background:#FBF3DD}
+  button.td-res{font:inherit;color:inherit;text-align:left;background:#FFFDF8;cursor:pointer}
+  @media(max-width:900px){.td-grid2{grid-template-columns:1fr}}
+.td-weekbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.td-day{flex:1 1 0;min-width:64px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 6px;border-radius:10px;border:1px solid #e5e0d2;background:#fffdf8;color:#6a6659;cursor:pointer;font-weight:700;transition:all .15s ease}
+.td-day .td-day-w{font-size:.76rem;opacity:.9}
+.td-day .td-day-d{font-size:.92rem}
+.td-day.today{border-color:#c9b98a}
+.td-day.active{background:#244f38;color:#fffaf0;border-color:#244f38}
+.td-day:hover:not(.active){background:#f2eee0}
+</style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">E</div>
+        <h1>Emily Kids Reader</h1>
+        <p>学生登录后首页：课程、排课、Library、Practice、Reader 统一入口。</p>
+      </div>
+      <div class="nav" aria-label="主导航">
+        <div class="student-nav">
+          <button class="active" data-page="student">学习首页 <small>课程</small></button>
+          <button data-page="library">Library <small>阅读</small></button>
+          <button data-page="practice">Practice <small>练习</small></button>
+          <button data-page="reader">Reader <small>绘本</small></button>
+          <button data-page="payments">充值记录 <small>账单</small></button>
+          <button data-page="message">家长留言 <small>留言</small></button>
+        </div>
+        <div class="teacher-nav hidden">
+          <button class="active tnav" data-td="tdOverview">运营总览</button>
+          <button class="tnav" data-td="tdSchedule">排课</button>
+          <button class="tnav" data-td="tdLeave">请假与调课</button>
+          <button class="tnav" data-td="tdMessages">家长留言</button>
+          <button class="tnav" data-td="tdHours">学员课时</button>
+          <button class="tnav" data-td="tdPayments">付款详情</button>
+          <button class="tnav" data-td="tdResources">资源入口</button>
+          <button class="tnav" data-td="tdLessons">教案库</button>
+          <button class="tnav" data-td="tdPractice">Practice 管理台</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="banner" id="loginBanner">尚未检测到当前登录账号。请从 <a href="/lesson.html" style="color:#7c4a14;text-decoration:underline">lesson.html</a> 登录进入。</div>
+
+      <!-- 学生首页 -->
+        <!-- ===== 教师运营首页 (v1.3 方案A: user=emily_mo) ===== -->
+  <section id="teacher" class="page">
+    <header class="page-head">
+      <h1 id="teacherGreeting">教师运营台</h1>
+      <p class="subtitle">今日排课 · 请假/调课 · 家长留言 · 学员课时 · 资源库（真实数据渲染）</p>
+    </header>
+
+    <div class="td">
+      <nav class="td-nav" id="tdNav">
+        <a class="active" href="#tdOverview">运营总览</a>
+        <a href="#tdSchedule">排课</a>
+        <a href="#tdLeave">请假与调课</a>
+        <a href="#tdMessages">家长留言</a>
+        <a href="#tdHours">学员课时</a>
+        <a href="#tdPayments">付款详情</a>
+        <a href="#tdResources">资源入口</a>
+      </nav>
+
+      <section class="td-metrics" id="tdOverview">
+        <div class="td-metric"><div class="td-num" id="tStudents">0</div><div class="td-lbl">在读学员</div></div>
+        <div class="td-metric"><div class="td-num" id="tTodayClasses">0</div><div class="td-lbl">今日班次</div></div>
+        <div class="td-metric"><div class="td-num warn" id="tLeaves">0</div><div class="td-lbl">待办请假</div></div>
+        <div class="td-metric"><div class="td-num warn" id="tLowHours">0</div><div class="td-lbl">低课时学员</div></div>
+      </section>
+
+      <section class="td-card" id="tdSchedule">
+        <div class="td-card-head"><div><h3>本周排课</h3><p>点击日期标签切换查看本周每一天 · 按 date + startTime + courseName 聚合真实数据</p></div></div>
+        <div class="td-weekbar" id="tdWeekBar"></div>
+        <div id="tdClassList"></div>
+      </section>
+
+      <div class="td-grid2">
+        <section class="td-card" id="tdLeave">
+          <div class="td-card-head"><div><h3>请假与调课</h3><p>点击行进入处理 · 真实 leaveRequests</p></div></div>
+          <div id="tdLeaveList"></div>
+        </section>
+        <section class="td-card" id="tdMessages">
+        <div class="td-card-head"><div><h3>家长留言</h3><p>真实留言 · 请假/留言与家长反馈汇总 · 点击查看详情</p></div></div>
+        <div id="tdMessageList" class="td-msg-list"></div>
+      </section>
+      </div>
+
+      <section class="td-card" id="tdHours">
+        <div class="td-card-head"><div><h3>学员课时</h3><p>总览 + 按课程 / 按学员 · 阈值告警 ≤4 / 提醒 ≤8 · 点击行查看详情</p></div></div>
+        <div class="td-co-summary" id="tdHoursSummary"></div>
+        <div id="tdHoursList"></div>
+      </section>
+
+      <section class="td-card" id="tdPayments">
+        <div class="td-card-head"><div><h3>付款详情</h3><p>按学员展示缴费金额 · 对应课程 · 缴费时间（真实 payments 字段）</p></div></div>
+        <div id="tdPaymentsList"></div>
+      </section>
+
+      <section class="td-card" id="tdResources">
+        <div class="td-card-head"><div><h3>资源入口</h3><p>教案库 → Library → Practice 管理台 → Tools</p></div></div>
+        <div class="td-res-grid">
+          <a class="td-res" href="#tdLessons"><span class="td-rlabel op">教案库</span><h4>Lesson Plan</h4><p>RAZ / Phonics / Fly Guy / Frog and Toad / Roald Dahl 结构化教案</p></a>
+          <a class="td-res" href="#tdLibrary"><span class="td-rlabel lib">Library</span><h4>阅读器 Series</h4><p>Series → Book / Episode → Reader，查看上架与学生解锁状态</p></a>
+          <a class="td-res" href="#tdPractice"><span class="td-rlabel op">Practice</span><h4>Practice 管理台</h4><p>推送 worksheet / quiz，创建任务，查看完成情况</p></a>
+          <a class="td-res" href="#tdTools"><span class="td-rlabel tool">Tools</span><h4>纯工具</h4><p>课堂工具 · 作业批改 · 激活码管理</p></a>
+        </div>
+        <div class="td-note">生产环境所有资源入口不写死，由 library-catalog.json / lesson-catalog.json 渲染；此处展示新版版式占位。</div>
+      </section>
+
+      <section class="td-card" id="tdLessons">
+        <div class="td-card-head"><div><h3>教案库</h3><p>结构化教案 · 分类 / 级别 / skills</p></div></div>
+        <div class="td-res-grid">
+          <a class="td-res" href="/lesson-library.html"><span class="td-rlabel op">教案库</span><h4>教案库总入口</h4><p>Fly Guy / Frog and Toad / Roald Dahl / Lesson Plan 教案首页</p></a>
+          <a class="td-res" href="/raz_engine.html"><span class="td-rlabel op">RAZ</span><h4>RAZ 引擎</h4><p>分级教案 · 课件存档 · 一键推送</p></a>
+          <a class="td-res" href="/phonics-training.html"><span class="td-rlabel op">Phonics</span><h4>Phonics 训练</h4><p>自然拼读课件</p></a>
+        </div>
+      </section>
+      <section class="td-card" id="tdLibrary">
+        <div class="td-card-head"><div><h3>Library · 阅读器</h3><p>第一层必须是 Series，不是平铺 Book</p></div></div>
+        <div class="td-res-grid">
+          <a class="td-res" href="https://emilyenstudio.com/flyguy-library.html" target="_blank" rel="noopener noreferrer"><span class="td-rlabel lib">Series</span><h4>Fly Guy Series</h4><p>15 本 · 进入 Series 再选 Book</p></a>
+          <a class="td-res" href="https://emilyenstudio.com/frontend/frog-reader/reader-index.html" target="_blank" rel="noopener noreferrer"><span class="td-rlabel lib">Series</span><h4>Frog and Toad Series</h4><p>4 册 · Book 层级 · legacy reader</p></a>
+          <a class="td-res" href="https://emilyenstudio.com/dahl-library.html" target="_blank" rel="noopener noreferrer"><span class="td-rlabel lib">Series</span><h4>Roald Dahl Series</h4><p>书库入口 · The Magic Finger 上架中</p></a>
+        </div>
+        <div class="td-note">入口不写死，来自 library-catalog.json（Fly Guy / Frog / Dahl series 渲染器动态生成书架）。</div>
+      </section>
+      <section class="td-card" id="tdPractice">
+        <div class="td-card-head"><div><h3>Practice 管理台</h3><p>作业分发 · 作业批改（推送设计由 GPT 交付）</p></div></div>
+        <div class="td-res-grid">
+          <a class="td-res" href="/practice-teacher.html#pushPanel"><span class="td-rlabel op">Practice</span><h4>作业分发</h4><p>推送 worksheet / quiz / listen，创建任务</p></a>
+          <a class="td-res" href="/practice-teacher.html#gradePanel"><span class="td-rlabel tool">Practice</span><h4>作业批改</h4><p>批改学生提交 · 勾选错题写反馈</p></a>
+        </div>
+      </section>
+      <section class="td-card" id="tdTools">
+        <div class="td-card-head"><div><h3>Tools · 纯工具</h3><p>课堂工具 · 引擎</p></div></div>
+        <div class="td-res-grid">
+          <a class="td-res" href="/classroom-tools.html"><span class="td-rlabel tool">工具</span><h4>课堂工具</h4><p>上课辅助工具</p></a>
+          <a class="td-res" href="/raz_engine.html"><span class="td-rlabel tool">RAZ</span><h4>RAZ 引擎</h4><p>分级教案与推送</p></a>
+        </div>
+      </section>
+    </div>
+
+    <div class="td-modal-mask" id="tdMask" onclick="tdClose()">
+      <div class="td-modal" onclick="event.stopPropagation()">
+        <div class="td-modal-head"><h3 id="tdTitle">详情</h3><button class="td-mclose" onclick="tdClose()">×</button></div>
+        <div class="td-modal-body" id="tdBody"></div>
+      </div>
+    </div>
+  </section><section id="student" class="page">
+        <div class="topbar">
+          <div class="page-title">
+            <h2><span id="studentGreeting">我的学习首页</span></h2>
+            <p>先看上课时间、上课记录和作业。阅读、My Words、路线图放在课程信息下面。</p>
+          </div>
+          <div class="student-top-actions">
+            <span class="pill" id="courseHoursPill">加载中…</span>
+            <button class="ghost-btn" id="logoutBtn" type="button">退出</button>
+          </div>
+        </div>
+
+        <div class="grid cols-2">
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <h3 id="scheduleTitle">下一节课</h3>
+                <p id="scheduleSubtitle">正在加载…</p>
+              </div>
+              <button class="danger-btn" id="leaveBtn">请假</button>
+            </div>
+            <div class="schedule-tabs">
+              <button class="active" data-schedule="next">下一节</button>
+              <button data-schedule="week">下一周</button>
+              <button data-schedule="month">下个月</button>
+            </div>
+            <div class="stats">
+              <div class="stat"><strong id="scheduleTime">--</strong><span>上课时间</span></div>
+              <div class="stat"><strong id="scheduleDuration">--</strong><span>时长</span></div>
+              <div class="stat"><strong id="scheduleCourse">--</strong><span>课程主题</span></div>
+              <div class="stat"><strong id="scheduleHours">--</strong><span>本月已上课</span></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <h3>阅读快捷入口</h3>
+              </div>
+            </div>
+            <div class="list">
+              <a class="row quick" href="/flyguy-reader.html">
+                <div class="avatar">R</div>
+                <div><h4>Continue Reading</h4><p>Hi! Fly Guy · 从阅读器继续读</p></div>
+                <span class="primary-btn">继续读</span>
+              </a>
+              <a class="row quick" href="/my-words.html">
+                <div class="avatar">W</div>
+                <div><h4>My Words</h4><p>生词本 · 收藏与复习已保存单词</p></div>
+                <span class="ghost-btn">打开</span>
+              </a>
+              <a class="row quick" href="/practice-student.html">
+                <div class="avatar">P</div>
+                <div><h4>Practice</h4><p>作业、quiz、听力与常年开放游戏</p></div>
+                <span class="ghost-btn">查看</span>
+              </a>
+              <a class="row quick" id="awardRow" href="/frog_toad_award.html">
+                <div class="avatar">A</div>
+                <div><h4>My Awards</h4><p id="awardStatus">Award · 完成课程后点亮</p></div>
+                <span class="ghost-btn">查看</span>
+              </a>
+            </div>
+          </section>
+        </div>
+
+        <div class="grid cols-2" style="margin-top:16px">
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <h3>上课记录</h3>
+                <p>最近 5 次 · 点「查看全部」可按课程和年月筛选。</p>
+              </div>
+              <button class="ghost-btn" id="recordsOpenBtn">查看全部</button>
+            </div>
+            <div class="timeline" id="recordsTimeline">
+              <div class="empty-state">加载中…</div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <h3>Reading Roadmap</h3>
+                <p id="roadmapHint">根据你上过的阅读课，自动生成你的阅读学习路线图。</p>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button class="ghost-btn" data-page="library">查看书架</button>
+                <span class="ghost-btn" style="cursor:default;opacity:.72" title="Page will be updated later">My Learning Roadmap · Page will be updated later</span>
+              </div>
+            </div>
+            <div class="list" id="roadmapList">
+              <div class="empty-state">正在读取你的阅读记录…</div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Library -->
+      <section id="library" class="page">
+        <div class="topbar">
+          <div class="page-title">
+            <h2>Library</h2>
+            <p>第一层显示 Series。Fly Guy 短绘本不在第一层摊开，点进系列后再进入单本。</p>
+          </div>
+          <a class="primary-btn" href="/lesson.html">老师：分配/管理书目</a>
+        </div>
+
+        <div class="tabs">
+          <button class="active" data-filter="all">全部</button>
+          <button data-filter="unlocked">已解锁</button>
+          <button data-filter="locked">未解锁预览</button>
+        </div>
+
+        <div class="book-grid" id="libGrid">
+          <div class="empty-state">正在读取你的阅读记录…</div>
+        </div>
+
+        <section class="panel series-detail" id="libSeriesDetail"></section>
+      </section>
+
+      <!-- Practice -->
+      <section id="practice" class="page">
+        <div class="topbar">
+          <div class="page-title">
+            <h2>Practice</h2>
+            <p id="practiceIntro">这里会展示老师推送给你的作业、测验和听力练习。</p>
+          </div>
+        </div>
+        <section class="panel">
+          <div class="section-head">
+            <div><h3>练习</h3><p>老师会在上课后把要做的练习推送到这里。</p></div>
+          </div>
+          <div id="practiceBox" class="empty-state" style="padding:48px 16px">暂无推送的练习 · 等老师添加后，会在这里显示 📝</div>
+        </section>
+      </section>
+
+      <!-- Reader -->
+      <section id="reader" class="page">
+        <div class="topbar">
+          <div class="page-title">
+            <h2>Reader</h2>
+            <p>左图右文 / 纯文字 / Hybrid / Vocabulary Card / My Words。下方为交互演示，正式阅读进入 Fly Guy 阅读器。</p>
+          </div>
+          <span class="pill" id="readerRole">Student Mode</span>
+        </div>
+
+        <section class="panel reader-shell">
+          <aside class="reader-side">
+            <div class="section-head">
+              <div><h3>Hi! Fly Guy</h3><p>A1 · Picture Book</p></div>
+            </div>
+            <div class="tabs">
+              <button class="active" data-reader-view="study">Study</button>
+              <button data-reader-view="picture">Picture</button>
+              <button data-reader-view="text">Text</button>
+              <button data-reader-view="hybrid">Hybrid</button>
+            </div>
+            <div class="list" style="margin-bottom:12px">
+              <a class="row" href="/flyguy-reader.html"><div class="book-no">1</div><div><h4>Chapter 1</h4><p>打开阅读器继续读</p></div></a>
+            </div>
+            <a class="primary-btn" href="/flyguy-reader.html" style="width:100%">进入 Fly Guy 阅读器</a>
+          </aside>
+          <section class="reader-stage">
+            <div class="reading-surface" id="readingSurface">
+              <button class="page-image" data-modal="focus"><div></div></button>
+              <article class="text-pane">
+                <p class="tag">Chapter 1 · Demo</p>
+                <div class="story-text">
+                  <p>A fly went flying.</p>
+                  <p>He was looking for something <button class="word" data-word="tasty">tasty</button>, something <button class="word" data-word="slimy">slimy</button>.</p>
+                  <p>A boy went walking.</p>
+                  <p>He was looking for something to <button class="word" data-word="catch">catch</button>.</p>
+                </div>
+              </article>
+            </div>
+          </section>
+          <aside class="reader-words">
+            <div class="section-head">
+              <div><h3 id="wordTitle">tasty</h3><p>Vocabulary Card</p></div>
+            </div>
+            <div class="list">
+              <div class="timeline-item">
+                <h4 id="wordZh">好吃的</h4>
+                <p id="wordDef">good to eat; yummy</p>
+                <p id="wordEx">something tasty</p>
+              </div>
+              <a class="primary-btn" href="/story-world.html">My Words · 打开</a>
+            </div>
+          </aside>
+        </section>
+      </section>
+    <!-- 充值记录 -->
+      <section id="payments" class="page">
+        <div class="topbar">
+          <div class="page-title">
+            <h2>充值记录</h2>
+            <p>你的课时包充值 / 购买记录，点击每张卡片可查看对应课程详情。</p>
+          </div>
+          <span class="pill" id="pmSummary">—</span>
+        </div>
+        <div class="track-overview">
+          <div class="track-box"><div class="lb">总充值课时</div><div class="vl" id="pmTotalHours">—</div></div>
+          <div class="track-box"><div class="lb">已上课时</div><div class="vl" id="pmUsed">—</div></div>
+          <div class="track-box"><div class="lb">剩余课时</div><div class="vl" id="pmRemaining">—</div></div>
+        </div>
+        <div class="pm-grid" id="pmGrid"><div class="empty-state">加载中…</div></div>
+        <p style="margin-top:14px;color:var(--muted);font-size:.8rem">如对课时或金额有疑问，可在「家长留言」中说明，我会为你核对。</p>
+      </section>
+
+      <!-- 家长留言 -->
+      <section id="message" class="page">
+        <div class="topbar">
+          <div class="page-title">
+            <h2>家长留言</h2>
+            <p>选择课程和上课日期，写下留言，老师后台就能看到是哪一天的课、针对哪门课程。</p>
+          </div>
+          <span class="pill">留言</span>
+        </div>
+
+        <section class="panel msg-form">
+          <div class="section-head"><div><h3>写留言</h3><p>填写后提交给老师，后台会按课程 / 日期汇总给你。多个日期可分别提交。</p></div></div>
+          <div class="gf">
+            <div><label>课程 *</label><select id="msgCourse"><option value="">请选择课程</option></select></div>
+            <div><label>上课日期 *</label><input type="date" id="msgDate" /></div>
+            <div><label>上课时间</label><select id="msgTime"><option value="">请选择上课时间</option></select></div>
+          </div>
+          <div style="margin-top:12px"><label>留言内容 *</label><textarea id="msgText" placeholder="例如：本周课调一下 / 想了解这节重点 / 请假…"></textarea></div>
+          <div class="msg-actions">
+            <button class="ghost-btn" id="msgClear">清空</button>
+            <button class="primary-btn" id="msgSubmit">提交留言</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head"><div><h3>留言历史</h3><p id="msgHistHint">这里列出你之前提交的留言。</p></div></div>
+          <div id="msgHist"><div class="empty-state">加载中…</div></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <!-- 通用提示弹窗 -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <h3 id="modalTitle">提示</h3>
+      <p id="modalBody">内容预览。</p>
+      <div class="modal-actions">
+        <button class="ghost-btn" id="modalClose">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 请假弹窗 -->
+  <div id="leaveModal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <h3>请假申请</h3>
+      <div class="modal-meta" id="leaveMeta">—</div>
+      <textarea class="modal-field" id="leaveReason" placeholder="请假原因（选填）"></textarea>
+      <div class="modal-actions">
+        <button class="ghost-btn" id="leaveCancel">取消</button>
+        <button class="primary-btn" id="leaveConfirm">确认请假</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 上课记录全览 -->
+  <div id="recordsModal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-box records-box">
+      <div class="section-head">
+        <div>
+          <h3 id="recordsModalTitleH3">上课记录</h3>
+          <p id="recordsSum">共 0 条</p>
+        </div>
+        <button class="ghost-btn" id="recordsClose">关闭</button>
+      </div>
+      <div id="recordsListPane">
+        <div class="records-toolbar">
+          <label>课程
+            <select id="recFilterCourse"><option value="">全部课程</option></select>
+          </label>
+          <label>年月
+            <select id="recFilterMonth"><option value="">全部月份</option></select>
+          </label>
+          <label>每页显示
+            <select id="recPageSize">
+              <option value="10">10 条</option>
+              <option value="20" selected>20 条</option>
+              <option value="50">50 条</option>
+              <option value="0">全部</option>
+            </select>
+          </label>
+        </div>
+        <div class="records-list" id="recordsFullList"><div class="empty-state">加载中…</div></div>
+        <div class="records-pager" id="recordsPager"></div>
+      </div>
+      <div id="recordDetailPane" class="record-detail" hidden>
+        <button class="ghost-btn detail-back" id="recordDetailBack">← 返回列表</button>
+        <div id="recordDetailBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+  // ---------- 常量 ----------
+  var STORAGE_STUDENT = 'lesson_tracker_student_id';
+  var TEACHER_KEY = 'lesson_tracker_is_teacher';
+
+  // ---------- 全局状态 ----------
+  var studentsList = [];
+  var allStudentData = {};      // id -> studentData
+  var currentStudentId = null;  // 学生用户的 id
+  var currentUser = null;       // 当前登录用户名（学生 id 或教师名）
+  var isTeacherUser = false;
+  var currentRole = 'student';
+  var pendingLeave = null;      // 待提交请假 {date, startTime, duration, courseName}
+
+  // ---------- DOM 快捷 ----------
+  function $(id) { return document.getElementById(id); }
+
+  // ---------- 工具 ----------
+  function getLocalDateStr(d) {
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return y + '-' + m + '-' + day;
+  }
+  function getNowMonth() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+  }
+  function showToast(msg, type) {
+    var t = $('toast');
+    t.className = 'toast ' + (type || '');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function () { t.classList.remove('show'); }, 3000);
+  }
+
+  // ---------- 用户识别（不弹登录框，拿到什么算什么） ----------
+  function getCurrentUserFromSource() {
+    var params = new URLSearchParams(window.location.search);
+    var u = params.get('user');
+    if (u && u.trim()) {
+      var id = u.trim().toLowerCase();
+      // 把 URL 里的 user 回写 localStorage，保证学生刷新或二次进入仍能识别身份（不新造机制，沿用 lesson_tracker_student_id）
+      try { localStorage.setItem(STORAGE_STUDENT, id); localStorage.setItem('currentUser', id); } catch (e) {}
+      return { id: id };
+    }
+    var stored = localStorage.getItem(STORAGE_STUDENT) || localStorage.getItem('currentUser');
+    if (stored && stored.trim()) return { id: stored.trim().toLowerCase() };
+    return null;
+  }
+
+  // ---------- 认证 ----------
+  function readToken() { return localStorage.getItem('authToken'); }
+  function saveToken(t) {
+    localStorage.setItem('authToken', t);
+    document.cookie = 'authToken=' + t + '; path=/; max-age=604800';
+  }
+  async function ensureToken(username, role) {
+    var t = readToken();
+    if (t) return t;
+    var res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: username, password: '000', role: role || 'student' })
+    });
+    if (!res.ok) { var e = await res.json().catch(function(){return{};}); throw new Error((e && e.error) || '登录失败'); }
+    var d = await res.json();
+    saveToken(d.token);
+    return d.token;
+  }
+  function authHeaders(t) { return { 'Authorization': 'Bearer ' + t }; }
+
+  // ---------- 导航 ----------
+  var pages = document.querySelectorAll('.page');
+  var navButtons = document.querySelectorAll('[data-page]');
+  var readerRole = $('readerRole');
+
+  function showPage(id) {
+    pages.forEach(function (p) { p.classList.toggle('active', p.id === id); });
+    navButtons.forEach(function (b) { b.classList.toggle('active', b.dataset.page === id); });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  navButtons.forEach(function (b) { b.addEventListener('click', function () { showPage(b.dataset.page); }); });
+  document.querySelectorAll('[data-page-link]').forEach(function (b) {
+    b.addEventListener('click', function () { showPage(b.dataset.pageLink); });
+  });
+
+  // 学生首页：固定学生视角（无角色切换）
+  function setStudentRole() {
+    currentRole = 'student';
+    readerRole.textContent = 'Student Mode';
+    document.querySelectorAll('.teacher-only').forEach(function (el) { el.classList.add('hidden'); });
+    document.querySelectorAll('.student-nav').forEach(function (el) { el.classList.remove('hidden'); });
+    document.querySelectorAll('.teacher-nav').forEach(function (el) { el.classList.add('hidden'); });
+  }
+
+  // ---------- 退出登录：清空身份与 token，跳回登录页 ----------
+  function clearAuth() {
+    try { localStorage.removeItem(STORAGE_STUDENT); } catch (e) {}
+    try { localStorage.removeItem('authToken'); } catch (e) {}
+    document.cookie = 'authToken=; path=/; max-age=0';
+  }
+  var logoutBtn = $('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function () {
+      clearAuth();
+      window.location.href = '/lesson.html';
+    });
+  }
+
+  // ---------- 数据加载：学生视图 ----------
+  async function loadStudentView(studentId) {
+    if (!studentId) { showBanner(); return; }
+    try {
+      var token = await ensureToken(studentId, 'student');
+      var res = await fetch('/api/students/' + encodeURIComponent(studentId), { headers: authHeaders(token) });
+      if (!res.ok) throw new Error('无法加载学员数据');
+      var data = await res.json();
+      allStudentData[studentId] = data;
+      renderStudent(data);
+      loadStudentPractice(studentId, token);
+    } catch (err) {
+      console.error('student load error:', err);
+      var tl = $('recordsTimeline');
+      if (tl) tl.innerHTML = '<div class="empty-state">加载失败：' + (err.message || '') + '</div>';
+      showBanner();
+    }
+  }
+
+  // ---------- Practice：学生端拉取老师推送的作业（对接后端 practice 接口） ----------
+  async function loadStudentPractice(studentId, token) {
+    if (!document.getElementById('pfStyle')) {
+      var se = document.createElement('style'); se.id = 'pfStyle';
+      se.textContent = '.pf-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;background:#F7F8FA;border:1px solid #eef0f3;border-radius:10px;margin-bottom:12px}'
+        + '.pf-seg{display:inline-flex;background:#EFF1F4;border-radius:12px;overflow:hidden;flex:0 0 auto}'
+        + '.pf-seg button{border:0;background:transparent;padding:6px 13px;font-size:13px;color:#596070;cursor:pointer;font-weight:600}'
+        + '.pf-seg button.on{background:#1D7A3F;color:#fff}'
+        + '.pf-sel{padding:6px 10px;border:1px solid #d0d5dc;border-radius:8px;font-size:13px;background:#fff;color:#2B2A26;max-width:180px}'
+        + '.pf-sel:focus{outline:none;border-color:#1D7A3F}'
+        + '.pflabel{font-size:12px;color:#8a8f98;font-weight:600;margin-left:2px}'
+        + '.pf-badge{display:inline-block;font-size:12px;padding:3px 9px;border-radius:12px;font-weight:600;white-space:nowrap}'
+        + '.pf-badge.done{background:#E2EFE6;color:#1D7A3F}'
+        + '.pf-badge.todo{background:#F1F2F4;color:#7c828c}'
+        + '.pf-badge.sub{background:#F4E9D7;color:#9A6B1F}'
+        + '.pf-badge.redo{background:#FBE4E0;color:#B4452C}';
+      document.head.appendChild(se);
+    }
+    var box = $('practiceBox');
+    if (!box) return;
+    var tk = token || readToken();
+    if (!tk) { box.className = 'empty-state'; box.style.padding = '48px 16px'; box.innerHTML = '未登录，无法加载练习。'; return; }
+    box.className = 'list';
+    box.style.padding = '';
+    box.innerHTML = '<div class="empty-state" style="padding:32px 16px">正在加载推送的练习…</div>';
+    try {
+      var asRes = await fetch('/api/practice/assignments?student=' + encodeURIComponent(studentId), { headers: authHeaders(tk) });
+      if (!asRes.ok) throw new Error('加载练习失败');
+      var items = await asRes.json();
+      var subRes = await fetch('/api/practice/submissions?student=' + encodeURIComponent(studentId), { headers: authHeaders(tk) });
+      var subs = subRes.ok ? await subRes.json() : [];
+      window.__pfFlats = items.filter(function (a) { return String(a.status || 'active').toLowerCase() === 'active'; });
+      var subMap = {};
+      (subs || []).forEach(function (s) { if (s && s.assignmentId && !subMap[s.assignmentId]) subMap[s.assignmentId] = s; });
+      window.__pfFlats.forEach(function (a) { a.__sub = subMap[a.assignmentId] || null; });
+      if (!window.__pfFlats.length) {
+        box.className = 'empty-state';
+        box.style.padding = '48px 16px';
+        box.innerHTML = '暂无推送的练习 · 等老师添加后，会在这里显示 📝';
+        return;
+      }
+      var courses = [], months = [];
+      window.__pfFlats.forEach(function (a) {
+        if (a.courseName && courses.indexOf(a.courseName) < 0) courses.push(a.courseName);
+        var m = String(a.relatedClassDate || a.assignedDate || '').slice(0, 7);
+        if (m && months.indexOf(m) < 0) months.push(m);
+      });
+      courses.sort(); months.sort();
+      window.__pfMeta = { courses: courses, months: months };
+      if (!window.__pfState) window.__pfState = { status: 'all', course: '', month: '' };
+      pfRender();
+    } catch (err) {
+      box.className = 'empty-state';
+      box.style.padding = '48px 16px';
+      box.innerHTML = '推送的练习加载失败：' + (err.message || '');
+    }
+  }
+  function pfSet(k, v) {
+    if (!window.__pfState) window.__pfState = { status: 'all', course: '', month: '' };
+    window.__pfState[k] = v;
+    pfRender();
+  }
+  function pfRender() {
+    var box = $('practiceBox'); if (!box) return;
+    var st = window.__pfState || { status: 'all', course: '', month: '' };
+    var meta = window.__pfMeta || { courses: [], months: [] };
+    var flats = window.__pfFlats || [];
+    var seg = function (v, l) { return '<button type="button" class="' + (st.status === v ? 'on' : '') + '" onclick="pfSet(\'status\',\'' + v + '\')">' + l + '</button>'; };
+    var courseOpts = '<option value="">全部课程</option>' + meta.courses.map(function (c) { return '<option value="' + esc(c) + '"' + (st.course === c ? ' selected' : '') + '>' + esc(c) + '</option>'; }).join('');
+    var monthOpts = '<option value="">全部月份</option>' + meta.months.map(function (m) { return '<option value="' + m + '"' + (st.month === m ? ' selected' : '') + '>' + m + '</option>'; }).join('');
+    var rows = flats.filter(function (a) {
+      if (st.status === 'done' && !a.__sub) return false;
+      if (st.status === 'todo' && a.__sub) return false;
+      if (st.course && a.courseName !== st.course) return false;
+      if (st.month) { var m = String(a.relatedClassDate || a.assignedDate || '').slice(0, 7); if (m !== st.month) return false; }
+      return true;
+    });
+    var doneC = flats.filter(function (a) { return a.__sub; }).length;
+    var todoC = flats.length - doneC;
+    box.innerHTML = '<div class="pf-bar">'
+      + '<div class="pf-seg">' + seg('all', '全部') + seg('done', '✅ 已完成') + seg('todo', '⏳ 未完成') + '</div>'
+      + '<span class="pflabel">课程</span><select class="pf-sel" onchange="pfSet(\'course\',this.value)">' + courseOpts + '</select>'
+      + '<span class="pflabel">月份</span><select class="pf-sel" onchange="pfSet(\'month\',this.value)">' + monthOpts + '</select>'
+      + '</div>'
+      + '<div id="pfSummary" style="margin:0 2px 10px;font-size:13px;color:#596070">共 ' + flats.length + ' 项练习 · 已完成 ' + doneC + ' · 待完成 ' + todoC + '</div>'
+      + '<div id="pfList"></div>';
+    var list = $('pfList'); if (!list) return;
+    if (!rows.length) { list.innerHTML = '<div class="empty-state" style="padding:28px 10px">没有符合筛选条件的练习 📭</div>'; return; }
+    var rLabelMap = { 'checklist': '✅ 勾选', 'short-answer': '✍️ 简答', 'drag-order': '↕️ 排序', 'drag-match': '🔗 配对', 'multiple-choice': '🔘 选择', 'upload': '📤 上传' };
+    list.innerHTML = rows.slice().reverse().map(function (a) {
+      var cat = String(a.title || a.practiceId || '作业');
+      var s = a.__sub;
+      var badge;
+      if (s) {
+        var lbl = '已提交'; var cls = 'sub';
+        if (s.status === 'checked') { lbl = '已批改' + (s.score != null ? ' · ' + esc(s.score) + '分' : ''); cls = 'done'; }
+        else if (s.status === 'needredo') { lbl = '需重做'; cls = 'redo'; }
+        badge = '<span class="pf-badge ' + cls + '">✅ ' + lbl + '</span>';
+      } else {
+        badge = '<span class="pf-badge todo">⏳ 未完成</span>';
+      }
+      var tasks = (a.tasks && a.tasks.length) ? a.tasks : [];
+      var due = a.dueDate ? '<span style="color:#8a8f98;font-size:12px">截止：' + esc(a.dueDate) + '</span>' : '';
+      var dateLine = a.relatedClassDate ? '<span style="color:#8a8f98;font-size:12px">上课：' + esc(a.relatedClassDate) + '</span>' : '';
+      var courseTag = a.courseName ? '<span style="display:inline-block;font-size:11px;background:#E9EDF1;color:#43506a;padding:2px 8px;border-radius:10px;margin-right:6px">' + esc(a.courseName) + '</span>' : '';
+      var taskHtml = tasks.map(function (t) {
+        var rl = rLabelMap[t.studentRenderer] || (t.studentRenderer || 'task');
+        var desc = t.prompt || t.instructions || '';
+        return '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;margin-top:8px;background:#F7F8FA;border-radius:8px">'
+          + '<div><span style="font-size:12px;color:#1D7A3F;font-weight:600;margin-right:6px">' + rl + '</span>'
+          + '<span style="font-size:13px;color:#2B2A26">' + esc(t.title || desc) + '</span></div></div>';
+      }).join('');
+      var note = a.teacherNote ? '<p style="margin:8px 0 0;font-size:13px;color:#4a4f57">📌 ' + esc(a.teacherNote) + '</p>' : '';
+      var btnTxt = s ? '重新查看 →' : '开始练习 →';
+      var btn = '<a href="practice-student.html?assignmentId=' + encodeURIComponent(a.assignmentId) + '" style="display:inline-block;margin-top:10px;padding:8px 16px;background:#1D7A3F;color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">' + btnTxt + '</a>';
+      return '<div style="border:1px solid #eef0f3;border-radius:10px;padding:14px 16px;margin-bottom:10px;background:#fff">'
+        + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><div style="font-size:14px;font-weight:600;color:#1c1e21">' + esc(cat) + '</div>' + badge + '</div>'
+        + taskHtml + note
+        + '<div style="margin-top:8px">' + courseTag + dateLine + ' ' + due + '</div>'
+        + btn
+        + '</div>';
+    }).join('');
+  }
+  function getUpcomingClasses(schedule, oneTimeClasses, count) {
+    var classes = [];
+    var now = new Date();
+    if (schedule && schedule.length) {
+      var search = new Date(now); search.setHours(0,0,0,0);
+      var days = 0;
+      while (classes.length < 50 && days < 365) {
+        (schedule || []).forEach(function (s) {
+          var targetDay = s.dayOfWeek === 7 ? 0 : s.dayOfWeek;
+          if (search.getDay() === targetDay) {
+            var dt = new Date(search);
+            var hm = String(s.startTime || '00:00').split(':');
+            dt.setHours(parseInt(hm[0],10)||0, parseInt(hm[1],10)||0, 0, 0);
+            if (dt > now) {
+              classes.push({ date: getLocalDateStr(search), startTime: s.startTime, duration: s.duration, courseName: s.courseName, classDateTime: dt });
+            }
+          }
+        });
+        search.setDate(search.getDate() + 1);
+        days++;
+      }
+    }
+    (oneTimeClasses || []).forEach(function (otc) {
+      var dt = new Date(otc.date + 'T' + (otc.startTime || '00:00'));
+      if (dt > now) classes.push({ date: otc.date, startTime: otc.startTime, duration: otc.duration, courseName: otc.courseName, classDateTime: dt });
+    });
+    classes.sort(function (a, b) { return a.classDateTime - b.classDateTime; });
+    return classes.slice(0, count || 5);
+  }
+  function scheduleDayLabel(dateStr) {
+    if (!dateStr) return '--';
+    var d = new Date(dateStr + 'T00:00:00');
+    var today = new Date();
+    var t0 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    var d0 = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    var diff = Math.round((d0 - t0) / 86400000);
+    if (diff === 0) return '今天';
+    return (d.getMonth() + 1) + '月' + d.getDate() + '日';
+  }
+  function fmtHours(h) {
+    var x = Math.round((Number(h) || 0) * 100) / 100;
+    return (Math.round(x) === x ? x : x.toFixed(1)) + 'h';
+  }
+  function weekDaysText(dayOfWeek) {
+    return ['周日','周一','周二','周三','周四','周五','周六'][dayOfWeek === 7 ? 0 : dayOfWeek];
+  }
+
+  function renderStudent(data) {
+    var used = (data.records || []).length;
+    var total = data.totalHours || 0;
+    var st = courseStats(data);
+    var remaining = st.ongoingRem;
+    var month = getNowMonth();
+    var monthUsed = (data.records || []).filter(function (r) { return r.date && r.date.indexOf(month) === 0; }).length;
+
+    // 课时 pill
+    var pkgPill = '总课时 ' + st.total + ' · 进行中 已上 ' + st.ongoingUsed + ' · 剩余 ' + st.ongoingRem + ' · 已完结 ' + st.doneHours;
+    $('courseHoursPill').textContent = pkgPill;
+    $('studentGreeting').textContent = (data.name || '学员') + ' 的学习首页';
+
+    // 下一节
+    var upcoming = getUpcomingClasses(data.schedule, data.oneTimeClasses, 4);
+    var next = upcoming[0];
+    if (next) {
+      var wd = weekDaysText(new Date(next.date).getDay());
+      $('scheduleSubtitle').textContent = next.date + ' ' + wd + ' · ' + (next.startTime || '') + ' · ' + (next.courseName || '');
+      $('scheduleTime').textContent = scheduleDayLabel(next.date) + (next.startTime ? (' ' + next.startTime) : '');
+      $('scheduleDuration').textContent = (next.duration || '') ? (next.duration + 'h') : '--';
+      $('scheduleCourse').textContent = (next.courseName || '--');
+      // 本周汇总 / 本月
+      var weekCount = upcoming.filter(function (c) { return betweenDays(c.date, 0, 7); }).length;
+      pendingLeave = { date: next.date, startTime: next.startTime, duration: next.duration, courseName: next.courseName };
+    } else {
+      $('scheduleSubtitle').textContent = '暂无即将开始的排课';
+      $('scheduleTime').textContent = '--';
+      $('scheduleDuration').textContent = '--';
+      $('scheduleCourse').textContent = '--';
+      pendingLeave = null;
+    }
+    $('scheduleHours').textContent = monthUsed;
+
+    // 请假按钮可用性
+    $('leaveBtn').disabled = !pendingLeave;
+
+    // 上课记录时间线（最近5条，倒序）
+    var recs = (data.records || []).slice().reverse().slice(0, 5);
+    setRecordsData(data.records);
+    var tl = $('recordsTimeline');
+    if (recs.length === 0) {
+      tl.innerHTML = '<div class="empty-state">暂无上课记录</div>';
+    } else {
+      tl.innerHTML = recs.map(function (r) {
+        var idx = recAll.indexOf(r);
+        return '<div class="timeline-item rec" data-idx="' + idx + '"><h4>' + esc(r.date || '') + ' · ' + esc(r.courseName || '') + '</h4><p>' + esc(r.lessonTitle || '') + '</p><div class="rec-open">查看完整记录 ›</div></div>';
+      }).join('') + '<div class="timeline-item" style="text-align:center"><button class="ghost-btn" id="recordsOpenBtnHome">查看全部上课记录</button></div>';
+      var homeOpen = $('recordsOpenBtnHome');
+      homeOpen.addEventListener('click', openRecordsAll);
+      tl.querySelectorAll('.timeline-item.rec[data-idx]').forEach(function (it) {
+        it.addEventListener('click', function () {
+          var i = parseInt(it.dataset.idx, 10);
+          if (i >= 0 && recAll[i]) { openRecordDetail(recAll[i]); recordsModal.classList.add('open'); }
+        });
+      });
+    }
+
+    // Award：payments 中 courseName 的 hours ≤ 该 courseName 的 records 数 → 点亮
+    var payments = data.payments || [];
+    var recordsByCourse = {};
+    (data.records || []).forEach(function (r) {
+      var c = r.courseName || 'undefined';
+      recordsByCourse[c] = (recordsByCourse[c] || 0) + 1;
+    });
+    var lit = payments.some(function (p) {
+      var c = p.courseName || '';
+      if (!c) return false;
+      return (p.hours || 0) <= (recordsByCourse[c] || 0);
+    });
+    var name = encodeURIComponent(data.name || '');
+    var awardRow = $('awardRow');
+    if (lit) {
+      awardRow.href = '/frog_toad_award.html?name=' + name;
+      $('awardStatus').textContent = data.name + ' · Award 已点亮';
+      awardRow.querySelector('.tag') && awardRow.querySelector('.tag').classList.add('blue');
+    } else {
+      awardRow.href = '/frog_toad_award.html?name=' + name;
+      $('awardStatus').textContent = '完成对应课程后点亮';
+    }
+
+    // Reading Roadmap：根据上课记录自动计算阅读学习路线（通用阶段模板）
+    renderRoadmapV2(data, $('roadmapList'), $('roadmapHint'));
+    renderLibrary(data);
+    renderStudentPayments(data);
+    renderMessageTab(data);
+  }
+
+  // ---------- Reading Roadmap（按上课记录匹配已读书本） ----------
+  function countEnglishWords(pageObj) {
+    var txt = '';
+    (function walk(o) {
+      if (typeof o === 'string') { txt += ' ' + o; return; }
+      if (Array.isArray(o)) { o.forEach(walk); return; }
+      if (o && typeof o === 'object') Object.keys(o).forEach(function (k) { walk(o[k]); });
+    })(pageObj);
+    var m = txt.match(/[A-Za-z]+(?:['-][A-Za-z]+)*/g) || [];
+    return m.length;
+  }
+  async function renderRoadmap(data, listEl, hintEl) {
+    if (!listEl) return;
+    var records = data && data.records ? data.records : [];
+    if (!records.length) {
+      listEl.innerHTML = '<div class="empty-state">还没有上过课，阅读路线图会随课程更新。</div>';
+      if (hintEl) hintEl.textContent = '上完阅读课后，这里会展示你读过的绘本与字数。';
+      return;
+    }
+    try {
+      var seriesRes = await fetch('/fly-guy-series.json', { cache: 'no-store' });
+      var series = seriesRes.ok ? await seriesRes.json() : null;
+      var books = (series && (series.books || series.series)) || [];
+
+      function norm(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9\u4e00-\u9fa5]+/g, ''); }
+      function bookPath(id) { return '/books/fly-guy/' + String(id).replace(/^fly-guy-/, '') + '/book.json'; }
+      var byTitle = {};
+      books.forEach(function (b) { byTitle[norm(b.title)] = b; });
+
+      // 记录 → 匹配书本
+      var matched = [];   // 命中的 Fly Guy 书目
+      var seen = {};
+      var generic = [];   // 未命中书名的其它课程记录
+      records.forEach(function (r) {
+        var lt = String(r.lessonTitle || '');
+        var cn = String(r.courseName || '');
+        var unit = { date: r.date, lt: lt, cn: cn };
+        var key = norm(lt) || norm(cn);
+        var target = key ? byTitle[key] : null;
+        if (target && !seen[target.id]) {
+          seen[target.id] = true;
+          target._recs = [];
+          matched.push(target);
+        }
+        if (target) { target._recs = target._recs || []; target._recs.push(unit); return; }
+        generic.push(unit);
+      });
+
+      var html = '';
+      // 匹配到的糖果绘本
+      for (var i = 0; i < matched.length; i++) {
+        var b = matched[i];
+        var vocab = 0, words = 0;
+        try {
+          var bj = await (await fetch(bookPath(b.id), { cache: 'no-store' })).json();
+          vocab = (bj.vocabulary || []).length;
+          words = (bj.pages || []).reduce(function (s, p) { return s + countEnglishWords(p); }, 0);
+        } catch (e) { /* 拿不到数据时跳过统计 */ }
+        var dates = (b._recs || []).map(function (u) { return u.date; });
+        var lastName = '最近 ' + (dates[dates.length - 1] || '');
+        html += '<a class="row" href="/flyguy-reader.html">'
+          + '<div class="avatar">' + (i + 1) + '</div>'
+          + '<div><h4>' + (b.title || b.id) + '</h4>'
+          + '<p>已上 ' + b._recs.length + ' 次课 · ' + lastName + ' · 全册约 ' + words + ' 词 · 核心生词 ' + vocab + ' 个</p></div>'
+          + '<span class="tag blue">已读</span></a>';
+      }
+      // 其它阅读课程
+      generic.forEach(function (g) {
+        if (g.cn) {
+          html += '<a class="row" href="/lesson.html"><div class="avatar">课</div><div><h4>' + (g.cn || '阅读课') + '</h4><p>' + (g.lt || '') + ' · ' + (g.date || '') + '</p></div><span class="tag">记录</span></a>';
+        }
+      });
+
+      if (!html) {
+        html = '<div class="empty-state">还没有匹配到已读绘本，继续上课吧！</div>';
+      }
+      listEl.innerHTML = html;
+      if (hintEl) hintEl.textContent = '这些是你已经上过课的阅读绘本：每册会显示全册字数与核心生词，代表你已经学过的内容。';
+    } catch (err) {
+      console.error('roadmap error:', err);
+      listEl.innerHTML = '<div class="empty-state">路线图加载失败，请稍后刷新。</div>';
+    }
+  }
+
+  // ---------- Reading Roadmap v2（学习路线图 · 通用阶段模板） ----------
+  var ROADMAP_STAGES = [
+    { key: 'flyguy',  title: '起步绘本', desc: 'Fly Guy 1-15 · 学会跟读短句和高频词',
+      course: /起步绘本|fly\s*guy/i, href: '/flyguy-reader.html', total: 15,
+      books: ['hi! fly guy', 'super fly guy', 'shoo, fly guy', 'old lady', 'fly high, fly guy', 'hooray for fly guy', 'i spy fly guy', 'fly girl', 'buzz boy and fly guy', 'flyswatter', 'ride, fly guy', 'in my soup', 'frankenfly', 'prince fly guy', 'alien summer'] },
+    { key: 'frogtoad', title: '桥梁阅读', desc: 'Frog and Toad · 训练章节理解',
+      course: /(?:frog and toad|2026暑期原版阅读)/i, href: '/frog_toad_award.html', total: 4,
+      books: ['are friends', 'together', 'all year', 'days with'] },
+    { key: 'dahl',     title: '章节桥梁', desc: 'Roald Dahl · 桥梁章节阅读',
+      course: /roald dahl|magic finger|fantastic mr/i, href: '/mf-reader.html', total: 0, books: [] },
+    { key: 'raz',      title: '分级阅读', desc: 'RAZ·Reading A1 · 积累高频词句',
+      course: /raz|reading a\d/i, href: '/lesson.html', total: 0, books: [] },
+    { key: 'powerup',  title: '剑桥体系', desc: 'Power Up · 系统精学',
+      course: /power\s*up/i, href: '/lesson.html', total: 0, books: [] }
+  ];
+  function rmNorm(s) {
+    return String(s || '').toLowerCase().replace(/[’\u2019]/g, "'").replace(/[^a-z0-9' ]/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  async function renderRoadmapV2(data, listEl, hintEl) {
+    if (!listEl) return;
+    var records = (data && data.records) || [];
+    if (!records.length) {
+      listEl.innerHTML = '<div class="empty-state">还没有上课记录，读完一本书后会在这里点亮你的阅读路线。</div>';
+      if (hintEl) hintEl.textContent = '根据你上过的阅读课，自动生成你的阅读学习路线图。';
+      return;
+    }
+    var stageRec = {};
+    records.forEach(function (r) {
+      var cn = String(r.courseName || '');
+      for (var i = 0; i < ROADMAP_STAGES.length; i++) {
+        var st = ROADMAP_STAGES[i];
+        if (st.course && st.course.test(cn + ' ' + String(r.lessonTitle || ''))) { (stageRec[st.key] = stageRec[st.key] || []).push(r); }
+      }
+    });
+    function readBooksIn(st) {
+      var hits = [];
+      if (!st.books || !st.books.length) return hits;
+      (stageRec[st.key] || []).forEach(function (r) {
+        var hay = rmNorm(String(r.lessonTitle || '') + ' ' + String(r.lessonTitle || '') + ' ' + String(r.courseName || ''));
+        st.books.forEach(function (bk) { if (hay.indexOf(bk) !== -1 && hits.indexOf(bk) === -1) hits.push(bk); });
+      });
+      return hits;
+    }
+    var html = '', started = 0;
+    var ovr = (data && data.roadmapOverride) || {};
+    ROADMAP_STAGES.forEach(function (st, i) {
+      var man = ovr[st.key] || '';
+      var recs = stageRec[st.key] || [];
+      var nb = recs.length;
+      var effectiveLocked = man === 'locked' ? true : (man === 'ongoing' ? false : !nb);
+      if (effectiveLocked) {
+        html += '<div class="rm-stage"><div class="rm-num done">' + (i + 1) + '</div>'
+          + '<div class="rm-body"><h4>' + esc(st.title) + '</h4>'
+          + '<div class="rm-desc">' + esc(st.desc) + '</div>'
+          + (man === 'locked' && nb ? '<div class="rm-manualtag">🔒 老师已手动锁定</div>' : '')
+          + '</div>'
+          + '<span class="rm-badge lock">未解锁</span></div>';
+        return;
+      }
+      started++;
+      var manualFlag = man === 'ongoing' && !nb;
+      var last = nb ? recs[recs.length - 1] : null;
+      var hits = manualFlag ? [] : readBooksIn(st);
+      var pct = 0, pctTxt = '', booksTxt = '';
+      if (hits.length) {
+        pct = st.total ? Math.min(100, Math.round(hits.length / st.total * 100)) : 0;
+        pctTxt = '已读 ' + hits.length + '/' + (st.total || hits.length) + ' 本';
+        booksTxt = '<div class="rm-books">' + hits.map(function (b) { return '<span>' + esc(b) + '</span>'; }).join('') + '</div>';
+      } else if (manualFlag) {
+        pctTxt = '老师已手动开启';
+      } else {
+        pctTxt = '已上 ' + nb + ' 次课';
+      }
+      var bar = st.total ? ('<div class="rm-bar"><i style="width:' + pct + '%"></i></div>') : '';
+      html += '<div class="rm-stage">'
+        + '<div class="rm-num">' + (i + 1) + '</div>'
+        + '<div class="rm-body"><h4>' + esc(st.title) + '</h4>'
+        + '<div class="rm-desc">' + esc(st.desc) + '</div>'
+        + '<div class="rm-prog">' + pctTxt + (last ? ' · 最近 ' + esc(last.date || '') : '') + '</div>'
+        + booksTxt + bar + '</div>'
+        + '<span class="rm-badge' + (man === 'locked' ? ' lock' : '') + '">' + (man === 'locked' ? '未解锁' : '进行中') + '</span></div>';
+    });
+    listEl.innerHTML = html;
+    if (hintEl) hintEl.textContent = started
+      ? '根据你的上课记录自动算出的阅读路线：绿色=在读，灰阶=还没读到。'
+      : '根据你上过的阅读课，自动生成你的阅读学习路线图。';
+  }
+
+  // ---------- v1.3 Library 动态书架（按学员已学课程解锁；锁定书目也可预览封面与子书） ----------
+  var LIBRARY_SERIES = [
+    { key:'flyguy', title:'Fly Guy Series', desc:'15 books · A1 · 短绘本阅读器', cover:'cover-fg', emoji:'🪰', mark:'FLY GUY',
+      href:'/flyguy-library.html', entryLabel:'打开 Fly Guy 阅读器', course:/fly\s*guy/i,
+      books:[
+        {t:'Hi! Fly Guy', coverUrl:'/flyguy_pages/book01/book01_page01.jpg'},
+        {t:'Super Fly Guy', coverUrl:'/flyguy_pages/book02/book02_page01.jpg'},
+        {t:'Shoo, Fly Guy!', coverUrl:'/flyguy_pages/book03/book03_page01.jpg'},
+        {t:'There Was an Old Lady Who Swallowed Fly Guy', coverUrl:'/flyguy_pages/book04/book04_page01.jpg'},
+        {t:'Fly High, Fly Guy!', coverUrl:'/flyguy_pages/book05/book05_page01.jpg'},
+        {t:'Hooray for Fly Guy!', coverUrl:'/flyguy_pages/book06/book06_page01.jpg'},
+        {t:'I Spy Fly Guy!', coverUrl:'/flyguy_pages/book07/book07_page01.jpg'},
+        {t:'Fly Guy Meets Fly Girl', coverUrl:'/flyguy_pages/book08/book08_page01.jpg'},
+        {t:'Buzz Boy and Fly Guy', coverUrl:'/flyguy_pages/book09/book09_page01.jpg'},
+        {t:'Fly Guy vs. The Flyswatter!', coverUrl:'/flyguy_pages/book10/book10_page01.jpg'},
+        {t:'Ride, Fly Guy, Ride!', coverUrl:'/flyguy_pages/book11/book11_page01.jpg'},
+        {t:"There's A Fly Guy in My Soup", coverUrl:'/flyguy_pages/book12/book12_page01.jpg'},
+        {t:'Fly Guy and the Frankenfly', coverUrl:'/flyguy_pages/book13/book13_page01.jpg'},
+        {t:"Fly Guy's Amazing Tricks", coverUrl:'/flyguy_pages/book14/book14_page01.jpg'},
+        {t:'Prince Fly Guy', coverUrl:'/flyguy_pages/book15/book15_page01.jpg'}
+      ] },
+    { key:'frogtoad', title:'Frog and Toad Series', desc:'桥梁阅读 · 章节理解训练（暑假名著营）', cover:'cover-ft', emoji:'🐸', mark:'FROG & TOAD',
+      href:'/frontend/frog-reader/book1-reader.html', entryLabel:'打开 Frog and Toad 阅读器', course:/(?:frog and toad|2026暑期原版阅读)/i,
+      books:[
+        {t:'Frog and Toad Are Friends', h:'/frontend/frog-reader/book1-reader.html'},
+        {t:'Frog and Toad Together', h:'/frontend/frog-reader/book2-reader.html'},
+        {t:'Frog and Toad All Year', h:'/frontend/frog-reader/book3-reader.html'},
+        {t:'Days with Frog and Toad', h:'/frontend/frog-reader/book4-reader.html'}
+      ] },
+    { key:'dahl', title:'Dahl Collection', desc:'Roald Dahl · 桥梁章节阅读 6 本', cover:'cover-dahl', emoji:'🕰️', mark:'DAHL',
+      href:'/dahl-library.html', entryLabel:'打开 Dahl 书单',
+      course:/(?:roald dahl|magic finger|fantastic mr|esio trot|the enormous crocodile|charlie and the|george)/i,
+      books:[
+        {t:'The Magic Finger', h:'/magic_finger_courseware.html'},
+        {t:'Fantastic Mr. Fox', h:'/fox_courseware.html'},
+        {t:'The Enormous Crocodile', h:'/crocodile_courseware.html'},
+        {t:'Charlie and the Chocolate Factory', h:'/charlie_courseware.html'},
+        {t:"George's Marvelous Medicine", h:'/george_courseware.html'},
+        {t:'Esio Trot', h:'/esio-trot_courseware.html'}
+      ] },
+    { key:'raz', title:'RAZ 分级阅读', desc:'D · E · F 分级小书 · 积累高频词句', cover:'cover-raz', emoji:'📚', mark:'RAZ',
+      href:'/lesson.html', entryLabel:'进入 RAZ 阅读',
+      course:/(?:raz|reading a\d)/i,
+      books:[
+        { t:'D 级', sub:'D', subs:[] },
+        { t:'E 级', sub:'E', subs:[] },
+        { t:'F 级', sub:'F', subs:[] }
+      ] },
+    { key:'story', title:'Story World', desc:'短篇与故事世界 · 复习与 My Words', cover:'cover-story', emoji:'🌍', mark:'STORIES',
+      href:'/story-world.html', entryLabel:'进入 Story World', course:null, always:true, books:[] }
+  ];
+  function libUnlocked(s, records){
+    if (s.always) return true;
+    if (!s.course) return false;
+    return (records || []).some(function (r) { return s.course.test(String(r.courseName || '') + ' ' + (r.lessonTitle || '')); });
+  }
+  function closeSeriesDetail(){
+    var d = $('libSeriesDetail');
+    if (d) { d.classList.remove('open'); d.innerHTML = ''; }
+  }
+  function renderSeriesDetail(s, records){
+    var un = libUnlocked(s, records);
+    var subs = '';
+    if (s.books && s.books.length) {
+      subs = '<div class="lib-subgrid">' + s.books.map(function (b) {
+        // RAZ 分级卡：显示 已读X本小书 + 点亮
+        if (b.subs) {
+          var rcProc = ' ' + (records || []).map(function (r) { return String(r.lessonTitle || '') + ' ' + String(r.courseName || ''); }).join(' ') + ' ';
+          var cnt = (b.subs || []).filter(function (t) { return rmNorm(rcProc).indexOf(rmNorm(t)) !== -1; }).length;
+          var lit = (b.subs.length > 0 && cnt > 0);
+          return '<div class="lib-level' + (lit ? ' lit' : '') + '">'
+            + '<div class="lib-level-cover cover-raz"><span>' + esc(b.sub) + '</span></div>'
+            + '<div class="lib-level-body"><h4>' + esc(b.t) + ' 级</h4>'
+            + '<p>' + (b.subs.length ? '已读 ' + cnt + '/' + b.subs.length + ' 本小书' : '小书书单更新中') + '</p>'
+            + '<span class="tag ' + (lit ? 'blue' : 'lock') + '">' + (lit ? '已点亮' : '未点亮') + '</span></div></div>';
+        }
+        var coverBody;
+        if (b.coverUrl) {
+          coverBody = '<div class="mini-cover has-img">' + (un ? '' : '<span class="mini-lock">🔒</span>') + '<img src="' + esc(b.coverUrl) + '" alt="' + esc(b.t) + '" loading="lazy"></div>';
+        } else {
+          coverBody = '<div class="mini-cover ' + s.cover + '">' + s.emoji + '<b>' + esc(b.t) + '</b>' + (un ? '' : '<span class="mini-lock">🔒</span>') + '</div>';
+        }
+        var mini = coverBody + '<span class="t">' + esc(b.t) + '</span>';
+        var href = b.h || s.href;
+        return (un && !b.subs) ? '<a class="lib-sub" href="' + esc(href) + '">' + mini + '</a>' : '<div class="lib-sub">' + mini + '</div>';
+      }).join('') + '</div>';
+    }
+    var headBtn = un
+      ? '<a class="primary-btn" href="' + esc(s.href) + '">' + esc(s.entryLabel || '打开') + '</a>'
+      : '<span class="tag lock">未解锁</span>';
+    var note = un ? '' : '<p class="lib-locknote">🔒 该系列还「未解锁」。你可以先看封面和目录，学完对应课程后就会点亮、可以阅读。</p>';
+    $('libSeriesDetail').innerHTML =
+      '<div class="section-head"><div class="lib-detail-head">'
+      + '<div class="lib-detail-thumb ' + s.cover + '">' + s.emoji + '</div>'
+      + '<div><h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p>'
+      + '<div class="tagline" style="margin-top:6px"><span class="tag ' + (un ? 'blue' : 'lock') + '">' + (un ? '已解锁' : '未解锁') + '</span>'
+      + ((s.books && s.books.length) ? '<span class="tag">' + s.books.length + ' books</span>' : '') + '</div></div></div>'
+      + '<div style="flex:0 0 auto">' + headBtn + '</div></div>'
+      + note + subs
+      + '<div class="section-head" style="margin-top:14px;border-bottom:0"><button class="ghost-btn" id="libDetailClose">← 收起书架</button></div>';
+    var cl = $('libDetailClose');
+    if (cl) cl.addEventListener('click', closeSeriesDetail);
+  }
+  function openSeriesDetail(key, records){
+    for (var i = 0; i < LIBRARY_SERIES.length; i++) {
+      if (LIBRARY_SERIES[i].key === key) { renderSeriesDetail(LIBRARY_SERIES[i], records); break; }
+    }
+    var d = $('libSeriesDetail');
+    if (d) { d.classList.add('open'); d.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  }
+  function renderLibrary(data){
+    var grid = $('libGrid');
+    if (!grid) return;
+    var records = (data && data.records) || [];
+    var cards = '';
+    LIBRARY_SERIES.forEach(function (s) {
+      var un = libUnlocked(s, records);
+      cards += '<button class="book-card ' + (un ? 'is-link' : 'locked') + '" data-key="' + s.key + '" data-status="' + (un ? 'unlocked' : 'locked') + '">'
+        + '<div class="cover ' + s.cover + '"><span class="cover-emoji">' + s.emoji + '</span><span class="cover-mark">' + esc(s.mark) + '</span></div>'
+        + '<div class="book-body"><h4>' + esc(s.title) + '</h4><p>' + esc(s.desc) + '</p>'
+        + '<div class="tagline"><span class="tag">' + (s.books && s.books.length ? 'Series' : 'Story') + '</span>'
+        + '<span class="tag ' + (un ? 'blue' : 'lock') + '">' + (un ? '去阅读' : '未解锁·预览') + '</span></div></div></button>';
+    });
+    grid.innerHTML = cards;
+    grid.querySelectorAll('.book-card[data-key]').forEach(function (c) {
+      c.addEventListener('click', function () { openSeriesDetail(c.dataset.key, records); });
+    });
+    closeSeriesDetail();
+  }
+
+  // ---------- 充值记录（遍历全部 payments，按课程汇总剩余） ----------
+  function courseRemaining(data){
+    var pay={},done={},used={};
+    ((data&&data.payments)||[]).forEach(function(p){var c=p.courseName||'unnamed';var h=parseFloat(p.hours)||0;pay[c]=(pay[c]||0)+h;if(p.status==='done')done[c]=1;});
+    ((data&&data.records)||[]).forEach(function(r){var c=r.courseName||'unnamed';used[c]=(used[c]||0)+1;});
+    var rem=0;
+    Object.keys(pay).forEach(function(c){if(done[c])return;rem+=Math.max(0,(pay[c]||0)-(used[c]||0));});
+    return rem;
+  }
+
+  function courseStats(data){
+    var pay={},done={},used={};
+    ((data&&data.payments)||[]).forEach(function(p){var c=p.courseName||'unnamed';var h=parseFloat(p.hours)||0;pay[c]=(pay[c]||0)+h;if(p.status==='done')done[c]=1;});
+    ((data&&data.records)||[]).forEach(function(r){var c=r.courseName||'unnamed';used[c]=(used[c]||0)+1;});
+    Object.keys(pay).forEach(function(c){ if((pay[c]||0)-(used[c]||0)<=0) done[c]=1; });
+    var total=0,ongoingUsed=0,doneHours=0;
+    Object.keys(pay).forEach(function(c){ total+=pay[c]; if(done[c]) doneHours+=pay[c]; else ongoingUsed+=(used[c]||0); });
+    var ongoingRem=0;
+    Object.keys(pay).forEach(function(c){ if(done[c])return; ongoingRem+=Math.max(0,(pay[c]||0)-(used[c]||0)); });
+    return {total:total, ongoingUsed:ongoingUsed, ongoingRem:ongoingRem, doneHours:doneHours};
+  }
+
+  function renderStudentPayments(data){
+    var grid = $('pmGrid'); if (!grid) return;
+    var payments = (data && data.payments) || [];
+    var records = (data && data.records) || [];
+    // 各课程已充值课时（payments.hours 求和）与已上节数（records）
+    var payHours = {}, paySum = 0;
+    payments.forEach(function(p){
+      var c = p.courseName || '未命名课程';
+      var h = parseFloat(p.hours) || 0;
+      payHours[c] = (payHours[c] || 0) + h;
+      paySum += h;
+    });
+    var usedCount = records.length;
+    var usedByCourse = {};
+    records.forEach(function(r){
+      var c = r.courseName || '未命名课程';
+      usedByCourse[c] = (usedByCourse[c] || 0) + 1;
+    });
+    $('pmTotalHours').textContent = paySum;
+    $('pmUsed').textContent = usedCount;
+    $('pmRemaining').textContent = courseStats(data).ongoingRem;
+    // 余量按课程累计（充值小时 − 已上节数），更贴近真实剩余
+    var totalRemByCourse = courseStats(data).ongoingRem;
+    $('pmSummary').textContent = '总课时 ' + paySum + ' · 进行中 已上 ' + courseStats(data).ongoingUsed + ' · 剩余 ' + courseStats(data).ongoingRem + ' · 已完结 ' + courseStats(data).doneHours;
+    if (!payments.length){ grid.innerHTML = '<div class="empty-state">暂无充值记录。</div>'; return; }
+    var html = '';
+    payments.slice().reverse().forEach(function(p){
+      var c = p.courseName || '未命名课程';
+      var h = parseFloat(p.hours) || 0;
+      var remByCourse = Math.max(0, (payHours[c]||0) - (usedByCourse[c]||0));
+      var stDone = p.status === 'done' || remByCourse <= 0;
+      var badge = '<span class="pm-badge' + (stDone ? ' done' : ' ongoing') + '">' + (stDone ? '已完结' : '进行中') + '</span>';
+      html += '<div class="pm-card">'
+        + '<div class="pm-course">' + esc(c) + badge + '</div>'
+        + '<div class="pm-date">' + esc(p.date || '') + (p.firstLessonDate ? ' · 首课 ' + esc(p.firstLessonDate) : '') + '</div>'
+        + '<div class="pm-row"><span class="amt">¥' + (p.amount!=null?p.amount:'—') + '</span><span class="hrs">' + (h ? (h + ' 课时') : '') + '</span></div>'
+        + '<span class="pm-rem' + (stDone ? ' zero' : '') + '">该课程剩余 ' + (stDone ? 0 : remByCourse) + ' 课时</span>'
+        + '</div>';
+    });
+    grid.innerHTML = html;
+  }
+
+  // ---------- 家长留言（选课程 + 日期 + 时间 → PUT 存 leaveRequests） ----------
+  var msgTimesByCourse = {};
+  function renderMessageTab(data){
+    var sel = $('msgCourse'); if (!sel) return;
+    var schedule = (data && data.schedule) || [];
+    var otc = (data && data.oneTimeClasses) || [];
+    var records = (data && data.records) || [];
+    var courseSet = {};
+    schedule.forEach(function(s){ if(s.courseName) courseSet[s.courseName]=1; });
+    otc.forEach(function(s){ if(s.courseName) courseSet[s.courseName]=1; });
+    records.forEach(function(s){ if(s.courseName) courseSet[s.courseName]=1; });
+    var courses = Object.keys(courseSet).sort();
+    var cur = sel.value;
+    sel.innerHTML = '<option value="">请选择课程</option>' + courses.map(function(c){ return '<option'+(c===cur?' selected':'')+'>'+esc(c)+'</option>'; }).join('');
+    msgTimesByCourse = {};
+    schedule.concat(otc).forEach(function(s){
+      if(!s.courseName || !s.startTime) return;
+      if(!msgTimesByCourse[s.courseName]) msgTimesByCourse[s.courseName] = {};
+      msgTimesByCourse[s.courseName][s.startTime] = 1;
+    });
+    fillMsgTimes(cur || '');
+    renderMsgHistory(data);
+  }
+  function fillMsgTimes(course){
+    var tsel = $('msgTime'); if(!tsel) return;
+    var times = course ? Object.keys(msgTimesByCourse[course]||{}) : [];
+    times.sort();
+    tsel.innerHTML = '<option value="">' + (times.length ? '请选择上课时间' : '该课程暂无预排时间，可手填') + '</option>'
+      + times.map(function(t){ return '<option>' + esc(t) + '</option>'; }).join('');
+  }
+  $('msgCourse').addEventListener('change', function(){ fillMsgTimes(this.value); });
+  $('msgClear').addEventListener('click', function(){
+    $('msgCourse').value=''; $('msgDate').value=''; $('msgText').value='';
+    $('msgTime').innerHTML = '<option value="">请选择上课时间</option>';
+  });
+  $('msgSubmit').addEventListener('click', async function(){
+    if(!currentStudentId){ showToast('未检测到登录账号','error'); return; }
+    var course = $('msgCourse').value.trim();
+    var date = $('msgDate').value.trim();
+    var reason = $('msgText').value.trim();
+    if(!course){ showToast('请选择课程','error'); return; }
+    if(!date){ showToast('请选择上课日期','error'); return; }
+    if(!reason){ showToast('请填写留言内容','error'); return; }
+    var btn = $('msgSubmit'); btn.disabled = true;
+    try{
+      var data = allStudentData[currentStudentId];
+      if(!data) throw new Error('数据缺失');
+      if(!data.leaveRequests) data.leaveRequests = [];
+      data.leaveRequests.push({
+        courseName: course,
+        date: date,
+        startTime: $('msgTime').value || '',
+        reason: reason,
+        requestTime: new Date().toISOString(),
+        status: 'pending'
+      });
+      var token = await ensureToken(currentStudentId, 'student');
+      var res = await fetch('/api/students/' + encodeURIComponent(currentStudentId), {
+        method: 'PUT',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders(token)),
+        body: JSON.stringify(data)
+      });
+      if(!res.ok) throw new Error('保存失败');
+      allStudentData[currentStudentId] = data;
+      $('msgText').value=''; $('msgDate').value='';
+      renderMsgHistory(data);
+      showToast('留言已提交给老师');
+    }catch(err){
+      console.error('msg error:', err);
+      showToast('提交失败：' + (err.message || ''), 'error');
+    }finally{ btn.disabled = false; }
+  });
+  function renderMsgHistory(data){
+    var hist = $('msgHist'); if(!hist) return;
+    var items = [];
+    ((data && data.leaveRequests) || []).forEach(function(l){
+      items.push({ t: Date.parse(l.requestTime)||0, rawTm: l.requestTime||'', isMsg:true, d: l.date||'', tm: l.startTime||'', course: l.courseName||'未命名课程', content: l.reason||'', status: l.status||'pending', handled: !!l.handled, reply: (l.teacherReply && l.teacherReply.content) || '' });
+    });
+    ((data && data.records) || []).forEach(function(r){
+      if(r && r.parentFeedback && typeof r.parentFeedback.content === 'string'){
+        items.push({ t: Date.parse(r.parentFeedback.submitTime)||0, rawTm: r.parentFeedback.submitTime||'', isMsg:false, d: r.date||'', tm:'', course: r.courseName||'未命名课程', content: r.parentFeedback.content, status:'', handled: !!r.parentFeedback.handled, reply: (r.parentFeedback.teacherReply && r.parentFeedback.teacherReply.content) || '' });
+      }
+    });
+    if(!items.length){ hist.innerHTML = '<div class="empty-state">还没有留言，写下第一条吧。</div>'; return; }
+    items.sort(function(a,b){ return (b.t||0)-(a.t||0); });
+    var stMap = { pending:'待处理', approved:'已处理', cancelled:'已取消' };
+    var html = items.map(function(l){
+      var stTxt = l.handled ? '已处理' : (l.isMsg ? (stMap[l.status]||esc(l.status||'')) : (l.reply ? '待处理' : '家长反馈'));
+      var stCls = l.handled ? 'st-approved' : (l.isMsg ? (l.status==='approved'?'st-approved':(l.status==='cancelled'?'st-cancelled':'st-pending')) : 'st-approved');
+      var rt = l.rawTm ? ' · ' + esc(String(l.rawTm).replace('T',' ').slice(0,16)) : '';
+      var meta = l.isMsg ? (esc(l.d) + (l.tm ? ' · ' + esc(l.tm) : '')) : (esc(l.d) + ' 课');
+      var replyHtml = l.reply ? '<div class="mi-reply"><span class="mi-reply-tag">老师留言</span>' + esc(l.reply) + '</div>' : '';
+      return '<div class="msg-item"><div class="mi-av">' + (l.isMsg ? '留' : '反') + '</div><div class="mi-body">'
+        + '<div class="mi-head"><span class="mi-title">' + esc(l.course) + '</span>'
+        + '<span class="tag ' + stCls + '">' + stTxt + '</span></div>'
+        + '<div class="mi-meta">' + meta + rt + '</div>'
+        + '<div class="mi-reason">' + esc(l.content) + '</div>'
+        + replyHtml + '</div></div>';
+    }).join('');
+    hist.innerHTML = html;
+  }
+
+  function betweenDays(dateStr, a, b) {
+    var diff = (new Date(dateStr).setHours(0,0,0,0) - new Date().setHours(0,0,0,0)) / 86400000;
+    return diff >= a && diff < b;
+  }
+
+  // ---------- 数据加载：教师视图 ----------
+  async function loadTeacherView() {
+    try {
+      var token = await ensureToken('emily_mo', 'teacher');
+      var listRes = await fetch('/api/students/list', { headers: authHeaders(token) });
+      if (!listRes.ok) throw new Error('无法加载学员列表');
+      studentsList = await listRes.json();
+      var real = studentsList.filter(function (s) { return s.id !== 'teacher' && s.id !== 'emily_mo'; });
+
+      allStudentData = {};
+      for (var i = 0; i < real.length; i++) {
+        var s = real[i];
+        try {
+          var r = await fetch('/api/students/' + encodeURIComponent(s.id), { headers: authHeaders(token) });
+          if (r.ok) allStudentData[s.id] = await r.json();
+        } catch (e) { console.error('load student ' + s.id, e); }
+      }
+      renderTeacher(real);
+    } catch (err) {
+      console.error('teacher load error:', err);
+      $('tdClassList').innerHTML = '<div class="empty-state">教师数据加载失败，请以教师身份从 lesson.html 登录。</div>';
+    }
+  }
+
+  function weekOf(anchorDate) {
+    var d = new Date(anchorDate.getFullYear(), anchorDate.getMonth(), anchorDate.getDate());
+    var dow = (d.getDay() + 6) % 7;
+    d.setDate(d.getDate() - dow);
+    var days = [];
+    for (var i = 0; i < 7; i++) { var c = new Date(d); c.setDate(d.getDate() + i); days.push(getLocalDateStr(c)); }
+    return days;
+  }
+  var TD_WEEK_CN = ['周一','周二','周三','周四','周五','周六','周日'];
+  function tdGoDay(dateStr) {
+    window.TD_CUR_DATE = dateStr || '';
+    if (window.TD_REAL) renderWeekSchedule(window.TD_REAL);
+  }
+  function renderDayGroups(realStudents, dateStr) {
+    var d = dateStr ? new Date(dateStr + 'T00:00:00') : new Date();
+    var dowJS = d.getDay();
+    var ds = getLocalDateStr(d);
+    var groups = {};
+    realStudents.forEach(function (s) {
+      var data = allStudentData[s.id];
+      if (!data) return;
+      (data.schedule || []).forEach(function (sc) {
+        var targetDay = sc.dayOfWeek === 7 ? 0 : sc.dayOfWeek;
+        if (targetDay === dowJS) {
+          var key = sc.courseName + '|' + sc.startTime;
+          groups[key] = groups[key] || { time: sc.startTime, course: sc.courseName, att: [] };
+          var lv = (data.leaveRequests || []).find(function (l) { return l.date === ds && l.status === 'approved'; });
+          groups[key].att.push({ id: s.id, name: data.name, absent: !!lv });
+        }
+      });
+      (data.oneTimeClasses || []).forEach(function (otc) {
+        if (otc.date === ds) {
+          var key = (otc.courseName || '单次课') + '|' + otc.startTime;
+          groups[key] = groups[key] || { time: otc.startTime, course: otc.courseName || '单次课', att: [] };
+          var lv2 = (data.leaveRequests || []).find(function (l) { return l.date === ds && l.status === 'approved'; });
+          groups[key].att.push({ id: s.id, name: data.name, absent: !!lv2 });
+        }
+      });
+    });
+    return groups;
+  }
+  function renderDayList(groups) {
+    var keys = Object.keys(groups).sort(function (a, b) { return (groups[a].time || '99').localeCompare(groups[b].time || '99'); });
+    var cl = $('tdClassList');
+    window.TDCLASSES = {};
+    if (keys.length === 0) { cl.innerHTML = '<div class="td-empty">这一天没有排课班次。</div>'; return keys.length; }
+    cl.innerHTML = keys.map(function (k, idx) {
+      var g = groups[k];
+      window.TDCLASSES[idx] = g;
+      var leaves = g.att.filter(function (a) { return a.absent; });
+      var chips = g.att.map(function (a) {
+        return a.absent ? '<span class="td-chip absent">' + esc(a.name) + ' <span class="td-abs">· 请假</span></span>'
+                        : '<span class="td-chip">' + esc(a.name) + '</span>';
+      }).join('');
+      return '<div class="td-class" onclick="tdOpenClass(' + idx + ')">' +
+        '<div class="td-class-time"><span class="td-time">' + esc(g.time || '--') + '</span> · ' + esc(g.course || '') + ' <span class="td-badge">班次</span></div>' +
+        '<div class="td-class-meta">应到 <b>' + g.att.length + '</b> 人，请假 <b>' + leaves.length + '</b> 人</div>' +
+        '<div class="td-student-list">' + chips + '</div>' +
+        '<div class="td-hint">点击查看班次详情 →</div>' +
+        '</div>';
+    }).join('');
+    return keys.length;
+  }
+  function renderWeekSchedule(realStudents) {
+    var now = new Date();
+    var todayStr = getLocalDateStr(now);
+    var sel = window.TD_CUR_DATE || todayStr;
+    var days = weekOf(now);
+    var wb = $('tdWeekBar');
+    if (wb) {
+      wb.innerHTML = days.map(function (ds, i) {
+        var dt = new Date(ds + 'T00:00:00');
+        var isSel = ds === sel;
+        var isToday = ds === todayStr;
+        return '<button type="button" class="td-day' + (isSel ? ' active' : '') + (isToday ? ' today' : '') + '" onclick="tdGoDay(\'' + ds + '\')">' +
+          '<span class="td-day-w">' + TD_WEEK_CN[i] + '</span><span class="td-day-d">' + (dt.getMonth() + 1) + '/' + dt.getDate() + '</span></button>';
+      }).join('');
+    }
+    $('tTodayClasses').textContent = Object.keys(renderDayGroups(realStudents, todayStr)).length;
+    renderDayList(renderDayGroups(realStudents, sel));
+  }
+
+  function renderTeacher(realStudents) {
+    if (!realStudents) return;
+    $('tStudents').textContent = realStudents.length;
+    var now = new Date();
+    var todayStr = getLocalDateStr(now);
+    window.TD_REAL = realStudents;
+    renderWeekSchedule(realStudents);
+    // 请假 / 调课：汇总各学员 leaveRequests（approved 且今天或之后）
+    var allLeaves = [];
+    realStudents.forEach(function (s) {
+      var data = allStudentData[s.id];
+      if (!data || !data.leaveRequests) return;
+      data.leaveRequests.forEach(function (l) {
+        if (l.status === 'approved' && l.date >= todayStr) allLeaves.push({ name: data.name, date: l.date, reason: l.reason, course: l.courseName });
+      });
+    });
+    allLeaves.sort(function (a, b) { return a.date.localeCompare(b.date); });
+    $('tLeaves').textContent = allLeaves.length;
+    var ll = $('tdLeaveList');
+    if (allLeaves.length === 0) {
+      ll.innerHTML = '<div class="td-empty">暂无待办请假。</div>';
+    } else {
+      window.TDLEAVES = allLeaves;
+      ll.innerHTML = allLeaves.slice(0, 8).map(function (l, idx) {
+        return '<div class="td-row" onclick="tdOpenLeave(' + idx + ')">' +
+          '<div class="td-avatar coral">假</div>' +
+          '<div class="td-row-body"><h4>' + esc(l.name) + ' 请假</h4><p>' + esc(l.date) + ' · ' + esc(l.course || '') + (l.reason ? ' · ' + esc(l.reason) : '') + '</p></div>' +
+          '<span class="td-status pending">待处理</span>' +
+          '</div>';
+      }).join('');
+    }
+
+    // 学员课时：总览（按课程）+ 明细（按学员）
+    window.TDREALSTUDENTS = realStudents || [];
+    tdRenderHours(realStudents);
+    renderPayments(realStudents);
+    // 家长留言：真实数据汇总（问题6：直接展示，不再跳登录页）
+    renderTeacherMessages(realStudents);
+  }
+
+  // ---------- 教师运营台：侧边栏教师导航 ----------
+  // 统一滚动到教师运营台指定区块（左右两套导航共用，避免原生 hash 锚点在 SPA 下不滚动）
+  function goTdSection(tid) {
+    var el = document.getElementById(tid);
+    if (!el) return;
+    // 先尝试平滑滚动，兜底瞬时滚动（兼容无 smooth 场景）
+    try { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    catch (e) { el.scrollIntoView(true); }
+    // 若滚动发生在 .main 之外的滚动容器，手动补偿一次
+    window.setTimeout(function () {
+      var r = el.getBoundingClientRect();
+      if (r.top < 0 || r.top > window.innerHeight) {
+        try { el.scrollIntoView({ behavior: 'auto', block: 'start' }); } catch (e2) { /* noop */ }
+      }
+    }, 350);
+  }
+  function bindTeacherNav() {
+    document.querySelectorAll('.teacher-nav .tnav').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var tid = b.getAttribute('data-td');
+        document.querySelectorAll('.teacher-nav .tnav').forEach(function (x) { x.classList.remove('active'); });
+        b.classList.add('active');
+        document.querySelectorAll('#tdNav a').forEach(function (a) { a.classList.remove('active'); });
+        var link = document.querySelector('#tdNav a[href="#' + tid + '"]');
+        if (link) link.classList.add('active');
+        goTdSection(tid);
+      });
+    });
+    // 顶部横向导航：锚点统一接管，阻止默认 hash 跳转，强制滚到目标卡片
+    document.querySelectorAll('#tdNav a').forEach(function (a) {
+      a.addEventListener('click', function (ev) {
+        var href = a.getAttribute('href') || '';
+        if (href.charAt(0) !== '#') return;
+        ev.preventDefault();
+        var tid = href.slice(1);
+        document.querySelectorAll('#tdNav a').forEach(function (x) { x.classList.remove('active'); });
+        a.classList.add('active');
+        goTdSection(tid);
+      });
+    });
+  }
+
+  // ---------- 教师运营台：按课程统计课时（三层逻辑，不写死） ----------
+  // 总课次 = payments 对应课程 hours 累加；已上 = 该课程 records 条数；剩余 = 总 - 已上
+  // status: noPaid(未充值) / ongoing(进行中) / done(已结课)
+  function studentCourseHours(data) {
+    var map = {}, exp = {};
+    (data.payments || []).forEach(function (p) {
+      var c = p.courseName || '未命名';
+      map[c] = map[c] || { paid: 0, used: 0 };
+      map[c].paid += parseFloat(p.hours) || 0;
+      if (p.status === 'done' || p.status === 'ongoing') exp[c] = p.status;
+    });
+    (data.records || []).forEach(function (r) {
+      var c = r.courseName || '未命名';
+      map[c] = map[c] || { paid: 0, used: 0 };
+      map[c].used += 1;
+    });
+    Object.keys(map).forEach(function (c) {
+      var m = map[c];
+      m.paid = Math.round(m.paid * 10) / 10;
+      m.rem = Math.max(0, m.paid - m.used);
+      if (exp[c] && m.paid > 0) m.status = exp[c];
+      else if (m.paid <= 0) m.status = 'noPaid';
+      else if (m.rem <= 0) m.status = 'done';
+      else m.status = 'ongoing';
+    });
+    return map;
+  }
+
+  // ---------- 教师运营台：课时汇总 ----------
+  function tdRenderHours(realStudents) {
+    var low = 0;
+    var courseSum = {};
+    realStudents.forEach(function (s) {
+      var data = allStudentData[s.id];
+      if (!data) return;
+      var cm = studentCourseHours(data);
+      Object.keys(cm).forEach(function (c) {
+        var m = cm[c];
+        if (m.status === 'noPaid' || m.status === 'done') return; // 未充值 / 已结课不计入低课时
+        if (m.rem < 4) low++;
+        courseSum[c] = courseSum[c] || { total: 0, used: 0 };
+        courseSum[c].total += m.paid;
+        courseSum[c].used += m.used;
+      });
+    });
+    $('tLowHours').textContent = low;
+
+    // 总览：只显示正在进行中的课程（结课 / 未充值不计剩余课时）
+    var sum = $('tdHoursSummary');
+    var courses = Object.keys(courseSum).sort();
+    if (courses.length === 0) {
+      sum.innerHTML = '<div class="td-empty">暂无进行中的课程（已结课 / 未充值的课程不计入剩余课时）。</div>';
+    } else {
+      sum.innerHTML = courses.map(function (c) {
+        var cs = courseSum[c];
+        var rem = Math.max(0, cs.total - cs.used);
+        var flag = rem < 4 ? 'danger' : (rem < 8 ? 'warn' : 'ok');
+        return '<div class="td-co-cell"><div class="td-cname">' + esc(c) + '</div><div class="td-hours" style="color:' + (flag === 'danger' ? '#A9503D' : '#244F38') + '">' + rem + ' 课时</div><div class="td-sub">总 ' + cs.total + ' · 已用 ' + cs.used + '</div></div>';
+      }).join('');
+    }
+
+    // 明细：每学员列出各课程（进行中 / 已结课 / 未充值不展示总与剩余）
+    window.TDHOURS = realStudents.map(function (s) {
+      var data = allStudentData[s.id];
+      var cm = data ? studentCourseHours(data) : {};
+      var rows = [];
+      Object.keys(cm).forEach(function (c) {
+        var m = cm[c];
+        if (m.status === 'noPaid') return;
+        rows.push({ name: c, paid: m.paid, used: m.used, rem: m.rem, status: m.status });
+      });
+      rows.sort(function (a, b) { return (a.status === 'done' ? 1 : 0) - (b.status === 'done' ? 1 : 0) || a.name.localeCompare(b.name); });
+      return { id: s.id, name: data ? (data.name || s.name) : s.name, courses: rows };
+    });
+
+    var hl = $('tdHoursList');
+    if (window.TDHOURS.length === 0) {
+      hl.innerHTML = '<div class="td-empty">暂无课时数据。</div>';
+    } else {
+      hl.innerHTML = window.TDHOURS.map(function (h, idx) {
+        var chips;
+        if (!h.courses.length) {
+          chips = '<span class="td-cchip done" title="新学员/暂无课时">暂无课时</span>';
+        } else {
+          chips = h.courses.map(function (c) {
+            if (c.status === 'done') return '<span class="td-cchip done" title="已结课">' + esc(c.name) + ' 已上完</span>';
+            var flag = c.rem < 4 ? 'danger' : (c.rem < 8 ? 'warn' : 'ok');
+            return '<span class="td-cchip ' + flag + '">' + esc(c.name) + ' 剩 <b>' + c.rem + '</b></span>';
+          }).join('');
+        }
+        return '<div class="td-hour-row" onclick="tdOpenHour(' + idx + ')">' +
+          '<span class="td-student">' + esc(h.name) + '</span>' +
+          '<span class="td-chips">' + chips + '</span>' +
+          '<span style="margin-left:auto;display:flex;align-items:center;gap:8px">' +
+          '<button type="button" class="td-btn" style="padding:3px 9px;font-size:11.5px" onclick="event.stopPropagation();tdOpenRoadmap(\'' + esc(h.id) + '\',\'' + esc(h.name) + '\')">阅读路线</button>' +
+          '<span style="font-weight:700;color:#D8A23F;font-size:11.5px;white-space:nowrap">详情 →</span></span>' +
+          '</div>';
+      }).join('');
+    }
+  }
+
+  // ---------- 教师运营台：付款详情（按学员展示真实 payments 字段） ----------
+  function renderPayments(realStudents) {
+    var list = $('tdPaymentsList');
+    if (!list) return;
+    var rows = [];
+    realStudents.forEach(function (s) {
+      var data = allStudentData[s.id];
+      if (!data) return;
+      var nm = data.name || s.name;
+      var paid = ((data.payments) || []).slice().sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
+      var expanded = !!(window.TDPAYEXPAND && window.TDPAYEXPAND[s.id]);
+      var shown = expanded ? paid : paid.slice(0, 2);
+      var headNav = '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">' +
+        '<div class="td-cname" style="margin:0">' + esc(nm) + '</div>' +
+        (paid.length > 2 ? '<button type="button" class="td-btn" style="padding:5px 10px;font-size:12px" onclick="tdPayToggle(\'' + esc(s.id) + '\')">' + (expanded ? '收起' : '展开全部 ' + paid.length + ' 条') + '</button>' : '') +
+        '</div>';
+      var body = paid.length ? shown.map(function (p) {
+        var pi = data.payments.indexOf(p);
+        return '\u003cdiv class=\"td-pay-row\"\u003e' +
+          '\u003cspan class=\"td-pay-cell\" style=\"font-weight:800;color:#244F38\"\u003e￥' + esc(p.amount || 0) + '\u003c/span\u003e' +
+          '\u003cspan class=\"td-pay-cell\"\u003e' + esc(p.courseName || '') + (p.hours ? ' · ' + esc(p.hours) + ' 课时' : '') + '\u003c/span\u003e' +
+          '\u003cspan class=\"td-pay-cell\" style=\"margin-left:auto\"\u003e' + esc(p.date || '') + '\u003c/span\u003e' +
+          '\u003cbutton type=\"button\" class=\"td-btn\" style=\"padding:2px 8px;font-size:11px;margin-left:6px\" data-sid=\"' + esc(s.id) + '\" data-idx=\"' + pi + '\" onclick=\"tdEditPayment(this)\"\u003e编辑\u003c/button\u003e' +
+          '\u003c/div\u003e';
+      }).join('') : '<div class="td-pay-row"><span class="td-pay-cell" style="color:#8A8678">暂无缴费记录</span></div>';
+      var addBtn = '<div style="margin-top:8px"><button type="button" class="td-btn" style="padding:5px 10px;font-size:12px" onclick="tdAddPayment(\'' + esc(s.id) + '\', \'' + esc(nm) + '\')">＋ 添加付费信息</button></div>';
+      rows.push('<div class="td-pay-block">' + headNav + body + addBtn + '</div>');
+    });
+    list.innerHTML = rows.join('') || '<div class="td-empty">暂无学员。</div>';
+  }
+  function tdPayToggle(id) {
+    window.TDPAYEXPAND = window.TDPAYEXPAND || {};
+    window.TDPAYEXPAND[id] = !window.TDPAYEXPAND[id];
+    if (window.TDREALSTUDENTS) renderPayments(window.TDREALSTUDENTS);
+  }
+  function tdEditPayment(btn) {
+    var sid = btn ? btn.getAttribute('data-sid') : null;
+    var payIdx = btn ? parseInt(btn.getAttribute('data-idx'), 10) : -1;
+    if (!sid || payIdx < 0) { showToast('未找到该付费记录', 'error'); return; }
+    var data = allStudentData[sid]; if (!data) return;
+    var p = (data.payments || [])[payIdx];
+    if (!p) { showToast('未找到该付费记录', 'error'); return; }
+    var nm = data.name || sid;
+    var h = '\u003cdiv class=\"td-form\"\u003e\u003cdiv class=\"td-msec\"\u003e\u003ch4\u003e' + esc(nm) + ' · 编辑付费信息\u003c/h4\u003e\u003cp style=\"font-size:13px;color:#7A7468;margin-top:2px\"\u003e修改后保存到原记录（不新增）\u003c/p\u003e\u003c/div\u003e' +
+      '\u003clabel\u003e金额（¥）\u003c/label\u003e\u003cinput class=\"td-f\" id=\"tdPayEditAmount\" type=\"number\" min=\"0\" step=\"0.01\" value=\"' + (p.amount == null ? '' : p.amount) + '\"\u003e' +
+      '\u003clabel\u003e课程名\u003c/label\u003e\u003cinput class=\"td-f\" id=\"tdPayEditCourse\" value=\"' + esc(p.courseName || '') + '\"\u003e' +
+      '\u003clabel\u003e缴费日期\u003c/label\u003e\u003cinput class=\"td-f\" id=\"tdPayEditDate\" type=\"date\" value=\"' + esc(p.date || '') + '\"\u003e' +
+      '\u003clabel\u003e课时数\u003c/label\u003e\u003cinput class=\"td-f\" id=\"tdPayEditHours\" type=\"number\" min=\"0\" step=\"1\" value=\"' + (p.hours == null ? '' : p.hours) + '\"\u003e' +
+      '\u003cdiv class=\"td-maction\" style=\"margin-top:12px\"\u003e\u003cbutton type=\"button\" class=\"td-btn primary\" id=\"tdPayEditSave\"\u003e保存修改\u003c/button\u003e\u003c/div\u003e\u003c/div\u003e';
+    tdOpen(esc(nm) + ' · 编辑付费信息', h);
+    var btn2 = $('tdPayEditSave'); if (!btn2) return;
+    btn2.addEventListener('click', function () {
+      var amount = parseFloat($('tdPayEditAmount').value);
+      var courseName = $('tdPayEditCourse').value.trim();
+      var date = $('tdPayEditDate').value.trim();
+      var hours = parseFloat($('tdPayEditHours').value);
+      if (!(amount >= 0) || !courseName || !date || !(hours >= 0)) { showToast('请完整填写金额 / 课程 / 日期 / 课时', 'error'); return; }
+      var d2 = JSON.parse(JSON.stringify(data));
+      (d2.payments || [])[payIdx].amount = amount;
+      (d2.payments || [])[payIdx].courseName = courseName;
+      (d2.payments || [])[payIdx].date = date;
+      (d2.payments || [])[payIdx].hours = hours;
+      btn2.disabled = true;
+      tdSaveStudent(sid, d2).then(function () {
+        showToast('已更新原付费记录');
+        if (window.TDREALSTUDENTS) { tdRenderHours(window.TDREALSTUDENTS); renderPayments(window.TDREALSTUDENTS); }
+        tdClose();
+      }).catch(function (e) { showToast('保存失败：' + (e.message || e), 'error'); if (btn2) btn2.disabled = false; });
+    });
+  }
+  window.tdEditPayment = tdEditPayment;
+  function tdAddPayment(id, nm) {
+    var courseNames = [];
+    (window.TDREALSTUDENTS || []).forEach(function (ss) {
+      var d = allStudentData[ss.id]; if (!d) return;
+      (d.schedule || []).forEach(function (sc) { if (sc.courseName) courseNames.push(sc.courseName); });
+      (d.oneTimeClasses || []).forEach(function (o) { if (o.courseName) courseNames.push(o.courseName); });
+      (d.records || []).forEach(function (r) { if (r.courseName) courseNames.push(r.courseName); });
+      (d.payments || []).forEach(function (pp) { if (pp.courseName) courseNames.push(pp.courseName); });
+    });
+    courseNames = courseNames.filter(function (v, i, a) { return a.indexOf(v) === i; }).sort();
+    var h = '<div class="td-form"><div class="td-msec"><h4>' + esc(nm) + ' · 添加付费信息</h4><p style="font-size:13px;color:#7A7468;margin-top:2px">保存后自动计入该学员总课时</p></div>' +
+      '<label>金额（¥）</label><input class="td-f" id="tdPayAmount" type="number" min="0" step="0.01" placeholder="如 1800">' +
+      '<label>课程名</label><input class="td-f" id="tdPayCourse" list="tdPayCourseList" placeholder="选择或输入课程">' +
+      '<datalist id="tdPayCourseList">' + courseNames.map(function (c) { return '<option value="' + esc(c) + '">'; }).join('') + '</datalist>' +
+      '<label>缴费日期</label><input class="td-f" id="tdPayDate" type="date" value="' + getLocalDateStr(new Date()) + '">' +
+      '<label>课时数</label><input class="td-f" id="tdPayHours" type="number" min="0" step="1" placeholder="如 12">' +
+      '<div class="td-maction" style="margin-top:12px"><button type="button" class="td-btn primary" id="tdPaySave">保存付费信息</button></div></div>';
+    tdOpen(esc(nm) + ' · 添加付费信息', h);
+    var btn = $('tdPaySave'); if (!btn) return;
+    btn.addEventListener('click', function () { doAddPayment(id); });
+  }
+  function doAddPayment(id) {
+    var amount = parseFloat($('tdPayAmount').value);
+    var courseName = $('tdPayCourse').value.trim();
+    var date = $('tdPayDate').value.trim();
+    var hours = parseFloat($('tdPayHours').value);
+    if (!(amount >= 0) || !courseName || !date || !(hours >= 0)) { showToast('请完整填写金额 / 课程 / 日期 / 课时', 'error'); return; }
+    var data = JSON.parse(JSON.stringify(allStudentData[id] || {}));
+    if (!data.payments) data.payments = [];
+    data.payments.push({ amount: amount, courseName: courseName, date: date, hours: hours });
+    var btn = $('tdPaySave'); if (btn) btn.disabled = true;
+    tdSaveStudent(id, data).then(function () {
+      showToast('已保存付费信息并计入总课时');
+      if (window.TDREALSTUDENTS) { tdRenderHours(window.TDREALSTUDENTS); renderPayments(window.TDREALSTUDENTS); }
+      tdClose();
+    }).catch(function (e) { showToast('保存失败：' + (e.message || e), 'error'); if (btn) btn.disabled = false; });
+  }
+
+  // ---------- 教师运营台：modal 与工具 ----------
+  var tdMask = $('tdMask'), tdTitle = $('tdTitle'), tdBody = $('tdBody');
+  function tdOpen(title, html) { if (!tdMask || !tdTitle || !tdBody) return; tdTitle.textContent = title; tdBody.innerHTML = html; tdMask.classList.add('show'); }
+  function tdClose() { if (tdMask) tdMask.classList.remove('show'); }
+  function tdTip(msg) { try { showToast(msg); } catch (e) { if (window.alert) alert(msg || ''); } }
+
+  // ---------- 教师运营台：家长留言汇总（真实数据，非写死） ----------
+  function renderTeacherMessages(realStudents) {
+    var items = [];
+    realStudents.forEach(function (s) {
+      var data = allStudentData[s.id];
+      if (!data) return;
+      var nm = data.name || s.name;
+      (data.leaveRequests || []).forEach(function (l, li) {
+        if (l.status === 'cancelled') return;
+        items.push({ sid: s.id, idx: li, type: 'leave', name: nm, course: l.courseName || '', date: l.date || '', time: l.startTime || '', content: l.reason || '', status: l.status || 'pending', handled: !!l.handled, reply: (l.teacherReply && l.teacherReply.content) || '', kind: '请假/留言', t: Date.parse(l.requestTime) || 0 });
+      });
+      (data.records || []).forEach(function (r, ri) {
+        if (r && r.parentFeedback && typeof r.parentFeedback.content === 'string') {
+          items.push({ sid: s.id, idx: ri, type: 'feedback', name: nm, course: r.courseName || '', date: r.date || '', content: r.parentFeedback.content, status: 'feedback', handled: !!r.parentFeedback.handled, reply: (r.parentFeedback.teacherReply && r.parentFeedback.teacherReply.content) || '', kind: '家长反馈', t: Date.parse(r.parentFeedback.submitTime) || 0 });
+        }
+      });
+    });
+    items.sort(function (a, b) { return (b.t || 0) - (a.t || 0); });
+    var el = $('tdMessageList');
+    if (!el) return;
+    if (!items.length) { el.innerHTML = '<div class="td-empty">暂无家长留言。</div>'; return; }
+    window.TDMESSAGES = items;
+    // 留言收拢：默认只展示最近一条，点击"展开全部"再看其余
+    function msgRow(m, i) {
+      var stTxt = m.status === 'feedback' ? '家长反馈' : ({ pending: '待处理', approved: '已处理', cancelled: '已取消' }[m.status] || '待处理');
+      var stCls = m.status === 'feedback' ? 'st-approved' : (m.status === 'approved' ? 'st-approved' : 'st-pending');
+      var meta = esc(m.date) + (m.time ? ' · ' + esc(m.time) : '') + ' · ' + esc(m.course);
+      return '<div class="td-msg" onclick="tdOpenMessage(' + i + ')">' +
+        '<div class="td-avatar coral">' + esc(m.name.slice(0, 1)) + '</div>' +
+        '<div class="td-row-body"><h4>' + esc(m.name) + ' · <span class="td-msg-kind">' + esc(m.kind) + '</span></h4>' +
+        '<p>' + meta + '</p><p class="td-msg-content">' + esc(m.content) + '</p></div>' +
+        '<span class="td-status ' + stCls + '">' + stTxt + '</span>' +
+        '</div>';
+    }
+    window.tdMsgExpandAll = function () {
+      var full = window.TDMESSAGES.map(function (m, i) { return msgRow(m, i); }).join('');
+      el.innerHTML = full;
+    };
+    if (items.length <= 1) {
+      el.innerHTML = items.map(function (m, i) { return msgRow(m, i); }).join('');
+    } else {
+      el.innerHTML = msgRow(items[0], 0) +
+        '<button type="button" class="td-msg-more" onclick="tdMsgExpandAll()">展开全部 ' + items.length + ' 条留言</button>';
+    }
+  }
+
+  function tdSaveStudent(id, data) {
+    return ensureToken('emily_mo', 'teacher').then(function (token) {
+      return fetch('/api/students/' + encodeURIComponent(id), {
+        method: 'PUT',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders(token)),
+        body: JSON.stringify(data)
+      }).then(function (res) { if (!res.ok) throw new Error('保存失败'); allStudentData[id] = data; });
+    });
+  }
+  function _tdMsg(tm, data) {
+    if (!tm || !data) return null;
+    if (tm.type === 'leave') return (data.leaveRequests || [])[tm.idx];
+    if (tm.type === 'feedback') return ((data.records || [])[tm.idx] || {}).parentFeedback;
+    return null;
+  }
+  function tdProcessMessage(idx) {
+    var m = window.TDMESSAGES[idx]; if (!m) return;
+    var data = JSON.parse(JSON.stringify(allStudentData[m.sid] || {}));
+    var obj = _tdMsg(m, data); if (!obj) return;
+    obj.handled = true;
+    tdSaveStudent(m.sid, data).then(function () {
+      showToast('已标记为已处理');
+      if (window.TDREALSTUDENTS) renderTeacherMessages(window.TDREALSTUDENTS);
+      var mm = window.TDMESSAGES[idx]; if (mm) tdOpenMessage(idx);
+    }).catch(function (e) { showToast('保存失败：' + (e.message || e), 'error'); });
+  }
+  function tdReplyMessage(idx) {
+    var m = window.TDMESSAGES[idx]; if (!m) return;
+    var cur = m.reply ? '<div class="td-msec"><h4>已有老师留言</h4><div style="font-size:14px;line-height:1.6;color:#244F38">' + nl2br(m.reply) + '</div></div>' : '';
+    var h = cur + '<div class="td-form"><label>老师留言（保存后显示在该学生家长留言板）</label>' +
+      '<textarea class="td-f" id="tdReplyContent" rows="3" placeholder="输入给家长 / 学员的回复…"></textarea>' +
+      '<div class="td-maction" style="margin-top:12px"><button type="button" class="td-btn primary" id="tdReplySave">发送老师留言</button> ' +
+      '<button type="button" class="td-btn" onclick="tdOpenMessage(' + idx + ')">返回</button></div></div>';
+    tdOpen(esc(m.name) + ' · 老师留言', h);
+    var btn = $('tdReplySave'); if (!btn) return;
+    btn.addEventListener('click', function () {
+      var content = $('tdReplyContent').value.trim(); if (!content) { showToast('请输入留言内容', 'error'); return; }
+      var data = JSON.parse(JSON.stringify(allStudentData[m.sid] || {}));
+      var obj = _tdMsg(m, data); if (!obj) return;
+      obj.teacherReply = { content: content, time: new Date().toISOString() };
+      btn.disabled = true;
+      tdSaveStudent(m.sid, data).then(function () {
+        showToast('老师留言已发送');
+        if (window.TDREALSTUDENTS) renderTeacherMessages(window.TDREALSTUDENTS);
+        var mm = window.TDMESSAGES[idx]; if (mm) tdOpenMessage(idx);
+      }).catch(function (e) { showToast('保存失败：' + (e.message || e), 'error'); btn.disabled = false; });
+    });
+  }
+  function tdOpenMessage(idx) {
+    var m = window.TDMESSAGES[idx]; if (!m) return;
+    var stTxt = m.handled ? '已处理' : (m.status === 'approved' ? '已处理' : (m.status === 'feedback' ? '家长反馈' : '待处理'));
+    var stCls = (m.handled || m.status === 'approved' || m.status === 'feedback') ? 'ok' : 'pending';
+    var h = '<div class="td-msec"><h4>' + esc(m.name) + ' · ' + esc(m.kind) + '</h4>' +
+      '<div style="font-size:14px">' + esc(m.course) + ' · ' + esc(m.date) + (m.time ? ' · ' + esc(m.time) : '') + '</div></div>';
+    h += '<div class="td-msec"><h4>内容</h4><div style="font-size:14px;line-height:1.6">' + nl2br(m.content) + '</div></div>';
+    if (m.reply) h += '<div class="td-msec"><h4>老师留言</h4><div style="font-size:14px;line-height:1.6;color:#244F38">' + nl2br(m.reply) + '</div></div>';
+    h += '<div class="td-msec"><h4>状态</h4><span class="td-status ' + stCls + '">' + stTxt + '</span></div>';
+    h += '<div class="td-maction" style="margin-top:12px">' +
+      '<button type="button" class="td-btn" onclick="tdReplyMessage(' + idx + ')">老师留言</button> ' +
+      '<button type="button" class="td-btn primary" onclick="tdProcessMessage(' + idx + ')">已处理</button></div>';
+    h += '<div class="td-maction" style="margin-top:8px"><button type="button" class="td-btn" onclick="tdClose()">收起 / 折叠</button></div>';
+    tdOpen(esc(m.name) + ' · ' + esc(m.kind), h);
+  }
+
+  // ---------- 教师运营台：Practice 作业批改台（问题4 推送区留给 GPT 设计） ----------
+
+
+  function tdOpenClass(idx) {
+    var g = window.TDCLASSES[idx]; if (!g) return;
+    var present = g.att.filter(function (a) { return !a.absent; });
+    var absent = g.att.filter(function (a) { return a.absent; });
+    var h = '<div class="td-msec"><h4>学生名单</h4><div class="td-mstudents">' +
+      present.map(function (a) { return '<span class="td-chip">' + esc(a.name) + '</span>'; }).join('') +
+      absent.map(function (a) { return '<span class="td-chip absent">' + esc(a.name) + ' <span class="td-abs">· 请假</span></span>'; }).join('') + '</div></div>';
+    h += '<div class="td-msec"><h4>今日请假</h4>' + (absent.length
+      ? absent.map(function (a) { return '<span class="td-chip absent">' + esc(a.name) + ' · 请假</span>'; }).join(' ')
+      : '<div style="font-size:13.5px;color:#7A7468">无请假</div>') + '</div>';
+    h += '<div class="td-msec"><h4>今日课次记录</h4>' + g.att.map(function (a) {
+      return '<div class="td-mrec"><span class="td-chip">' + esc(a.name) + '</span><span style="color:' + (a.absent ? '#A9503D' : '#3E7C4F') + ';font-weight:700">' + (a.absent ? '缺席' : '待记录') + '</span></div>';
+    }).join('') + '</div>';
+    h += '<div class="td-msec"><h4>课次操作</h4><div class="td-maction">' +
+      '<button type="button" class="td-btn primary" onclick="tdAddRecord(' + idx + ')">＋ 添加课次记录</button>' +
+      '<button type="button" class="td-btn gold" onclick="tdPushLesson(' + idx + ')">推送下一课</button>' +
+      '</div></div>';
+    tdOpen((g.time || '') + ' · ' + (g.course || '') + ' · 班次详情', h);
+  }
+
+  function tdOpenLeave(idx) {
+    var l = window.TDLEAVES[idx]; if (!l) return;
+    var h = '<div class="td-msec"><h4>事项</h4><div style="font-size:14px">' + esc(l.date) + ' · ' + esc(l.course || '') + (l.reason ? ' · ' + esc(l.reason) : '') + '</div></div>';
+    h += '<div class="td-msec"><h4>处理</h4><div class="td-maction">' +
+      '<a class="td-btn primary" href="/lesson.html?full=1">确认请假</a>' +
+      '<a class="td-btn" href="/lesson.html?full=1">改期或调班</a>' +
+      '<a class="td-btn gold" href="/lesson.html?full=1">标记已处理</a>' +
+      '</div></div>';
+    tdOpen(esc(l.name) + ' · 请假处理', h);
+  }
+
+  // ---------- 教师运营台：Reading Roadmap 手动状态（老师可逐学员设各阶段 跟随自动/进行中/未解锁） ----------
+  var RM_STAGE_KEYS = [
+    { key: 'flyguy',   label: '起步绘本（Fly Guy）' },
+    { key: 'frogtoad', label: '桥梁阅读（Frog and Toad）' },
+    { key: 'dahl',     label: '章节桥梁（Roald Dahl）' },
+    { key: 'raz',      label: '分级阅读（RAZ）' },
+    { key: 'powerup',  label: '剑桥体系（Power Up）' }
+  ];
+  function tdOpenRoadmap(sid, name) {
+    if (!sid) return;
+    var data = allStudentData[sid] || {};
+    var cur = (data.roadmapOverride) || {};
+    var rows = RM_STAGE_KEYS.map(function (s) {
+      var val = cur[s.key] === 'ongoing' ? 'ongoing' : (cur[s.key] === 'locked' ? 'locked' : '');
+      var opts = ['', 'ongoing', 'locked'].map(function (v) {
+        var txt = v === '' ? '跟随自动' : (v === 'ongoing' ? '进行中' : '未解锁');
+        return '<option value="' + v + '"' + (val === v ? ' selected' : '') + '>' + txt + '</option>';
+      }).join('');
+      return '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #F1E9DA">'
+        + '<span style="font-weight:700;color:#1B3D2C;font-size:13.5px">' + esc(s.label) + '</span>'
+        + '<select class="rm-stage-sel" data-stage="' + s.key + '" style="padding:5px 8px;border:1px solid #D8C9A8;border-radius:8px;background:#fff;font-size:12.5px">' + opts + '</select>'
+        + '</div>';
+    }).join('');
+    var h = '<p style="margin:0 0 6px;color:#7A7468;font-size:12.5px">手动状态优先：设为「进行中」即使没上课记录也会点亮；设为「未解锁」即使有记录也会锁住。</p>'
+      + rows
+      + '<div style="margin-top:16px;display:flex;justify-content:flex-end;gap:8px">'
+      + '<button type="button" class="td-btn" onclick="tdClose()">取消</button>'
+      + '<button type="button" class="td-btn primary" data-sid="' + esc(sid) + '" onclick="tdSaveRoadmap(this)">保存</button>'
+      + '</div>';
+    tdOpen(esc(name || '学员') + ' · 阅读路线状态', h);
+  }
+  function tdSaveRoadmap(btn) {
+    var sid = btn ? btn.getAttribute('data-sid') : null;
+    if (!sid) { showToast('未找到学员', 'error'); return; }
+    var stages = {};
+    tdBody.querySelectorAll('.rm-stage-sel').forEach(function (sel) {
+      var k = sel.getAttribute('data-stage');
+      var v = sel.value;
+      if (v === 'ongoing' || v === 'locked') stages[k] = v;
+    });
+    btn.disabled = true;
+    btn.textContent = '保存中…';
+    fetch('/api/students/' + encodeURIComponent(sid) + '/roadmap', {
+      method: 'PUT',
+      headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders(readToken())),
+      body: JSON.stringify({ stages: stages })
+    }).then(function (res) { return res.json(); }).then(function (r) {
+      btn.disabled = false;
+      btn.textContent = '保存';
+      if (r && r.success) {
+        if (allStudentData[sid]) allStudentData[sid].roadmapOverride = (r.roadmapOverride || {});
+        tdClose();
+        showToast('阅读路线状态已更新');
+      } else {
+        showToast((r && r.error) || '保存失败', 'error');
+      }
+    }).catch(function () {
+      btn.disabled = false;
+      btn.textContent = '保存';
+      showToast('网络错误，保存失败', 'error');
+    });
+  }
+
+  function tdOpenHour(idx) {
+    var hh = window.TDHOURS[idx]; if (!hh) return;
+    var h = '<div class="td-msec"><h4>按课程课时</h4><div class="td-co-grid">' +
+      hh.courses.map(function (c) {
+        var stSel = '<select class="td-status-sel" data-hidx="' + idx + '" data-course="' + esc(c.name) + '" onchange="tdSetCourseStatus(this)">' +
+          '<option value="done"' + (c.status === 'done' ? ' selected' : '') + '>已上完</option>' +
+          '<option value="ongoing"' + (c.status === 'done' ? '' : ' selected') + '>进行中</option></select>';
+        return '<div class="td-co-cell' + (c.status === 'done' ? ' dim' : '') + '"><div class="td-cname">' + esc(c.name) + ' ' + stSel + '</div>' +
+          '<div class="td-hours">' + (c.status === 'done' ? '已上完' : (c.rem + ' 课时')) + '</div>' +
+          '<div class="td-sub">总 ' + c.paid + ' · 已上 ' + c.used + ' · 剩 ' + c.rem + '</div></div>';
+      }).join('') + '</div></div>';
+
+    var data = allStudentData[hh.id];
+    var recs = ((data && data.records) || []).slice().sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); }).slice(0, 5);
+    if (recs.length) {
+      h += '<div class="td-msec"><h4>最近课次</h4>' + recs.map(function (r) {
+        return '<div class="td-mrec"><span class="td-chip">' + esc(r.courseName || '') + '</span><span>' + esc(r.date || '') + ' · ' + esc(r.lessonTitle || r.title || '') + '</span></div>';
+      }).join('') + '</div>';
+    }
+
+    h += '<div class="td-msec"><h4>操作</h4><div class="td-maction">' +
+      '<button type="button" class="td-btn primary" onclick="tdEditRecord(' + idx + ')">手动修改上课记录</button>' +
+      '</div></div>';
+    tdOpen(esc(hh.name) + ' · 课时详情', h);
+  }
+  function tdSetCourseStatus(sel) {
+    var hidx = +sel.dataset.hidx, course = sel.dataset.course, val = sel.value;
+    var hh = window.TDHOURS[hidx]; if (!hh) return;
+    var sid = hh.id, data = allStudentData[sid]; if (!data) return;
+    var hit = false;
+    (data.payments || []).forEach(function (p) { if (!hit && p.courseName === course) { p.status = val; hit = true; } });
+    if (!hit) { showToast('未找到该课程的付费记录，无法标记', 'error'); return; }
+    tdSaveStudent(sid, data).then(function () {
+      showToast('已将「' + course + '」标记为' + (val === 'done' ? '已上完' : '进行中'));
+      if (window.TDREALSTUDENTS) tdRenderHours(window.TDREALSTUDENTS);
+      tdOpenHour(hidx);
+    }).catch(function (e) { showToast('保存失败：' + (e.message || e), 'error'); });
+  }
+  window.tdSetCourseStatus = tdSetCourseStatus;
+
+  // sub-nav active 切换
+  (function () {
+    var links = document.querySelectorAll('#tdNav a');
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', function () {
+        for (var j = 0; j < links.length; j++) links[j].classList.remove('active');
+        this.classList.add('active');
+      });
+    }
+  })();
+
+// ---------- banner ----------
+  function showBanner() {
+    var b = $('loginBanner');
+    if (b) b.classList.add('show');
+  }
+  function hideBanner() { $('loginBanner').classList.remove('show'); }
+
+  // ---------- 通用 modal ----------
+  var modal = $('modal');
+  var modalCopy = {
+    lockedBook: ['未解锁书目', '学生和家长可以看到封面、级别和学习价值，但不能直接阅读。Frog and Toad / Dahl 章节书目需完成对应课程后解锁。'],
+    focus: ['Picture Focus', '绘本图片聚焦视图（演示）。正式阅读请进入 Fly Guy 阅读器。']
+  };
+  function openModal(kind) {
+    var copy = modalCopy[kind] || ['提示', '内容预览。'];
+    $('modalTitle').textContent = copy[0];
+    $('modalBody').textContent = copy[1];
+    modal.classList.add('open');
+  }
+  document.querySelectorAll('[data-modal]').forEach(function (b) {
+    b.addEventListener('click', function () { openModal(b.dataset.modal); });
+  });
+  $('modalClose').addEventListener('click', function () { modal.classList.remove('open'); });
+  modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('open'); });
+
+  // 阅读聚焦
+  document.querySelectorAll('[data-word]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var w = btn.dataset.word;
+      var d = { tasty:['好吃的','good to eat; yummy','something tasty'], slimy:['黏滑的','wet and slippery in a funny way','something slimy'], catch:['抓住','to get and hold something moving','looking for something to catch'] }[w];
+      $('wordTitle').textContent = w;
+      $('wordZh').textContent = d[0]; $('wordDef').textContent = d[1]; $('wordEx').textContent = d[2];
+    });
+  });
+  document.querySelectorAll('[data-reader-view]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('[data-reader-view]').forEach(function (it) { it.classList.toggle('active', it === btn); });
+      var view = btn.dataset.readerView;
+      var surface = $('readingSurface');
+      surface.style.gridTemplateColumns = (view === 'text' || view === 'picture') ? '1fr' : 'minmax(280px, .9fr) minmax(320px, 1.1fr)';
+      surface.querySelector('.page-image').classList.toggle('hidden', view === 'text');
+      surface.querySelector('.text-pane').classList.toggle('hidden', view === 'picture');
+    });
+  });
+
+  // Library filter
+  document.querySelectorAll('[data-filter]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('[data-filter]').forEach(function (it) { it.classList.toggle('active', it === btn); });
+      var f = btn.dataset.filter;
+      document.querySelectorAll('.book-card').forEach(function (c) { c.classList.toggle('hidden', f !== 'all' && c.dataset.status !== f); });
+      closeSeriesDetail();
+    });
+  });
+
+  // 教案库 filter
+  document.querySelectorAll('[data-lesson-filter]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('[data-lesson-filter]').forEach(function (it) { it.classList.toggle('active', it === btn); });
+      var f = btn.dataset.lessonFilter;
+      document.querySelectorAll('.lesson-item').forEach(function (it) { it.classList.toggle('hidden', f !== 'all' && it.dataset.category !== f); });
+    });
+  });
+
+  // Practice 视角
+  document.querySelectorAll('[data-practice-mode]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var mode = btn.dataset.practiceMode;
+      document.querySelectorAll('[data-practice-mode]').forEach(function (it) { it.classList.toggle('active', it === btn); });
+      document.querySelectorAll('.practice-student').forEach(function (it) { it.classList.toggle('hidden', mode !== 'student'); });
+      document.querySelectorAll('.practice-teacher').forEach(function (it) { it.classList.toggle('hidden', mode !== 'teacher'); });
+      $('practiceIntro').textContent = mode === 'teacher'
+        ? '教师端为 Practice 管理台，进入 lesson.html 查看班级/学员提交与归档。'
+        : '学生看到老师推送给自己的 worksheet / quiz / listening，也看到常年开放游戏。';
+    });
+  });
+
+  // schedule tabs（学生）
+  document.querySelectorAll('[data-schedule]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('[data-schedule]').forEach(function (it) { it.classList.toggle('active', it === btn); });
+      // 下一周/下个月为简短汇总说明，不改变核心数据
+      var mode = btn.dataset.schedule;
+      var data = (allStudentData && currentStudentId) ? allStudentData[currentStudentId] : null;
+      if (mode === 'next') {
+        if (data) renderStudent(data);
+      } else if (mode === 'week') {
+        $('scheduleTitle').textContent = '下一周课程';
+        $('scheduleSubtitle').textContent = '近 7 天排课班次汇总';
+        var up = data ? getUpcomingClasses(data.schedule, data.oneTimeClasses, 30) : [];
+        var wk = up.filter(function (c) { return betweenDays(c.date, 0, 7); });
+        $('scheduleTime').textContent = wk.length + ' 节';
+        var wkDur = wk.reduce(function (s, c) { return s + (parseFloat(c.duration) || 0); }, 0);
+        $('scheduleDuration').textContent = wkDur > 0 ? fmtHours(wkDur) : '--';
+        $('scheduleCourse').textContent = wk.map(function (c) { return c.courseName; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).join(' / ') || '--';
+      } else {
+        $('scheduleTitle').textContent = '下个月课程';
+        $('scheduleSubtitle').textContent = '未来 30 天排课班次汇总';
+        var allu = data ? getUpcomingClasses(data.schedule, data.oneTimeClasses, 90) : [];
+        var m = allu.filter(function (c) { return betweenDays(c.date, 0, 30); });
+        $('scheduleTime').textContent = m.length + ' 节';
+        var mDur = m.reduce(function (s, c) { return s + (parseFloat(c.duration) || 0); }, 0);
+        $('scheduleDuration').textContent = mDur > 0 ? fmtHours(mDur) : '--';
+        $('scheduleCourse').textContent = m.map(function (c) { return c.courseName; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).join(' / ') || '--';
+      }
+    });
+  });
+
+  // ---------- 请假（真实 PUT 到后端） ----------
+  var leaveModal = $('leaveModal');
+  function openLeave() {
+    if (!pendingLeave) { showToast('暂无可请假的排课', 'error'); return; }
+    var n = pendingLeave;
+    var dt = new Date(n.date);
+    var wd = ['周日','周一','周二','周三','周四','周五','周六'][dt.getDay()];
+    $('leaveMeta').textContent = (n.date + ' ' + wd) + ' · ' + (n.startTime || '') + (n.duration ? ' · ' + n.duration + '小时' : '') + ' · ' + (n.courseName || '');
+    $('leaveReason').value = '';
+    leaveModal.classList.add('open');
+  }
+  $('leaveBtn').addEventListener('click', openLeave);
+  $('leaveCancel').addEventListener('click', function () { leaveModal.classList.remove('open'); });
+  leaveModal.addEventListener('click', function (e) { if (e.target === leaveModal) leaveModal.classList.remove('open'); });
+
+  $('leaveConfirm').addEventListener('click', async function () {
+    if (!currentStudentId || !pendingLeave) return;
+    var btn = $('leaveConfirm');
+    btn.disabled = true;
+    try {
+      var data = allStudentData[currentStudentId];
+      if (!data) return;
+      if (!data.leaveRequests) data.leaveRequests = [];
+      var reason = $('leaveReason').value.trim();
+      data.leaveRequests.push({
+        date: pendingLeave.date,
+        courseName: pendingLeave.courseName || '',
+        reason: reason || '无',
+        requestTime: new Date().toISOString(),
+        status: 'approved'
+      });
+      var token = await ensureToken(currentStudentId, 'student');
+      var res = await fetch('/api/students/' + encodeURIComponent(currentStudentId), {
+        method: 'PUT',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders(token)),
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('保存失败');
+      allStudentData[currentStudentId] = data;
+      leaveModal.classList.remove('open');
+      showToast('请假申请成功');
+    } catch (err) {
+      console.error('leave error:', err);
+      showToast('操作失败：' + (err.message || ''), 'error');
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  // ---------- 上课记录全览（按课程/年月筛选、分页） ----------
+  var recordsModal = $('recordsModal');
+  var recAll = [];        // 全部记录
+  var recFilter = { course: '', month: '', size: 20, page: 1 };
+  var recStateCourses = [];
+  var recStateMonths = [];
+
+  function recText(r) { return (r.keyKnowledge || []).concat(r.homework || []).filter(Boolean); }
+  function recMonthOf(r) { return String(r.date || '').slice(0, 7); }
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+  function nl2br(s) { return esc(s).replace(/\n/g, '<br>'); }
+  function rich(s) {
+    var str = String(s == null ? '' : s);
+    var o = '\u0001B\u0001';
+    var c = '\u0001/E\u0001';
+    var br = '\u0001BR\u0001';
+    str = str.replace(/&nbsp;/gi, ' ')
+             .replace(/<b>/g, o).replace(/<\/b>/g, c)
+             .replace(/<strong>/gi, o).replace(/<\/strong>/gi, c)
+             .replace(/<u>/g, '\u0001U\u0001').replace(/<\/u>/g, '\u0001/U\u0001')
+             .replace(/<i>/gi, '\u0001I\u0001').replace(/<\/i>/gi, '\u0001/I\u0001')
+             .replace(/<em>/gi, '\u0001I\u0001').replace(/<\/em>/gi, '\u0001/I\u0001')
+             .replace(/<br\s*\/?>/gi, br);
+    str = esc(str).replace(/\n/g, '\u0001BR\u0001');
+    return str.replace(new RegExp(o, 'g'), '<b>').replace(new RegExp(c, 'g'), '</b>')
+              .replace(new RegExp('\u0001U\u0001', 'g'), '<u>').replace(new RegExp('\u0001/U\u0001', 'g'), '</u>')
+              .replace(new RegExp('\u0001I\u0001', 'g'), '<i>').replace(new RegExp('\u0001/I\u0001', 'g'), '</i>')
+              .replace(new RegExp(br, 'g'), '<br>');
+  }
+  function recDayWd(d) { return d ? '周' + '日一二三四五六'[new Date(d).getDay()] : ''; }
+  function recFmtDate(r) {
+    var d = String(r.date || '');
+    return '<div class="rec-date"><strong>' + (d.slice(8, 10) || '') + '</strong><span>' + recDayWd(d) + '</span></div>';
+  }
+  function showRecordsPane(listMode) {
+    $('recordsListPane').hidden = !listMode;
+    $('recordDetailPane').hidden = listMode;
+  }
+  function renderRecordDetail(r) {
+    var body = $('recordDetailBody');
+    var d = String(r.date || '');
+    var imgs = r.homeworkImages || [];
+    var imgHtml = imgs.length
+      ? '<div class="rec-d-imgs">' + imgs.map(function (src) {
+          var s = String(src);
+          var full = (s.indexOf('http') === 0) ? s : ('/' + s.replace(/^\//, ''));
+          return '<a href="' + esc(full) + '" target="_blank" rel="noopener"><img src="' + esc(full) + '" alt="作业图片" loading="lazy"></a>';
+        }).join('') + '</div>'
+      : '';
+    function blocks(arr, cls) {
+      return (arr || []).filter(Boolean).map(function (t) {
+        return '<div class="rec-d-block' + (cls ? ' ' + cls : '') + '">' + rich(t) + '</div>';
+      }).join('');
+    }
+
+    // Group vocab lines (book-emoji + word (pos): meaning) into a table; keep others as blocks
+    function kvToHtml(arr) {
+      var rows = [];
+      var plain = [];
+      var re = /\uD83D\uDCD6\s*(.+?)\s*\(([^)]*)\)\s*:\s*(.*)$/;
+      (arr || []).filter(Boolean).forEach(function (t) {
+        var m = re.exec(t.trim());
+        if (m) {
+          rows.push('\u003ctr\u003e\u003ctd class="c-w"\u003e' + esc(m[1]) + '\u003c/td\u003e\u003ctd class="c-p"\u003e' + esc(m[2]) + '\u003c/td\u003e\u003ctd class="c-m"\u003e' + esc(m[3]) + '\u003c/td\u003e\u003c/tr\u003e');
+        } else {
+          plain.push(t);
+        }
+      });
+      var table = rows.length
+        ? '\u003ctable class="rec-d-vtab"\u003e\u003cthead\u003e\u003ctr\u003e\u003cth\u003e\u5355\u8bcd\u003c/th\u003e\u003cth\u003e\u8bcd\u6027\u003c/th\u003e\u003cth\u003e\u91ca\u4e49\u003c/th\u003e\u003c/tr\u003e\u003c/thead\u003e\u003ctbody\u003e' + rows.join('') + '\u003c/tbody\u003e\u003c/table\u003e'
+        : '';
+      var plainHtml = plain.map(function (t) {
+        return '\u003cdiv class="rec-d-block kv"\u003e' + rich(t) + '\u003c/div\u003e';
+      }).join('');
+      return table + plainHtml;
+    }
+    var kvBlocks = kvToHtml(r.keyKnowledge);
+    var hwBlocks = blocks(r.homework);
+    var timeTxt = r.time ? (' · ' + esc(r.time)) : '';
+    body.innerHTML =
+      '<div class="rec-d-head">'
+      + '<div class="rec-d-date">' + esc(d) + ' ' + recDayWd(d) + esc(timeTxt) + '</div>'
+      + '<div class="rec-d-course">' + esc(r.courseName || '课程') + '</div>'
+      + (r.bookName ? '<div class="rec-d-book">📚 ' + esc(r.bookName) + '</div>' : '')
+      + '<div class="rec-d-lesson">' + esc(r.lessonTitle || '') + '</div>'
+      + '<div class="rec-d-meta">本节课时：' + (r.hours || 1) + ' 节</div>'
+      + '</div>'
+      + (kvBlocks ? '<div class="rec-d-section"><div class="rec-d-section-title">📌 上课重点</div>' + kvBlocks + '</div>' : '')
+      + (hwBlocks ? '<div class="rec-d-section"><div class="rec-d-section-title">📝 家庭作业</div>' + hwBlocks + imgHtml + '</div>' : '')
+      + ((!kvBlocks && !hwBlocks && !imgHtml) ? '<div class="empty-state">本条暂无详细内容</div>' : '');
+  }
+  function openRecordDetail(r) {
+    renderRecordDetail(r);
+    showRecordsPane(false);
+    $('recordsModalTitleH3').textContent = '记录详情';
+    $('recordsSum').textContent = esc(r.date || '') + ' · ' + esc(r.courseName || '');
+  }
+  function backToRecordsList() {
+    showRecordsPane(true);
+    $('recordsModalTitleH3').textContent = '上课记录';
+    renderRecordsList();
+  }
+
+  function buildRecordsUI() {
+    var courseSel = $('recFilterCourse');
+    var monthSel = $('recFilterMonth');
+    courseSel.innerHTML = '<option value="">全部课程</option>';
+    monthSel.innerHTML = '<option value="">全部月份</option>';
+    recStateCourses.forEach(function (c) { courseSel.insertAdjacentHTML('beforeend', '<option value="' + c + '">' + c + '</option>'); });
+    recStateMonths.forEach(function (m) { monthSel.insertAdjacentHTML('beforeend', '<option value="' + m + '">' + m + '</option>'); });
+  }
+
+  function renderRecordsList() {
+    var listEl = $('recordsFullList');
+    var sumEl = $('recordsSum');
+    var filtered = recAll.filter(function (r) {
+      if (recFilter.course && (r.courseName || '') !== recFilter.course) return false;
+      if (recFilter.month && recMonthOf(r) !== recFilter.month) return false;
+      return true;
+    });
+    sumEl.textContent = '共 ' + filtered.length + ' 条';
+    var size = recFilter.size || 0;
+    var totalPages = size ? Math.max(1, Math.ceil(filtered.length / size)) : 1;
+    if (recFilter.page > totalPages) recFilter.page = totalPages;
+    if (recFilter.page < 1) recFilter.page = 1;
+    var view = size ? filtered.slice((recFilter.page - 1) * size, recFilter.page * size) : filtered;
+
+    if (!view.length) {
+      listEl.innerHTML = '<div class="empty-state">没有符合条件的上课记录。</div>';
+      $('recordsPager').innerHTML = '';
+      return;
+    }
+
+    // 按日期倒序，并分组展示
+    var byMonth = {};
+    view.forEach(function (r) {
+      var key = recMonthOf(r) || '其他';
+      byMonth[key] = byMonth[key] || [];
+      byMonth[key].push(r);
+    });
+    var html = '';
+    Object.keys(byMonth).sort().reverse().forEach(function (ym) {
+      html += '<div class="records-group-title">' + ym + '</div>';
+      byMonth[ym].forEach(function (r) {
+        var idx = recAll.indexOf(r);
+        var kvs = recText(r).map(function (t) {
+          var len = String(t || '').length;
+          return '<li>· ' + esc(t).slice(0, 42) + (len > 42 ? '…' : '') + '</li>';
+        }).slice(0, 3).join('');
+        html += '<div class="records-card" data-idx="' + idx + '">'
+          + recFmtDate(r)
+          + '<div><h4>' + esc(r.courseName || '课程') + '</h4>'
+          + '<div class="rec-meta">' + esc(r.lessonTitle || '') + '</div>'
+          + (kvs ? '<ul class="rec-kv">' + kvs + '</ul>' : '')
+          + '<div class="rec-open">查看完整记录 ›</div>'
+          + '</div></div>';
+      });
+    });
+
+    listEl.innerHTML = html;
+
+    // 分页
+    var pagerEl = $('recordsPager');
+    if (!size || totalPages <= 1) { pagerEl.innerHTML = ''; return; }
+    var ph = '';
+    ph += '<button ' + (recFilter.page === 1 ? 'disabled' : '') + ' data-pg="' + (recFilter.page - 1) + '">‹ 上一页</button>';
+    for (var p = 1; p <= totalPages; p++) {
+      if (totalPages > 7 && p > 2 && p < totalPages - 1 && Math.abs(p - recFilter.page) > 1) {
+        if (ph.indexOf('…') === -1) ph += '<button disabled>…</button>';
+        continue;
+      }
+      ph += '<button ' + (p === recFilter.page ? 'class="active" ' : '') + 'data-pg="' + p + '">' + p + '</button>';
+    }
+    ph += '<button ' + (recFilter.page === totalPages ? 'disabled' : '') + ' data-pg="' + (recFilter.page + 1) + '">下一页 ›</button>';
+    pagerEl.innerHTML = ph;
+    pagerEl.querySelectorAll('button[data-pg]').forEach(function (b) {
+      b.addEventListener('click', function () { recFilter.page = parseInt(b.dataset.pg, 10); renderRecordsList(); });
+    });
+
+    listEl.querySelectorAll('.records-card[data-idx]').forEach(function (card) {
+      card.addEventListener('click', function () {
+        var i = parseInt(card.dataset.idx, 10);
+        if (i >= 0 && recAll[i]) openRecordDetail(recAll[i]);
+      });
+    });
+  }
+
+  function openRecordsAll() {
+    showRecordsPane(true);
+    $('recordsModalTitleH3').textContent = '上课记录';
+    buildRecordsUI();
+    recFilter.page = 1;
+    renderRecordsList();
+    recordsModal.classList.add('open');
+  }
+
+  $('recordsOpenBtn').addEventListener('click', openRecordsAll);
+  $('recordsClose').addEventListener('click', function () { recordsModal.classList.remove('open'); });
+  recordsModal.addEventListener('click', function (e) { if (e.target === recordsModal) recordsModal.classList.remove('open'); });
+  $('recordDetailBack').addEventListener('click', backToRecordsList);
+  $('recFilterCourse').addEventListener('change', function () { recFilter.course = this.value; recFilter.page = 1; renderRecordsList(); });
+  $('recFilterMonth').addEventListener('change', function () { recFilter.month = this.value; recFilter.page = 1; renderRecordsList(); });
+  $('recPageSize').addEventListener('change', function () { recFilter.size = parseInt(this.value, 10) || 0; recFilter.page = 1; renderRecordsList(); });
+
+  // 保存全量记录与筛选选项（在 renderStudent 里调用）
+  function setRecordsData(records) {
+    recAll = (records || []).slice().sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
+    var set = {};
+    (records || []).forEach(function (r) { if (r.courseName) set[r.courseName] = 1; });
+    recStateCourses = Object.keys(set);
+    var mset = {};
+    (records || []).forEach(function (r) { var m = recMonthOf(r); if (m) mset[m] = 1; });
+    recStateMonths = Object.keys(mset).sort().reverse();
+  }
+
+  // ---------- 启动（学生首页，固定学生视角） ----------
+  async function init() {
+    var src = getCurrentUserFromSource();
+    if (src) {
+      // 教师身份 (emily_mo) → 教师运营首页 (学生+教师全景)
+      if (src.id === 'emily_mo') {
+        currentUser = src.id;
+        isTeacherUser = true;
+        currentRole = 'teacher';
+        document.querySelectorAll('.teacher-only').forEach(function (el) { el.classList.remove('hidden'); });
+        document.querySelectorAll('.student-nav').forEach(function (el) { el.classList.add('hidden'); });
+        document.querySelectorAll('.teacher-nav').forEach(function (el) { el.classList.remove('hidden'); });
+        bindTeacherNav();
+        showPage('teacher');
+        await loadTeacherView();
+        return;
+      }
+      // 学生身份 → 学生首页
+      setStudentRole();
+      showPage('student');
+      hideBanner();
+      currentUser = src.id;
+      isTeacherUser = false;
+      currentStudentId = src.id;
+      await loadStudentView(currentStudentId);
+      return;
+    }
+
+    // 拿不到登录账号 → 提示去 lesson.html 登录
+    setStudentRole();
+    showPage('student');
+    hideBanner();
+    showBanner();
+  }
+
+  // ---------- 教师运营台：添加课次记录 / 推送下一课（直接弹窗填写，不再跳登录页） ----------
+  // 依 classIdx 读取该班次的真实学员，允许勾选并填写 上课内容 + 家庭作业（支持 URL，与 practice 作业联动）
+  function tdAddRecord(classIdx) {
+    var g = window.TDCLASSES[classIdx]; if (!g) return;
+    var today = getLocalDateStr(new Date());
+    var studentOpts = (g.att || []).map(function (a) {
+      return '<label class="td-pick"><input type="checkbox" class="td-ar-check" value="' + esc(a.id) + '"' + (a.absent ? '' : ' checked') + '> ' + esc(a.name) + (a.absent ? ' <span class="td-abs">· 请假</span>' : '') + '</label>';
+    }).join('');
+    var h = '<div class="td-form"><label>记录到学员</label><div class="td-picks">' + (studentOpts || '<div class="td-empty">本班次暂无学员</div>') + '</div>' +
+      '<label>上课日期</label><input class="td-f" type="date" id="tdArDate" value="' + today + '">' +
+      '<label>单词课名 / 课名</label><input class="td-f" id="tdArTitle" placeholder="如 My Farm & 单元复习">' +
+      '<label>上课时间</label><input class="td-f" id="tdArTime" value="' + esc(g.time || '') + '">' +
+      '<label>上课内容</label><textarea class="td-f" id="tdArContent" rows="3" placeholder="每行一条核心知识点"></textarea>' +
+      '<label>家庭作业（每行一条，可填练习页 / 课件 URL 以便与 practice 联动）</label><textarea class="td-f" id="tdArHomework" rows="3" placeholder="例如：https://emilyenstudio.com/xxx.html"></textarea>' +
+      '<div class="td-maction" style="margin-top:12px"><button type="button" class="td-btn primary" id="tdArSave">保存课次记录</button></div></div>';
+    tdOpen((g.time || '') + ' · ' + (g.course || '') + ' · 添加课次记录', h);
+    var saveBtn = $('tdArSave'); if (!saveBtn) return;
+    saveBtn.addEventListener('click', function () { doAddRecord(classIdx); });
+  }
+
+  function doAddRecord(classIdx) {
+    var g = window.TDCLASSES[classIdx]; if (!g) return;
+    var ids = Array.prototype.slice.call(document.querySelectorAll('.td-ar-check')).filter(function (c) { return c.checked; }).map(function (c) { return c.value; });
+    if (!ids.length) { showToast('请至少勾选一名学员', 'error'); return; }
+    var date = $('tdArDate').value.trim();
+    if (!date) { showToast('请选择上课日期', 'error'); return; }
+    var contentLines = $('tdArContent').value.split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+    var homeworkLines = $('tdArHomework').value.split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+    var title = $('tdArTitle').value.trim();
+    var time = $('tdArTime').value.trim();
+    var rec = { courseName: g.course || '', date: date, time: time, lessonTitle: title, hours: 1, keyKnowledge: contentLines, homework: homeworkLines };
+    var btn = $('tdArSave'); if (btn) btn.disabled = true;
+    // 逐学员追加记录并保存（PUT 全量学员数据，后端自动重算课时）
+    var pending = ids.map(function (id) {
+      var saved = allStudentData[id];
+      var data = JSON.parse(JSON.stringify(saved || {}));
+      if (!data.records) data.records = [];
+      data.records.push(JSON.parse(JSON.stringify(rec)));
+      data.records.sort(function (a, b) { return String(a.date || '').localeCompare(String(b.date || '')); });
+      return ensureToken('emily_mo', 'teacher').then(function (token) {
+        return fetch('/api/students/' + encodeURIComponent(id), {
+          method: 'PUT',
+          headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders(token)),
+          body: JSON.stringify(data)
+        }).then(function (res) { if (!res.ok) throw new Error('保存失败'); allStudentData[id] = data; });
+      });
+    });
+    Promise.all(pending).then(function () {
+      showToast('已保存 ' + ids.length + ' 名学员的课次记录');
+      if (window.TDREALSTUDENTS) { tdRenderHours(window.TDREALSTUDENTS); renderPayments(window.TDREALSTUDENTS); }
+      tdClose();
+    }).catch(function (e) {
+      console.error('add record error:', e);
+      showToast('保存失败：' + (e.message || e), 'error');
+      if (btn) btn.disabled = false;
+    });
+  }
+
+  function tdPushLesson(classIdx) {
+    tdAddRecord(classIdx);
+  }
+
+  // ---------- 教师运营台：手动修改上课记录（直接编辑学员 records 关键字段） ----------
+  function tdEditRecord(hourIdx) {
+    var hh = window.TDHOURS[hourIdx]; if (!hh) return;
+    var data = allStudentData[hh.id];
+    var recs = ((data && data.records) || []).slice().sort(function (a, b) { return String(a.date || '').localeCompare(String(b.date || '')); });
+    if (!recs.length) { showToast('该学员暂无上课记录', 'error'); return; }
+    var h = '<div class="td-form">' +
+      '<div class="td-msec"><h4>' + esc(hh.name) + ' · 上课记录（直接修改后保存）</h4></div>' +
+      recs.map(function (r, i) {
+        var kk = (r.keyKnowledge || []).join('\n');
+        var hw = (r.homework || []).join('\n');
+        return '<div class="td-edrec" data-i="' + i + '">' +
+          '<div class="td-edrec-head">第 ' + (i + 1) + ' 次 · ' + esc(r.date || '') + ' · ' + esc(r.courseName || '') + '</div>' +
+          '<label>单词课名 / 课名</label><input class="td-f td-er-f" data-f="lessonTitle" value="' + esc(r.lessonTitle || '') + '">' +
+          '<label>上课时间</label><input class="td-f td-er-f" data-f="time" value="' + esc(r.time || '') + '">' +
+          '<label>上课内容</label><textarea class="td-f td-er-f" data-f="keyKnowledge" rows="2">' + esc(kk) + '</textarea>' +
+          '<label>家庭作业（每行一条，可填 URL）</label><textarea class="td-f td-er-f" data-f="homework" rows="2">' + esc(hw) + '</textarea>' +
+          '</div>';
+      }).join('') +
+      '<div class="td-maction" style="margin-top:12px"><button type="button" class="td-btn primary" id="tdErSave">保存全部修改</button></div></div>';
+    tdOpen(esc(hh.name) + ' · 手动修改上课记录', h);
+    var saveBtn = $('tdErSave'); if (!saveBtn) return;
+    saveBtn.addEventListener('click', function () { doEditRecord(hourIdx); });
+  }
+
+  function doEditRecord(hourIdx) {
+    var hh = window.TDHOURS[hourIdx]; if (!hh) return;
+    var data = JSON.parse(JSON.stringify(allStudentData[hh.id] || {}));
+    // 按 .td-edrec[data-i] 顺序重建
+    var blocks = document.querySelectorAll('.td-edrec');
+    var out = Array.prototype.map.call(blocks, function (blk, i) {
+      var r = data.records[i] || {};
+      blk.querySelectorAll('.td-er-f').forEach(function (el) {
+        var f = el.getAttribute('data-f');
+        var v = el.value;
+        if (f === 'keyKnowledge' || f === 'homework') { r[f] = v.split('\n').map(function (s) { return s.trim(); }).filter(Boolean); }
+        else { r[f] = v.trim(); }
+      });
+      return r;
+    });
+    data.records = out.sort(function (a, b) { return String(a.date || '').localeCompare(String(b.date || '')); });
+    var btn = $('tdErSave'); if (btn) btn.disabled = true;
+    ensureToken('emily_mo', 'teacher').then(function (token) {
+      return fetch('/api/students/' + encodeURIComponent(hh.id), {
+        method: 'PUT',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders(token)),
+        body: JSON.stringify(data)
+      });
+    }).then(function (res) { if (!res.ok) throw new Error('保存失败'); return res; })
+      .then(function () {
+        allStudentData[hh.id] = data;
+        showToast('上课记录已保存');
+        if (window.TDREALSTUDENTS) { tdRenderHours(window.TDREALSTUDENTS); renderPayments(window.TDREALSTUDENTS); }
+        tdClose();
+      }).catch(function (e) {
+        console.error('edit record error:', e);
+        showToast('保存失败：' + (e.message || e), 'error');
+        if (btn) btn.disabled = false;
+      });
+  }
+
+  // 供内联 onclick 使用的全局导出（弹窗函数定义在闭包内，必须挂到 window）
+  window.tdClose = tdClose;
+  window.tdOpen = tdOpen;
+  window.tdOpenClass = tdOpenClass;
+  window.tdGoDay = tdGoDay;
+  window.tdOpenHour = tdOpenHour;
+  window.tdOpenRoadmap = tdOpenRoadmap;
+  window.tdSaveRoadmap = tdSaveRoadmap;
+  window.tdOpenMessage = tdOpenMessage;
+  window.tdOpenLeave = tdOpenLeave;
+  window.tdAddRecord = tdAddRecord;
+  window.tdPushLesson = tdPushLesson;
+  window.tdEditRecord = tdEditRecord;
+  window.tdPayToggle = tdPayToggle;
+  window.tdAddPayment = tdAddPayment;
+  window.doAddPayment = doAddPayment;
+  window.tdReplyMessage = tdReplyMessage;
+  window.tdProcessMessage = tdProcessMessage;
+
+  init();
+})();
+</script>
+</body>
+</html>

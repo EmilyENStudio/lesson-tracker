@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>There Was an Old Lady Who Swallowed Fly Guy — 精读教案 · 两课时</title>
+<style>
+:root {
+  --canvas: #FBF3E7;
+  --surface: #FFF9F1;
+  --surface-alt: #FFF3E0;
+  --ink: #31251B;
+  --ink-secondary: #8B7662;
+  --accent: #C96F3D;
+  --accent-light: #F5DCC8;
+  --green: #5A8F56;
+  --green-light: #E8F0E6;
+  --blue: #4A7FA5;
+  --blue-light: #E3EFF6;
+  --purple: #8B6DAF;
+  --purple-light: #F0EAF6;
+  --red: #C75A4A;
+  --red-light: #FCEAE7;
+  --divider: #E8DDD0;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-heading: Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.35rem;
+  --fs-2xl: 1.7rem;
+  --fs-3xl: 2.2rem;
+  --lh: 1.7;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(49,37,27,0.06);
+  --shadow: 0 2px 8px rgba(49,37,27,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* ── Header ── */
+.site-header {
+  background: linear-gradient(135deg, #C96F3D 0%, #B85A2E 100%);
+  color: #fff;
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2rem;
+}
+.site-header .page-wrap { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; }
+.header-text { flex: 1; min-width: 260px; }
+.header-text h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3.6vw, 2.3rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.3rem;
+}
+.header-text .subtitle {
+  font-size: var(--fs-lg);
+  opacity: 0.9;
+}
+.book-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.badge {
+  display: inline-block;
+  font-size: var(--fs-sm);
+  padding: 0.2em 0.7em;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+/* ── Section ── */
+section { margin-bottom: 2.5rem; }
+.section-label {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+h4 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+p { margin-bottom: 0.8rem; }
+.text-secondary { color: var(--ink-secondary); }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.card-accent { border-left: 4px solid var(--accent); }
+.card-green { border-left: 4px solid var(--green); }
+.card-blue { border-left: 4px solid var(--blue); }
+.card-purple { border-left: 4px solid var(--purple); }
+
+/* ── LT Grid ── */
+.lt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.lt-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+.lt-card .lt-num {
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.lt-card h4 { margin-bottom: 0.5rem; font-size: var(--fs-base); }
+.lt-card ul { padding-left: 1.2em; }
+.lt-card li { margin-bottom: 0.3rem; font-size: var(--fs-sm); color: var(--ink-secondary); }
+
+/* ── Session Timeline ── */
+.session-block {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.session-header {
+  padding: 1.2rem 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.session-header.s1 { background: linear-gradient(135deg, #C96F3D, #A85A30); }
+.session-header.s2 { background: linear-gradient(135deg, #5A8F56, #3D7A3A); }
+.session-header h2 { color: #fff; margin: 0; font-size: var(--fs-xl); }
+.session-header .session-meta { font-size: var(--fs-sm); opacity: 0.9; }
+.session-body { padding: 1.5rem; }
+
+.phase {
+  position: relative;
+  padding-left: 1.8rem;
+  padding-bottom: 1.5rem;
+  border-left: 2px solid var(--divider);
+  margin-left: 0.5rem;
+}
+.phase:last-child { border-left-color: transparent; padding-bottom: 0; }
+.phase::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 0.3rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.phase.green-dot::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+.phase-blue-dot::before { background: var(--blue); box-shadow: 0 0 0 2px var(--blue); }
+.phase-purple-dot::before { background: var(--purple); box-shadow: 0 0 0 2px var(--purple); }
+
+.phase-label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+.phase.green-dot .phase-label { color: var(--green); }
+.phase-blue-dot .phase-label { color: var(--blue); }
+.phase-purple-dot .phase-label { color: var(--purple); }
+
+.phase-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  margin: 0.8rem 0;
+}
+th, td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--divider);
+  vertical-align: top;
+}
+th {
+  background: var(--surface-alt);
+  font-weight: 700;
+  white-space: nowrap;
+}
+td { color: var(--ink); }
+.wrap-word { overflow-wrap: break-word; word-break: break-word; }
+
+/* ── Vocab Table ── */
+.vocab-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  align-items: baseline;
+}
+.vocab-word {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--accent);
+}
+.vocab-ipa {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+}
+.vocab-pos {
+  font-size: var(--fs-sm);
+  color: var(--blue);
+  font-weight: 600;
+}
+.vocab-def { font-size: var(--fs-sm); }
+.vocab-example {
+  grid-column: 1 / -1;
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  border-top: 1px dashed var(--divider);
+  padding-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+/* ── Phonics ── */
+.phonics-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.8rem;
+  margin: 0.25rem;
+  font-size: var(--fs-sm);
+}
+.phonics-pattern {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* ── Sentence Pattern ── */
+.pattern-block {
+  background: var(--purple-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+.pattern-template {
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  color: var(--purple);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.pattern-example {
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+}
+
+/* ── Callout ── */
+.callout {
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: var(--fs-sm);
+}
+.callout-tip { background: var(--green-light); border-left: 3px solid var(--green); }
+.callout-warn { background: var(--red-light); border-left: 3px solid var(--red); }
+.callout-info { background: var(--blue-light); border-left: 3px solid var(--blue); }
+.callout strong { display: block; margin-bottom: 0.3rem; }
+
+/* ── Homework Section ── */
+.hw-section {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
+}
+.hw-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.hw-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--divider);
+}
+.hw-question {
+  margin-bottom: 1rem;
+  padding-left: 0.2rem;
+}
+.hw-question .q-num {
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 0.3rem;
+}
+.hw-blank {
+  display: inline-block;
+  min-width: 120px;
+  border-bottom: 1px solid var(--ink);
+  margin: 0 0.2rem;
+}
+.hw-lines {
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 1.8em,
+    var(--divider) 1.8em,
+    var(--divider) calc(1.8em + 1px)
+  );
+  min-height: 6em;
+}
+
+/* ── Sticky Nav ── */
+.toc {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(251,243,231,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--divider);
+  padding: 0.6rem 0;
+  margin-bottom: 1.5rem;
+}
+.toc .page-wrap {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.toc .page-wrap::-webkit-scrollbar { display: none; }
+.toc a {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.3em 0.8em;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.toc a:hover, .toc a:focus { background: var(--accent-light); color: var(--accent); }
+.toc a:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ── Divider ── */
+hr { border: none; border-top: 1px solid var(--divider); margin: 2rem 0; }
+
+/* ── Footer ── */
+.site-footer {
+  text-align: center;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--divider);
+  margin-top: 2rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .lt-grid { grid-template-columns: 1fr; }
+  .session-body { padding: 1rem; }
+  .phase { padding-left: 1.2rem; }
+  table { font-size: 0.8rem; }
+  th, td { padding: 0.4rem 0.5rem; }
+}
+
+/* ── Print ── */
+@media print {
+  .toc { display: none; }
+  .site-header { background: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .session-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card, .lt-card, .session-block, .hw-section, .vocab-card, .pattern-block, .callout, .phonics-item {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  body { font-size: 11pt; }
+  .page-wrap { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ── Push Modal ── */
+.push-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+}
+.push-modal {
+  background: white; border-radius: 16px; padding: 24px;
+  max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.push-modal h3 { margin: 0 0 8px; font-size: 18px; }
+.student-list { margin: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.student-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.student-item:hover { background: #f5f5f5; }
+.student-item input { width: 16px; height: 16px; }
+.push-confirm-btn {
+  width: 100%; padding: 12px; margin-top: 12px;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 10px;
+  font-weight: 700; cursor: pointer; font-size: 14px;
+}
+.push-cancel-btn {
+  width: 100%; padding: 10px; margin-top: 8px;
+  background: #f0f0f0; color: #666; border: none;
+  border-radius: 10px; cursor: pointer; font-size: 13px;
+}
+.push-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; margin: 4px 0;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 6px;
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  float: right;
+}
+.push-btn:hover { opacity: 0.9; transform: scale(1.05); }
+@media print { .push-btn { display: none !important; } }
+
+/* ── Answer Key (collapsible, teacher use) ── */
+details.answer-key {
+  margin-top: 1rem;
+  border: 1px dashed var(--green);
+  border-radius: var(--radius);
+  background: var(--green-light);
+  padding: 0.6rem 1rem;
+  font-size: var(--fs-sm);
+}
+details.answer-key summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--green);
+}
+details.answer-key ul { padding-left: 1.4em; margin-top: 0.4rem; }
+details.answer-key li { margin-bottom: 0.25rem; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header class="site-header">
+  <div class="page-wrap">
+    <div class="header-text">
+      <h1>There Was an Old Lady<br>Who Swallowed Fly Guy</h1>
+      <p class="subtitle">精读教案 · 两课时 · 100 分钟</p>
+      <div class="book-badges">
+        <span class="badge">Tedd Arnold</span>
+        <span class="badge">Lexile 370L</span>
+        <span class="badge">GRL Level I</span>
+        <span class="badge">Grade K–2</span>
+        <span class="badge">Fly Guy #4</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════ TOC ═══════ -->
+<nav class="toc" aria-label="页面导航">
+  <div class="page-wrap">
+    <a href="#overview">故事概览</a>
+    <a href="#lt-overview">LT 框架总览</a>
+    <a href="#session1">第一课时</a>
+    <a href="#session2">第二课时</a>
+    <a href="#homework">课后作业</a>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<section id="overview">
+  <div class="section-label">Overview</div>
+  <h2>故事概览</h2>
+  <div class="card card-accent">
+    <h3>Story Summary</h3>
+    <p>A young boy named Buzz has a pet fly named Fly Guy. One day Buzz goes to visit his grandma, and Fly Guy goes along. When Grandma bends down to hug Buzz, she accidentally swallows Fly Guy with a loud "Glurk!" Down he goes into a deep, dark hole and lands in a wet place at the bottom.</p>
+    <p>Fly Guy looks around and decides he wants to leave, but just as he starts back up the hole, Grandma swallows a spider to catch the fly, then a bird to catch the spider, then a cat to catch the bird, then a dog to catch the cat, a goat to catch the dog, and a cow to catch the goat! Just as Grandma is about to swallow a horse to catch the cow, Fly Guy cries out, "BUZZ!" Buzz yells, "I'm up here!" — and out comes Fly Guy, followed by the spider, the bird, the cat, the dog, the goat, and the cow. And everyone lives happily ever after, of course!</p>
+  </div>
+  <div class="lt-grid" style="margin-top:1rem;">
+    <div class="card" style="margin:0;">
+      <h4>📖 文本特征</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li>3 chapters, 32 pages · classic nursery-rhyme parody</li>
+        <li>连锁累积结构 (chaining): "swallowed a ___ to catch the ___"</li>
+        <li>顺序连接词：First / Just then / Then ▸ 推动故事</li>
+        <li>拟声词 onomatopoeia：Glurk! BUZZ!</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>🎯 教学目标</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>Reading:</strong> 理解连锁累积式故事结构，辨识事件发生的先后顺序</li>
+        <li><strong>Language:</strong> 掌握核心词汇、<em>to catch</em> 表目的、过去时态</li>
+        <li><strong>Speaking:</strong> 能按顺序复述连锁故事（first, then, next）</li>
+        <li><strong>Writing:</strong> 仿写自己的老奶奶吞飞物连锁小故事</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LT FRAMEWORK OVERVIEW ═══════ -->
+<section id="lt-overview">
+  <div class="section-label">Language Target Framework</div>
+  <h2>LT 框架总览 — There Was an Old Lady Who Swallowed Fly Guy</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;">以下 8 个模块构成本书的完整语言目标体系，两个课时分工推进。</p>
+
+  <div class="lt-grid">
+    <div class="lt-card">
+      <div class="lt-num">LT01</div>
+      <h4>Vocabulary 词汇</h4>
+      <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.5rem;">12 个核心词，含 IPA、词性、搭配、例句、词族。</p>
+      <ul>
+        <li>swallow, catch, spider, hole, deep</li>
+        <li>wet, leave, climb, goat, cow, horse</li>
+        <li>worried</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT02</div>
+      <h4>Phonics / Decoding 语音拼读</h4>
+      <ul>
+        <li><strong>sw-</strong> blend: swallow, swallowed</li>
+        <li><strong>-ed</strong> past suffix: swallowed, started, wanted, looked</li>
+        <li>Short vowel <strong>CVC</strong>: cat, dog, wet, big</li>
+        <li><strong>-ow</strong> vowel team /aʊ/: cow, down, how, now</li>
+        <li><strong>-oa</strong> long vowel: goat</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT03</div>
+      <h4>Pronunciation 发音</h4>
+      <ul>
+        <li>音节切分：swal-low (2), spi-der (2), e-ver-y-one (3/4)</li>
+        <li>重音模式：<em>SWAL</em>-low, <em>SPY</em>-der, a-<em>BOUT</em></li>
+        <li>连读：swallowed_a spider · caught_the fly</li>
+        <li>尾音 <em>-(e)d</em> 三态：/d/ looked / /t/ swallowed ▸ 视词形而定</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT04</div>
+      <h4>Sentence Patterns 句型</h4>
+      <ul>
+        <li>She swallowed a [noun] to catch the [noun].</li>
+        <li>He wanted to [verb].</li>
+        <li>Just then, ___ . / Then ___ .</li>
+        <li>Out came the [animal]. (倒装)</li>
+        <li>第一课 First... Then... In the end...</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT05</div>
+      <h4>Grammar 语法功能</h4>
+      <ul>
+        <li><strong>Simple past:</strong> swallowed, started, wanted, looked, cried, yelled, came</li>
+        <li><strong>to + 动词表目的</strong> (purpose): "swallowed a spider <em>to catch</em> the fly"</li>
+        <li><strong>be about to</strong> (即将): "Grandma was about to swallow a horse."</li>
+        <li><strong>顺序/序数:</strong> First, Just then, Then, In the end</li>
+        <li><strong>Prepositions:</strong> down, up, out of, at the bottom of</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT06</div>
+      <h4>Morphology 词形变化</h4>
+      <ul>
+        <li><strong>-ed 规则过去式:</strong> swallow→swallowed, start→started, want→wanted, look→looked</li>
+        <li><strong>不规则过去式:</strong> catch→caught, come→came, cry→cried, say→said</li>
+        <li><strong>复数 -s:</strong> spider→spiders, animal→animals</li>
+        <li><strong>合成词:</strong> every + one = everyone</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT07</div>
+      <h4>Cohesion / Discourse 语篇衔接</h4>
+      <ul>
+        <li><strong>连锁目的从句 (chaining):</strong> to catch the spider ▸ to catch the bird ▸ to catch the cat…</li>
+        <li><strong>顺序连接词:</strong> One day, Just then, Then, In the end</li>
+        <li><strong>代词指代:</strong> "she" = Grandma; "he" = Fly Guy</li>
+        <li><strong>倒装衔接:</strong> "Out came Fly Guy."</li>
+        <li><strong>结尾公式:</strong> "lived happily ever after."</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT08</div>
+      <h4>Functional Communication 语用功能</h4>
+      <ul>
+        <li><strong>Sequence/Retell:</strong> 按顺序复述连锁故事</li>
+        <li><strong>Describe:</strong> 描述各个动物及大小排序</li>
+        <li><strong>Explain:</strong> 为什么奶奶一个个吞动物</li>
+        <li><strong>Create:</strong> 仿写自己的连锁小故事</li>
+        <li><strong>Express opinion:</strong> 你觉得哪个动物最滑稽，为什么?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ SESSION 1 ═══════ -->
+<section id="session1">
+  <div class="section-label">Session 1 · 50 minutes</div>
+  <h2>第一课时 — 基础阅读与语言输入</h2>
+  <p class="text-secondary">目标：建立背景知识，通读全文，掌握核心词汇与语音规律，完成基础理解。</p>
+
+  <div class="session-block">
+    <div class="session-header s1">
+      <div>
+        <h2>Lesson 1: Grandma's Big Gulp</h2>
+        <div class="session-meta">Focus: Pre-reading → Reading → Vocabulary → Phonics → Pronunciation</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–10 min · Warm-up &amp; Pre-reading</div>
+        <div class="phase-title">激活背景 · 图片讨论</div>
+
+        <h4>活动 1：Picture Talk (5 min)</h4>
+        <p>展示封面和图页，引导学生观察：</p>
+        <ul style="padding-left:1.2em;margin-bottom:1rem;">
+          <li>"Who do you see in the picture?" → An old lady, a boy (Buzz), and a fly.</li>
+          <li>"What strange animals are around her?" → A spider, bird, cat, dog, goat, cow, horse.</li>
+          <li>"Why do you think the old lady has her mouth open?" → 引导预测。</li>
+        </ul>
+
+        <h4>活动 2：Key Concept — A Silly Rhyme (5 min)</h4>
+        <p>简要介绍经典童谣 <em>"There Was an Old Lady Who Swallowed a Fly"</em>（先吞苍蝇、再吞蜘蛛抓苍蝇……）。告诉学生本书是它的搞笑改编版，Fly Guy 被困在肚子里。引出 Big Question：</p>
+        <div class="callout callout-info">
+          <strong>🔑 Big Question</strong>
+          How will Fly Guy get back out of Grandma? Let's read and find out!
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 教学提示</strong>
+          让学生先猜一猜出口的方式（喊名字？飞出来？），保留悬念到第二课时揭晓。
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase green-dot">
+        <div class="phase-label">⏱ 10–20 min · Read Aloud</div>
+        <div class="phase-title">通读全文 · 理解故事</div>
+
+        <h4>Chapter 1 精读 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.2–4</td>
+              <td>"A young boy named Buzz had a pet fly. No one knows why he had a pet fly. Buzz named him Fly Guy."</td>
+              <td>复习前册人物；理解 why 句型</td>
+            </tr>
+            <tr>
+              <td>p.5–7</td>
+              <td>"One day Buzz went to visit his grandma. Fly Guy went, too. Grandma ran to hug him."</td>
+              <td>理解 went to visit；too 的用法；one day 开启故事</td>
+            </tr>
+            <tr>
+              <td>p.8–10</td>
+              <td>"'Hi, Grandma!' said Buzz. 'I want you to meet my pet...' and she swallowed Fly Guy."</td>
+              <td>理解吞入的意外时刻；"Glurk!" 拟声词</td>
+            </tr>
+            <tr>
+              <td>p.11</td>
+              <td>"Buzz didn't know why she swallowed Fly Guy."</td>
+              <td>引出悬念；复现书名的经典反问结构</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 2 与 Chapter 3 精读 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.12–14</td>
+              <td>"Fly Guy went down a deep dark hole. At the bottom of the hole, he came to a wet place. He looked around for a while. Then he wanted to leave."</td>
+              <td>needs: down/bottom/wet；方位介词</td>
+            </tr>
+            <tr>
+              <td>p.15–16</td>
+              <td>"He started up the hole. Just then, Grandma swallowed a spider to catch the fly."</td>
+              <td>核心句型 <em>"swallowed a spider to catch the fly"</em>；连锁开始</td>
+            </tr>
+            <tr>
+              <td>p.17–24</td>
+              <td>"She swallowed a bird to catch the spider. She swallowed a cat to catch the bird. She swallowed a dog... a goat... a cow."</td>
+              <td>连锁累积结构；动物由小到大排序</td>
+            </tr>
+            <tr>
+              <td>p.25–27</td>
+              <td>"Grandma was about to swallow a horse to catch the cow. Fly Guy cried, BUZZ!"</td>
+              <td>be about to；高潮悬念；BUZZ! 呼救</td>
+            </tr>
+            <tr>
+              <td>p.28–30</td>
+              <td>"'I'm up here!' yelled Buzz. Out came Fly Guy. Out came the spider, the bird, the cat, the dog, the goat, and the cow. And everyone lived happily ever after, of course!"</td>
+              <td>倒装 Out came；结尾公式 happily ever after</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-tip">
+          <strong>💡 跟读技巧</strong>
+          连锁句子越长越好读——让学生接力：每读到一个新动物就加入前面所有动物，体会累积的节奏感与画面感。
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase blue-dot" id="sec-lt01-vocab">
+        <div class="phase-label">⏱ 20–33 min · LT01 Vocabulary <button class="push-btn" onclick="openPushModal('LT01-Vocabulary','12 core words: swallow, catch, spider, hole, deep, wet, leave, climb, goat, cow, horse, worried — with IPA, POS, definitions, examples, word families')">📤 Push to Students</button></div>
+        <div class="phase-title">核心词汇深度讲解（12 词）</div>
+
+        <div class="callout callout-info">
+          <strong>📋 词汇教学原则</strong>
+          每个词从 Recognize → Understand → Use 三个层次推进。先让学生听/看到词，再理解含义和用法，最后尝试产出。
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">swallow</span>
+            <span class="vocab-ipa">/ˈswɑːloʊ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <span class="vocab-pos" style="color:var(--red);">past: swallowed</span>
+            <div class="vocab-def">to make food or drink go down your throat into your stomach</div>
+          </div>
+          <div class="vocab-example">Grandma <strong>swallowed</strong> Fly Guy. → Please <strong>swallow</strong> your food before you talk.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">catch</span>
+            <span class="vocab-ipa">/kætʃ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <span class="vocab-pos" style="color:var(--red);">past: caught</span>
+            <div class="vocab-def">to grab and hold something that is moving</div>
+          </div>
+          <div class="vocab-example">She swallowed a spider to <strong>catch</strong> the fly. → Can you <strong>catch</strong> a ball?</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">spider</span>
+            <span class="vocab-ipa">/ˈspaɪdər/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a small animal with eight legs that makes webs</div>
+          </div>
+          <div class="vocab-example">Grandma swallowed a <strong>spider</strong>. → The <strong>spider</strong> spins a web in the corner.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">hole</span>
+            <span class="vocab-ipa">/hoʊl/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">an opening or hollow place in something</div>
+          </div>
+          <div class="vocab-example">Fly Guy went down a deep dark <strong>hole</strong>. → There is a <strong>hole</strong> in my sock.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">deep</span>
+            <span class="vocab-ipa">/diːp/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adj</span>
+            <span class="vocab-pos" style="color:var(--purple);">opposite: shallow</span>
+            <div class="vocab-def">going far down from the top or surface</div>
+          </div>
+          <div class="vocab-example">Fly Guy went down a <strong>deep</strong> dark hole. → The pool is very <strong>deep</strong>; please be careful.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">wet</span>
+            <span class="vocab-ipa">/wet/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adj</span>
+            <span class="vocab-pos" style="color:var(--purple);">opposite: dry</span>
+            <div class="vocab-def">covered with water or another liquid</div>
+          </div>
+          <div class="vocab-example">He came to a <strong>wet</strong> place. → My shoes are <strong>wet</strong> after the rain.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">leave</span>
+            <span class="vocab-ipa">/liːv/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <span class="vocab-pos" style="color:var(--red);">past: left</span>
+            <div class="vocab-def">to go away from a place</div>
+          </div>
+          <div class="vocab-example">He wanted to <strong>leave</strong> the wet place. → It is time to <strong>leave</strong> school.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">climb</span>
+            <span class="vocab-ipa">/klaɪm/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <div class="vocab-def">to go up something, using your hands and feet</div>
+          </div>
+          <div class="vocab-example">Fly Guy started up the hole; the b in <strong>climb</strong> is quiet. → We <strong>climbed</strong> the hill together. (词族: climber, climbing)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">goat</span>
+            <span class="vocab-ipa">/ɡoʊt/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a farm animal with horns and a beard</div>
+          </div>
+          <div class="vocab-example">Grandma swallowed a <strong>goat</strong> to catch the dog. → A <strong>goat</strong> is eating the grass.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">cow</span>
+            <span class="vocab-ipa">/kaʊ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a large farm animal that gives us milk</div>
+          </div>
+          <div class="vocab-example">Grandma swallowed a <strong>cow</strong> to catch the goat. → A <strong>cow</strong> says, "Moo!"</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">horse</span>
+            <span class="vocab-ipa">/hɔːrs/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a large animal with a mane that people can ride</div>
+          </div>
+          <div class="vocab-example">Grandma was about to swallow a <strong>horse</strong>. → Buzz rode a <strong>horse</strong> on the farm.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">worried</span>
+            <span class="vocab-ipa">/ˈwɜːrid/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adj</span>
+            <span class="vocab-pos" style="color:var(--purple);">verb: worry · noun: worry</span>
+            <div class="vocab-def">feeling nervous or scared that something bad might happen</div>
+          </div>
+          <div class="vocab-example">Buzz was starting to get <strong>worried</strong>. → I feel <strong>worried</strong> before a test.</div>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 词汇巩固活动 (3 min)</strong>
+          <strong>Animal Line-Up:</strong> 出示动物卡（spider, bird, cat, dog, goat, cow, horse），让学生按奶奶吞入的顺序从小到大排列，边说边用手比划"吞下去"的动作。顺序答对即全班欢呼。
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase-purple-dot" id="sec-lt02-phonics">
+        <div class="phase-label">⏱ 33–43 min · LT02 Phonics + LT03 Pronunciation <button class="push-btn" onclick="openPushModal('LT02-Phonics','Word patterns: sw- blend, -ed past suffix, CVC short vowels, -ow /aʊ/, -oa long vowel with examples from the story')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT03-Pronunciation','Syllable counting and stress patterns: swallow(2), spider(2), everyone(3), about(2); linking: swallowed_a spider; -ed endings')">📤 Push</button></div>
+        <div class="phase-title">语音拼读与发音训练</div>
+
+        <h4>Phonics Focus (5 min)</h4>
+        <p>从本书中提取高频语音模式，引导学生发现规律：</p>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">字母连缀 sw-</h4>
+          <span class="phonics-item"><span class="phonics-pattern">sw-</span> swallow, swallowed</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">sw- 中 w 与 s 连读成 /sw/，圆唇发出。</p>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">-ed 规则过去式后缀</h4>
+          <span class="phonics-item"><span class="phonics-pattern">-ed</span> swallowed, started, wanted, looked</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">引导发现：吞 went on… 过去式在动词后加 -ed 表示"已经发生"。</p>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">短元音 CVC 与元音字母组合</h4>
+          <span class="phonics-item"><span class="phonics-pattern">CVC a</span> cat, sag</span>
+          <span class="phonics-item"><span class="phonics-pattern">CVC e</span> wet, pet, let</span>
+          <span class="phonics-item"><span class="phonics-pattern">-ow /aʊ/</span> cow, down, how, now</span>
+          <span class="phonics-item"><span class="phonics-pattern">-oa /oʊ/</span> goat</span>
+        </div>
+
+        <h4 style="margin-top:1rem;">Pronunciation Focus (5 min)</h4>
+
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Word</th><th>Syllables</th><th>Stress</th><th>Practice</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>swallow</td><td>swal·low (2)</td><td>1st</td><td><strong>SWAL</strong>-low</td></tr>
+            <tr><td>spider</td><td>spi·der (2)</td><td>1st</td><td><strong>SPY</strong>-der</td></tr>
+            <tr><td>worried</td><td>wor·ried (2)</td><td>1st</td><td><strong>WUR</strong>-ried</td></tr>
+            <tr><td>about</td><td>a·bout (2)</td><td>2nd</td><td>a-<strong>BOUT</strong></td></tr>
+            <tr><td>everyone</td><td>e·very·one (3)</td><td>1st</td><td><strong>EV</strong>·ery·one</td></tr>
+            <tr><td>started</td><td>start·ed (2)</td><td>1st</td><td><strong>STAR</strong>-ted</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-tip">
+          <strong>💡 发音练习 (2 min)</strong>
+          <strong>回声游戏：</strong>教师读一个词，学生跟读并拍手打出音节数。
+          "swal-low!" → 拍手 2 次。"e-very-one!" → 拍手 3 次。
+          然后全班齐诵连锁句："She swallowed a spider to catch the fly!" 体会连读 swallowed_a / caught_the。
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase green-dot" id="sec-lt04-patterns">
+        <div class="phase-label">⏱ 43–50 min · LT04 Sentence Patterns + Wrap-up <button class="push-btn" onclick="openPushModal('LT04-Sentence-Patterns','Core patterns: She swallowed a [noun] to catch the [noun]; He wanted to [verb]; Just then/Then sequencing; Out came...')">📤 Push to Students</button></div>
+        <div class="phase-title">核心句型初探 + 小结</div>
+
+        <p>引入本课核心句式，为第二课时深度语法做铺垫：</p>
+
+        <div class="pattern-block">
+          <div class="pattern-template">She swallowed a [noun] to catch the [noun].</div>
+          <div class="pattern-example">"She swallowed a spider to catch the fly. She swallowed a bird to catch the spider."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 本书最核心功法 — 连锁累积句式，动物越来越庞大。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">He wanted to [verb].</div>
+          <div class="pattern-example">"He wanted to leave. He wanted to get back out."</div>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">Just then, ___ . / Then ___ .</div>
+          <div class="pattern-example">"Just then, Grandma swallowed a spider." / "Then he wanted to leave."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 顺序连词，用来推动连锁故事一步步向前。</p>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>📝 第一课时小结</strong>
+          回顾 Big Question: "How will Fly Guy get out of Grandma?"
+          让学生用一句话表达预测：
+          <br>"Fly Guy will get out by ___. "
+          <br>（为第二课时的写作任务做铺垫。）
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ SESSION 2 ═══════ -->
+<section id="session2">
+  <div class="section-label">Session 2 · 50 minutes</div>
+  <h2>第二课时 — 深度分析与语言输出</h2>
+  <p class="text-secondary">目标：深入语法、词形、语篇分析，完成口语输出和写作任务。</p>
+
+  <div class="session-block">
+    <div class="session-header s2">
+      <div>
+        <h2>Lesson 2: Out Came Fly Guy!</h2>
+        <div class="session-meta">Focus: Grammar → Morphology → Cohesion → Speaking → Writing</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–5 min · Review</div>
+        <div class="phase-title">快速复习</div>
+
+        <p>用 3 个快速问题回顾第一课时内容：</p>
+        <ol style="padding-left:1.5em;margin-bottom:0.8rem;">
+          <li>"Who went to visit Grandma?" → Buzz and Fly Guy.</li>
+          <li>"What did Grandma swallow to catch the fly?" → A spider.</li>
+          <li>"What did the animals do at the very end?" → They all came out and lived happily ever after.</li>
+        </ol>
+        <p>然后用 <strong>故事链条 (Story Chain)</strong> 快速梳理顺序结构：</p>
+        <svg viewBox="0 0 700 200" style="width:100%;max-width:700px;height:auto;margin:0.5rem 0;" role="img" aria-label="Story Mountain for There Was an Old Lady Who Swallowed Fly Guy">
+          <title>Story Mountain — There Was an Old Lady Who Swallowed Fly Guy</title>
+          <desc>A mountain shape showing story structure: beginning, rising action, climax, falling action, ending</desc>
+          <polygon points="50,170 175,40 350,20 525,100 650,170" fill="none" stroke="#C96F3D" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="50" cy="170" r="6" fill="#C96F3D"/>
+          <circle cx="175" cy="40" r="6" fill="#C96F3D"/>
+          <circle cx="350" cy="20" r="6" fill="#C75A4A"/>
+          <circle cx="525" cy="100" r="6" fill="#C96F3D"/>
+          <circle cx="650" cy="170" r="6" fill="#C96F3D"/>
+          <text x="50" y="195" text-anchor="middle" font-size="11" fill="#31251B">Beginning</text>
+          <text x="50" y="160" text-anchor="middle" font-size="9" fill="#8B7662">Grandma swallows Fly Guy</text>
+          <text x="175" y="30" text-anchor="middle" font-size="11" fill="#31251B">Rising</text>
+          <text x="175" y="58" text-anchor="middle" font-size="9" fill="#8B7662">spider, bird, cat, dog…</text>
+          <text x="350" y="12" text-anchor="middle" font-size="11" fill="#C75A4A" font-weight="700">Climax</text>
+          <text x="350" y="42" text-anchor="middle" font-size="9" fill="#8B7662">about to swallow a horse</text>
+          <text x="525" y="90" text-anchor="middle" font-size="11" fill="#31251B">Falling</text>
+          <text x="525" y="118" text-anchor="middle" font-size="9" fill="#8B7662">Fly Guy cries BUZZ! Buzz yells</text>
+          <text x="650" y="195" text-anchor="middle" font-size="11" fill="#31251B">Ending</text>
+          <text x="650" y="160" text-anchor="middle" font-size="9" fill="#8B7662">Out they all came — happily ever after</text>
+        </svg>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase blue-dot" id="sec-lt05-grammar">
+        <div class="phase-label">⏱ 5–18 min · LT05 Grammar <button class="push-btn" onclick="openPushModal('LT05-Grammar','Simple Past (swallowed, came, cried, yelled); to + verb for purpose; be about to; sequence words (first/just then/then); prepositions (down/up/out of)')">📤 Push to Students</button></div>
+        <div class="phase-title">语法功能深度分析</div>
+
+        <h4>① to + 动词 表目的 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>原文句</th><th>功能</th><th>结构</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>"She swallowed a spider <strong>to catch</strong> the fly."</td><td>目的（表 why）</td><td>动词 + 宾语 + to + 动词原形</td></tr>
+            <tr><td>"She swallowed a bird <strong>to catch</strong> the spider."</td><td>目的（表 why）</td><td>动词 + 宾语 + to + 动词原形</td></tr>
+            <tr><td>"Grandma was about <strong>to swallow</strong> a horse."</td><td>即将发生</td><td>be about to + 动词原形</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">练习：用 "She swallowed a ___ to catch the ___" 说出奶奶做的每一步。</p>
+
+        <h4 style="margin-top:1rem;">② Simple Past Tense — 讲故事的核心时态 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base Form</th><th>Past Tense</th><th>Type</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>swallow</td><td><strong>swallowed</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"Grandma <em>swallowed</em> Fly Guy."</td></tr>
+            <tr><td>start</td><td><strong>started</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"He <em>started</em> up the hole."</td></tr>
+            <tr><td>want</td><td><strong>wanted</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"He <em>wanted</em> to leave."</td></tr>
+            <tr><td>look</td><td><strong>looked</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"He <em>looked</em> around for a while."</td></tr>
+            <tr><td>climb</td><td><strong>climbed</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"Fly Guy <em>climbed</em> up the hole."</td></tr>
+            <tr><td>come</td><td><strong>came</strong></td><td style="color:var(--red);">irregular</td><td>"Out <em>came</em> Fly Guy."</td></tr>
+            <tr><td>catch</td><td><strong>caught</strong></td><td style="color:var(--red);">irregular</td><td>"...to <em>catch</em> the fly."</td></tr>
+            <tr><td>cry</td><td><strong>cried</strong></td><td style="color:var(--red);">irregular</td><td>"Fly Guy <em>cried</em>, BUZZ!"</td></tr>
+            <tr><td>yell</td><td><strong>yelled</strong></td><td style="color:var(--red);">irregular-ish</td><td>"'I'm up here!' <em>yelled</em> Buzz."</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-warn">
+          <strong>⚠️ 重点提示</strong>
+          本书有大量不规则过去式（came, caught, cried），且 cry→cried 是"去掉 y 加 -ied"，容易出错。建议用配对练习：给出 base form，学生快速说出 past tense。
+        </div>
+
+        <h4 style="margin-top:1rem;">③ be about to — 即将发生 (3 min)</h4>
+        <div class="pattern-block">
+          <div class="pattern-template">主语 + was/were about to + 动词原形</div>
+          <div class="pattern-example">"Grandma <strong>was about to</strong> swallow a horse to catch the cow."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">
+            表示"正要做、马上要做"，用法与 be going to 相近但更强调"即将"。这是制造悬紧张的关键结构。
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-purple-dot" id="sec-lt06-morphology">
+        <div class="phase-label">⏱ 18–26 min · LT06 Morphology + LT07 Cohesion <button class="push-btn" onclick="openPushModal('LT06-Morphology','Word families: -ed regular past (swallowed/started/wanted/looked), irregular past (came/caught/cried), plurals -s, compound every+one')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT07-Cohesion','Chained purpose clauses (to catch the ...); sequence words (one day/just then/then/in the end); pronoun reference (she=Grandma, he=Fly Guy); inversion Out came...; happily ever after')">📤 Push</button></div>
+        <div class="phase-title">词形变化与语篇衔接</div>
+
+        <h4>LT06 · Morphology 词形变化 (4 min)</h4>
+        <p>引导学生发现词族（word families）与变化规则：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base</th><th>+ ed</th><th>+ ing</th><th>+ s (plural)</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>swallow</td><td>swallowed</td><td>swallowing</td><td>—</td><td>规则变化</td></tr>
+            <tr><td>start</td><td>started</td><td>starting</td><td>—</td><td>规则变化</td></tr>
+            <tr><td>want</td><td>wanted</td><td>wanting</td><td>—</td><td>规则变化</td></tr>
+            <tr><td>look</td><td>looked</td><td>looking</td><td>—</td><td>规则变化</td></tr>
+            <tr><td>climb</td><td>climbed</td><td>climbing</td><td>—</td><td>规则变化</td></tr>
+            <tr><td>cry</td><td>cried</td><td>crying</td><td>—</td><td>去 y 加 -ied / -ing</td></tr>
+            <tr><td>spider</td><td>—</td><td>—</td><td>spiders</td><td>规则复数加 -s</td></tr>
+            <tr><td>animal</td><td>—</td><td>—</td><td>animals</td><td>规则复数加 -s</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-info">
+          <strong>🔍 不规则变化重点</strong>
+          come → came (不是 comed) · catch → caught (不是 catched) · 以及 cry → cried（y 变 i 加 -ed）
+          <br>这些词不能靠规则推导，需要单独记忆！
+        </div>
+
+        <h4 style="margin-top:1rem;">LT07 · Cohesion 语篇衔接 (4 min)</h4>
+        <p>分析本书中的衔接手段，理解作者如何连接句子、推动连锁故事：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Device</th><th>Function</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>chain (to catch the ___)</strong></td>
+              <td>连锁目的从句 — 全书最核心</td>
+              <td>"...a spider <em>to catch the fly</em>... a bird <em>to catch the spider</em>..."</td>
+            </tr>
+            <tr>
+              <td><strong>just then / then</strong></td>
+              <td>顺序递进 sequence</td>
+              <td>"<strong>Just then</strong>, Grandma swallowed a spider." / "<strong>Then</strong> he wanted to leave."</td>
+            </tr>
+            <tr>
+              <td><strong>代词 she / he</strong></td>
+              <td>指代 reference — 需要看上下文</td>
+              <td>"<strong>She</strong> swallowed..." → She = Grandma<br>"<strong>He</strong> wanted to leave." → He = Fly Guy</td>
+            </tr>
+            <tr>
+              <td><strong>Out came...</strong></td>
+              <td>倒装 + 收束 inversion + closure</td>
+              <td>"<strong>Out came</strong> the spider, the bird, the cat..."</td>
+            </tr>
+            <tr>
+              <td><strong>happily ever after</strong></td>
+              <td>结尾公式 story-end formula</td>
+              <td>"And everyone lived <strong>happily ever after</strong>, of course!"</td>
+            </tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-tip">
+          <strong>💡 讨论：连锁的魔法</strong>
+          让学生找出整条链：spider ▸ bird ▸ cat ▸ dog ▸ goat ▸ cow。讨论：每次新动物为什么出现？
+          → 都是为了 <em>to catch</em> 上一个动物，一环套一环，画面越滚越大。
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase green-dot" id="sec-lt08-functional">
+        <div class="phase-label">⏱ 26–40 min · LT08 Functional Communication <button class="push-btn" onclick="openPushModal('LT08-Functional-Communication','Chain-retelling frame; animal size ordering; explain why Grandma swallowed each animal; write your own old-lady chained story')">📤 Push to Students</button></div>
+        <div class="phase-title">口语输出与写作任务</div>
+
+        <h4>Activity 1: Chain Retell (5 min)</h4>
+        <p>学生两人一组，用以下框架按顺序复述连锁故事：</p>
+        <div class="card" style="background:var(--green-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Chain Retelling Frame:</strong></p>
+          <p style="font-size:var(--fs-sm);">
+            First, Buzz took Fly Guy to visit Grandma and she swallowed Fly Guy.<br>
+            Then, Grandma swallowed a spider to catch the fly.<br>
+            Next, she swallowed a bird to catch the spider...<br>
+            After that, she was about to swallow a horse to catch the cow.<br>
+            In the end, Fly Guy cried "BUZZ!", Buzz yelled, and out they all came!
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 2: Size the Animals (5 min)</h4>
+        <p>回到连锁关键词，进行动物排序小游戏：</p>
+        <div class="card" style="background:var(--purple-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Discussion Prompts:</strong></p>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li>"Which animal is smallest? Which is biggest?" → Spider < bird < cat < dog < goat < cow.</li>
+            <li>"Why did Grandma keep swallowing bigger and bigger animals?" → To catch the one before; it got silly!</li>
+            <li>"Which animal do you think is the funniest? Why?"</li>
+          </ul>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Language scaffold:</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            "I think the ___ is the funniest because ___."<br>
+            "The spider is smaller than the bird."<br>
+            "She swallowed the cow to catch the goat."
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 3: Writing — My Own Old Lady (4 min 指导 + 课后完成)</h4>
+        <div class="card" style="background:var(--surface-alt);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Writing Prompt:</strong></p>
+          <p style="font-size:var(--fs-base);font-weight:600;">Write your own silly chain story starting with "There was an old lady who swallowed a ___."</p>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Writing Frame (scaffold):</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            There was an old lady who swallowed a ___ to catch the ___.<br>
+            Just then, she swallowed a ___ to catch the ___.<br>
+            Then she swallowed a ___ to catch the ___.<br>
+            In the end, out came the ___, the ___, and the ___!
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 40–50 min · Review &amp; Extension</div>
+        <div class="phase-title">总结回顾 + 拓展延伸</div>
+
+        <h4>Exit Ticket (5 min)</h4>
+        <p>每人回答 3 个问题后离开教室：</p>
+        <ol style="padding-left:1.5em;">
+          <li>说出 2 个你新学的单词。</li>
+          <li>用 "to catch" 说出奶奶吞动物的一个目的。</li>
+          <li>Fly Guy 最后是怎么出来的？（一句话）</li>
+        </ol>
+
+        <h4 style="margin-top:0.8rem;">Extension (5 min)</h4>
+        <div class="callout callout-tip">
+          <strong>🌟 拓展活动选择</strong>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li><strong>Draw the Zoo-in-Tummy:</strong> 画出奶奶肚子里堆满动物的滑稽画面，用英文标注每个动物。</li>
+            <li><strong>Role Play:</strong> 3 人一组表演"吞动物连锁"场景（Grandma, Buzz, Fly Guy）。</li>
+            <li><strong>Chain Chant:</strong> 全班像绕口令一样接力背诵动物链条，看谁记得最长。</li>
+            <li><strong>Word Detective:</strong> 找出书中所有以 "sw-" 开头的词，写在纸上。</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ HOMEWORK ═══════ -->
+<section id="homework">
+  <div class="section-label">Homework Worksheet</div>
+  <h2>课后作业 · There Was an Old Lady Who Swallowed Fly Guy</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;">以下作业分为 6 个部分，覆盖 LT01–LT08 全部模块。可打印为 A4 纸质版。建议在第 1 课时后完成 Part A–D，第 2 课时后完成 Part E–F。每部分右下角"参考答案"供教师批改使用。</p>
+
+  <!-- Part A: Vocabulary -->
+  <div class="hw-section" id="sec-hw-partA">
+    <div class="hw-title">Part A · Vocabulary Match <button class="push-btn" onclick="openPushModal('HW-PartA','Vocabulary Match: match 6 words (swallow, catch, deep, wet, worried, leave) with definitions')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Draw a line to match each word with its meaning.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;font-size:var(--fs-sm);">
+      <div>
+        <p><strong>1.</strong> swallow &nbsp;________</p>
+        <p><strong>2.</strong> catch &nbsp;________</p>
+        <p><strong>3.</strong> deep &nbsp;________</p>
+        <p><strong>4.</strong> wet &nbsp;________</p>
+        <p><strong>5.</strong> worried &nbsp;________</p>
+        <p><strong>6.</strong> leave &nbsp;________</p>
+      </div>
+      <div>
+        <p><strong>A.</strong> to go away from a place</p>
+        <p><strong>B.</strong> going far down from the top</p>
+        <p><strong>C.</strong> to send food down your throat into your stomach</p>
+        <p><strong>D.</strong> covered with water or another liquid</p>
+        <p><strong>E.</strong> to grab and hold something that is moving</p>
+        <p><strong>F.</strong> feeling nervous that something bad might happen</p>
+      </div>
+    </div>
+
+    <details class="answer-key">
+      <summary>📌 参考答案 (Answer Key)</summary>
+      <ul>
+        <li>1 = C (swallow — to send food down your throat)</li>
+        <li>2 = E (catch — to grab and hold something moving)</li>
+        <li>3 = B (deep — going far down from the top)</li>
+        <li>4 = D (wet — covered with water)</li>
+        <li>5 = F (worried — feeling nervous something bad might happen)</li>
+        <li>6 = A (leave — to go away from a place)</li>
+      </ul>
+    </details>
+  </div>
+
+  <!-- Part B: Vocabulary in Context -->
+  <div class="hw-section" id="sec-hw-partB">
+    <div class="hw-title">Part B · Vocabulary in Context <button class="push-btn" onclick="openPushModal('HW-PartB','Vocabulary in Context: fill in blanks with word bank (swallowed, deep, wet, leave, catch, worried)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Fill in the blanks with the correct word from the box.</div>
+
+    <div style="background:var(--surface-alt);border-radius:var(--radius);padding:0.6rem 1rem;margin-bottom:1rem;font-size:var(--fs-sm);">
+      <strong>Word Bank:</strong> &nbsp; swallowed &nbsp; | &nbsp; deep &nbsp; | &nbsp; wet &nbsp; | &nbsp; leave &nbsp; | &nbsp; catch &nbsp; | &nbsp; worried
+    </div>
+
+    <div class="hw-question"><span class="q-num">1.</span> Grandma <span class="hw-blank"></span> Fly Guy and a loud "Glurk!"</div>
+    <div class="hw-question"><span class="q-num">2.</span> Fly Guy went down a <span class="hw-blank"></span>, dark hole.</div>
+    <div class="hw-question"><span class="q-num">3.</span> At the bottom, he came to a <span class="hw-blank"></span> place.</div>
+    <div class="hw-question"><span class="q-num">4.</span> He wanted to <span class="hw-blank"></span> and fly back out.</div>
+    <div class="hw-question"><span class="q-num">5.</span> Grandma swallowed a spider to <span class="hw-blank"></span> the fly.</div>
+    <div class="hw-question"><span class="q-num">6.</span> Buzz was getting <span class="hw-blank"></span>, but Fly Guy knew what to do.</div>
+
+    <details class="answer-key">
+      <summary>📌 参考答案 (Answer Key)</summary>
+      <ul>
+        <li>1 = swallowed</li>
+        <li>2 = deep</li>
+        <li>3 = wet</li>
+        <li>4 = leave</li>
+        <li>5 = catch</li>
+        <li>6 = worried</li>
+      </ul>
+    </details>
+  </div>
+
+  <!-- Part C: Phonics -->
+  <div class="hw-section" id="sec-hw-partC">
+    <div class="hw-title">Part C · Phonics Detective <button class="push-btn" onclick="openPushModal('HW-PartC','Phonics Detective: find story words matching sw-, -ed, CVC short vowels, and -ow /aʊ/ patterns; bonus syllable counting and stress marking')">📤 Push</button></div>
+    <div class="hw-subtitle">LT02 + LT03 · Find words in the story that match each sound pattern.</div>
+
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th style="width:120px;">Sound Pattern</th><th>Find 2 words from the story</th><th>Pronunciation (IPA)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>sw-</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>-ed</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>short vowel CVC</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>-ow /aʊ/</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="font-size:var(--fs-sm);margin-top:0.8rem;"><strong>Bonus:</strong> Circle the syllables and mark the stress: swal-low &nbsp; spi-der &nbsp; wor-ried &nbsp; e-very-one &nbsp; a-bout</p>
+
+    <details class="answer-key">
+      <summary>📌 参考答案 (Answer Key)</summary>
+      <ul>
+        <li><strong>sw-:</strong> swallow, swallowed</li>
+        <li><strong>-ed:</strong> swallowed, started, wanted, looked, climbed</li>
+        <li><strong>short vowel CVC:</strong> cat /kæt/, wet /wet/, dog /dɔːɡ/, big /bɪɡ/</li>
+        <li><strong>-ow /aʊ/:</strong> cow, down, how, now</li>
+        <li><strong>Bonus stress:</strong> SWAL-low (2) · SPY-der (2) · WUR-ried (2) · EV-ery-one (3) · a-BOUT (2)</li>
+      </ul>
+    </details>
+  </div>
+
+  <!-- Part D: Grammar -->
+  <div class="hw-section" id="sec-hw-partD">
+    <div class="hw-title">Part D · Grammar Power <button class="push-btn" onclick="openPushModal('HW-PartD','Grammar Power: past tense base-to-past conversion; to + verb purpose chaining; be about to')">📤 Push</button></div>
+    <div class="hw-subtitle">LT05 + LT06 · Past Tense &amp; Purpose Structure</div>
+
+    <h4 style="font-size:var(--fs-base);margin-bottom:0.5rem;">D1: Past Tense — Write the past tense form.</h4>
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th>Base Form</th><th>Past Tense</th><th>Base Form</th><th>Past Tense</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>swallow</td><td><span class="hw-blank"></span></td><td>come</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>start</td><td><span class="hw-blank"></span></td><td>catch</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>want</td><td><span class="hw-blank"></span></td><td>cry</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>look</td><td><span class="hw-blank"></span></td><td>yell</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>climb</td><td><span class="hw-blank"></span></td><td>say</td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">D2: Complete the chain with <em>to catch</em>.</h4>
+    <div class="hw-question"><span class="q-num">1.</span> Grandma swallowed a bird <span class="hw-blank" style="min-width:180px;"></span> the spider.</div>
+    <div class="hw-question"><span class="q-num">2.</span> Grandma swallowed a cat <span class="hw-blank" style="min-width:180px;"></span> the bird.</div>
+    <div class="hw-question"><span class="q-num">3.</span> Grandma swallowed a goat <span class="hw-blank" style="min-width:180px;"></span> the dog.</div>
+
+    <details class="answer-key">
+      <summary>📌 参考答案 (Answer Key)</summary>
+      <ul>
+        <li><strong>D1:</strong> swallow→swallowed · start→started · want→wanted · look→looked · climb→climbed · come→came · catch→caught · cry→cried · yell→yelled · say→said</li>
+        <li><strong>D2:</strong> 1 = to catch · 2 = to catch · 3 = to catch</li>
+      </ul>
+    </details>
+  </div>
+
+  <!-- Part E: Cohesion -->
+  <div class="hw-section" id="sec-hw-partE">
+    <div class="hw-title">Part E · Cohesion — Order the Chain <button class="push-btn" onclick="openPushModal('HW-PartE','Cohesion: order the animals in the chain; identify who she/he refers to')">📤 Push</button></div>
+    <div class="hw-subtitle">LT07 · ① Put the animals in the order Grandma swallowed them. ② Write who "she" / "he" refers to.</div>
+
+    <h4 style="font-size:var(--fs-base);margin-bottom:0.5rem;">E1: Order the chain (write 1–6).</h4>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.6rem;">
+      ____ cat &nbsp;&nbsp; ____ spider &nbsp;&nbsp; ____ cow &nbsp;&nbsp; ____ bird &nbsp;&nbsp; ____ goat &nbsp;&nbsp; ____ dog
+    </p>
+
+    <h4 style="font-size:var(--fs-base);margin:0.8rem 0 0.5rem;">E2: Who does the pronoun refer to? (Grandma, Fly Guy, or Buzz)</h4>
+    <div class="hw-question"><span class="q-num">1.</span> "<strong>She</strong> swallowed a spider to catch the fly." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">2.</span> "<strong>He</strong> looked around for a while." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">3.</span> "<strong>He</strong> cried, 'BUZZ!'" → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">4.</span> "'I'm up here!' <strong>yelled Buzz</strong>." → <span class="hw-blank"></span></div>
+
+    <details class="answer-key">
+      <summary>📌 参考答案 (Answer Key)</summary>
+      <ul>
+        <li><strong>E1 order:</strong> spider=1 · bird=2 · cat=3 · dog=4 · goat=5 · cow=6</li>
+        <li><strong>E2:</strong> 1 = Grandma · 2 = Fly Guy · 3 = Fly Guy · 4 = Buzz (he = Buzz)</li>
+      </ul>
+    </details>
+  </div>
+
+  <!-- Part F: Writing -->
+  <div class="hw-section" id="sec-hw-partF">
+    <div class="hw-title">Part F · Write Your Own Chain Story <button class="push-btn" onclick="openPushModal('HW-PartF','Create: write your own old-lady chain story with at least 4 animal links using the scaffold')">📤 Push</button></div>
+    <div class="hw-subtitle">LT08 · Write your own silly chain story starting with "There was an old lady who swallowed a ___." Use at least 4 animals.</div>
+
+    <p style="font-size:var(--fs-sm);margin-bottom:0.5rem;"><strong>Use these sentence starters if you need help:</strong></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.8rem;">
+      There was an old lady who swallowed a ___ to catch the ___.<br>
+      Just then, she swallowed a ___ to catch the ___.<br>
+      Then she swallowed a ___ to catch the ___.<br>
+      In the end, out came the ___, the ___, and the ___!
+    </p>
+    <div class="hw-lines" style="min-height:12em;"></div>
+
+    <details class="answer-key">
+      <summary>📌 参考范例 (Model Answer)</summary>
+      <p style="margin-top:0.3rem;">There was an old lady who swallowed a dog to catch the cat. Just then, she swallowed a pig to catch the dog. Then she swallowed a duck to catch the pig. In the end, out came the duck, the pig, and the dog — and everyone lived happily ever after, of course!</p>
+    </details>
+  </div>
+
+</section>
+
+<!-- ═══════ TEACHER NOTES ═══════ -->
+<section>
+  <div class="section-label">Teacher Notes</div>
+  <h2>教师备注</h2>
+
+  <div class="lt-grid">
+    <div class="card">
+      <h4>📊 LT Coverage Map</h4>
+      <div style="overflow-x:auto"><table style="min-width:500px">
+        <thead>
+          <tr><th>LT Module</th><th>Session 1</th><th>Session 2</th><th>Homework</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LT01 Vocabulary</td><td>✅ 主教学</td><td>复习</td><td>✅ Part A–B</td></tr>
+          <tr><td>LT02 Phonics</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT03 Pronunciation</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT04 Sentence Patterns</td><td>✅ 初探</td><td>复习</td><td>—</td></tr>
+          <tr><td>LT05 Grammar</td><td>—</td><td>✅ 主教学</td><td>✅ Part D</td></tr>
+          <tr><td>LT06 Morphology</td><td>—</td><td>✅ 主教学</td><td>✅ Part C+D</td></tr>
+          <tr><td>LT07 Cohesion</td><td>—</td><td>✅ 主教学</td><td>✅ Part E</td></tr>
+          <tr><td>LT08 Functional</td><td>—</td><td>✅ 主教学</td><td>✅ Part F</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h4>🎯 CCSS Alignment (Grade 1–2)</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>RL.1.1</strong> Ask and answer questions about key details</li>
+        <li><strong>RL.1.2</strong> Retell stories, including key details</li>
+        <li><strong>RL.1.3</strong> Describe characters, settings, and major events</li>
+        <li><strong>RL.1.4</strong> Identify words and phrases that suggest feelings</li>
+        <li><strong>RL.1.7</strong> Use illustrations and details to describe characters/events</li>
+        <li><strong>W.1.1</strong> Write opinion pieces, introduce topic, supply reason</li>
+        <li><strong>SL.1.1</strong> Participate in collaborative conversations</li>
+        <li><strong>SL.1.4</strong> Describe people, places, things, and events</li>
+        <li><strong>L.1.1</strong> Print all upper- and lowercase letters; use conventions</li>
+        <li><strong>L.1.4</strong> Determine meaning of words using context clues</li>
+        <li><strong>RF.1.3</strong> Know and apply grade-level phonics and word analysis skills</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="page-wrap">
+    <p>There Was an Old Lady Who Swallowed Fly Guy — 精读教案 · 两课时 · Emily's Reading Studio</p>
+    <p style="margin-top:0.3rem;">Language Target Framework · LT01–LT08 · CCSS Grade 1–2 Aligned</p>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll for TOC
+document.querySelectorAll('.toc a').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var id = this.getAttribute('href').slice(1);
+    var target = document.getElementById(id);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ═══════ Push to Students ═══════
+const BOOK_TITLE = 'There Was an Old Lady Who Swallowed Fly Guy';
+const SOURCE_LESSON_URL = '/frontend/fly-guy/old_lady_who_swallowed_fly_guy_lesson_plan.html';
+
+const sectionContentMap = {
+  'LT01-Vocabulary': '12 core vocabulary words with IPA, POS, definitions, examples, and word families: swallow, catch, spider, hole, deep, wet, leave, climb, goat, cow, horse, worried',
+  'LT02-Phonics': 'Word patterns: sw- blend, -ed past suffix, CVC short vowels (cat/wet/dog), -ow /aʊ/ (cow/down), -oa long vowel (goat) with examples from the story',
+  'LT03-Pronunciation': 'Syllable counting and stress patterns: swallow(2), spider(2), worried(2), about(2), everyone(3), started(2); linking: swallowed_a spider, caught_the fly; echo game practice',
+  'LT04-Sentence-Patterns': 'Core sentence patterns: She swallowed a [noun] to catch the [noun]; He wanted to [verb]; Just then/Then sequencing; Out came...',
+  'LT05-Grammar': 'Simple Past (swallowed, came, cried, yelled); to + verb for purpose; be about to; sequence words (first/just then/then); prepositions (down/up/out of)',
+  'LT06-Morphology': 'Word families: -ed regular past (swallowed/started/wanted/looked/climbed), irregular past (came/caught/cried), plurals +s (spiders/animals), compound every+one=everyone',
+  'LT07-Cohesion': 'Chained purpose clauses (to catch the...); sequence words (one day/just then/then/in the end); pronoun reference (she=Grandma, he=Fly Guy); inversion Out came...; happily ever after',
+  'LT08-Functional-Communication': 'Chain-retelling frame; animal size ordering; explain why Grandma swallowed each animal; express opinion; write your own old-lady chain story',
+  'HW-PartA': 'Vocabulary Match: match 6 words (swallow, catch, deep, wet, worried, leave) with their definitions',
+  'HW-PartB': 'Vocabulary in Context: fill in blanks using word bank (swallowed, deep, wet, leave, catch, worried)',
+  'HW-PartC': 'Phonics Detective: find story words matching sw-, -ed, CVC short vowels, and -ow /aʊ/ patterns; syllable counting bonus',
+  'HW-PartD': 'Grammar Power: past tense base-to-past conversion (10 verbs) + complete the chain with to catch',
+  'HW-PartE': 'Cohesion: order the animal chain 1-6; identify who she/he refers to',
+  'HW-PartF': 'Creative Writing: write your own old-lady chain story with at least 4 animals using the scaffold'
+};
+
+function openPushModal(sectionId, sectionContent) {
+  var token = localStorage.getItem('authToken');
+  if (!token) {
+    window.location.href = '/lesson.html';
+    return;
+  }
+  var content = sectionContent || sectionContentMap[sectionId] || sectionId;
+
+  fetch('/api/students/list', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API error: ' + r.status);
+    return r.json();
+  })
+  .then(function(students) {
+    if (!Array.isArray(students) || students.length === 0) {
+      alert('No students found. Please add students first.');
+      return;
+    }
+    var existing = document.querySelector('.push-modal-overlay');
+    if (existing) existing.remove();
+
+    var modal = document.createElement('div');
+    modal.className = 'push-modal-overlay';
+    var studentListHtml = students.map(function(s) {
+      return '<label class="student-item"><input type="checkbox" value="' + s.id + '"><span>' + s.name + '</span></label>';
+    }).join('');
+    modal.innerHTML = '<div class="push-modal">' +
+      '<h3>\ud83d\udce4 Push to Students</h3>' +
+      '<p style="color:#666;font-size:13px;">' + sectionId + '</p>' +
+      '<p style="color:#888;font-size:11px;margin-bottom:8px;">' + content.substring(0, 120) + (content.length > 120 ? '...' : '') + '</p>' +
+      '<div class="student-list">' + studentListHtml + '</div>' +
+      '<button class="push-confirm-btn" id="pushConfirmBtn">\u2705 Confirm Push</button>' +
+      '<button class="push-cancel-btn" id="pushCancelBtn">\u2716 Cancel</button>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    document.getElementById('pushConfirmBtn').onclick = function() { doPush(sectionId, content, this); };
+    document.getElementById('pushCancelBtn').onclick = function() { modal.remove(); };
+    modal.onclick = function(e) { if (e.target === modal) modal.remove(); };
+  })
+  .catch(function(err) {
+    alert('Failed to load students: ' + err.message);
+  });
+}
+
+function doPush(sectionId, content, btn) {
+  var modal = document.querySelector('.push-modal-overlay');
+  if (!modal) return;
+  var checked = modal.querySelectorAll('input:checked');
+  if (checked.length === 0) {
+    alert('Please select at least one student.');
+    return;
+  }
+  var token = localStorage.getItem('authToken');
+  btn.textContent = 'Pushing...';
+  btn.disabled = true;
+
+  var emojiMap = {
+    'LT01': '\ud83d\udcd6', 'LT02': '\ud83d\udd24', 'LT03': '\ud83c\udfa4',
+    'LT04': '\u270f\ufe0f', 'LT05': '\ud83d\udd24', 'LT06': '\ud83e\udde9',
+    'LT07': '\ud83d\udd17', 'LT08': '\ud83d\udcac', 'HW': '\ud83d\udcdd'
+  };
+  var prefix = sectionId.split('-')[0];
+  var emoji = emojiMap[prefix] || '\ud83d\udccc';
+  var title = emoji + ' [Fly Guy] ' + sectionId;
+  var today = new Date();
+  var todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  var teacher = localStorage.getItem('currentUser') || localStorage.getItem('lesson_tracker_user') || 'emily_mo';
+
+  // Push a TASK SNAPSHOT (not the whole lesson HTML) so the student renders
+  // only the selected task interactively.
+  var taskDef = PUSH_TASKS[sectionId] || { renderer: 'checklist', prompt: content, required: true };
+  var taskId = 'flyguy-oldlady-' + String(sectionId).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  var taskSnapshot = {
+    id: taskId,
+    title: title,
+    type: 'task',
+    series: 'Fly Guy',
+    book: BOOK_TITLE,
+    lesson: sectionId,
+    part: sectionId,
+    sourceLessonUrl: SOURCE_LESSON_URL,
+    studentRenderer: taskDef.renderer,
+    prompt: taskDef.prompt || content,
+    required: !!taskDef.required
+  };
+  if (taskDef.renderer === 'drag-match' && taskDef.pairs) taskSnapshot.pairs = taskDef.pairs;
+  if (taskDef.renderer === 'drag-order' && taskDef.items) taskSnapshot.items = taskDef.items;
+  if (taskDef.renderer === 'multiple-choice' && taskDef.options) taskSnapshot.options = taskDef.options;
+  if (taskDef.renderer === 'checklist') taskSnapshot.instructions = taskDef.prompt || content;
+
+  var assignments = [];
+  for (var i = 0; i < checked.length; i++) {
+    var studentId = checked[i].value;
+    assignments.push({
+      assignmentId: 'assign-' + Date.now() + '-' + Math.random().toString(16).slice(2) + '-' + i,
+      practiceId: 'lessonplan:' + sectionId,
+      title: title,
+      content: content,
+      sourceLessonUrl: SOURCE_LESSON_URL,
+      sourceLessonId: 'flyguy-old-lady',
+      taskIds: [taskId],
+      tasks: [taskSnapshot],
+      sourceBook: 'Fly Guy',
+      targetType: 'student',
+      targetIds: [studentId],
+      studentIds: [studentId],
+      classId: '',
+      relatedClassDate: todayStr,
+      assignedDate: todayStr,
+      dueDate: '',
+      teacherNote: '',
+      assignedBy: teacher,
+      status: 'active'
+    });
+  }
+
+  fetch('/api/practice/assignments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ assignments: assignments })
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    alert('\u2705 Pushed to ' + (data.count || assignments.length) + ' student(s)');
+    modal.remove();
+  })
+  .catch(function(err) {
+    alert('Push failed: ' + err.message);
+    btn.textContent = 'Push';
+    btn.disabled = false;
+  });
+}
+// ═══════ Task definitions for Practice push (task snapshot) ═══════
+var PUSH_TASKS = {
+  'LT01-Vocabulary': { renderer: 'checklist', prompt: 'Review the 12 core vocabulary words with IPA, definitions and word families.', required: true },
+  'LT02-Phonics': { renderer: 'checklist', prompt: 'Practice word patterns: sw-, -ed, CVC shorts, -ow /aʊ/ and -oa.', required: true },
+  'LT03-Pronunciation': { renderer: 'checklist', prompt: 'Count syllables and practice stress: swallow(2), spider(2), everyone(3), about(2); echo game.', required: true },
+  'LT04-Sentence-Patterns': { renderer: 'checklist', prompt: 'Practice sentence patterns: She swallowed a [noun] to catch the [noun]; He wanted to [verb].', required: true },
+  'LT05-Grammar': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of "catch".', options: [
+    { label: 'catch → caught', value: 'caught', correct: true },
+    { label: 'catch → catched', value: 'catched', correct: false },
+    { label: 'catch → caughted', value: 'caughted', correct: false }
+  ], required: true },
+  'LT06-Morphology': { renderer: 'checklist', prompt: 'Review word families (-ed regular past, irregular past, plurals -s) and compound every+one.', required: true },
+  'LT07-Cohesion': { renderer: 'drag-order', prompt: 'Put the animals in the order Grandma swallowed them.', items: ['spider', 'bird', 'cat', 'dog', 'goat', 'cow'], required: true },
+  'LT08-Functional-Communication': { renderer: 'short-answer', prompt: 'Write your own old-lady chain story with at least 4 animals using the scaffold.', required: true },
+  'HW-PartA': { renderer: 'drag-match', prompt: 'Match each word with its meaning.', pairs: [
+    { left: 'swallow', right: 'send food down your throat' },
+    { left: 'catch', right: 'grab something moving' },
+    { left: 'deep', right: 'going far down' },
+    { left: 'wet', right: 'covered with water' },
+    { left: 'worried', right: 'feeling nervous' },
+    { left: 'leave', right: 'go away from a place' }
+  ], required: true },
+  'HW-PartB': { renderer: 'drag-order', prompt: 'Use the word bank to complete the sentences.', items: ['swallowed', 'deep', 'wet', 'leave', 'catch', 'worried'], required: true },
+  'HW-PartC': { renderer: 'multiple-choice', prompt: 'Which sound pattern does "cow" use?', options: [
+    { label: '-ow /aʊ/', value: 'ow', correct: true },
+    { label: '-oa /oʊ/', value: 'oa', correct: false },
+    { label: 'CVC short o', value: 'o', correct: false }
+  ], required: true },
+  'HW-PartD': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of "cry".', options: [
+    { label: 'cry → cried', value: 'cried', correct: true },
+    { label: 'cry → cryed', value: 'cryed', correct: false },
+    { label: 'cry → cryd', value: 'cryd', correct: false }
+  ], required: true },
+  'HW-PartE': { renderer: 'drag-order', prompt: 'Order the animals in the chain: spider, bird, cat, dog, goat, cow.', items: ['spider', 'bird', 'cat', 'dog', 'goat', 'cow'], required: true },
+  'HW-PartF': { renderer: 'short-answer', prompt: 'Write your own chain story starting with "There was an old lady who swallowed a ___."', required: true }
+};
+</script>
+</body>
+</html>

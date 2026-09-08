@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教案库 · Emily Kids Reader</title>
+<style>
+  :root{
+    --green:#244f38; --green-2:#386b4c; --cream:#fff8ea; --paper:#f7efe2;
+    --ink:#203027; --muted:#637264; --line:#e5dcc8; --gold:#d8a23f;
+    --coral:#a9503d; --blue:#28627a; --white:#fffdf8; --red:#b84a3b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;min-height:100vh}
+  .topstrip{height:6px;background:linear-gradient(90deg,var(--green),var(--green-2))}
+  header{background:var(--green);color:var(--cream);padding:26px 28px}
+  .header-inner{max-width:980px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  header h1{font-size:26px;font-weight:700;letter-spacing:.5px}
+  header .sub{color:#cfdec8;font-size:13px;margin-top:6px;line-height:1.6}
+  .back{display:inline-flex;align-items:center;gap:8px;background:var(--cream);color:var(--green);font-weight:600;font-size:13px;padding:9px 16px;border-radius:999px;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .back:hover{background:#fff}
+  main{max-width:980px;margin:24px auto;padding:0 20px 60px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .tab{padding:8px 18px;border-radius:999px;border:1px solid var(--line);background:var(--white);color:var(--muted);font-size:13px;cursor:pointer}
+  .tab.active{background:var(--green);color:var(--cream);border-color:var(--green);font-weight:600}
+  .group{margin-bottom:30px}
+  .group h2{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-left:2px;border-left:4px solid var(--gold);padding-left:10px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:16px 18px;text-decoration:none;color:inherit;display:block;box-shadow:0 2px 10px rgba(32,48,39,.05);transition:transform .12s,box-shadow .12s}
+  .card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(32,48,39,.12)}
+  .card h3{font-size:16px;color:var(--green);margin-bottom:5px}
+  .card .desc{font-size:12.5px;color:var(--muted);line-height:1.55;min-height:36px}
+  .tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .tag{font-size:11px;padding:3px 10px;border-radius:999px;background:rgba(36,79,56,.08);color:var(--green)}
+  .tag.gold{background:rgba(216,162,63,.14);color:#8a6a1f}
+  .tag.coral{background:rgba(169,80,61,.1);color:var(--coral)}
+  .tag.grey{background:#efe9dc;color:var(--muted)}
+  .tag.lock{background:#f0e4e0;color:var(--red)}
+  .dahl-note{font-size:11.5px;color:var(--muted);margin-top:8px}
+  footer{margin-top:10px;text-align:center;color:var(--muted);font-size:12px;padding:20px}
+</style>
+</head>
+<body>
+<div class="topstrip"></div>
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>📖 教案库</h1>
+      <div class="sub">集中所有教案 / 课程课件，供教师取用。RAZ 与 Phonics 均归教案库。教案里的 worksheet / quiz 通过「关联 Practice」推送给学生。</div>
+    </div>
+    <a class="back" href="/lesson.html">← 返回后台</a>
+  </div>
+</header>
+
+<main>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-f="all">全部</button>
+    <button class="tab" data-f="Dahl">Dahl</button>
+    <button class="tab" data-f="RAZ">RAZ</button>
+    <button class="tab" data-f="Power Up">Power Up</button>
+    <button class="tab" data-f="Phonics">Phonics</button>
+    <button class="tab" data-f="Fly Guy">Fly Guy</button>
+    <button class="tab" data-f="Frog and Toad">Frog and Toad</button>
+  </div>
+
+  <section class="group" data-cat="RAZ">
+    <h2>RAZ</h2>
+    <div class="grid">
+      <a class="card" href="/raz_engine.html" data-tags="RAZ">
+        <h3>RAZ Lesson Engine</h3>
+        <div class="desc">教案生成 / 老师备课 / teacher only · A1-B1</div>
+        <div class="tags"><span class="tag">教案</span><span class="tag gold">RAZ</span><span class="tag">生成+打印</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" data-cat="Power Up">
+    <h2>Power Up</h2>
+    <div class="grid">
+      <a class="card" href="/teacher/PU2.html" data-tags="Power Up">
+        <h3>Power Up Level 2 · Teacher</h3>
+        <div class="desc">PU2 教师课件 · 课堂教学呈现</div>
+        <div class="tags"><span class="tag">教案</span><span class="tag gold">Power Up</span><span class="tag">Teacher</span></div>
+      </a>
+      <a class="card" href="/teacher/PU3.html" data-tags="Power Up">
+        <h3>Power Up Level 3 · Teacher</h3>
+        <div class="desc">PU3 教师课件 · 课堂教学呈现</div>
+        <div class="tags"><span class="tag">教案</span><span class="tag gold">Power Up</span><span class="tag">Teacher</span></div>
+      </a>
+      <a class="card" href="/teacher/PU4.html" data-tags="Power Up">
+        <h3>Power Up Level 4 · Teacher</h3>
+        <div class="desc">PU4 教师课件 · 课堂教学呈现</div>
+        <div class="tags"><span class="tag">教案</span><span class="tag gold">Power Up</span><span class="tag">Teacher</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" data-cat="Phonics">
+    <h2>Phonics</h2>
+    <div class="grid">
+      <a class="card" href="/phonics-training.html" data-tags="Phonics">
+        <h3>Phonics Training</h3>
+        <div class="desc">拼读 &amp; 音标训练 · do_not_touch（只加入口，不改内容）</div>
+        <div class="tags"><span class="tag">教案</span><span class="tag grey">do_not_touch</span><span class="tag coral">Phonics</span></div>
+      </a>
+      <a class="card" href="/mark-phonics.html" data-tags="Phonics">
+        <h3>Mark Phonics</h3>
+        <div class="desc">Mark 专属拼读练习 · needs_review</div>
+        <div class="tags"><span class="tag grey">needs_review</span><span class="tag coral">Phonics</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" data-cat="Fly Guy">
+    <h2>Fly Guy</h2>
+    <div class="grid" id="flyguy-grid" data-tags="Fly Guy"><!-- dynamic --></div>
+  </section>
+
+  <section class="group" data-cat="Frog and Toad">
+    <h2>Frog and Toad</h2>
+    <div class="grid">
+      <a class="card" href="/book1_select.html" data-tags="Frog and Toad">
+        <h3>Book1 · Are Friends</h3>
+        <div class="desc">Frog and Toad Are Friends 教案选择页</div>
+        <div class="tags"><span class="tag">教案</span></div>
+      </a>
+      <a class="card" href="/book2_select.html" data-tags="Frog and Toad">
+        <h3>Book2 · Together</h3>
+        <div class="desc">Frog and Toad Together 教案选择页</div>
+        <div class="tags"><span class="tag">教案</span></div>
+      </a>
+      <a class="card" href="/book3_select.html" data-tags="Frog and Toad">
+        <h3>Book3 · All Year</h3>
+        <div class="desc">Frog and Toad All Year 教案选择页</div>
+        <div class="tags"><span class="tag">教案</span></div>
+      </a>
+      <a class="card" href="/book4_select.html" data-tags="Frog and Toad">
+        <h3>Book4 · Days with Frog and Toad</h3>
+        <div class="desc">Days with Frog and Toad 教案选择页</div>
+        <div class="tags"><span class="tag">教案</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" data-cat="Dahl">
+    <h2>Roald Dahl 系列</h2>
+    <div class="grid">
+      <a class="card" href="/charlie_courseware.html" data-tags="Dahl">
+        <h3>Charlie Courseware</h3>
+        <div class="desc">Charlie and the Chocolate Factory 教案课件</div>
+        <div class="tags"><span class="tag">教案</span><span class="tag gold">Dahl</span></div>
+      </a>
+      <a class="card" href="/frontend/roald-dahl/crocodile_courseware.html" data-tags="Dahl">
+        <h3>Crocodile Courseware</h3>
+        <div class="desc">The Enormous Crocodile · 支持打印 + 写作批改</div>
+        <div class="tags"><span class="tag">教案</span><span class="tag gold">Dahl</span><span class="tag coral">打印+批改</span></div>
+      </a>
+      <a class="card" href="/frontend/roald-dahl/george_courseware.html" data-tags="Dahl">
+        <h3>George Courseware</h3>
+        <div class="desc">George's Marvelous Medicine 教案课件</div>
+        <div class="tags"><span class="tag">教案</span><span class="tag gold">Dahl</span></div>
+      </a>
+      <a class="card" href="/frontend/roald-dahl/magic_finger_courseware.html" data-tags="Dahl">
+        <h3>Magic Finger Courseware</h3>
+        <div class="desc">The Magic Finger · 5-tab + 8 套模板</div>
+        <div class="tags"><span class="tag">教案</span><span class="tag gold">Dahl</span><span class="tag">5-tab</span></div>
+      </a>
+      <a class="card" href="/frontend/roald-dahl/fox_courseware.html" data-tags="Dahl">
+        <h3>Fantastic Mr Fox Courseware</h3>
+        <div class="desc">Fantastic Mr Fox · 教案课件（含可打印资料 &amp; 写作批改）</div>
+        <div class="tags"><span class="tag">教案</span><span class="tag gold">Dahl</span></div>
+      </a>
+      <a class="card" href="/frontend/roald-dahl/esio-trot_courseware.html" data-tags="Dahl">
+        <h3>Esio Trot Courseware</h3>
+        <div class="desc">Esio Trot · 唯一课件入口</div>
+        <div class="tags"><span class="tag">教案</span><span class="tag gold">Dahl</span></div>
+      </a>
+    </div>
+    <div class="dahl-note">Dahl 教案含可打印资料与写作批改；前端目录与根目录重复文件已在架构中统一以 catalog 为准，避免双入口。</div>
+  </section>
+</main>
+
+<footer>Emily Kids Reader · v1 教案库 · 森林绿统一视觉</footer>
+
+<script>
+  const tabs=document.querySelectorAll('.tab');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.toggle('active',x===t));
+    const f=t.dataset.f;
+    document.querySelectorAll('.group').forEach(g=>{
+      g.style.display=(f==='all'||g.dataset.cat===f)?'':'none';
+    });
+  }));
+
+  // Fly Guy 教案动态渲染：从 lesson-plans.json 加载全部教案卡片
+  (function(){
+    const grid=document.getElementById('flyguy-grid');
+    if(!grid) return;
+    fetch('/lesson-plans-flyguy.json')
+      .then(r=>{ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
+      .then(list=>{
+        if(!Array.isArray(list)||!list.length) return;
+        grid.innerHTML=list.map(b=>`
+          <a class="card" href="/frontend/fly-guy/${b.file}" data-tags="Fly Guy">
+            <h3>${b.title}</h3>
+            <div class="desc">${b.desc}</div>
+            <div class="tags"><span class="tag">教案</span><span class="tag gold">Fly Guy</span></div>
+          </a>`).join('');
+      })
+      .catch(()=>{ grid.innerHTML='<p style="color:var(--muted);font-size:12.5px">教案加载失败，请稍后刷新。</p>'; });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Spy Fly Guy! — 精读教案 · 两课时</title>
+<style>
+:root {
+  --canvas: #FBF3E7;
+  --surface: #FFF9F1;
+  --surface-alt: #FFF3E0;
+  --ink: #31251B;
+  --ink-secondary: #8B7662;
+  --accent: #C96F3D;
+  --accent-light: #F5DCC8;
+  --green: #5A8F56;
+  --green-light: #E8F0E6;
+  --blue: #4A7FA5;
+  --blue-light: #E3EFF6;
+  --purple: #8B6DAF;
+  --purple-light: #F0EAF6;
+  --red: #C75A4A;
+  --red-light: #FCEAE7;
+  --divider: #E8DDD0;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-heading: Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.35rem;
+  --fs-2xl: 1.7rem;
+  --fs-3xl: 2.2rem;
+  --lh: 1.7;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(49,37,27,0.06);
+  --shadow: 0 2px 8px rgba(49,37,27,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* ── Header ── */
+.site-header {
+  background: linear-gradient(135deg, #C96F3D 0%, #B85A2E 100%);
+  color: #fff;
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2rem;
+}
+.site-header .page-wrap { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; }
+.header-text { flex: 1; min-width: 260px; }
+.header-text h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.3rem;
+}
+.header-text .subtitle {
+  font-size: var(--fs-lg);
+  opacity: 0.9;
+}
+.book-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.badge {
+  display: inline-block;
+  font-size: var(--fs-sm);
+  padding: 0.2em 0.7em;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+.lang-toggle {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.22);
+  border: 1.5px solid rgba(255,255,255,0.6);
+  color: #fff; font-weight: 700; font-size: var(--fs-sm);
+  border-radius: 24px; cursor: pointer;
+  transition: background 0.2s;
+}
+.lang-toggle:hover { background: rgba(255,255,255,0.35); }
+
+/* ── Section ── */
+section { margin-bottom: 2.5rem; }
+.section-label {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+h4 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+p { margin-bottom: 0.8rem; }
+.text-secondary { color: var(--ink-secondary); }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.card-accent { border-left: 4px solid var(--accent); }
+.card-green { border-left: 4px solid var(--green); }
+.card-blue { border-left: 4px solid var(--blue); }
+.card-purple { border-left: 4px solid var(--purple); }
+
+/* ── LT Grid ── */
+.lt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.lt-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+.lt-card .lt-num {
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.lt-card h4 { margin-bottom: 0.5rem; font-size: var(--fs-base); }
+.lt-card ul { padding-left: 1.2em; }
+.lt-card li { margin-bottom: 0.3rem; font-size: var(--fs-sm); color: var(--ink-secondary); }
+
+/* ── Session Timeline ── */
+.session-block {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.session-header {
+  padding: 1.2rem 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.session-header.s1 { background: linear-gradient(135deg, #C96F3D, #A85A30); }
+.session-header.s2 { background: linear-gradient(135deg, #5A8F56, #3D7A3A); }
+.session-header h2 { color: #fff; margin: 0; font-size: var(--fs-xl); }
+.session-header .session-meta { font-size: var(--fs-sm); opacity: 0.9; }
+.session-body { padding: 1.5rem; }
+
+.phase {
+  position: relative;
+  padding-left: 1.8rem;
+  padding-bottom: 1.5rem;
+  border-left: 2px solid var(--divider);
+  margin-left: 0.5rem;
+}
+.phase:last-child { border-left-color: transparent; padding-bottom: 0; }
+.phase::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 0.3rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.phase.green-dot::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+.phase-blue-dot::before { background: var(--blue); box-shadow: 0 0 0 2px var(--blue); }
+.phase-purple-dot::before { background: var(--purple); box-shadow: 0 0 0 2px var(--purple); }
+
+.phase-label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+.phase.green-dot .phase-label { color: var(--green); }
+.phase-blue-dot .phase-label { color: var(--blue); }
+.phase-purple-dot .phase-label { color: var(--purple); }
+
+.phase-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  margin: 0.8rem 0;
+}
+th, td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--divider);
+  vertical-align: top;
+}
+th {
+  background: var(--surface-alt);
+  font-weight: 700;
+  white-space: nowrap;
+}
+td { color: var(--ink); }
+.wrap-word { overflow-wrap: break-word; word-break: break-word; }
+
+/* ── Vocab Card ── */
+.vocab-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  align-items: baseline;
+}
+.vocab-word {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--accent);
+}
+.vocab-ipa {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+}
+.vocab-pos {
+  font-size: var(--fs-sm);
+  color: var(--blue);
+  font-weight: 600;
+}
+.vocab-def { font-size: var(--fs-sm); }
+.vocab-example {
+  grid-column: 1 / -1;
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  border-top: 1px dashed var(--divider);
+  padding-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+/* ── Phonics ── */
+.phonics-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.8rem;
+  margin: 0.25rem;
+  font-size: var(--fs-sm);
+}
+.phonics-pattern {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* ── Sentence Pattern ── */
+.pattern-block {
+  background: var(--purple-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+.pattern-template {
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  color: var(--purple);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.pattern-example {
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+}
+
+/* ── Callout ── */
+.callout {
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: var(--fs-sm);
+}
+.callout-tip { background: var(--green-light); border-left: 3px solid var(--green); }
+.callout-warn { background: var(--red-light); border-left: 3px solid var(--red); }
+.callout-info { background: var(--blue-light); border-left: 3px solid var(--blue); }
+.callout strong { display: block; margin-bottom: 0.3rem; }
+
+/* ── Homework Section ── */
+.hw-section {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
+}
+.hw-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.hw-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--divider);
+}
+.hw-question {
+  margin-bottom: 1rem;
+  padding-left: 0.2rem;
+}
+.hw-question .q-num {
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 0.3rem;
+}
+.hw-blank {
+  display: inline-block;
+  min-width: 120px;
+  border-bottom: 1px solid var(--ink);
+  margin: 0 0.2rem;
+}
+.hw-lines {
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 1.8em,
+    var(--divider) 1.8em,
+    var(--divider) calc(1.8em + 1px)
+  );
+  min-height: 6em;
+}
+/* Answer key */
+.answer-key {
+  margin-top: 1rem;
+  border: 1px solid var(--green);
+  border-radius: var(--radius);
+  background: var(--green-light);
+}
+.answer-key summary {
+  cursor: pointer;
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--green);
+  list-style: none;
+}
+.answer-key summary::-webkit-details-marker { display: none; }
+.answer-key .answer-body {
+  padding: 0.6rem 1rem 0.9rem;
+  font-size: var(--fs-sm);
+  border-top: 1px dashed var(--green);
+  color: var(--ink);
+}
+.answer-key .answer-body li { margin-bottom: 0.35rem; }
+.answer-key .answer-body p { margin-bottom: 0.4rem; }
+
+/* ── Sticky Nav ── */
+.toc {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(251,243,231,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--divider);
+  padding: 0.6rem 0;
+  margin-bottom: 1.5rem;
+}
+.toc .page-wrap {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.toc .page-wrap::-webkit-scrollbar { display: none; }
+.toc a {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.3em 0.8em;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.toc a:hover, .toc a:focus { background: var(--accent-light); color: var(--accent); }
+.toc a:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ── Divider ── */
+hr { border: none; border-top: 1px solid var(--divider); margin: 2rem 0; }
+
+/* ── Footer ── */
+.site-footer {
+  text-align: center;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--divider);
+  margin-top: 2rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .lt-grid { grid-template-columns: 1fr; }
+  .session-body { padding: 1rem; }
+  .phase { padding-left: 1.2rem; }
+  table { font-size: 0.8rem; }
+  th, td { padding: 0.4rem 0.5rem; }
+}
+
+/* ── Print ── */
+@media print {
+  .toc { display: none; }
+  .site-header { background: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .session-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card, .lt-card, .session-block, .hw-section, .vocab-card, .pattern-block, .callout, .phonics-item, .answer-key {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  body { font-size: 11pt; }
+  .page-wrap { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ── Push Modal ── */
+.push-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+}
+.push-modal {
+  background: white; border-radius: 16px; padding: 24px;
+  max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.push-modal h3 { margin: 0 0 8px; font-size: 18px; }
+.student-list { margin: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.student-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.student-item:hover { background: #f5f5f5; }
+.student-item input { width: 16px; height: 16px; }
+.push-confirm-btn {
+  width: 100%; padding: 12px; margin-top: 12px;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 10px;
+  font-weight: 700; cursor: pointer; font-size: 14px;
+}
+.push-cancel-btn {
+  width: 100%; padding: 10px; margin-top: 8px;
+  background: #f0f0f0; color: #666; border: none;
+  border-radius: 10px; cursor: pointer; font-size: 13px;
+}
+.push-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; margin: 4px 0;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 6px;
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  float: right;
+}
+.push-btn:hover { opacity: 0.9; transform: scale(1.05); }
+@media print { .push-btn { display: none !important; } }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header class="site-header">
+  <div class="page-wrap">
+    <div class="header-text">
+      <h1>I Spy Fly Guy!</h1>
+      <p class="subtitle">精读教案 · 两课时 · 100 分钟</p>
+      <div class="book-badges">
+        <span class="badge">Tedd Arnold</span>
+        <span class="badge">Lexile ≈ 320L</span>
+        <span class="badge">GRL Level I</span>
+        <span class="badge">Grade K–2</span>
+        <span class="badge">Fly Guy #7</span>
+      </div>
+    </div>
+    <button class="lang-toggle" onclick="toggleLang()" type="button">🌐 EN</button>
+  </div>
+</header>
+
+<!-- ═══════ TOC ═══════ -->
+<nav class="toc" aria-label="页面导航">
+  <div class="page-wrap">
+    <a href="#overview">故事概览</a>
+    <a href="#lt-overview">LT 框架总览</a>
+    <a href="#session1">第一课时</a>
+    <a href="#session2">第二课时</a>
+    <a href="#homework">课后作业</a>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<section id="overview">
+  <div class="section-label">Overview</div>
+  <h2 data-en="Story Overview">故事概览</h2>
+  <div class="card card-accent">
+    <h3>Story Summary</h3>
+    <p>Buzz has a pet fly named Fly Guy, and Fly Guy can say the boy's name. One day Buzz and Fly Guy go outside to play <strong>hide-and-seek</strong>. Fly Guy hides in the garbage can — he always hides there, so he can eat while Buzz looks for him. "I spy Fly Guy!" says Buzz, and then it's Buzz's turn to hide. Buzz hides in the garden shed and shuts the door, but clever Fly Guy finds a way in. "You are GOOD!" says Buzz. "It's your turn to hide again."</p>
+    <p>Fly Guy hides in the garbage can once more — but just then the <strong>garbageman</strong> comes, dumps the garbage into his truck, and drives away! "Follow that truck!" cries Buzz. Dad races him all the way to the <strong>town dump</strong>. Buzz cries out, "Fly Guy, where are you? Answer me!" A <strong>zillion</strong> flies buzz back "ZZZZZ!" Buzz spied one fly hiding, one eating, one landing on his hand — "Do I spy Fly Guy?" — but each one just flies away, boinks him, or bites him. Buzz is heartbroken. Was Fly Guy gone forever?</p>
+    <p>Then Buzz remembers — they are still playing a game! "Okay, Fly Guy, I give up. You win." Suddenly he hears a voice from above, and cries out "I SPY FLY GUY!" — because Fly Guy had been hiding there all along, waiting for his boy to find him. Best friends, reunited.</p>
+  </div>
+  <div class="lt-grid" style="margin-top:1rem;">
+    <div class="card" style="margin:0;">
+      <h4>📖 文本特征</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li>3 chapters, ~30 pages</li>
+        <li>反复句式：I spy ___ / Do I spy ___ ?</li>
+        <li>地点介词：in the garbage can, in the shed, on his hand, from above</li>
+        <li>核心主题词：hide-and-seek, playing a game, friendship, cleverness</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>🎯 教学目标</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>Reading:</strong> 理解游戏规则与悬念结构（捉迷藏怎会变成找苍蝇？）</li>
+        <li><strong>Language:</strong> 掌握核心词汇、地点介词、过去时态、I spy 句式</li>
+        <li><strong>Speaking:</strong> 能玩 I Spy 游戏、复述故事、回答 Where / How 问题</li>
+        <li><strong>Writing:</strong> 完成 opinion / retell 写作：I spy + 位置描述</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LT FRAMEWORK OVERVIEW ═══════ -->
+<section id="lt-overview">
+  <div class="section-label">Language Target Framework</div>
+  <h2 data-en="Language Target Framework — I Spy Fly Guy!">LT 框架总览 — I Spy Fly Guy!</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;"><span>以下 8 个模块构成本书的完整语言目标体系，两个课时分工推进。</span></p>
+
+  <div class="lt-grid">
+    <div class="lt-card">
+      <div class="lt-num">LT01</div>
+      <h4>Vocabulary 词汇</h4>
+      <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.5rem;">12 个核心词，含 IPA、词性、搭配、例句、词族。</p>
+      <ul>
+        <li>spy, hide, seek, found</li>
+        <li>garbage can, shed, garbageman, dump</li>
+        <li>zillion, follow, answer, boink, bite</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT02</div>
+      <h4>Phonics / Decoding 语音拼读</h4>
+      <ul>
+        <li><strong>sp-</strong> blend: spy, spied, spying</li>
+        <li><strong>tr-</strong> blend: truck, trash</li>
+        <li><strong>dr-</strong> blend: drove, drove, drove</li>
+        <li><strong>-mp</strong> final: dump, stomp</li>
+        <li><strong>-ck</strong>: truck, kick, back</li>
+        <li>拟声词 <strong>Z</strong> /z/: zillion, ZZZZZ</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT03</div>
+      <h4>Pronunciation 发音</h4>
+      <ul>
+        <li>音节切分：spy (1), gar-bage (2), gar-bage-man (3), gizilion / zi-llion (2)</li>
+        <li>重音：GAR-bage, REM-ber, a-BOVE, to-GE-ther</li>
+        <li>连读：spied_a fly, hid in_the</li>
+        <li>/z/ 音拖长：ZZZZZ!（拟声）</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT04</div>
+      <h4>Sentence Patterns 句型</h4>
+      <ul>
+        <li>I spy [noun]! / Do I spy [noun]?</li>
+        <li>It's my / your turn to [verb].</li>
+        <li>Let's play [game].</li>
+        <li>___ hid in / on / from [place].</li>
+        <li>Follow that truck!</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT05</div>
+      <h4>Grammar 语法功能</h4>
+      <ul>
+        <li><strong>Ability:</strong> can / could — "Fly Guy could say the boy's name."</li>
+        <li><strong>Simple past:</strong> hid, came, dumped, drove, cried, spied, flew, bit</li>
+        <li><strong>Prepositions of place:</strong> in / on / from / into / above</li>
+        <li><strong>Questions:</strong> "Where are you?" "How will I find Fly Guy?"</li>
+        <li><strong>Imperatives:</strong> "Follow that truck!" "Answer me!"</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT06</div>
+      <h4>Morphology 词形变化</h4>
+      <ul>
+        <li><strong>Irregular past:</strong> hide→hid, come→came, drive→drove, fly→flew, bite→bit, hear→heard, give→gave, say→said</li>
+        <li><strong>-ed:</strong> dumped, kicked, remembered</li>
+        <li><strong>y→i-ed:</strong> spy→spied, cry→cried</li>
+        <li><strong>-ing:</strong> hide→hiding, play→playing, eat→eating</li>
+        <li><strong>Compound:</strong> garbage+man, hide+and+seek</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT07</div>
+      <h4>Cohesion / Discourse 语篇衔接</h4>
+      <ul>
+        <li><strong>Sequence:</strong> One day → Just then → all the way → Then</li>
+        <li><strong>and</strong>: "drove and drove and drove"（反复并列）</li>
+        <li><strong>again</strong>: 重复动作推进节奏</li>
+        <li><strong>代词 he:</strong> "Fly Guy hid... He always hid..." He = Fly Guy</li>
+        <li>对话标记词：said, cried, yelled, asked</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT08</div>
+      <h4>Functional Communication 语用功能</h4>
+      <ul>
+        <li><strong>Play a game:</strong> 玩"I Spy"游戏 — "I spy something..."</li>
+        <li><strong>Describe position:</strong> Where did Fly Guy hide? On / In...</li>
+        <li><strong>Retell:</strong> What happened first / next / at the end?</li>
+        <li><strong>Answer questions:</strong> "Where are you?" "Answer me!"</li>
+        <li><strong>Express opinion:</strong> Where would you hide? Why?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ SESSION 1 ═══════ -->
+<section id="session1">
+  <div class="section-label">Session 1 · 50 minutes</div>
+  <h2 data-en="Session 1 — Reading & Language Input">第一课时 — 基础阅读与语言输入</h2>
+  <p class="text-secondary">目标：激活游戏背景，通读全文，掌握核心词汇、语音规律与 I spy 句式，完成基础理解。</p>
+
+  <div class="session-block">
+    <div class="session-header s1">
+      <div>
+        <h2>Lesson 1: Let's Play Hide-and-Seek!</h2>
+        <div class="session-meta">Focus: Warm-up → Reading → Vocabulary → Phonics → Patterns</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–10 min · Warm-up &amp; Pre-reading</div>
+        <div class="phase-title" data-en="Activate Background · Picture Talk">激活游戏背景 · 图片讨论</div>
+
+        <h4>活动 1：Game Talk (5 min)</h4>
+        <p>引导学生聊聊"捉迷藏"这个他们熟悉的游戏：</p>
+        <ul style="padding-left:1.2em;margin-bottom:1rem;">
+          <li>"How do you play hide-and-seek?" → One person hides, the other finds.</li>
+          <li>"Where do you like to hide in your house or yard?" → Behind the door, under the bed...</li>
+          <li>"What does 'I spy' mean?" → 引出主题："I spy with my little eye..."</li>
+        </ul>
+
+        <h4>活动 2：Picture Predict (5 min)</h4>
+        <p>展示封面和内页插图，引导学生观察预测：</p>
+        <ul style="padding-left:1.2em;margin-bottom:1rem;">
+          <li>"Where do you think Fly Guy is hiding?" → In the garbage can (see the lid!).</li>
+          <li>"Can a fly hide in a garbage can? What might happen next?"</li>
+          <li>"Why is Buzz holding a net / looking so hard?" → 引导预测危机。</li>
+        </ul>
+
+        <div class="callout callout-info">
+          <strong>🔑 Big Question</strong>
+          Can Buzz find Fly Guy? Where is Fly Guy hiding? Let's read and find out!
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 教学提示</strong>
+          将调查问题"Fly Guy 藏在哪里？"保留到全文阅读后讨论，制造悬念。
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase green-dot">
+        <div class="phase-label">⏱ 10–20 min · Read Aloud</div>
+        <div class="phase-title" data-en="Read the Whole Story · Comprehension">通读全文 · 理解故事</div>
+
+        <h4>Chapter 1 精读 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>开场</td>
+              <td>"A boy had a pet fly. He named him Fly Guy. Fly Guy could say the boy's name."</td>
+              <td>引入 could（过去能力）与命名；复习系列老梗 "BUZZ!"</td>
+            </tr>
+            <tr>
+              <td>Ch.1 a</td>
+              <td>"Let's play hide-and-seek," said Buzz. "Fly Guy hid in the garbage can. He always hid in the garbage can. He liked to eat while Buzz looked for him."</td>
+              <td>理解 always（习惯）与 in the garbage can（地点）；Fly Guy 是有计划的小机灵</td>
+            </tr>
+            <tr>
+              <td>Ch.1 b</td>
+              <td>"I spy Fly Guy!" said Buzz. "It's my turn to hide."</td>
+              <td>核心句式 "I spy ___!" 与 "It's my turn to ___."</td>
+            </tr>
+            <tr>
+              <td>Ch.1 c</td>
+              <td>"Buzz hid in the garden shed and shut the door. Fly Guy found a way in. 'You are GOOD!' said Buzz."</td>
+              <td>地点 in the garden shed；学习 found（find 的过去式）；Fly Guy 太聪明</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 2 精读 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ch.2 a</td>
+              <td>"Just then, the garbageman came. He dumped the garbage into the truck and drove away."</td>
+              <td>"just then"（就在这时）制造转折；garbageman + dump</td>
+            </tr>
+            <tr>
+              <td>Ch.2 b</td>
+              <td>"Follow that truck!" cried Buzz. "The truck drove and drove and drove, all the way to the town dump."</td>
+              <td>命令句 "Follow that truck!"；"drove and drove and drove" 反复结构强调路程远</td>
+            </tr>
+            <tr>
+              <td>Ch.2 c</td>
+              <td>"Fly Guy, where are you? Answer me! A zillion flies all answered, ZZZZZ!"</td>
+              <td>特殊疑问句 "where are you?"；zillion = 无数；拟声词 ZZZZZ!</td>
+            </tr>
+            <tr>
+              <td>Ch.2 d</td>
+              <td>"They all can say my name! How will I find Fly Guy?" Buzz spied a fly hiding... eating... landing on his hand.</td>
+              <td>"How will I find...?" 疑问；重复 "Do I spy Fly Guy?" 三连；每个答案都否</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 3 精读 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ch.3 a</td>
+              <td>"Buzz was sad. Was Fly Guy gone forever? He kicked a can. He kicked a jar."</td>
+              <td>疑问句 "Was Fly Guy gone forever?"；forever；情感转折</td>
+            </tr>
+            <tr>
+              <td>Ch.3 b</td>
+              <td>"Then Buzz remembered. They were still playing a game. 'Okay, Fly Guy, I give up. You win.'"</td>
+              <td>then（恍然大悟）；"I give up. You win."（认输也是赢）</td>
+            </tr>
+            <tr>
+              <td>Ch.3 c</td>
+              <td>"He heard a voice from above. 'I SPY FLY GUY!' cried Buzz. And Fly Guy said..."</td>
+              <td>from above（上方）；情感高潮！感人重逢；结尾悬念</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-tip">
+          <strong>💡 阅读策略</strong>
+          全书用"找苍蝇"作为悬念主线，每次 "Do I spy Fly Guy?" 都指向错误的苍蝇，最后 "I SPY FLY GUY!" 反转。请学生带着"这次是真的吗？"读下去。
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase" id="sec-lt01-vocab">
+        <div class="phase-label">⏱ 20–33 min · LT01 Vocabulary <button class="push-btn" onclick="openPushModal('LT01-Vocabulary','Vocabulary')">📤 Push to Students</button></div>
+        <div class="phase-title" data-en="Core Vocabulary Teaching">核心词汇教学</div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">spy</span>
+            <span class="vocab-ipa">/spaɪ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb / noun</span>
+            <div class="vocab-def">to notice or see something suddenly; a person who secretly watches</div>
+          </div>
+          <div class="vocab-example">"I <strong>spy</strong> Fly Guy!" → Did you <strong>spy</strong> the bird in the tree? <br><em>word family:</em> spied · spying · I-spy-game</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">hide / seek</span>
+            <span class="vocab-ipa">/haɪd/ · /siːk/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <div class="vocab-def">hide = to put yourself where you cannot be seen; seek = to look for</div>
+          </div>
+          <div class="vocab-example">"Let's play <strong>hide</strong>-and-<strong>seek</strong>." → Fly Guy <strong>hid</strong> in the can. <br><em>word family:</em> hid · hidden · hiding · hide-and-seek</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">garbage can</span>
+            <span class="vocab-ipa">/ˈɡɑːrbɪdʒ kæn/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a large container for holding rubbish / trash</div>
+          </div>
+          <div class="vocab-example">"Fly Guy hid in the <strong>garbage can</strong>." → Put the empty bottle in the <strong>garbage can</strong>.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">shed</span>
+            <span class="vocab-ipa">/ʃed/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a small building used for storage, often in a garden</div>
+          </div>
+          <div class="vocab-example">"Buzz hid in the garden <strong>shed</strong>." → The tools are kept in the <strong>shed</strong>.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">garbageman</span>
+            <span class="vocab-ipa">/ˈɡɑːrbɪdʒmæn/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">garbage + man</span>
+            <div class="vocab-def">a person whose job is to collect and take away garbage</div>
+          </div>
+          <div class="vocab-example">"Just then, the <strong>garbageman</strong> came." → The <strong>garbageman</strong> comes every Tuesday.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">dump</span>
+            <span class="vocab-ipa">/dʌmp/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb / noun</span>
+            <div class="vocab-def">to drop loads of trash; a place (the dump) where trash is taken</div>
+          </div>
+          <div class="vocab-example">"He <strong>dumped</strong> the garbage into the truck." "all the way to the town <strong>dump</strong>."</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">zillion</span>
+            <span class="vocab-ipa">/ˈzɪljən/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">quantifier (informal)</span>
+            <div class="vocab-def">an extremely large, uncountable number (a fun, made-up number)</div>
+          </div>
+          <div class="vocab-example">"A <strong>zillion</strong> flies all answered." → I have a <strong>zillion</strong> toys!</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">follow</span>
+            <span class="vocab-ipa">/ˈfɒloʊ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <div class="vocab-def">to go behind or after someone or something</div>
+          </div>
+          <div class="vocab-example">"<strong>Follow</strong> that truck!" → The puppy <strong>followed</strong> me home.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">answer</span>
+            <span class="vocab-ipa">/ˈænsər/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb / noun</span>
+            <div class="vocab-def">to reply or respond to a question</div>
+          </div>
+          <div class="vocab-example">"Fly Guy, <strong>answer</strong> me!" <em>("Where are you?")</em> → She <strong>answered</strong> every question.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">boink</span>
+            <span class="vocab-ipa">/bɔɪŋk/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb (informal)</span>
+            <div class="vocab-def">to hit someone gently on the nose or head (a playful bonk)</div>
+          </div>
+          <div class="vocab-example">"The fly <strong>boinked</strong> him on the nose." → The naughty ball <strong>boinked</strong> me!</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">bite</span>
+            <span class="vocab-ipa">/baɪt/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb / noun</span>
+            <div class="vocab-def">to use teeth to cut into something; the marks teeth make</div>
+          </div>
+          <div class="vocab-example">"The fly <strong>bit</strong> him and flew away." → A mosquito <strong>bit</strong> my arm. <br><em>word family:</em> bit · bitten · biting</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">remember</span>
+            <span class="vocab-ipa">/rɪˈmembər/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <div class="vocab-def">to bring a past fact or event back into your mind</div>
+          </div>
+          <div class="vocab-example">"Then Buzz <strong>remembered</strong>. They were still playing a game." → I <strong>remember</strong> your name. <br><em>word family:</em> remembered · remembering · memory</div>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 词汇巩固活动 (2 min)</strong>
+          <strong>Where Is It? 快闪游戏：</strong>教师读地点词（garbage can / shed / hand / dump），学生指出或说出 Fly Guy 曾藏在哪里。用动作强化位置记忆（in / on / from above）。
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase-purple-dot" id="sec-lt02-phonics">
+        <div class="phase-label">⏱ 33–43 min · LT02 Phonics + LT03 Pronunciation <button class="push-btn" onclick="openPushModal('LT02-Phonics','Phonics')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT03-Pronunciation','Pronunciation')">📤 Push</button></div>
+        <div class="phase-title" data-en="Phonics & Pronunciation">语音拼读与发音训练</div>
+
+        <h4>Phonics Focus (5 min)</h4>
+        <p>从本书中提取高频语音模式，引导学生发现规律：</p>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">辅音连缀 Consonant Blends</h4>
+          <span class="phonics-item"><span class="phonics-pattern">sp-</span> spy, spied, spying</span>
+          <span class="phonics-item"><span class="phonics-pattern">tr-</span> truck, trash</span>
+          <span class="phonics-item"><span class="phonics-pattern">dr-</span> drove, drive</span>
+          <span class="phonics-item"><span class="phonics-pattern">st-</span> still, stomp</span>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">尾音连缀 Final Blends</h4>
+          <span class="phonics-item"><span class="phonics-pattern">-mp</span> dump, stomp</span>
+          <span class="phonics-item"><span class="phonics-pattern">-ck</span> truck, kick, back</span>
+          <span class="phonics-item"><span class="phonics-pattern">-nd</span> found, hand</span>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">拟声与字母 Z</h4>
+          <span class="phonics-item"><span class="phonics-pattern">Z</span> /z/ — zillion, ZZZZZ!</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">苍蝇的嗡嗡声用 z 拉长模仿，读作 /zːzːz/。</p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Pronunciation Focus (5 min)</h4>
+
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Word</th><th>Syllables</th><th>Stress</th><th>Practice</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>spy</td><td>spy (1)</td><td>1st</td><td><strong>SPY</strong></td></tr>
+            <tr><td>garbage</td><td>gar·bage (2)</td><td>1st</td><td><strong>GAR</strong>-bage</td></tr>
+            <tr><td>garbageman</td><td>gar·bage·man (3)</td><td>1st</td><td><strong>GAR</strong>-bage-man</td></tr>
+            <tr><td>zillion</td><td>zil·lion (2)</td><td>1st</td><td><strong>ZIL</strong>-lion</td></tr>
+            <tr><td>remember</td><td>re·mem·ber (3)</td><td>2nd</td><td>re-<strong>MEM</strong>-ber</td></tr>
+            <tr><td>forever</td><td>for·ev·er (3)</td><td>2nd</td><td>for-<strong>EV</strong>-er</td></tr>
+            <tr><td>above</td><td>a·bove (2)</td><td>2nd</td><td>a-<strong>BOVE</strong></td></tr>
+            <tr><td>together</td><td>to·ge·ther (3)</td><td>2nd</td><td>to-<strong>GE</strong>-ther</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-tip">
+          <strong>💡 发音练习 (2 min)</strong>
+          <strong>回声游戏：</strong>教师读一个词，学生跟读并拍手打出音节数。
+          "gar-bage-man!" → 拍手 3 次。"zil-lion!" → 拍手 2 次。最后全班一起拉长读 "ZZZZZ!"
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase green-dot" id="sec-lt04-patterns">
+        <div class="phase-label">⏱ 43–50 min · LT04 Sentence Patterns + Wrap-up <button class="push-btn" onclick="openPushModal('LT04-Sentence-Patterns','Sentence Patterns')">📤 Push to Students</button></div>
+        <div class="phase-title" data-en="Core Sentence Patterns + Wrap-up">核心句型初探 + 小结</div>
+
+        <p>引入本课核心句式，为第二课时深度语法做铺垫：</p>
+
+        <div class="pattern-block">
+          <div class="pattern-template">I spy [noun]! / Do I spy [noun]?</div>
+          <div class="pattern-example">"I spy Fly Guy!" / "Do I spy Fly Guy?"</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 全书主干句式。肯定句"I spy..."和疑问句"Do I spy...?"交替出现。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">It's my / your turn to [verb].</div>
+          <div class="pattern-example">"It's my turn to hide." / "It's your turn to hide again."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 表示"该轮到谁做某事"。游戏用语，也是最核心的日常表达。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">___ hid in / on / from [place].</div>
+          <div class="pattern-example">"Fly Guy hid in the garbage can." / "landing on his hand." / "a voice from above."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 地点介词 in / on / from 描述"在哪里"。</p>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>📝 第一课时小结</strong>
+          回顾 Big Question: "Can Buzz find Fly Guy? Where was he hiding?" 让学生用一句英文表述：
+          <br>"I spy ___. It was in / on ___."
+          <br>（为第二课时的 I Spy 游戏与 opinion writing 做铺垫。）
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ SESSION 2 ═══════ -->
+<section id="session2">
+  <div class="section-label">Session 2 · 50 minutes</div>
+  <h2 data-en="Session 2 — Analysis & Language Output">第二课时 — 深度分析与语言输出</h2>
+  <p class="text-secondary">目标：深入语法、词形、语篇分析，完成 I Spy 口语游戏与写作任务。</p>
+
+  <div class="session-block">
+    <div class="session-header s2">
+      <div>
+        <h2>Lesson 2: I Spy, You Win!</h2>
+        <div class="session-meta">Focus: Review → Grammar → Morphology → Cohesion → Speaking → Writing</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–5 min · Review</div>
+        <div class="phase-title" data-en="Quick Review">快速复习</div>
+
+        <p>用 3 个快速问题回顾第一课时内容：</p>
+        <ol style="padding-left:1.5em;margin-bottom:0.8rem;">
+          <li>"What did Buzz and Fly Guy play?" → Hide-and-seek.</li>
+          <li>"Where did Fly Guy always hide?" → In the garbage can.</li>
+          <li>"What happened to the garbage?" → The garbageman dumped it into his truck and drove away.</li>
+        </ol>
+        <p>然后用 <strong>Sequence Map</strong> 快速梳理故事线索：</p>
+        <svg viewBox="0 0 700 200" style="width:100%;max-width:700px;height:auto;margin:0.5rem 0;" role="img" aria-label="Sequence map for I Spy Fly Guy">
+          <title>Sequence — I Spy Fly Guy!</title>
+          <desc>Five steps showing story sequence: play, hide in can, garbageman, dump, unforgettable find</desc>
+          <polygon points="50,170 175,40 350,20 525,100 650,170" fill="none" stroke="#C96F3D" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="50" cy="170" r="6" fill="#C96F3D"/>
+          <circle cx="175" cy="40" r="6" fill="#C96F3D"/>
+          <circle cx="350" cy="20" r="6" fill="#C75A4A"/>
+          <circle cx="525" cy="100" r="6" fill="#C96F3D"/>
+          <circle cx="650" cy="170" r="6" fill="#C96F3D"/>
+          <text x="50" y="195" text-anchor="middle" font-size="11" fill="#31251B">Play</text>
+          <text x="50" y="160" text-anchor="middle" font-size="9" fill="#8B7662">hide-and-seek</text>
+          <text x="175" y="30" text-anchor="middle" font-size="11" fill="#31251B">Hide</text>
+          <text x="175" y="58" text-anchor="middle" font-size="9" fill="#8B7662">in the garbage can</text>
+          <text x="350" y="12" text-anchor="middle" font-size="11" fill="#C75A4A" font-weight="700">Climax</text>
+          <text x="350" y="42" text-anchor="middle" font-size="9" fill="#8B7662">garbageman takes it</text>
+          <text x="525" y="90" text-anchor="middle" font-size="11" fill="#31251B">Chase</text>
+          <text x="525" y="118" text-anchor="middle" font-size="9" fill="#8B7662">to the town dump</text>
+          <text x="650" y="195" text-anchor="middle" font-size="11" fill="#31251B">I SPY!</text>
+          <text x="650" y="160" text-anchor="middle" font-size="9" fill="#8B7662">Fly Guy found above</text>
+        </svg>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase blue-dot" id="sec-lt05-grammar">
+        <div class="phase-label">⏱ 5–18 min · LT05 Grammar <button class="push-btn" onclick="openPushModal('LT05-Grammar','Grammar')">📤 Push to Students</button></div>
+        <div class="phase-title" data-en="Deep Grammar Analysis">语法功能深度分析</div>
+
+        <h4>① can / could — 表达能力 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>原文句</th><th>功能</th><th>结构</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>"Fly Guy <strong>could</strong> say the boy's name."</td><td>过去能力（肯定）</td><td>主语 + could + 动词原形</td></tr>
+            <tr><td>"They all <strong>can</strong> say my name!"</td><td>现在能力（肯定）</td><td>主语 + can + 动词原形</td></tr>
+            <tr><td>"How will I find Fly Guy?"</td><td>将来 + 疑问</td><td>How + will + 主语 + 动词原形?</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">练习：区分 can / could——"Can you find Fly Guy?"（现在）与 "Fly Guy could say his name."（过去）。</p>
+
+        <h4 style="margin-top:1rem;">② Prepositions of Place 地点介词 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Preposition</th><th>Meaning</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>in</strong></td><td>在里面</td><td>"Fly Guy hid <em>in</em> the garbage can." "Buzz hid <em>in</em> the garden shed."</td></tr>
+            <tr><td><strong>on</strong></td><td>在上面</td><td>"a fly landing <em>on</em> his hand." "boinked him <em>on</em> the nose."</td></tr>
+            <tr><td><strong>into</strong></td><td>进入</td><td>"He dumped the garbage <em>into</em> the truck."</td></tr>
+            <tr><td><strong>from</strong></td><td>从…</td><td>"a voice <em>from</em> above."</td></tr>
+            <tr><td><strong>above</strong></td><td>在上方</td><td>"He heard a voice <em>from above</em>."</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-warn">
+          <strong>⚠️ 重点提示</strong>
+          地点介词是本册语言核心。用"实物演示"帮助学生内化：把一个小玩偶放进杯子里（in）、放在桌上（on）、从上面发声（from above）。
+        </div>
+
+        <h4 style="margin-top:1rem;">③ Simple Past Tense 过去时态 (3 min)</h4>
+        <div class="pattern-block">
+          <div class="pattern-template">主语 + 过去式动词</div>
+          <div class="pattern-example">"Fly Guy <strong>hid</strong> in the can." "The garbageman <strong>came</strong>." "The truck <strong>drove</strong> away." "Buzz <strong>remembered</strong>."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">
+            全书用过去时讲故事。注意不规则动词：hide→hid, come→came, drive→drove, fly→flew, say→said, give→gave。
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-purple-dot" id="sec-lt06-morphology">
+        <div class="phase-label">⏱ 18–26 min · LT06 Morphology + LT07 Cohesion <button class="push-btn" onclick="openPushModal('LT06-Morphology','Morphology')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT07-Cohesion','Cohesion')">📤 Push</button></div>
+        <div class="phase-title" data-en="Morphology & Cohesion">词形变化与语篇衔接</div>
+
+        <h4>LT06 · Morphology 词形变化 (4 min)</h4>
+        <p>引导学生发现词形变化与合成词：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base</th><th>Past</th><th>+ ing</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>hide</td><td>hid (irr.)</td><td>hiding</td><td>不规则过去式 + 去 e 加 ing</td></tr>
+            <tr><td>come</td><td>came (irr.)</td><td>coming</td><td>不规则过去式</td></tr>
+            <tr><td>drive</td><td>drove (irr.)</td><td>driving</td><td>不规则过去式</td></tr>
+            <tr><td>fly</td><td>flew (irr.)</td><td>flying</td><td>不规则过去式（注意 flying→flying）</td></tr>
+            <tr><td>spy</td><td>spied (y→ied)</td><td>spying</td><td>辅音+y 结尾：去 y 加 -ied</td></tr>
+            <tr><td>cry</td><td>cried (y→ied)</td><td>crying</td><td>辅音+y 结尾：去 y 加 -ied</td></tr>
+            <tr><td>dump</td><td>dumped (-ed)</td><td>dumping</td><td>规则变化</td></tr>
+            <tr><td>say</td><td>said (irr.)</td><td>saying</td><td>不规则过去式</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>合成词 Compound words:</strong></p>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+          garbage + man = <strong>garbageman</strong> &nbsp;·&nbsp; hide + and + seek = <strong>hide-and-seek</strong> &nbsp;·&nbsp; town + dump = town dump &nbsp;·&nbsp; garden + shed = garden shed
+        </p>
+
+        <div class="callout callout-info">
+          <strong>🔍 不规则变化重点</strong>
+          hide→hid（不是 hideed）· drive→drove（不是 drived）· fly→flew（不是 flyed）· say→said（不是 sayed）
+          <br>这些词不能靠规则推导，需要单独记忆！
+        </div>
+
+        <h4 style="margin-top:1rem;">LT07 · Cohesion 语篇衔接 (4 min)</h4>
+        <p>分析本书中的衔接手段，理解作者如何推动故事：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Connector</th><th>Function</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>One day</strong></td>
+              <td>开启故事 beginning</td>
+              <td>"<strong>One day</strong>, Buzz and Fly Guy went outside."</td>
+            </tr>
+            <tr>
+              <td><strong>Just then</strong></td>
+              <td>关键时刻转折</td>
+              <td>"<strong>Just then</strong>, the garbageman came."</td>
+            </tr>
+            <tr>
+              <td><strong>and ... and ... and</strong></td>
+              <td>并列反复（突出很久）</td>
+              <td>"drove <strong>and</strong> drove <strong>and</strong> drove"</td>
+            </tr>
+            <tr>
+              <td><strong>then</strong></td>
+              <td>顺序 + 恍然大悟</td>
+              <td>"<strong>Then</strong> Buzz remembered."</td>
+            </tr>
+            <tr>
+              <td><strong>代词 he</strong></td>
+              <td>指代 reference</td>
+              <td>"Fly Guy hid... <strong>He</strong> always hid in the can." → He = Fly Guy</td>
+            </tr>
+            <tr>
+              <td><strong>对话标记 said / cried / yelled</strong></td>
+              <td>情绪衔接</td>
+              <td>"cried Buzz"（着急）"yelled Buzz"（大声）</td>
+            </tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-tip">
+          <strong>💡 讨论：悬念的结构</strong>
+          让学生找出所有 "Do I spy Fly Guy?"，讨论：为什么三次都答错？（作者用重复制造 tension——每次都让读者猜"这次是 Fly Guy 吗？"）
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase green-dot" id="sec-lt08-functional">
+        <div class="phase-label">⏱ 26–40 min · LT08 Functional Communication <button class="push-btn" onclick="openPushModal('LT08-Functional-Communication','Functional')">📤 Push to Students</button></div>
+        <div class="phase-title" data-en="Speaking & Writing Output">口语输出与写作任务</div>
+
+        <h4>Activity 1: Play "I Spy"! (5 min)</h4>
+        <p>学生两人一组，用教室里的物品玩 I Spy 游戏：</p>
+        <div class="card" style="background:var(--green-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>I Spy Game Frame:</strong></p>
+          <p style="font-size:var(--fs-sm);">
+            Player A: "I spy something <em>red</em>!"<br>
+            Player B: "Is it the pencil?" → "No, it's not."<br>
+            Player B: "Where is it? Is it <em>on</em> the desk?" → "Yes! You win!"
+          </p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.5rem;">📌 使用句型 "I spy... Is it...?" 与地点介词 in/on/under。</p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 2: Describe &amp; Retell (5 min)</h4>
+        <div class="card" style="background:var(--purple-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Discussion Prompts:</strong></p>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li>"Where did Fly Guy hide at the start?" → In the garbage can.</li>
+            <li>"Why was Buzz sad in the dump?" → He thought Fly Guy was gone forever.</li>
+            <li>"Where was Fly Guy at the end?" → From above.</li>
+            <li>"Is it a good hiding place? Would you hide there?"</li>
+          </ul>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Retell frame:</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            First, they played hide-and-seek.<br>
+            Then, the garbageman took the can away.<br>
+            Next, Buzz followed the truck to the dump.<br>
+            At the end, Buzz found Fly Guy hiding above. "I spy Fly Guy!"
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 3: Writing — Opinion / Retell (4 min 指导 + 课后完成)</h4>
+        <div class="card" style="background:var(--surface-alt);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Writing Prompt:</strong></p>
+          <p style="font-size:var(--fs-base);font-weight:600;">Where would you hide in hide-and-seek? Write about it using "I spy" and position words.</p>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Writing Frame (scaffold):</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            I would hide <em>in / under / behind</em> ___.<br>
+            Buzz would spy me there.<br>
+            "I spy ___!" said Buzz.<br>
+            Then it's my turn to ___. I win!
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 40–50 min · Review &amp; Extension</div>
+        <div class="phase-title" data-en="Review & Extension">总结回顾 + 拓展延伸</div>
+
+        <h4>Exit Ticket (5 min)</h4>
+        <p>每人回答 3 个问题后离开教室：</p>
+        <ol style="padding-left:1.5em;">
+          <li>说出 2 个你新学的单词。</li>
+          <li>用 "I spy ___ in / on ___" 造一个句子。</li>
+          <li>Fly Guy 最后藏在哪里？（一句话）</li>
+        </ol>
+
+        <h4 style="margin-top:0.8rem;">Extension (5 min)</h4>
+        <div class="callout callout-tip">
+          <strong>🌟 拓展活动选择</strong>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li><strong>Draw &amp; Label:</strong> 画一张"藏宝图"，标出房间里可以藏身的位置，用英文标注。</li>
+            <li><strong>Role Play:</strong> 两人一组表演"追垃圾车"场景（Buzz, Dad）。</li>
+            <li><strong>Creative Writing:</strong> 如果 Buzz 也钻进垃圾车去 dump，会发生什么？写 3-5 句话。</li>
+            <li><strong>Word Detective:</strong> 找出书中所有由两个词拼成的合成词（garbage can, garden shed, town dump...）。</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ HOMEWORK ═══════ -->
+<section id="homework">
+  <div class="section-label">Homework Worksheet</div>
+  <h2 data-en="Homework · I Spy Fly Guy!">课后作业 · I Spy Fly Guy!</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;">以下作业分为 6 个部分，覆盖 LT01–LT08 全部模块。可打印为 A4 纸质版。建议在第 1 课时后完成 Part A–D，第 2 课时后完成 Part E–F。每部分均附参考答案（点击展开）。</p>
+
+  <!-- Part A: Vocabulary -->
+  <div class="hw-section" id="sec-hw-partA">
+    <div class="hw-title">Part A · Vocabulary Match <button class="push-btn" onclick="openPushModal('HW-PartA','Vocabulary Match')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Draw a line to match each word with its meaning.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;font-size:var(--fs-sm);">
+      <div>
+        <p><strong>1.</strong> spy &nbsp;______</p>
+        <p><strong>2.</strong> dump &nbsp;______</p>
+        <p><strong>3.</strong> zillion &nbsp;______</p>
+        <p><strong>4.</strong> shed &nbsp;______</p>
+        <p><strong>5.</strong> follow &nbsp;______</p>
+        <p><strong>6.</strong> boink &nbsp;______</p>
+      </div>
+      <div>
+        <p><strong>A.</strong> to go behind or after someone</p>
+        <p><strong>B.</strong> a small building used for storage</p>
+        <p><strong>C.</strong> to notice or see something suddenly</p>
+        <p><strong>D.</strong> an extremely large number</p>
+        <p><strong>E.</strong> to hit someone gently on the nose or head</p>
+        <p><strong>F.</strong> a place where trash is taken</p>
+      </div>
+    </div>
+
+    <details class="answer-key">
+      <summary>✅ 参考答案 · Answer Key (Part A)</summary>
+      <div class="answer-body">
+        <p><strong>1 = C</strong> (spy → to notice or see something suddenly)</p>
+        <p><strong>2 = F</strong> (dump → a place where trash is taken)</p>
+        <p><strong>3 = D</strong> (zillion → an extremely large number)</p>
+        <p><strong>4 = B</strong> (shed → a small building used for storage)</p>
+        <p><strong>5 = A</strong> (follow → to go behind or after someone)</p>
+        <p><strong>6 = E</strong> (boink → to hit someone gently on the nose or head)</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part B: Vocabulary in Context -->
+  <div class="hw-section" id="sec-hw-partB">
+    <div class="hw-title">Part B · Vocabulary in Context <button class="push-btn" onclick="openPushModal('HW-PartB','Vocabulary in Context')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Fill in the blanks with the correct word from the box.</div>
+
+    <div style="background:var(--surface-alt);border-radius:var(--radius);padding:0.6rem 1rem;margin-bottom:1rem;font-size:var(--fs-sm);">
+      <strong>Word Bank:</strong> &nbsp; shed &nbsp; | &nbsp; dump &nbsp; | &nbsp; garbage can &nbsp; | &nbsp; zillion &nbsp; | &nbsp; followed &nbsp; | &nbsp; answer
+    </div>
+
+    <div class="hw-question"><span class="q-num">1.</span> Fly Guy hid in the <span class="hw-blank"></span>.</div>
+    <div class="hw-question"><span class="q-num">2.</span> Buzz hid in the garden <span class="hw-blank"></span> and shut the door.</div>
+    <div class="hw-question"><span class="q-num">3.</span> "Fly Guy, where are you? <span class="hw-blank"></span> me!" cried Buzz.</div>
+    <div class="hw-question"><span class="q-num">4.</span> Buzz <span class="hw-blank"></span> the truck all the way to the town <span class="hw-blank"></span>.</div>
+    <div class="hw-question"><span class="q-num">5.</span> A <span class="hw-blank"></span> flies all answered, "ZZZZZ!"</div>
+    <div class="hw-question"><span class="q-num">6.</span> They were still playing a <span class="hw-blank"></span>.</div>
+
+    <details class="answer-key">
+      <summary>✅ 参考答案 · Answer Key (Part B)</summary>
+      <div class="answer-body">
+        <p><strong>1.</strong> garbage can</p>
+        <p><strong>2.</strong> shed</p>
+        <p><strong>3.</strong> Answer</p>
+        <p><strong>4.</strong> followed ... (town) dump</p>
+        <p><strong>5.</strong> zillion</p>
+        <p><strong>6.</strong> game</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part C: Phonics -->
+  <div class="hw-section" id="sec-hw-partC">
+    <div class="hw-title">Part C · Phonics &amp; Morphology <button class="push-btn" onclick="openPushModal('HW-PartC','Phonics and Morphology')">📤 Push</button></div>
+    <div class="hw-subtitle">LT02 + LT03 + LT06 · Find words matching each sound pattern; sort past tenses.</div>
+
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th style="width:140px;">Sound Pattern</th><th>Find 1–2 words from the story</th><th>Pronunciation (IPA)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>sp-</strong></td><td><span class="hw-blank" style="min-width:90px;"></span>, <span class="hw-blank" style="min-width:90px;"></span></td><td>/sp/</td></tr>
+        <tr><td><strong>tr-</strong></td><td><span class="hw-blank" style="min-width:90px;"></span></td><td>/tr/</td></tr>
+        <tr><td><strong>-mp</strong></td><td><span class="hw-blank" style="min-width:90px;"></span></td><td>/mp/</td></tr>
+        <tr><td><strong>-ck</strong></td><td><span class="hw-blank" style="min-width:90px;"></span>, <span class="hw-blank" style="min-width:90px;"></span></td><td>/k/</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 style="font-size:var(--fs-base);margin-top:1rem;">C2: Past Tense Sort — Write the past form.</h4>
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th>Base Form</th><th>Past Tense</th><th>Base Form</th><th>Past Tense</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>hide</td><td><span class="hw-blank"></span></td><td>come</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>drive</td><td><span class="hw-blank"></span></td><td>fly</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>spy</td><td><span class="hw-blank"></span></td><td>cry</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>dump</td><td><span class="hw-blank"></span></td><td>bite</td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <details class="answer-key">
+      <summary>✅ 参考答案 · Answer Key (Part C)</summary>
+      <div class="answer-body">
+        <p><strong>C1 (sample answers):</strong></p>
+        <p>sp- → spy, spied &nbsp;·&nbsp; tr- → truck &nbsp;·&nbsp; -mp → dump &nbsp;·&nbsp; -ck → truck, kick, back</p>
+        <p><strong>C2:</strong></p>
+        <p>hide→hid &nbsp;·&nbsp; come→came &nbsp;·&nbsp; drive→drove &nbsp;·&nbsp; fly→flew &nbsp;·&nbsp; spy→spied &nbsp;·&nbsp; cry→cried &nbsp;·&nbsp; dump→dumped &nbsp;·&nbsp; bite→bit</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part D: Grammar -->
+  <div class="hw-section" id="sec-hw-partD">
+    <div class="hw-title">Part D · Grammar Power <button class="push-btn" onclick="openPushModal('HW-PartD','Grammar Power')">📤 Push</button></div>
+    <div class="hw-subtitle">LT05 · Prepositions of place &amp; Question forms</div>
+
+    <h4 style="font-size:var(--fs-base);margin-bottom:0.5rem;">D1: Prepositions — Complete with in / on / from.</h4>
+    <div class="hw-question"><span class="q-num">1.</span> Fly Guy hid <span class="hw-blank" style="min-width:60px;"></span> the garbage can.</div>
+    <div class="hw-question"><span class="q-num">2.</span> A fly landed <span class="hw-blank" style="min-width:60px;"></span> his hand.</div>
+    <div class="hw-question"><span class="q-num">3.</span> Buzz heard a voice <span class="hw-blank" style="min-width:60px;"></span> above.</div>
+    <div class="hw-question"><span class="q-num">4.</span> He dumped the garbage <span class="hw-blank" style="min-width:60px;"></span> the truck.</div>
+    <div class="hw-question"><span class="q-num">5.</span> Buzz hid <span class="hw-blank" style="min-width:60px;"></span> the garden shed.</div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">D2: Questions — Complete the question words.</h4>
+    <div class="hw-question"><span class="q-num">1.</span> "Fly Guy, <span class="hw-blank" style="min-width:60px;"></span> are you?" (place)</div>
+    <div class="hw-question"><span class="q-num">2.</span> "<span class="hw-blank" style="min-width:60px;"></span> will I find Fly Guy?" (method)</div>
+    <div class="hw-question"><span class="q-num">3.</span> "Was Fly Guy gone <span class="hw-blank" style="min-width:60px;"></span>?" (finish the question)</div>
+
+    <details class="answer-key">
+      <summary>✅ 参考答案 · Answer Key (Part D)</summary>
+      <div class="answer-body">
+        <p><strong>D1:</strong> 1. in &nbsp; 2. on &nbsp; 3. from &nbsp; 4. into &nbsp; 5. in</p>
+        <p><strong>D2:</strong> 1. Where &nbsp; 2. How &nbsp; 3. forever (Was Fly Guy gone forever?)</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part E: Cohesion -->
+  <div class="hw-section" id="sec-hw-partE">
+    <div class="hw-title">Part E · Cohesion — Who Is "He"? <button class="push-btn" onclick="openPushModal('HW-PartE','Cohesion')">📤 Push</button></div>
+    <div class="hw-subtitle">LT07 · Read each sentence. Write who "he" refers to: Buzz, Fly Guy, or the garbageman.</div>
+
+    <div class="hw-question"><span class="q-num">1.</span> "Fly Guy hid in the garbage can. <strong>He</strong> always hid in the garbage can." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">2.</span> "Just then, the garbageman came. <strong>He</strong> dumped the garbage into the truck." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">3.</span> "<strong>He</strong> found a way into the shed." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">4.</span> "<strong>He</strong> kicked a can. He kicked a jar." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">5.</span> "Then <strong>he</strong> remembered they were still playing a game." → <span class="hw-blank"></span></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">Find the sequence words!</h4>
+    <p style="font-size:var(--fs-sm);">Write the story-word that means "at that exact moment" and the one that means "right after that".</p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">At that exact moment: <span class="hw-blank" style="min-width:180px;"></span></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">Right after that: <span class="hw-blank" style="min-width:180px;"></span></p>
+
+    <details class="answer-key">
+      <summary>✅ 参考答案 · Answer Key (Part E)</summary>
+      <div class="answer-body">
+        <p><strong>1.</strong> Fly Guy &nbsp; <strong>2.</strong> the garbageman &nbsp; <strong>3.</strong> Fly Guy &nbsp; <strong>4.</strong> Buzz &nbsp; <strong>5.</strong> Buzz</p>
+        <p><strong>Sequence words:</strong> "At that exact moment" → Just then &nbsp;·&nbsp; "Right after that" → Then (also: all the way, again)</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part F: Writing -->
+  <div class="hw-section" id="sec-hw-partF">
+    <div class="hw-title">Part F · Writing — I Spy Me! <button class="push-btn" onclick="openPushModal('HW-PartF','Writing')">📤 Push</button></div>
+    <div class="hw-subtitle">LT08 · Where would you hide in hide-and-seek? Write about it. Use at least 4 sentences.</div>
+
+    <p style="font-size:var(--fs-sm);margin-bottom:0.5rem;"><strong>Use these sentence starters if you need help:</strong></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.8rem;">
+      I would hide <em>in / under / behind</em> ___.<br>
+      Buzz would spy me there.<br>
+      "I spy ___!" said Buzz.<br>
+      Then it's my turn to ___. I win!
+    </p>
+    <div class="hw-lines" style="min-height:12em;"></div>
+
+    <details class="answer-key">
+      <summary>✅ 参考答案 · Model Answer (Part F)</summary>
+      <div class="answer-body">
+        <p><em>Sample (suggested, not the only answer):</em></p>
+        <p>"I would hide under my bed. Buzz would walk in and look around. He would say, 'Where is she?' I am quiet. Then Buzz would laugh and say, 'I spy you under the bed!' It is my turn to hide again. I win!"</p>
+        <p>（评分关注：是否使用位置介词 on/in/under，是否使用 "I spy" 句式，句子是否完整、流畅。）</p>
+      </div>
+    </details>
+  </div>
+
+</section>
+
+<!-- ═══════ TEACHER NOTES ═══════ -->
+<section>
+  <div class="section-label">Teacher Notes</div>
+  <h2 data-en="Teacher Notes">教师备注</h2>
+
+  <div class="lt-grid">
+    <div class="card">
+      <h4>📊 LT Coverage Map</h4>
+      <div style="overflow-x:auto"><table style="min-width:500px">
+        <thead>
+          <tr><th>LT Module</th><th>Session 1</th><th>Session 2</th><th>Homework</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LT01 Vocabulary</td><td>✅ 主教学</td><td>复习</td><td>✅ Part A–B</td></tr>
+          <tr><td>LT02 Phonics</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT03 Pronunciation</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT04 Sentence Patterns</td><td>✅ 初探</td><td>复习</td><td>—</td></tr>
+          <tr><td>LT05 Grammar</td><td>—</td><td>✅ 主教学</td><td>✅ Part D</td></tr>
+          <tr><td>LT06 Morphology</td><td>—</td><td>✅ 主教学</td><td>✅ Part C</td></tr>
+          <tr><td>LT07 Cohesion</td><td>—</td><td>✅ 主教学</td><td>✅ Part E</td></tr>
+          <tr><td>LT08 Functional</td><td>—</td><td>✅ 主教学</td><td>✅ Part F</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h4>🎯 CCSS Alignment (Grade 1–2)</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>RL.1.1</strong> Ask and answer questions about key details</li>
+        <li><strong>RL.1.2</strong> Retell stories, including key details</li>
+        <li><strong>RL.1.3</strong> Describe characters, settings, and major events</li>
+        <li><strong>RL.1.7</strong> Use illustrations and details to describe characters/events</li>
+        <li><strong>W.1.1</strong> Write opinion pieces, introduce topic, supply reason</li>
+        <li><strong>SL.1.1</strong> Participate in collaborative conversations</li>
+        <li><strong>SL.1.4</strong> Describe people, places, things, and events</li>
+        <li><strong>L.1.1</strong> Print all upper- and lowercase letters; use conventions</li>
+        <li><strong>L.1.4</strong> Determine meaning of words using context clues</li>
+        <li><strong>RF.1.3</strong> Know and apply grade-level phonics and word analysis skills</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="page-wrap">
+    <p>I Spy Fly Guy! — 精读教案 · 两课时 · Emily's Reading Studio</p>
+    <p style="margin-top:0.3rem;">Language Target Framework · LT01–LT08 · CCSS Grade 1–2 Aligned</p>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll for TOC
+document.querySelectorAll('.toc a').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var id = this.getAttribute('href').slice(1);
+    var target = document.getElementById(id);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ═══════ CN / EN Language Toggle ═══════
+function toggleLang() {
+  var body = document.body;
+  body.classList.toggle('lang-en');
+  var en = body.classList.contains('lang-en');
+  document.querySelectorAll('[data-en]').forEach(function(el) {
+    if (en) {
+      if (!el.dataset.zh) el.dataset.zh = el.textContent;
+      el.textContent = el.getAttribute('data-en');
+    } else {
+      el.textContent = el.dataset.zh || el.textContent;
+    }
+  });
+  var btn = document.querySelector('.lang-toggle');
+  if (btn) btn.textContent = en ? '🌐 中文' : '🌐 EN';
+}
+
+// ═══════ Push to Students ═══════
+const sectionContentMap = {
+  'LT01-Vocabulary': '12 core vocabulary words with IPA, POS, definitions and examples: spy, hide/seek, garbage can, shed, garbageman, dump, zillion, follow, answer, boink, bite, remember',
+  'LT02-Phonics': 'Consonant/final blends: sp- (spy), tr- (truck), dr- (drove), st- (still), -mp (dump), -ck (truck, kick), -nd (found); Z /z/ onomatopoeia ZZZZZ',
+  'LT03-Pronunciation': 'Syllable and stress: spy(1), garbage(2), garbageman(3), zillion(2), remember(3), forever(3), above(2), together(3); echo game',
+  'LT04-Sentence-Patterns': 'Core patterns: I spy [noun]! / Do I spy [noun]?; It\'s my/your turn to [verb]; ___ hid in/on/from [place]; Follow that truck!',
+  'LT05-Grammar': 'can/could ability; prepositions of place (in/on/into/from/above); Simple Past irregulars (hid, came, drove, flew); question forms (Where/How)',
+  'LT06-Morphology': 'Irregular past tense (hide→hid, come→came, drive→drove, fly→flew, bite→bit, say→said); y→-ied (spy→spied, cry→cried); compounds (garbageman, hide-and-seek)',
+  'LT07-Cohesion': 'Sequence (One day/Just then/then/again); and...and...and iterative repetition; pronoun reference (he=Fly Guy/Buzz/garbageman); dialogue tags (cried, yelled)',
+  'LT08-Functional-Communication': 'Play "I Spy" game; describe position; retell frame; answer questions; opinion writing with scaffold',
+  'HW-PartA': 'Vocabulary Match: match 6 words (spy, dump, zillion, shed, follow, boink) with their definitions',
+  'HW-PartB': 'Vocabulary in Context: fill in blanks using word bank (garbage can, shed, answer, followed, dump, zillion, game)',
+  'HW-PartC': 'Phonics & Morphology: find story words for sp-, tr-, -mp, -ck; write past tense of 8 verbs',
+  'HW-PartD': 'Grammar Power: prepositions in/on/into/from + question words Where/How',
+  'HW-PartE': 'Cohesion: identify who "he" refers to in 5 sentences; find sequence words (just then, then)',
+  'HW-PartF': 'Writing: Where would you hide? Write 4+ sentences using position words and "I spy"'
+};
+
+function openPushModal(sectionId, sectionContent) {
+  var token = localStorage.getItem('authToken');
+  if (!token) {
+    window.location.href = '/lesson.html';
+    return;
+  }
+  var content = sectionContent || sectionContentMap[sectionId] || sectionId;
+
+  fetch('/api/students/list', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API error: ' + r.status);
+    return r.json();
+  })
+  .then(function(students) {
+    if (!Array.isArray(students) || students.length === 0) {
+      alert('No students found. Please add students first.');
+      return;
+    }
+    var existing = document.querySelector('.push-modal-overlay');
+    if (existing) existing.remove();
+
+    var modal = document.createElement('div');
+    modal.className = 'push-modal-overlay';
+    var studentListHtml = students.map(function(s) {
+      return '<label class="student-item"><input type="checkbox" value="' + s.id + '"><span>' + s.name + '</span></label>';
+    }).join('');
+    modal.innerHTML = '<div class="push-modal">' +
+      '<h3>\ud83d\udce4 Push to Students</h3>' +
+      '<p style="color:#666;font-size:13px;">' + sectionId + '</p>' +
+      '<p style="color:#888;font-size:11px;margin-bottom:8px;">' + content.substring(0, 120) + (content.length > 120 ? '...' : '') + '</p>' +
+      '<div class="student-list">' + studentListHtml + '</div>' +
+      '<button class="push-confirm-btn" id="pushConfirmBtn">\u2705 Confirm Push</button>' +
+      '<button class="push-cancel-btn" id="pushCancelBtn">\u2716 Cancel</button>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    document.getElementById('pushConfirmBtn').onclick = function() { doPush(sectionId, content, this); };
+    document.getElementById('pushCancelBtn').onclick = function() { modal.remove(); };
+    modal.onclick = function(e) { if (e.target === modal) modal.remove(); };
+  })
+  .catch(function(err) {
+    alert('Failed to load students: ' + err.message);
+  });
+}
+
+function doPush(sectionId, content, btn) {
+  var modal = document.querySelector('.push-modal-overlay');
+  if (!modal) return;
+  var checked = modal.querySelectorAll('input:checked');
+  if (checked.length === 0) {
+    alert('Please select at least one student.');
+    return;
+  }
+  var token = localStorage.getItem('authToken');
+  btn.textContent = 'Pushing...';
+  btn.disabled = true;
+
+  var emojiMap = {
+    'LT01': '\ud83d\udcd6', 'LT02': '\ud83d\udd24', 'LT03': '\ud83c\udfa4',
+    'LT04': '\u270f\ufe0f', 'LT05': '\ud83d\udd24', 'LT06': '\ud83e\udde9',
+    'LT07': '\ud83d\udd17', 'LT08': '\ud83d\udcac', 'HW': '\ud83d\udcdd'
+  };
+  var prefix = sectionId.split('-')[0];
+  var emoji = emojiMap[prefix] || '\ud83d\udccc';
+  var title = emoji + ' [Fly Guy] ' + sectionId;
+  var today = new Date();
+  var todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  var teacher = localStorage.getItem('currentUser') || localStorage.getItem('lesson_tracker_user') || 'emily_mo';
+
+  var taskDef = PUSH_TASKS[sectionId] || { renderer: 'checklist', prompt: content, required: true };
+  var taskId = 'flyguy-i-spy-fly-guy-' + String(sectionId).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  var taskSnapshot = {
+    id: taskId,
+    title: title,
+    type: 'task',
+    series: 'Fly Guy',
+    book: 'I Spy Fly Guy!',
+    lesson: sectionId,
+    part: sectionId,
+    sourceLessonUrl: '/frontend/fly-guy/i_spy_fly_guy_lesson_plan.html',
+    studentRenderer: taskDef.renderer,
+    prompt: taskDef.prompt || content,
+    required: !!taskDef.required
+  };
+  if (taskDef.renderer === 'drag-match' && taskDef.pairs) taskSnapshot.pairs = taskDef.pairs;
+  if (taskDef.renderer === 'drag-order' && taskDef.items) taskSnapshot.items = taskDef.items;
+  if (taskDef.renderer === 'multiple-choice' && taskDef.options) taskSnapshot.options = taskDef.options;
+  if (taskDef.renderer === 'checklist') taskSnapshot.instructions = taskDef.prompt || content;
+
+  var assignments = [];
+  for (var i = 0; i < checked.length; i++) {
+    var studentId = checked[i].value;
+    assignments.push({
+      assignmentId: 'assign-' + Date.now() + '-' + Math.random().toString(16).slice(2) + '-' + i,
+      practiceId: 'lessonplan:' + sectionId,
+      title: title,
+      content: content,
+      sourceLessonUrl: '/frontend/fly-guy/i_spy_fly_guy_lesson_plan.html',
+      sourceLessonId: 'flyguy-i-spy-fly-guy',
+      taskIds: [taskId],
+      tasks: [taskSnapshot],
+      sourceBook: 'Fly Guy',
+      targetType: 'student',
+      targetIds: [studentId],
+      studentIds: [studentId],
+      classId: '',
+      relatedClassDate: todayStr,
+      assignedDate: todayStr,
+      dueDate: '',
+      teacherNote: '',
+      assignedBy: teacher,
+      status: 'active'
+    });
+  }
+
+  fetch('/api/practice/assignments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ assignments: assignments })
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    alert('\u2705 Pushed to ' + (data.count || assignments.length) + ' student(s)');
+    modal.remove();
+  })
+  .catch(function(err) {
+    alert('Push failed: ' + err.message);
+    btn.textContent = 'Push';
+    btn.disabled = false;
+  });
+}
+// ═══════ Task definitions for Practice push ═══════
+var PUSH_TASKS = {
+  'LT01-Vocabulary': { renderer: 'checklist', prompt: 'Review the 12 core vocabulary words (spy, hide/seek, garbage can, shed, garbageman, dump, zillion, follow, answer, boink, bite, remember) with IPA and examples.', required: true },
+  'LT02-Phonics': { renderer: 'checklist', prompt: 'Practice blends: sp- (spy), tr- (truck), dr- (drove), st- (still), final blends -mp (dump), -ck (kick), -nd (found), and the Z /z/ sound in ZZZZZ.', required: true },
+  'LT03-Pronunciation': { renderer: 'checklist', prompt: 'Count syllables and practice stress: spy(1), garbage(2), garbageman(3), zillion(2), remember(3), forever(3), above(2), together(3).', required: true },
+  'LT04-Sentence-Patterns': { renderer: 'checklist', prompt: 'Practice patterns: I spy [noun]! / Do I spy [noun]? / It\'s my turn to [verb] / ___ hid in/on/from [place].', required: true },
+  'LT05-Grammar': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of "fly".', options: [
+    { label: 'fly → flew', value: 'flew', correct: true },
+    { label: 'fly → flyed', value: 'flyed', correct: false },
+    { label: 'fly → flown', value: 'flown', correct: false }
+  ], required: true },
+  'LT06-Morphology': { renderer: 'checklist', prompt: 'Review irregular past tense (hide→hid, come→came, drive→drove, fly→flew, bite→bit, say→said) and compounds (garbageman, hide-and-seek).', required: true },
+  'LT07-Cohesion': { renderer: 'short-answer', prompt: 'In the story, who does "he" refer to in "He always hid in the garbage can"? Write the name.', required: true },
+  'LT08-Functional-Communication': { renderer: 'short-answer', prompt: 'Where would you hide in hide-and-seek? Write 4+ sentences using "I spy" and position words (in/under/behind).', required: true },
+  'HW-PartA': { renderer: 'drag-match', prompt: 'Match each word with its meaning.', pairs: [
+    { left: 'spy', right: 'to notice or see something' },
+    { left: 'dump', right: 'a place for trash' },
+    { left: 'zillion', right: 'a huge number' },
+    { left: 'shed', right: 'a small storage building' },
+    { left: 'follow', right: 'to go after someone' },
+    { left: 'boink', right: 'to hit gently on the nose' }
+  ], required: true },
+  'HW-PartB': { renderer: 'drag-order', prompt: 'Put the words in the correct order to complete the sentences.', items: ['garbage can', 'shed', 'answer', 'followed', 'zillion', 'game'], required: true },
+  'HW-PartC': { renderer: 'multiple-choice', prompt: 'Which is the correct past tense of "hide"?', options: [
+    { label: 'hide → hid', value: 'hid', correct: true },
+    { label: 'hide → hided', value: 'hided', correct: false },
+    { label: 'hide → hiding', value: 'hiding', correct: false }
+  ], required: true },
+  'HW-PartD': { renderer: 'multiple-choice', prompt: 'Choose the correct preposition: "Fly Guy hid ___ the garbage can."', options: [
+    { label: 'in', value: 'in', correct: true },
+    { label: 'on', value: 'on', correct: false },
+    { label: 'from', value: 'from', correct: false }
+  ], required: true },
+  'HW-PartE': { renderer: 'short-answer', prompt: 'For each sentence, write who "he" refers to: Buzz, Fly Guy or the garbageman.', required: true },
+  'HW-PartF': { renderer: 'short-answer', prompt: 'Where would you hide in hide-and-seek? Write at least 4 sentences using the scaffold.', required: true }
+};
+</script>
+</body>
+</html>

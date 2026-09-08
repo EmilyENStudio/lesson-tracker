@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>There's a Fly Guy in My Soup — 精读教案 · 两课时</title>
+<style>
+:root {
+  --canvas: #FBF3E7;
+  --surface: #FFF9F1;
+  --surface-alt: #FFF3E0;
+  --ink: #31251B;
+  --ink-secondary: #8B7662;
+  --accent: #C96F3D;
+  --accent-light: #F5DCC8;
+  --green: #5A8F56;
+  --green-light: #E8F0E6;
+  --blue: #4A7FA5;
+  --blue-light: #E3EFF6;
+  --purple: #8B6DAF;
+  --purple-light: #F0EAF6;
+  --red: #C75A4A;
+  --red-light: #FCEAE7;
+  --divider: #E8DDD0;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-heading: Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.35rem;
+  --fs-2xl: 1.7rem;
+  --fs-3xl: 2.2rem;
+  --lh: 1.7;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(49,37,27,0.06);
+  --shadow: 0 2px 8px rgba(49,37,27,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* ── Language Toggle ── */
+.lang-toggle {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 14px; margin-top: 12px;
+  background: #fff; color: var(--accent);
+  border: 2px solid var(--accent-light); border-radius: 24px;
+  font-size: var(--fs-sm); font-weight: 700; cursor: pointer;
+  transition: all 0.2s;
+}
+.lang-toggle:hover { background: var(--accent-light); }
+@media print { .lang-toggle { display: none !important; } }
+
+/* ── Header ── */
+.site-header {
+  background: linear-gradient(135deg, #C96F3D 0%, #B85A2E 100%);
+  color: #fff;
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2rem;
+}
+.site-header .page-wrap { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; }
+.header-text { flex: 1; min-width: 260px; }
+.header-text h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.3rem;
+}
+.header-text .subtitle {
+  font-size: var(--fs-lg);
+  opacity: 0.9;
+}
+.book-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.badge {
+  display: inline-block;
+  font-size: var(--fs-sm);
+  padding: 0.2em 0.7em;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+/* ── Section ── */
+section { margin-bottom: 2.5rem; }
+.section-label {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+h4 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+p { margin-bottom: 0.8rem; }
+.text-secondary { color: var(--ink-secondary); }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.card-accent { border-left: 4px solid var(--accent); }
+.card-green { border-left: 4px solid var(--green); }
+.card-blue { border-left: 4px solid var(--blue); }
+.card-purple { border-left: 4px solid var(--purple); }
+
+/* ── LT Grid ── */
+.lt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.lt-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+.lt-card .lt-num {
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.lt-card h4 { margin-bottom: 0.5rem; font-size: var(--fs-base); }
+.lt-card ul { padding-left: 1.2em; }
+.lt-card li { margin-bottom: 0.3rem; font-size: var(--fs-sm); color: var(--ink-secondary); }
+
+/* ── Session Timeline ── */
+.session-block {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.session-header {
+  padding: 1.2rem 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.session-header.s1 { background: linear-gradient(135deg, #C96F3D, #A85A30); }
+.session-header.s2 { background: linear-gradient(135deg, #5A8F56, #3D7A3A); }
+.session-header h2 { color: #fff; margin: 0; font-size: var(--fs-xl); }
+.session-header .session-meta { font-size: var(--fs-sm); opacity: 0.9; }
+.session-body { padding: 1.5rem; }
+
+.phase {
+  position: relative;
+  padding-left: 1.8rem;
+  padding-bottom: 1.5rem;
+  border-left: 2px solid var(--divider);
+  margin-left: 0.5rem;
+}
+.phase:last-child { border-left-color: transparent; padding-bottom: 0; }
+.phase::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 0.3rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.phase.green-dot::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+.phase-blue-dot::before { background: var(--blue); box-shadow: 0 0 0 2px var(--blue); }
+.phase-purple-dot::before { background: var(--purple); box-shadow: 0 0 0 2px var(--purple); }
+
+.phase-label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+.phase.green-dot .phase-label { color: var(--green); }
+.phase-blue-dot .phase-label { color: var(--blue); }
+.phase-purple-dot .phase-label { color: var(--purple); }
+
+.phase-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  margin: 0.8rem 0;
+}
+th, td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--divider);
+  vertical-align: top;
+}
+th {
+  background: var(--surface-alt);
+  font-weight: 700;
+  white-space: nowrap;
+}
+td { color: var(--ink); }
+.wrap-word { overflow-wrap: break-word; word-break: break-word; }
+
+/* ── Vocab Table ── */
+.vocab-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  align-items: baseline;
+}
+.vocab-word {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--accent);
+}
+.vocab-ipa {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+}
+.vocab-pos {
+  font-size: var(--fs-sm);
+  color: var(--blue);
+  font-weight: 600;
+}
+.vocab-def { font-size: var(--fs-sm); }
+.vocab-example {
+  grid-column: 1 / -1;
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  border-top: 1px dashed var(--divider);
+  padding-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+/* ── Phonics ── */
+.phonics-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.8rem;
+  margin: 0.25rem;
+  font-size: var(--fs-sm);
+}
+.phonics-pattern {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* ── Sentence Pattern ── */
+.pattern-block {
+  background: var(--purple-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+.pattern-template {
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  color: var(--purple);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.pattern-example {
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+}
+
+/* ── Callout ── */
+.callout {
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: var(--fs-sm);
+}
+.callout-tip { background: var(--green-light); border-left: 3px solid var(--green); }
+.callout-warn { background: var(--red-light); border-left: 3px solid var(--red); }
+.callout-info { background: var(--blue-light); border-left: 3px solid var(--blue); }
+.callout strong { display: block; margin-bottom: 0.3rem; }
+
+/* ── Answer Key ── */
+.answer-key {
+  margin-top: 1rem;
+  border: 1px dashed var(--green);
+  border-radius: var(--radius);
+  background: var(--green-light);
+  font-size: var(--fs-sm);
+}
+.answer-key summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--green);
+  padding: 0.6rem 1rem;
+  list-style: none;
+}
+.answer-key summary::-webkit-details-marker { display: none; }
+.answer-key summary::before { content: '🔑 '; }
+.answer-key .ak-body { padding: 0 1rem 0.9rem; }
+.answer-key .ak-body ol, .answer-key .ak-body ul { padding-left: 1.3em; }
+.answer-key .ak-body li { margin-bottom: 0.25rem; }
+
+/* ── Homework Section ── */
+.hw-section {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
+}
+.hw-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.hw-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--divider);
+}
+.hw-question {
+  margin-bottom: 1rem;
+  padding-left: 0.2rem;
+}
+.hw-question .q-num {
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 0.3rem;
+}
+.hw-blank {
+  display: inline-block;
+  min-width: 120px;
+  border-bottom: 1px solid var(--ink);
+  margin: 0 0.2rem;
+}
+.hw-lines {
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 1.8em,
+    var(--divider) 1.8em,
+    var(--divider) calc(1.8em + 1px)
+  );
+  min-height: 6em;
+}
+
+/* ── Sticky Nav ── */
+.toc {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(251,243,231,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--divider);
+  padding: 0.6rem 0;
+  margin-bottom: 1.5rem;
+}
+.toc .page-wrap {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.toc .page-wrap::-webkit-scrollbar { display: none; }
+.toc a {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.3em 0.8em;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.toc a:hover, .toc a:focus { background: var(--accent-light); color: var(--accent); }
+.toc a:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ── Divider ── */
+hr { border: none; border-top: 1px solid var(--divider); margin: 2rem 0; }
+
+/* ── Footer ── */
+.site-footer {
+  text-align: center;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--divider);
+  margin-top: 2rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .lt-grid { grid-template-columns: 1fr; }
+  .session-body { padding: 1rem; }
+  .phase { padding-left: 1.2rem; }
+  table { font-size: 0.8rem; }
+  th, td { padding: 0.4rem 0.5rem; }
+}
+
+/* ── Print ── */
+@media print {
+  .toc { display: none; }
+  .site-header { background: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .session-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card, .lt-card, .session-block, .hw-section, .vocab-card, .pattern-block, .callout, .phonics-item {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  body { font-size: 11pt; }
+  .page-wrap { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ── Push Modal ── */
+.push-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+}
+.push-modal {
+  background: white; border-radius: 16px; padding: 24px;
+  max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.push-modal h3 { margin: 0 0 8px; font-size: 18px; }
+.student-list { margin: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.student-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.student-item:hover { background: #f5f5f5; }
+.student-item input { width: 16px; height: 16px; }
+.push-confirm-btn {
+  width: 100%; padding: 12px; margin-top: 12px;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 10px;
+  font-weight: 700; cursor: pointer; font-size: 14px;
+}
+.push-cancel-btn {
+  width: 100%; padding: 10px; margin-top: 8px;
+  background: #f0f0f0; color: #666; border: none;
+  border-radius: 10px; cursor: pointer; font-size: 13px;
+}
+.push-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; margin: 4px 0;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 6px;
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  float: right;
+}
+.push-btn:hover { opacity: 0.9; transform: scale(1.05); }
+@media print { .push-btn { display: none !important; } }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header class="site-header">
+  <div class="page-wrap">
+    <div class="header-text">
+      <h1>There's a Fly Guy in My Soup</h1>
+      <p class="subtitle">精读教案 · 两课时 · 100 分钟</p>
+      <div class="book-badges">
+        <span class="badge">Tedd Arnold</span>
+        <span class="badge">Lexile 400L</span>
+        <span class="badge">GRL Level I</span>
+        <span class="badge">Grade K–2</span>
+        <span class="badge">Fly Guy Book #12</span>
+      </div>
+      <div>
+        <button class="lang-toggle" id="langToggle" type="button" onclick="toggleLang()">🌐 English</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════ TOC ═══════ -->
+<nav class="toc" aria-label="页面导航">
+  <div class="page-wrap">
+    <a href="#overview">故事概览</a>
+    <a href="#lt-overview">LT 框架总览</a>
+    <a href="#session1">第一课时</a>
+    <a href="#session2">第二课时</a>
+    <a href="#homework">课后作业</a>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<section id="overview">
+  <div class="section-label">Overview</div>
+  <h2 class="l10n" data-cn="故事概览" data-en="Story Overview">故事概览</h2>
+  <div class="card card-accent">
+    <h3>Story Summary</h3>
+    <p>A boy has a pet fly named Fly Guy, and Fly Guy can say the boy's name — <em>BUZZ!</em> One day Buzz goes on a long trip with Mom and Dad. They stop at a hotel for dinner. There is a nice restaurant downstairs, but Fly Guy can't go inside, so Buzz says he can eat outside.</p>
+    <p>Fly Guy flies out. He finds a trash can, a puddle, a sticky spot, and the biggest, slimiest garbage can ever — but not one thing he wants to eat. Then he smells something wonderful and follows the smell all the way to a small, round bathtub full of warm brown soup. He needs to wash before dinner, so in he hops to wash his face and hands, his armpits, and between his toes. <em>Perfect!</em></p>
+    <p>Then the bathtub is picked up and set on a table in front of a lady — who screams, "Waiter! There's a fly in my soup!" Soup and Fly Guy go flying... into another lady's soup — and then a gentleman's hair — until everyone is jumping up and everyone needs a bath. "Last one in the pool is a rotten egg!" yells Buzz, and all the soup-caked travelers dive in.</p>
+  </div>
+  <div class="lt-grid" style="margin-top:1rem;">
+    <div class="card" style="margin:0;">
+      <h4 class="l10n" data-cn="📖 文本特征" data-en="📖 Text Features">📖 文本特征</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li class="l10n" data-cn="3 章，约 30 页" data-en="3 chapters, ~30 pages">3 章，约 30 页</li>
+        <li class="l10n" data-cn="反复句式：He found... / ...went flying into..." data-en="Repeated patterns: He found... / ...went flying into...">反复句式：He found... / ...went flying into...</li>
+        <li class="l10n" data-cn="关键修辞：连还/累积重复 (cumulative repetition)、拟声 (OOPZ! MEZZY!)" data-en="Key devices: cumulative repetition, onomatopoeia (OOPZ! MEZZY!)">关键修辞：连还/累积重复 (cumulative repetition)、拟声 (OOPZ! MEZZY!)</li>
+        <li class="l10n" data-cn="核心主题词：hotel, soup, bath, wash, There's..." data-en="Core theme words: hotel, soup, bath, wash, There's...">核心主题词：hotel, soup, bath, wash, There's...</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4 class="l10n" data-cn="🎯 教学目标" data-en="🎯 Teaching Goals">🎯 教学目标</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li class="l10n" data-cn="<strong>Reading:</strong> 理解故事因果链与连还重复结构，提取关键细节" data-en="<strong>Reading:</strong> Understand the cause-and-effect chain and cumulative structure; extract key details">Reading: 理解故事因果链与连还重复结构，提取关键细节</li>
+        <li class="l10n" data-cn="<strong>Language:</strong> 掌握 There is/There's、wash 表达、过去时态" data-en="<strong>Language:</strong> Master There is/There's, wash expressions, and simple past tense">Language: 掌握 There is/There's、wash 表达、过去时态</li>
+        <li class="l10n" data-cn="<strong>Speaking:</strong> 能用 There's... 描述情境、复述连锁事件" data-en="<strong>Speaking:</strong> Use There's... to describe scenes and retell the chain of events">Speaking: 能用 There's... 描述情境、复述连锁事件</li>
+        <li class="l10n" data-cn="<strong>Writing:</strong> 完成情境写作：“There's a fly in my soup!”" data-en="<strong>Writing:</strong> Write a funny scene:<br>there's a fly in my soup!">Writing: 完成情境写作："There's a fly in my soup!"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- ═══════ LT FRAMEWORK OVERVIEW ═══════ -->
+<section id="lt-overview">
+  <div class="section-label">Language Target Framework</div>
+  <h2 class="l10n" data-cn="LT 框架总览 — There's a Fly Guy in My Soup" data-en="LT Framework Overview — There's a Fly Guy in My Soup">LT 框架总览 — There's a Fly Guy in My Soup</h2>
+  <p class="text-secondary l10n" style="margin-bottom:1rem;" data-cn="以下 8 个模块构成本书的完整语言目标体系，两个课时分工推进。" data-en="These 8 modules form the complete language-target system for this book, built across two lessons.">以下 8 个模块构成本书的完整语言目标体系，两个课时分工推进。</p>
+
+  <div class="lt-grid">
+    <div class="lt-card">
+      <div class="lt-num">LT01</div>
+      <h4 class="l10n" data-cn="Vocabulary 词汇" data-en="Vocabulary">Vocabulary 词汇</h4>
+      <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.5rem;" class="l10n" data-cn="12 个核心词，含 IPA、词性、搭配、例句、词族。" data-en="12 core words with IPA, part of speech, collocation, examples, and word families.">12 个核心词，含 IPA、词性、搭配、例句、词族。</p>
+      <ul>
+        <li>restaurant, downstairs, outside</li>
+        <li>puddle, sticky, garbage, smell</li>
+        <li>wash, bathtub, soup, waiter</li>
+        <li>scream, gentleman, rotten</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT02</div>
+      <h4 class="l10n" data-cn="Phonics / Decoding 语音拼读" data-en="Phonics / Decoding">Phonics / Decoding 语音拼读</h4>
+      <ul>
+        <li><strong>sh-</strong>: wash, washing, fish</li>
+        <li><strong>oo</strong> /uː/: room, cool, food</li>
+        <li><strong>-ing</strong>: flying, going, washing, something</li>
+        <li><strong>ow/ou</strong> /aʊ/: downstairs, found, around</li>
+        <li><strong>sl-</strong>: smelled, slimy</li>
+        <li><strong>st-</strong>: sticky, stopped</li>
+        <li><strong>br-</strong>: brown</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT03</div>
+      <h4 class="l10n" data-cn="Pronunciation 发音" data-en="Pronunciation">Pronunciation 发音</h4>
+      <ul>
+        <li class="l10n" data-cn="音节切分：restau-rant (3), down-stairs (2), pud-dle (2), bath-tub (2)" data-en="Syllable division: restau-rant (3), down-stairs (2), pud-dle (2), bath-tub (2)">音节切分：restau-rant (3), down-stairs (2), pud-dle (2), bath-tub (2)</li>
+        <li class="l10n" data-cn="重音模式：<em>RES</em>tau-rant, <em>DOWN</em>-stairs, <em>GAR</em>-bage" data-en="Stress patterns: <em>RES</em>tau-rant, <em>DOWN</em>-stairs, <em>GAR</em>-bage">重音模式：<em>RES</em>tau-rant, <em>DOWN</em>-stairs, <em>GAR</em>-bage</li>
+        <li class="l10n" data-cn="句重音：" data-en="Sentence stress:">句重音：</li>
+        <li>There's a <strong>FLY</strong> in my <strong>SOUP</strong>!</li>
+        <li class="l10n" data-cn="连读/弱读：There's_a fly, went_to, washed_his" data-en="Linking &amp; weak forms: There's_a fly, went_to, washed_his">连读/弱读：There's_a fly, went_to, washed_his</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT04</div>
+      <h4 class="l10n" data-cn="Sentence Patterns 句型" data-en="Sentence Patterns">Sentence Patterns 句型</h4>
+      <ul>
+        <li>[Subject] found [something].</li>
+        <li>There's a [noun] in/on [place].</li>
+        <li>[Subject] needed to [verb] before [noun].</li>
+        <li>...went flying into [place].</li>
+        <li>Exclamations: OOPZ! / MEZZY! / Perfect!</li>
+        <li>Last one in the pool is a [adj] [noun]!</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT05</div>
+      <h4 class="l10n" data-cn="Grammar 语法功能" data-en="Grammar">Grammar 语法功能</h4>
+      <ul>
+        <li class="l10n" data-cn="<strong>存在句:</strong> There is / There's" data-en="<strong>Existential:</strong> There is / There's">存在句：There is / There's</li>
+        <li class="l10n" data-cn="<strong>能力/许可:</strong> can / can't" data-en="<strong>Ability/allowance:</strong> can / can't">能力/许可：can / can't</li>
+        <li class="l10n" data-cn="<strong>Simple past:</strong> went, drove, found, smelled, washed" data-en="<strong>Simple past:</strong> went, drove, found, smelled, washed">Simple past：went, drove, found, smelled, washed</li>
+        <li class="l10n" data-cn="<strong>need to + verb</strong> (必需/责任)" data-en="<strong>need to + verb</strong> (obligation)">need to + verb</li>
+        <li class="l10n" data-cn="<strong>被动:</strong> was picked up / was set down" data-en="<strong>Simple passive:</strong> was picked up / was set down">被动：was picked up / was set down</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT06</div>
+      <h4 class="l10n" data-cn="Morphology 词形变化" data-en="Morphology">Morphology 词形变化</h4>
+      <ul>
+        <li class="l10n" data-cn="<strong>-ed:</strong> followed, smelled, washed, screamed, jumped" data-en="<strong>-ed:</strong> followed, smelled, washed, screamed, jumped">-ed：followed, smelled, washed, screamed, jumped</li>
+        <li class="l10n" data-cn="<strong>不规则过去:</strong> go→went, drive→drove, find→found, fly→flew" data-en="<strong>Irregular past:</strong> go→went, drive→drove, find→found, fly→flew">不规则过去：go→went, drive→drove, find→found, fly→flew</li>
+        <li class="l10n" data-cn="<strong>-ing:</strong> flying, washing" data-en="<strong>-ing:</strong> flying, washing">-ing：flying, washing</li>
+        <li class="l10n" data-cn="<strong>复合词:</strong> down+stairs, bath+tub, garbage+can, gentle+man" data-en="<strong>Compounds:</strong> down+stairs, bath+tub, garbage+can, gentle+man">复合词：down+stairs, bath+tub, garbage+can, gentle+man</li>
+        <li class="l10n" data-cn="<strong>复数:</strong> hands, toes (加 s)" data-en="<strong>Plurals:</strong> hands, toes (add -s)">复数：hands, toes</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT07</div>
+      <h4 class="l10n" data-cn="Cohesion / Discourse 语篇衔接" data-en="Cohesion / Discourse">Cohesion / Discourse 语篇衔接</h4>
+      <ul>
+        <li class="l10n" data-cn="<strong>but</strong> (转折): &quot;but Fly Guy can't go there&quot;" data-en="<strong>but</strong> (contrast): &quot;but Fly Guy can't go there&quot;">but (转折)：but Fly Guy can't go there</li>
+        <li class="l10n" data-cn="<strong>then / at last</strong>: 时间顺序" data-en="<strong>then / at last</strong>: sequence">then / at last：时间顺序</li>
+        <li class="l10n" data-cn="<strong>累积重复</strong>: went flying into... 连锁句逐次叠加细节" data-en="<strong>Cumulative repetition</strong>: the &quot;went flying into...&quot; chain builds detail each time">累积重复：went flying into... 连锁句逐次叠加细节</li>
+        <li class="l10n" data-cn="<strong>代词指代:</strong> he / they / it 的指代" data-en="<strong>Pronoun reference:</strong> he / they / it">代词指代：he / they / it</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT08</div>
+      <h4 class="l10n" data-cn="Functional Communication 语用功能" data-en="Functional Communication">Functional Communication 语用功能</h4>
+      <ul>
+        <li class="l10n" data-cn="<strong>Describe:</strong> Describe the hotel, the soup, the chaos" data-en="<strong>Describe:</strong> Describe the hotel, the soup, the chaos">Describe：描述酒店、汤、混乱场面</li>
+        <li class="l10n" data-cn="<strong>Retell:</strong> 复述连锁事件" data-en="<strong>Retell:</strong> the chain of flying events">Retell：复述连锁事件</li>
+        <li class="l10n" data-cn="<strong>Predict:</strong> 猜测女士会怎么办" data-en="<strong>Predict:</strong> what the lady will do">Predict：猜测女士会怎么办</li>
+        <li class="l10n" data-cn="<strong>Exclaim:</strong> OOPZ! / MEZZY! / Perfect! 感叹表达" data-en="<strong>Exclaim:</strong> OOPZ! / MEZZY! / Perfect!">Exclaim：OOPZ! / MEZZY! / Perfect!</li>
+        <li class="l10n" data-cn="<strong>Opinion:</strong> 在汤里洗澡是不是好主意？" data-en="<strong>Opinion:</strong> Is bathing in soup a good idea?">Opinion：在汤里洗澡是不是好主意？</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr><!-- ═══════ SESSION 1 ═══════ -->
+<section id="session1">
+  <div class="section-label">Session 1 · 50 minutes</div>
+  <h2 class="l10n" data-cn="第一课时 — 基础阅读与语言输入" data-en="Lesson 1 — Basic Reading &amp; Language Input">第一课时 — 基础阅读与语言输入</h2>
+  <p class="text-secondary l10n" data-cn="目标：建立背景知识，通读全文，掌握核心词汇与语音规律，完成基础理解。" data-en="Goals: activate background knowledge, read the full text, master core vocabulary and phonics, and build basic comprehension.">目标：建立背景知识，通读全文，掌握核心词汇与语音规律，完成基础理解。</p>
+
+  <div class="session-block">
+    <div class="session-header s1">
+      <div>
+        <h2 class="l10n" data-cn="Lesson 1: Fly Guy Goes to a Hotel" data-en="Lesson 1: Fly Guy Goes to a Hotel">Lesson 1: Fly Guy Goes to a Hotel</h2>
+        <div class="session-meta">Focus: Pre-reading → Reading → Vocabulary → Phonics → Pronunciation</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–10 min · Warm-up &amp; Pre-reading</div>
+        <div class="phase-title l10n" data-cn="激活背景 · 图片讨论" data-en="Build Background · Picture Talk">激活背景 · 图片讨论</div>
+
+        <h4 class="l10n" data-cn="活动 1：Picture Talk (5 min)" data-en="Activity 1: Picture Talk (5 min)">活动 1：Picture Talk (5 min)</h4>
+        <p class="l10n" data-cn="展示封面和内页插图，引导学生观察：" data-en="Show the cover and inside illustrations. Help students observe:">展示封面和内页插图，引导学生观察：</p>
+        <ul style="padding-left:1.2em;margin-bottom:1rem;">
+          <li class="l10n" data-cn="“Where is Fly Guy now?”" data-en="Where is Fly Guy now?">"Where is Fly Guy now?"</li>
+          <li class="l10n" data-cn="“What is the fly in?” — A bowl of soup! (预测)" data-en="What is the fly in? — A bowl of soup! (predict)">"What is the fly in?" → A bowl of soup!（预测）</li>
+          <li class="l10n" data-cn="“Do you think a fly should be in a hotel?” → 引导预测" data-en="Do you think a fly should be in a hotel? → guide prediction">"Do you think a fly should be in a hotel?" → 引导预测。</li>
+        </ul>
+
+        <h4 class="l10n" data-cn="活动 2：Key Concept — Hotel Facts (5 min)" data-en="Activity 2: Key Concept — Hotels">活动 2：Key Concept — Hotel Facts (5 min)</h4>
+        <p class="l10n" data-cn="在白板上快速头脑风暴：What can you do in a hotel? 引导学生说出 room, pool, restaurant, dinner。引出核心问题：" data-en="Brainstorm on the board: What can you do in a hotel? Elicit room, pool, restaurant, dinner. Then pose the big question:">在白板上快速头脑风暴：What can you do in a hotel? 引导学生说出 room, pool, restaurant, dinner。引出核心问题：</p>
+        <div class="callout callout-info">
+          <strong class="l10n" data-cn="🔑 Big Question" data-en="🔑 Big Question">🔑 Big Question</strong>
+          <span class="l10n" data-cn="Where can a fly eat in a hotel? Let's read and find out!" data-en="Where can a fly eat in a hotel? Let's read and find out!">Where can a fly eat in a hotel? Let's read and find out!</span>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong class="l10n" data-cn="💡 教学提示" data-en="💡 Teaching Tip">💡 教学提示</strong>
+          <span class="l10n" data-cn="不急于给答案。将“fly 在酒店能不能进餐厅”这个问题保留到第二课时讨论。" data-en="Hold off on the answer. Save the question of whether Fly Guy can go into the restaurant for Lesson 2.">不急于给答案。将"fly 在酒店能不能进餐厅"这个问题保留到第二课时讨论。</span>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase green-dot">
+        <div class="phase-label">⏱ 10–20 min · Read Aloud</div>
+        <div class="phase-title l10n" data-cn="通读全文 · 理解故事" data-en="Read Aloud · Understand the Story">通读全文 · 理解故事</div>
+
+        <h4 class="l10n" data-cn="Chapter 1–2 精读 (6 min)" data-en="Chapters 1–2 Detailed Reading (6 min)">Chapter 1–2 精读 (6 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ch.1</td>
+              <td>"A boy had a pet fly. He named him Fly Guy."</td>
+              <td class="l10n" data-cn="复习 can say my name / BUZZ！角色回顾" data-en="Review <em>can say my name</em> / BUZZ! character recap">复习 can say my name / BUZZ！角色回顾</td>
+            </tr>
+            <tr>
+              <td>Ch.1</td>
+              <td>"They stopped at a hotel. 'I love hotels!'"</td>
+              <td class="l10n" data-cn="引入 hotel；讨论家人一起去旅行" data-en="Introduce hotel; talk about travelling as a family">引入 hotel；讨论家人一起去旅行</td>
+            </tr>
+            <tr>
+              <td>Ch.1</td>
+              <td>"There is a nice restaurant downstairs... but Fly Guy can't go there."</td>
+              <td class="l10n" data-cn="核心句式 There is + but 转折 + can't" data-en="Core: There is + but + can't">核心：There is + but 转折 + can't</td>
+            </tr>
+            <tr>
+              <td>Ch.1</td>
+              <td>"He found a trash can. He found a puddle. He found a sticky spot."</td>
+              <td class="l10n" data-cn="反复句式 He found... 排比" data-en="Repeated pattern: He found... (parallelism)">反复句式 He found... 排比</td>
+            </tr>
+            <tr>
+              <td>Ch.1</td>
+              <td>"He found the biggest, slimiest garbage can ever."</td>
+              <td class="l10n" data-cn="最高级 biggest/slimiest (ever)" data-en="Superlatives: biggest / slimiest (ever)">最高级 biggest/slimiest (ever)</td>
+            </tr>
+            <tr>
+              <td>Ch.2</td>
+              <td>"Then Fly Guy smelled something wonderful."</td>
+              <td class="l10n" data-cn="过渡词 Then；smell 表达" data-en="Connector <em>Then</em>; the verb <em>smell</em>">过渡词 Then；smell 表达</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4 class="l10n" data-cn="Chapter 3 精读 (4 min)" data-en="Chapter 3 Detailed Reading (4 min)">Chapter 3 精读 (4 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ch.3</td>
+              <td>"He spied a small round bathtub with warm brown water. Perfect!"</td>
+              <td class="l10n" data-cn="spied = saw；感叹 Perfect!" data-en="<em>spied</em> = saw; exclamation <em>Perfect!</em>"><em>spied</em> = saw；感叹 Perfect!</td>
+            </tr>
+            <tr>
+              <td>Ch.3</td>
+              <td>"He needed to wash before dinner."</td>
+              <td class="l10n" data-cn="need to + verb 句型" data-en="Pattern: <em>need to + verb</em>">need to + verb 句型</td>
+            </tr>
+            <tr>
+              <td>Ch.3</td>
+              <td>"He washed his face and hands. He washed his armpits. He washed between his toes."</td>
+              <td class="l10n" data-cn="wash 表达 + 排比结构" data-en="Wash expressions + parallel structure">wash 表达 + 排比结构</td>
+            </tr>
+            <tr>
+              <td>Ch.3</td>
+              <td>"Waiter! There's a fly in my soup!"</td>
+              <td class="l10n" data-cn="全书高潮句 — There's... in my...!" data-en="The climactic line — There's... in my...!">高潮句 There's... in my...!</td>
+            </tr>
+            <tr>
+              <td>Ch.3</td>
+              <td>"...went flying into another lady's soup... into a gentleman's head."</td>
+              <td class="l10n" data-cn="累积重复连锁句，逐次加 soup + hair" data-en="Cumulative chain: each time more soup and hair go flying">累积重复连锁句，逐次加 soup + hair</td>
+            </tr>
+            <tr>
+              <td>Ch.3</td>
+              <td>"Last one in the pool is a rotten egg!"</td>
+              <td class="l10n" data-cn="结尾俗语 rotten egg = 捣蛋鬼/输家" data-en="Idiom: <em>rotten egg</em> = a bad/losing person">结尾俗语 rotten egg</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-info">
+          <strong class="l10n" data-cn="🎙 朗读策略" data-en="🎙 Read-Aloud Strategy">🎙 朗读策略</strong>
+          <span class="l10n" data-cn="读到连锁句时，每次声音降低、手势加大，引导学生一起喊 "went flying into..."，体会重复累积带来的笑点。" data-en="When you reach the cumulative chain, drop your voice lower each time and gesture a bigger splash. Students join in: &quot;went flying into...&quot;">读到连锁句时，每次声音降低、手势加大，引导学生一起喊 "went flying into..."，体会重复累积带来的笑点。</span>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase blue-dot" id="sec-lt01-vocab">
+        <div class="phase-label">⏱ 20–33 min · LT01 Vocabulary <button class="push-btn" onclick="openPushModal('LT01-Vocabulary','12 core words: restaurant, downstairs, outside, puddle, sticky, garbage, smell, wash, bathtub, soup, waiter, scream, gentleman, rotten — with IPA, POS, definitions, examples, word families')">📤 Push to Students</button></div>
+        <div class="phase-title l10n" data-cn="核心词汇深度讲解（12 词）" data-en="Core Vocabulary in Depth (12 words)">核心词汇深度讲解（12 词）</div>
+
+        <div class="callout callout-info">
+          <strong class="l10n" data-cn="📋 词汇教学原则" data-en="📋 Vocabulary Teaching Principle">📋 词汇教学原则</strong>
+          <span class="l10n" data-cn="每个词从 Recognize → Understand → Use 三个层次推进。先让学生听/看到词，再理解含义和用法，最后尝试产出。" data-en="Take each word through three levels: Recognize → Understand → Use. Let students see and hear the word first, then grasp its meaning and use, and finally produce it.">每个词从 Recognize → Understand → Use 三个层次推进。先让学生听/看到词，再理解含义和用法，最后尝试产出。</span>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">restaurant</span>
+            <span class="vocab-ipa">/ˈres.tə.rɒnt/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a place where you buy and eat cooked food</div>
+          </div>
+          <div class="vocab-example">"There is a nice <strong>restaurant</strong> downstairs." → We eat lunch at a <strong>restaurant</strong>.<br><em>word family:</em> restaurateur (person who owns one)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">downstairs</span>
+            <span class="vocab-ipa">/ˌdaʊnˈsteəz/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adv / adj</span>
+            <div class="vocab-def">to or on a lower floor of a building</div>
+          </div>
+          <div class="vocab-example">"There is a nice restaurant <strong>downstairs</strong>." → The kitchen is <strong>downstairs</strong>.<br><em>word family:</em> downstairs ↔ upstairs (compound: down + stairs)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">outside</span>
+            <span class="vocab-ipa">/ˌaʊtˈsaɪd/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adv / prep</span>
+            <div class="vocab-def">not inside; in the open air</div>
+          </div>
+          <div class="vocab-example">"Fly Guy can eat <strong>outside</strong>." → The dog plays <strong>outside</strong>.<br><em>word family:</em> outside ↔ inside; outdoors</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">puddle</span>
+            <span class="vocab-ipa">/ˈpʌd.əl/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a small pool of liquid, usually water on the ground</div>
+          </div>
+          <div class="vocab-example">"He found a <strong>puddle</strong>." → After the rain, there was a <strong>puddle</strong>.<br><em>word family:</em> puddly (adj); muddy puddle</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">sticky</span>
+            <span class="vocab-ipa">/ˈstɪk.i/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adj</span>
+            <div class="vocab-def">something that sticks to your hands; covered in a gluey substance</div>
+          </div>
+          <div class="vocab-example">"He found a <strong>sticky</strong> spot." → Honey is <strong>sticky</strong>.<br><em>word family:</em> stick (v), stickiness (n), stickier/stickiest</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">garbage</span>
+            <span class="vocab-ipa">/ˈɡɑː.bɪdʒ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">waste material; rubbish</div>
+          </div>
+          <div class="vocab-example">"He found the biggest, slimiest <strong>garbage</strong> can ever." → Please take out the <strong>garbage</strong>.<br><em>word family:</em> garbage can (compound); garbage truck; (BrE) rubbish</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">smell</span>
+            <span class="vocab-ipa">/smel/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb / noun</span>
+            <span class="vocab-pos" style="color:var(--red);">past: smelled</span>
+            <div class="vocab-def">to notice something with your nose; a scent</div>
+          </div>
+          <div class="vocab-example">"Then Fly Guy <strong>smelled</strong> something wonderful." → I can <strong>smell</strong> the soup!<br><em>word family:</em> smell→smells→smelling→smelled; smelly (adj)</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">wash</span>
+            <span class="vocab-ipa">/wɒʃ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb / noun</span>
+            <span class="vocab-pos" style="color:var(--red);">past: washed</span>
+            <div class="vocab-def">to clean something or yourself with water</div>
+          </div>
+          <div class="vocab-example">"He <strong>washed</strong> his face and hands." → Please <strong>wash</strong> your hands.<br><em>word family:</em> wash→washes→washing→washed; washable</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">bathtub</span>
+            <span class="vocab-ipa">/ˈbɑːθ.tʌb/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a large container you fill with water to take a bath</div>
+          </div>
+          <div class="vocab-example">"He spied a small round <strong>bathtub</strong>." → I soak in the <strong>bathtub</strong>.<br><em>word family:</em> bath + tub (compound); bathe; bathroom</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">soup</span>
+            <span class="vocab-ipa">/suːp/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a hot liquid food made from meat or vegetables</div>
+          </div>
+          <div class="vocab-example">"There's a fly in my <strong>soup</strong>!" → Mom made chicken <strong>soup</strong>.<br><em>word family:</em> soup bowl; soupy (adj); soup spoon</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">waiter</span>
+            <span class="vocab-ipa">/ˈweɪ.tər/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a man who serves food in a restaurant</div>
+          </div>
+          <div class="vocab-example">"Waiter! There's a fly in my soup!" → The <strong>waiter</strong> brought our food.<br><em>word family:</em> wait→waitress (female); waiting; wait on</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">gentleman</span>
+            <span class="vocab-ipa">/ˈdʒen.tl.mən/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a polite word for a man</div>
+          </div>
+          <div class="vocab-example">"...into a <strong>gentleman</strong>'s head." → The <strong>gentleman</strong> waved for help.<br><em>word family:</em> gentle + man (compound); gentlewoman; gentlemanly</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">rotten</span>
+            <span class="vocab-ipa">/ˈrɒt.ən/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adj</span>
+            <div class="vocab-def">bad, spoiled, or (about a person) unlucky or in trouble</div>
+          </div>
+          <div class="vocab-example">"Last one in the pool is a <strong>rotten</strong> egg!" → The fruit is going <strong>rotten</strong>.<br><em>word family:</em> rot→rotted→rotten (adj); rottenness</div>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong class="l10n" data-cn="💡 词汇巩固活动 (3 min)" data-en="💡 Vocabulary Practice Game (3 min)">💡 词汇巩固活动 (3 min)</strong>
+          <span class="l10n" data-cn="<strong>Where Does It Live?</strong> 读出一个词，学生举手猜它属于酒店/餐厅/盥洗室哪一栏。" data-en="<strong>Where Does It Live?</strong> Say a word, and students point to the board heading it belongs to: the Hotel, the Restaurant, or the Bathroom."><strong>Where Does It Live?</strong> 读出一个词，学生举手猜它属于酒店/餐厅/盥洗室哪一栏。</span>
+        </div>
+      </div><!-- Phase 4 -->
+      <div class="phase-purple-dot" id="sec-lt02-phonics">
+        <div class="phase-label">⏱ 33–43 min · LT02 Phonics + LT03 Pronunciation <button class="push-btn" onclick="openPushModal('LT02-Phonics','Consonant blends and vowel patterns: sh- (wash, washing); oo /u:/ (room, cool, food); -ing (flying, going, washing, something); ow/ou /aʊ/ (downstairs, found, around); sl- (smelled, slimy); st- (sticky, stopped); br- (brown)')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT03-Pronunciation','Syllable counting and stress: restaurant(3), downstairs(2), puddle(2), bathtub(2), garbage(2); sentence stress: There\'s a FLY in my SOUP!; linking: There\'s_a fly')">📤 Push</button></div>
+        <div class="phase-title l10n" data-cn="语音拼读与发音训练" data-en="Phonics &amp; Pronunciation Practice">语音拼读与发音训练</div>
+
+        <h4 class="l10n" data-cn="Phonics Focus (5 min)" data-en="Phonics Focus (5 min)">Phonics Focus (5 min)</h4>
+        <p class="l10n" data-cn="从本书中提取高频语音模式，引导学生发现规律：" data-en="Extract high-frequency sound patterns from the book and help students notice the rules:">从本书中提取高频语音模式，引导学生发现规律：</p>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;" class="l10n" data-cn="sh 字母组合（清音 /ʃ/）" data-en="sh digraph (voiceless /ʃ/)">sh 字母组合（清音 /ʃ/）</h4>
+          <span class="phonics-item"><span class="phonics-pattern">sh</span> wash, washing, fish</span>
+          <span class="phonics-item"><span class="phonics-pattern">sh-</span> shoo</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;" class="l10n" data-cn="舌尖靠近上齿龈，气流摩擦送出，声带不振动。" data-en="Place the tongue close to the ridge behind the teeth, push air out with friction, and do not vibrate the vocal cords.">舌尖靠近上齿龈，气流摩擦送出，声带不振动。</p>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;" class="l10n" data-cn="oo 长元音 /uː/" data-en="oo long vowel /uː/">oo 长元音 /uː/</h4>
+          <span class="phonics-item"><span class="phonics-pattern">oo</span> room, cool, food</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;" class="l10n" data-cn="发现规律：oo 在大多数单词里读长音 /uː/，圆唇长元音。" data-en="Find the rule: oo is usually long /uː/; round the lips and hold the vowel.">发现规律：oo 在大多数单词里读长音 /uː/，圆唇长元音。</p>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;" class="l10n" data-cn="-ing 后缀" data-en="-ing suffix">-ing 后缀</h4>
+          <span class="phonics-item"><span class="phonics-pattern">-ing</span> /ɪŋ/ — flying, going, washing, something</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;" class="l10n" data-cn="动词 + ing = 正在做 / 动作进行。" data-en="Verb + -ing shows an action in progress.">动词 + ing = 正在做 / 动作进行。</p>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;" class="l10n" data-cn="ow / ou 双元音 /aʊ/" data-en="ow / ou diphthong /aʊ/">ow / ou 双元音 /aʊ/</h4>
+          <span class="phonics-item"><span class="phonics-pattern">down</span> downstairs, down</span>
+          <span class="phonics-item"><span class="phonics-pattern">ou</span> found, around</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;" class="l10n" data-cn="由 /a/ 滑向 /ʊ/，下巴先张大后收拢，如“啊—乌”。" data-en="Slide from /a/ to /ʊ/: open the jaw wide, then round it, like a surprised &quot;ow!&quot;">由 /a/ 滑向 /ʊ/，下巴先张大后收拢。</p>
+        </div>
+
+        <h4 style="margin-top:1rem;" class="l10n" data-cn="Pronunciation Focus (5 min)" data-en="Pronunciation Focus (5 min)">Pronunciation Focus (5 min)</h4>
+
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Word</th><th>Syllables</th><th>Stress</th><th>Practice</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>restaurant</td><td>res·tau·rant (3)</td><td>1st</td><td><strong>RES</strong>-tau-rant</td></tr>
+            <tr><td>downstairs</td><td>down·stairs (2)</td><td>2nd</td><td>down-<strong>STAIRS</strong></td></tr>
+            <tr><td>puddle</td><td>pud·dle (2)</td><td>1st</td><td><strong>PUD</strong>-dle</td></tr>
+            <tr><td>bathtub</td><td>bath·tub (2)</td><td>1st</td><td><strong>BATH</strong>-tub</td></tr>
+            <tr><td>garbage</td><td>gar·bage (2)</td><td>1st</td><td><strong>GAR</strong>-bage</td></tr>
+            <tr><td>wonderful</td><td>won·der·ful (3)</td><td>1st</td><td><strong>WON</strong>-der-ful</td></tr>
+            <tr><td>gentleman</td><td>gen·tle·man (3)</td><td>1st</td><td><strong>GEN</strong>-tle-man</td></tr>
+            <tr><td>rotten</td><td>rot·ten (2)</td><td>1st</td><td><strong>ROT</strong>-ten</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-tip">
+          <strong class="l10n" data-cn="💡 发音练习 (2 min)" data-en="💡 Pronunciation Practice (2 min)">💡 发音练习 (2 min)</strong>
+          <span class="l10n" data-cn="<strong>回声游戏</strong>：教师读一个词，学生跟读并拍手打出音节数；最后全班一起模仿女士尖叫：" data-en="<strong>Echo Game</strong>: the teacher says a word, students repeat it and clap out the syllables. Then the whole class shouts together like the lady:"><strong>回声游戏</strong>：教师读一个词，学生跟读并拍手打出音节数；最后全班一起模仿女士尖叫：</span><br>
+          <em style="font-size:var(--fs-sm);">"There's a <strong>FLY</strong> in my <strong>SOUP</strong>!"</em>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase green-dot" id="sec-lt04-patterns">
+        <div class="phase-label">⏱ 43–50 min · LT04 Sentence Patterns + Wrap-up <button class="push-btn" onclick="openPushModal('LT04-Sentence-Patterns','Core patterns: There\'s a [noun] in/on [place]; [Subject] found [something]; [Subject] needed to [verb] before [noun]; ...went flying into [place]; Exclamations: OOPZ!/MEZZY!/Perfect!')">📤 Push to Students</button></div>
+        <div class="phase-title l10n" data-cn="核心句型初探 + 小结" data-en="Core Sentence Patterns + Wrap-up">核心句型初探 + 小结</div>
+
+        <p class="l10n" data-cn="引入本课核心句式，为第二课时深度语法做铺垫：" data-en="Introduce the core sentence patterns of this book as a bridge to the deep grammar work in Lesson 2:">引入本课核心句式，为第二课时深度语法做铺垫：</p>
+
+        <div class="pattern-block">
+          <div class="pattern-template">There's a [noun] in/on [place].</div>
+          <div class="pattern-example">"There's a fly in my soup!" / "There is a nice restaurant downstairs."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;" class="l10n" data-cn="📌 全书最核心句型 — 说明“某处有某物”。" data-en="📌 The book's most important pattern — say that something exists in a place.">📌 全书最核心句型 — 说明"某处有某物"。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">[Subject] found [something].</div>
+          <div class="pattern-example">"He found a trash can. He found a puddle. He found a sticky spot."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;" class="l10n" data-cn="📌 排比反复，营造层层递进。" data-en="📌 Parallel repetition builds momentum step by step.">📌 排比反复，营造层层递进。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">[Subject] needed to [verb] before [noun].</div>
+          <div class="pattern-example">"Fly Guy needed to wash before dinner."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;" class="l10n" data-cn="📌 need to 表达“必须要做”。" data-en="📌 <em>need to</em> expresses something that must be done.">📌 need to 表达"必须要做"。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">...went flying into [place].</div>
+          <div class="pattern-example">"Her soup and Fly Guy went flying into another lady's soup."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;" class="l10n" data-cn="📌 连锁句，每次叠加更多“人和汤”，制造笑点。" data-en="📌 The cumulative chain piles more soup and people on each time — that is the joke!">📌 连锁句，每次叠加更多"人和汤"，制造笑点。</p>
+        </div>
+
+        <div class="callout callout-info">
+          <strong class="l10n" data-cn="📝 第一课时小结" data-en="📝 Lesson 1 Wrap-up">📝 第一课时小结</strong>
+          <span class="l10n" data-cn="回顾 Big Question：" data-en="Review the Big Question:">回顾 Big Question：</span>
+          <em style="font-size:var(--fs-sm);">"Where can a fly eat in a hotel? What happened when Fly Guy bathed in the soup?"</em>
+          <span class="l10n" data-cn="<br>让学生用 There's... 说一句预测（为第二课时的写作做铺垫。）" data-en="<br>Have students make a sentence with There's... to predict what happens next (a bridge to the writing task in Lesson 2)."><br>让学生用 There's... 说一句预测（为第二课时的写作做铺垫。）</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr><!-- ═══════ SESSION 2 ═══════ -->
+<section id="session2">
+  <div class="section-label">Session 2 · 50 minutes</div>
+  <h2 class="l10n" data-cn="第二课时 — 深度分析与语言输出" data-en="Lesson 2 — Deep Analysis &amp; Language Output">第二课时 — 深度分析与语言输出</h2>
+  <p class="text-secondary l10n" data-cn="目标：深入语法、词形、语篇分析，完成口语输出和写作任务。" data-en="Goals: dig into grammar, morphology, and discourse; produce spoken and written output.">目标：深入语法、词形、语篇分析，完成口语输出和写作任务。</p>
+
+  <div class="session-block">
+    <div class="session-header s2">
+      <div>
+        <h2 class="l10n" data-cn="Lesson 2: There's a Fly in My Soup!" data-en="Lesson 2: There's a Fly in My Soup!">Lesson 2: There's a Fly in My Soup!</h2>
+        <div class="session-meta">Focus: Grammar → Morphology → Cohesion → Speaking → Writing</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–5 min · Review</div>
+        <div class="phase-title l10n" data-cn="快速复习" data-en="Quick Review">快速复习</div>
+
+        <p class="l10n" data-cn="用 3 个快速问题回顾第一课时内容：" data-en="Review Lesson 1 with three quick questions:">用 3 个快速问题回顾第一课时内容：</p>
+        <ol style="padding-left:1.5em;margin-bottom:0.8rem;">
+          <li class="l10n" data-cn="“Where did Fly Guy smell something wonderful?” → In the hotel." data-en="Where did Fly Guy smell something wonderful? → In the hotel.">Where did Fly Guy smell something wonderful? → In the hotel.</li>
+          <li class="l10n" data-cn="“What did he think the bathtub was?” → Warm soup!" data-en="What did he think the bathtub was? → Warm soup!">What did he think the bathtub was? → Warm soup!</li>
+          <li class="l10n" data-cn="“Who yelled, There's a fly in my soup?” → The lady." data-en="Who yelled, &quot;There's a fly in my soup&quot;? → The lady.">Who yelled, "There's a fly in my soup?" → The lady.</li>
+        </ol>
+
+        <p class="l10n" data-cn="然后用 <strong>Story Mountain</strong> 快速梳理故事结构：" data-en="Then use a <strong>Story Mountain</strong> to map the story structure:">然后用 <strong>Story Mountain</strong> 快速梳理故事结构：</p>
+        <svg viewBox="0 0 700 200" style="width:100%;max-width:700px;height:auto;margin:0.5rem 0;" role="img" aria-label="Story Mountain for There's a Fly Guy in My Soup">
+          <title>Story Mountain — There's a Fly Guy in My Soup</title>
+          <desc>A mountain shape showing the story structure: beginning, rising action, climax, falling action, ending</desc>
+          <polygon points="50,170 175,40 350,20 525,100 650,170" fill="none" stroke="#C96F3D" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="50" cy="170" r="6" fill="#C96F3D"/>
+          <circle cx="175" cy="40" r="6" fill="#C96F3D"/>
+          <circle cx="350" cy="20" r="6" fill="#C75A4A"/>
+          <circle cx="525" cy="100" r="6" fill="#C96F3D"/>
+          <circle cx="650" cy="170" r="6" fill="#C96F3D"/>
+          <text x="50" y="195" text-anchor="middle" font-size="11" fill="#31251B">Beginning</text>
+          <text x="50" y="160" text-anchor="middle" font-size="9" fill="#8B7662">Trip to the hotel</text>
+          <text x="175" y="30" text-anchor="middle" font-size="11" fill="#31251B">Rising</text>
+          <text x="175" y="58" text-anchor="middle" font-size="9" fill="#8B7662">Fly Guy bathes in soup</text>
+          <text x="350" y="12" text-anchor="middle" font-size="11" fill="#C75A4A" font-weight="700">Climax</text>
+          <text x="350" y="42" text-anchor="middle" font-size="9" fill="#8B7662">"There's a fly in my soup!"</text>
+          <text x="525" y="90" text-anchor="middle" font-size="11" fill="#31251B">Falling</text>
+          <text x="525" y="118" text-anchor="middle" font-size="9" fill="#8B7662">Soup flies into lady &amp; gentleman</text>
+          <text x="650" y="195" text-anchor="middle" font-size="11" fill="#31251B">Ending</text>
+          <text x="650" y="160" text-anchor="middle" font-size="9" fill="#8B7662">Everyone needs a bath!</text>
+        </svg>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase blue-dot" id="sec-lt05-grammar">
+        <div class="phase-label">⏱ 5–18 min · LT05 Grammar <button class="push-btn" onclick="openPushModal('LT05-Grammar','There is/There\'s existential: There\'s a fly in my soup!; can/can\'t ability; Simple Past (went, drove, found, smelled, washed); need to + verb; simple passive: was picked up / was set down; prepositions in/on/into/outside/in front of')">📤 Push to Students</button></div>
+        <div class="phase-title l10n" data-cn="语法功能深度分析" data-en="Grammar Functions in Depth">语法功能深度分析</div>
+
+        <h4 class="l10n" data-cn="① There is / There's — 存在句 (5 min)" data-en="① There is / There's — Existentials (5 min)">① There is / There's — 存在句 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>原文句</th><th>功能</th><th>结构</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>"<strong>There's</strong> a fly in my soup!"</td><td class="l10n" data-cn="存在（口语缩略）" data-en="existential (spoken contraction)">存在（口语缩略）</td><td>There's + 名词 + in/on + 地点</td></tr>
+            <tr><td>"<strong>There is</strong> a nice restaurant downstairs."</td><td class="l10n" data-cn="存在（完整形式）" data-en="existential (full form)">存在（完整形式）</td><td>There is + 名词单数 + 地点</td></tr>
+            <tr><td>"There's a fly in my soup!" (×2)</td><td class="l10n" data-cn="强调/惊叫" data-en="emphasis / outcry">强调 / 惊叫</td><td>用于引起注意的惊叹</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);" class="l10n" data-cn="练习：用 There's... 描述图片里的东西。" data-en="Practice: use There's... to talk about what is in a picture.">练习：用 There's... 描述图片里的东西。</p>
+
+        <h4 style="margin-top:1rem;" class="l10n" data-cn="② Simple Past Tense — 讲故事的核心时态 (6 min)" data-en="② Simple Past Tense — Telling the Story (6 min)">② Simple Past Tense — 讲故事的核心时态 (6 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base Form</th><th>Past Tense</th><th>Type</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>go</td><td><strong>went</strong></td><td style="color:var(--red);">irregular</td><td>"They <em>went</em> on a long trip."</td></tr>
+            <tr><td>drive</td><td><strong>drove</strong></td><td style="color:var(--red);">irregular</td><td>"They <em>drove</em> until dinnertime."</td></tr>
+            <tr><td>find</td><td><strong>found</strong></td><td style="color:var(--red);">irregular</td><td>"He <em>found</em> a trash can."</td></tr>
+            <tr><td>fly</td><td><strong>flew</strong></td><td style="color:var(--red);">irregular</td><td>"Fly Guy <em>flew</em> outside."</td></tr>
+            <tr><td>stop</td><td><strong>stopped</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"They <em>stopped</em> at a hotel."</td></tr>
+            <tr><td>smell</td><td><strong>smelled</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"He <em>smelled</em> something wonderful."</td></tr>
+            <tr><td>wash</td><td><strong>washed</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"He <em>washed</em> his face."</td></tr>
+            <tr><td>scream</td><td><strong>screamed</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"The lady <em>screamed</em>."</td></tr>
+            <tr><td>jump</td><td><strong>jumped</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"The lady <em>jumped</em> up."</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-warn">
+          <strong class="l10n" data-cn="⚠️ 重点提示" data-en="⚠️ Key Reminder">⚠️ 重点提示</strong>
+          <span class="l10n" data-cn="本书有大量不规则过去式（went, drove, found, flew），学生容易想当然加 -ed。建议用配对练习：给出 base form，学生快速说出 past tense。" data-en="This book is full of irregular past forms (went, drove, found, flew) that students often over-regularize. Use a quick matching drill: give the base form, students shout the past tense.">本书有大量不规则过去式（went, drove, found, flew），学生容易想当然加 -ed。建议用配对练习：给出 base form，学生快速说出 past tense。</span>
+        </div>
+
+        <h4 style="margin-top:1rem;" class="l10n" data-cn="③ need to + 被动 + 介词 (2 min)" data-en="③ need to + Passive + Prepositions (2 min)">③ need to + 被动 + 介词 (2 min)</h4>
+        <div class="pattern-block">
+          <div class="pattern-template">[Subject] + needed to + verb · [thing] + was + past participle · prep phrases</div>
+          <div class="pattern-example">
+            "Fly Guy <strong>needed to</strong> wash before dinner."<br>
+            "His bathtub <strong>was picked up</strong>... <strong>was set down</strong> on a table."<br>
+            "...<strong>in front of</strong> a lady." / "...<strong>into</strong> another lady's soup."
+          </div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;" class="l10n" data-cn="被动句 was picked up / was set down 不需要变成过去时教学重点，只要学生能理解“被拿起/被放下”即可。" data-en="The passives was picked up / was set down needn't be trained in depth — students only need to catch the sense of something being lifted and set down.">被动句 was picked up / was set down 不需要变成过去时教学重点，只要学生能理解"被拿起/被放下"即可。</p>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-purple-dot" id="sec-lt06-morphology">
+        <div class="phase-label">⏱ 18–26 min · LT06 Morphology + LT07 Cohesion <button class="push-btn" onclick="openPushModal('LT06-Morphology','Word families: -ed (followed, smelled, washed, screamed, jumped); irregular past (go→went, drive→drove, find→found, fly→flew); compounds (down+stairs, bath+tub, garbage+can, gentle+man); -ing; plurals -s')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT07-Cohesion','Cohesion devices: but (contrast), then / at last (sequence), and, at dinnertime; the cumulative repetition chain (went flying into...); pronoun reference (he / they / it)')">📤 Push</button></div>
+        <div class="phase-title l10n" data-cn="词形变化与语篇衔接" data-en="Morphology &amp; Cohesion">词形变化与语篇衔接</div>
+
+        <h4 class="l10n" data-cn="LT06 · Morphology 词形变化 (4 min)" data-en="LT06 · Morphology (4 min)">LT06 · Morphology 词形变化 (4 min)</h4>
+        <p class="l10n" data-cn="引导学生发现词族（word families）：" data-en="Help students discover word families:">引导学生发现词族（word families）：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base</th><th>+ ing</th><th>+ ed</th><th>Form</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>fly</td><td>flying</td><td>flew</td><td>—</td><td class="l10n" data-cn="flew 是不规则过去" data-en="flew is irregular">flew 是不规则过去</td></tr>
+            <tr><td>follow</td><td>following</td><td>followed</td><td>—</td><td class="l10n" data-cn="规则变化" data-en="regular">规则变化</td></tr>
+            <tr><td>smell</td><td>smelling</td><td>smelled</td><td>—</td><td class="l10n" data-cn="规则变化" data-en="regular">规则变化</td></tr>
+            <tr><td>wash</td><td>washing</td><td>washed</td><td>—</td><td class="l10n" data-cn="以 sh 结尾加 -ed" data-en="add -ed after -sh">以 sh 结尾加 -ed</td></tr>
+            <tr><td>stop</td><td>stopping</td><td>stopped</td><td>—</td><td class="l10n" data-cn="双写 p（辅-元-辅）" data-en="double the p (CVC)">双写 p</td></tr>
+            <tr><td>scream</td><td>screaming</td><td>screamed</td><td>—</td><td class="l10n" data-cn="规则变化" data-en="regular">规则变化</td></tr>
+            <tr><td>jump</td><td>jumping</td><td>jumped</td><td>—</td><td class="l10n" data-cn="规则变化" data-en="regular">规则变化</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-info">
+          <strong class="l10n" data-cn="🔍 复合词 Compound Words" data-en="🔍 Compound Words">🔍 复合词 Compound Words</strong>
+          <span class="l10n" data-cn="down + stairs = downstairs · bath + tub = bathtub · garbage + can = garbage can · gentle + man = gentleman<br>两个小词拼成大词，意思等于两部分之和。" data-en="down + stairs = downstairs · bath + tub = bathtub · garbage + can = garbage can · gentle + man = gentleman<br>Two small words join to make a bigger one whose meaning adds up from its parts.">down + stairs = downstairs · bath + tub = bathtub · garbage + can = garbage can · gentle + man = gentleman</span>
+        </div>
+
+        <h4 style="margin-top:1rem;" class="l10n" data-cn="LT07 · Cohesion 语篇衔接 (4 min)" data-en="LT07 · Cohesion (4 min)">LT07 · Cohesion 语篇衔接 (4 min)</h4>
+        <p class="l10n" data-cn="分析本书中的衔接手段，理解作者如何连接句子和推动故事：" data-en="Analyze how the author connects sentences and moves the story forward:">分析本书中的衔接手段，理解作者如何连接句子和推动故事：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Connector</th><th>Function</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>but</strong></td>
+              <td class="l10n" data-cn="转折 contrast" data-en="contrast">转折 contrast</td>
+              <td>"There is a nice restaurant downstairs, <strong>but</strong> Fly Guy can't go there."</td>
+            </tr>
+            <tr>
+              <td><strong>Then</strong></td>
+              <td class="l10n" data-cn="时间顺序 sequence" data-en="sequence">时间顺序</td>
+              <td>"<strong>Then</strong> Fly Guy smelled something wonderful."</td>
+            </tr>
+            <tr>
+              <td><strong>At last</strong></td>
+              <td class="l10n" data-cn="终于 finally" data-en="finally">终于 finally</td>
+              <td>"<strong>At last</strong>, he found where he wanted to eat!"</td>
+            </tr>
+            <tr>
+              <td><strong>and (累积链)</strong></td>
+              <td class="l10n" data-cn="并列 + 反复，逐次叠加" data-en="addition + repetition, building up">并列 + 反复，逐次叠加</td>
+              <td>"Her soup and Fly Guy went flying... into another lady's soup."</td>
+            </tr>
+            <tr>
+              <td><strong>代词 he / it</strong></td>
+              <td class="l10n" data-cn="指代 reference" data-en="reference">指代 reference</td>
+              <td>"<strong>He</strong> washed his face." → He = Fly Guy<br>"<strong>It</strong> was set down on a table." → It = bathtub</td>
+            </tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-tip">
+          <strong class="l10n" data-cn="💡 讨论：连锁句的力量" data-en="💡 Discuss: the power of the chain">💡 讨论：连锁句的力量</strong>
+          <span class="l10n" data-cn="让学生轮流把 "went flying into..." 接着往下说，看谁加的“人和东西”最多。每次重复都在叠加笑料。" data-en="Have students take turns carrying the &quot;went flying into...&quot; chain forward, adding more people and things. Every repetition piles on the comedy.">让学生轮流把 "went flying into..." 接着往下说，看谁加的"人和东西"最多。每次重复都在叠加笑料。</span>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase green-dot" id="sec-lt08-functional">
+        <div class="phase-label">⏱ 26–40 min · LT08 Functional Communication <button class="push-btn" onclick="openPushModal('LT08-Functional-Communication','Story retelling frame; There\'s... in my... speaking frame; exclamations (OOPZ!/MEZZY!/Perfect!); opinion: Is bathing in soup a good idea?; prediction: What does the lady do next?')">📤 Push to Students</button></div>
+        <div class="phase-title l10n" data-cn="口语输出与写作任务" data-en="Speaking &amp; Writing Tasks">口语输出与写作任务</div>
+
+        <h4 class="l10n" data-cn="Activity 1: Retell the Chain (5 min)" data-en="Activity 1: Retell the Chain (5 min)">Activity 1: Retell the Chain (5 min)</h4>
+        <p class="l10n" data-cn="两人一组，用以下框架复述“飞汤”连锁事件：" data-en="In pairs, retell the flying-soup chain using this frame:">两人一组，用以下框架复述"飞汤"连锁事件：</p>
+        <div class="card" style="background:var(--green-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong class="l10n" data-cn="Story Retelling Frame" data-en="Story Retelling Frame">Story Retelling Frame:</strong></p>
+          <p style="font-size:var(--fs-sm);">
+            First, Fly Guy went to a hotel with his family.<br>
+            Then, he smelled wonderful soup and bathed in it.<br>
+            Next, a waiter carried the bathtub to a lady, and she screamed...<br>
+            After that, the soup and Fly Guy went flying into...<br>
+            In the end, everyone needed a bath, so they jumped in the pool!
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;" class="l10n" data-cn="Activity 2: Say It with There's... (5 min)" data-en="Activity 2: Say It with There's... (5 min)">Activity 2: Say It with There's... (5 min)</h4>
+        <p class="l10n" data-cn="全班游戏：一人说 “There's a fly in my...” 其余学生补充任意东西（soup, yogurt, bed...），越夸张越好笑。" data-en="Whole-class game: one student says &quot;There's a fly in my...&quot; and the class fills in anything (soup, yogurt, bed...) — the sillier, the funnier.">全班游戏：一人说 "There's a fly in my..." 其余学生补充任意东西（soup, yogurt, bed...），越夸张越好笑。</p>
+        <div class="card" style="background:var(--purple-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong class="l10n" data-cn="Language Frame" data-en="Language Frame">Language Frame:</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            "There's a fly in my <strong>___</strong>!"<br>
+            "OOPZ!" / "MEZZY!" / "Oh no!"<br>
+            "Perfect!" (当 Fly Guy 觉得满意时)
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;" class="l10n" data-cn="Activity 3: Express an Opinion (animate, 4 min)" data-en="Activity 3: Express an Opinion (4 min)">Activity 3: Express an Opinion (4 min)</h4>
+        <div class="card" style="background:var(--surface-alt);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong class="l10n" data-cn="Discussion Prompts" data-en="Discussion Prompts">Discussion Prompts:</strong></p>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li class="l10n" data-cn="Was it a good idea for Fly Guy to bathe in the soup? Why or why not?" data-en="Was it a good idea for Fly Guy to bathe in the soup? Why or why not?">Was it a good idea for Fly Guy to bathe in the soup? Why or why not?</li>
+            <li class="l10n" data-cn="What will the lady do after everyone jumps in the pool?" data-en="What will the lady do after everyone jumps in the pool?">What will the lady do after everyone jumps in the pool?</li>
+          </ul>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong class="l10n" data-cn="Language scaffold" data-en="Language scaffold">Language scaffold:</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            "I think ___, because ___."<br>
+            "In my opinion, ___."<br>
+            "Maybe the lady will ___."
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;" class="l10n" data-cn="Activity 4: Writing — A Funny Scene (3 min 指导 + 课后完成)" data-en="Activity 4: Writing — A Funny Scene (3 min + at home)">Activity 4: Writing — A Funny Scene（指导 3 min + 课后完成）</h4>
+        <div class="card" style="background:var(--surface-alt);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong class="l10n" data-cn="Writing Prompt" data-en="Writing Prompt">Writing Prompt:</strong></p>
+          <p style="font-size:var(--fs-base);font-weight:600;" class="l10n" data-cn="Write about a time something was where it should not be. Use “There's a ___ in my ___!” in your story." data-en="Write about a time something was where it should not be. Use &quot;There's a ___ in my ___!&quot; in your story.">Write about a time something was where it should not be. Use "There's a ___ in my ___!" in your story.</p>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong class="l10n" data-cn="Writing Frame (scaffold)" data-en="Writing Frame (scaffold)">Writing Frame (scaffold):</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            First, I was ___.<br>
+            Then I saw ___.<br>
+            "There's a ___ in my ___!" I yelled.<br>
+            Afterwards, everyone ___.<br>
+            In the end, ___.
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 40–50 min · Review &amp; Extension</div>
+        <div class="phase-title l10n" data-cn="总结回顾 + 拓展延伸" data-en="Wrap-up &amp; Extension">总结回顾 + 拓展延伸</div>
+
+        <h4 class="l10n" data-cn="Exit Ticket (5 min)" data-en="Exit Ticket (5 min)">Exit Ticket (5 min)</h4>
+        <p class="l10n" data-cn="每人回答 3 个问题后离开教室：" data-en="Answer 3 questions before leaving:">每人回答 3 个问题后离开教室：</p>
+        <ol style="padding-left:1.5em;">
+          <li class="l10n" data-cn="说 2 个新学的单词。" data-en="Name 2 new words you learned.">说出 2 个你新学的单词。</li>
+          <li class="l10n" data-cn="用 There's... 造一个句子。" data-en="Make a sentence with There's...">用 There's... 造一个句子。</li>
+          <li class="l10n" data-cn="故事最后大家都在干什么？（一句话）" data-en="What does everyone do at the very end? (one sentence)">故事最后大家都在干什么？（一句话）</li>
+        </ol>
+
+        <h4 style="margin-top:0.8rem;" class="l10n" data-cn="Extension (5 min)" data-en="Extension (5 min)">Extension (5 min)</h4>
+        <div class="callout callout-tip">
+          <strong class="l10n" data-cn="🌟 拓展活动选择" data-en="🌟 Extension Activity Options">🌟 拓展活动选择</strong>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li class="l10n" data-cn="<strong>Role Play:</strong> 演一演女士发现汤里有苍蝇时的尖叫声。" data-en="<strong>Role Play:</strong> Act out the lady's scream when she finds the fly in her soup."><strong>Role Play:</strong> 演一演女士发现汤里有苍蝇时的尖叫声。</li>
+            <li class="l10n" data-cn="<strong>Draw &amp; Label:</strong> 画出“汤里飞汤”的连锁场面，用英文标注。" data-en="<strong>Draw &amp; Label:</strong> Draw the soup-flying chain and label it in English."><strong>Draw &amp; Label:</strong> 画出"飞汤"连锁场面并英文标注。</li>
+            <li class="l10n" data-cn="<strong>Creative Writing:</strong> 如果 Fly Guy 进了你家餐厅，会发生什么？写 3–5 句。" data-en="<strong>Creative Writing:</strong> What would happen if Fly Guy got into your restaurant? Write 3–5 sentences."><strong>Creative Writing:</strong> 如果 Fly Guy 进了你家餐厅，会发生什么？写 3–5 句。</li>
+            <li class="l10n" data-cn="<strong>Word Detective:</strong> 找出书中所有以 -ing 结尾的词。" data-en="<strong>Word Detective:</strong> Find every word in the story that ends with -ing."><strong>Word Detective:</strong> 找出书中所有以 -ing 结尾的词。</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr><!-- ═══════ HOMEWORK ═══════ -->
+<section id="homework">
+  <div class="section-label">Homework Worksheet</div>
+  <h2 class="l10n" data-cn="课后作业 · There's a Fly Guy in My Soup" data-en="Homework · There's a Fly Guy in My Soup">课后作业 · There's a Fly Guy in My Soup</h2>
+  <p class="text-secondary l10n" style="margin-bottom:1rem;" data-cn="以下作业分为 6 个部分，覆盖 LT01–LT08 全部模块。可打印为 A4 纸质版（答案另附，教师可折叠查看）。建议在第 1 课时后完成 Part A–D，第 2 课时后完成 Part E–F。" data-en="The homework has 6 parts covering LT01–LT08. It can be printed on A4. Reference answers are tucked under each part for the teacher to reveal. Do Parts A–D after Lesson 1 and Parts E–F after Lesson 2.">以下作业分为 6 个部分，覆盖 LT01–LT08 全部模块。可打印为 A4 纸质版（答案另附，教师可折叠查看）。建议在第 1 课时后完成 Part A–D，第 2 课时后完成 Part E–F。</p>
+
+  <!-- Part A: Vocabulary -->
+  <div class="hw-section" id="sec-hw-partA">
+    <div class="hw-title">Part A · Vocabulary Match <button class="push-btn" onclick="openPushModal('HW-PartA','Vocabulary Match: match 6 words (restaurant, puddle, sticky, bathtub, waiter, rotten) with their definitions')">📤 Push</button></div>
+    <div class="hw-subtitle l10n" data-cn="LT01 · 连线配对：将单词与意思相连。" data-en="LT01 · Draw a line to match each word with its meaning.">LT01 · 连线配对：将单词与意思相连。</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;font-size:var(--fs-sm);">
+      <div>
+        <p><strong>1.</strong> restaurant &nbsp;________</p>
+        <p><strong>2.</strong> puddle &nbsp;________</p>
+        <p><strong>3.</strong> sticky &nbsp;________</p>
+        <p><strong>4.</strong> bathtub &nbsp;________</p>
+        <p><strong>5.</strong> waiter &nbsp;________</p>
+        <p><strong>6.</strong> rotten &nbsp;________</p>
+      </div>
+      <div>
+        <p><strong>A.</strong> a big container you fill with water to take a bath</p>
+        <p><strong>B.</strong> a place where you buy and eat cooked food</p>
+        <p><strong>C.</strong> a small pool of water on the ground</p>
+        <p><strong>D.</strong> a man who serves food in a restaurant</p>
+        <p><strong>E.</strong> bad, spoiled, or unlucky / in trouble</p>
+        <p><strong>F.</strong> sticking to things; gluey to the touch</p>
+      </div>
+    </div>
+
+    <details class="answer-key" open>
+      <summary class="l10n" data-cn="参考答案 Answer Key" data-en="Answer Key">参考答案 Answer Key</summary>
+      <div class="ak-body">
+        <p style="margin-bottom:0.4rem;"><strong>1–B, 2–C, 3–F, 4–A, 5–D, 6–E.</strong></p>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">Model sentence check: "I eat dinner at a <em>restaurant</em>." · "The <em>puddle</em> was on the sidewalk." · "<em>Sticky</em> honey dripped down my hand." · "The <em>bathtub</em> was full of warm water." · "The <em>waiter</em> brought us our soup." · "A <em>rotten</em> egg would be the last one in the pool."</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part B: Vocabulary in Context -->
+  <div class="hw-section" id="sec-hw-partB">
+    <div class="hw-title">Part B · Vocabulary in Context <button class="push-btn" onclick="openPushModal('HW-PartB','Vocabulary in Context: fill in the blanks using the word bank (downstairs, smelled, washed, bathtub, outside, waiter, soup)')">📤 Push</button></div>
+    <div class="hw-subtitle l10n" data-cn="LT01 · 用方框中的正确单词填空。" data-en="LT01 · Fill in the blanks with the correct word from the box.">LT01 · 用方框中的正确单词填空。</div>
+
+    <div style="background:var(--surface-alt);border-radius:var(--radius);padding:0.6rem 1rem;margin-bottom:1rem;font-size:var(--fs-sm);">
+      <strong>Word Bank:</strong> &nbsp; downstairs &nbsp; | &nbsp; smelled &nbsp; | &nbsp; washed &nbsp; | &nbsp; bathtub &nbsp; | &nbsp; outside &nbsp; | &nbsp; waiter &nbsp; | &nbsp; soup
+    </div>
+
+    <div class="hw-question"><span class="q-num">1.</span> Fly Guy went <span class="hw-blank"></span> to look for food because he could not go into the restaurant.</div>
+    <div class="hw-question"><span class="q-num">2.</span> There was a nice restaurant <span class="hw-blank"></span>, right below their hotel room.</div>
+    <div class="hw-question"><span class="q-num">3.</span> Fly Guy <span class="hw-blank"></span> something wonderful and followed the smell.</div>
+    <div class="hw-question"><span class="q-num">4.</span> He thought the warm water was a <span class="hw-blank"></span>, so he hopped right in.</div>
+    <div class="hw-question"><span class="q-num">5.</span> "Waiter! There's a fly in my <span class="hw-blank"></span>!" the lady cried.</div>
+    <div class="hw-question"><span class="q-num">6.</span> Fly Guy <span class="hw-blank"></span> his face, his hands, and even between his toes.</div>
+
+    <details class="answer-key" open>
+      <summary class="l10n" data-cn="参考答案 Answer Key" data-en="Answer Key">参考答案 Answer Key</summary>
+      <div class="ak-body">
+        <p style="margin-bottom:0.4rem;"><strong>1. outside · 2. downstairs · 3. smelled · 4. bathtub · 5. soup · 6. washed</strong></p>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">Full corrected sentences to read aloud: "Fly Guy went <em>outside</em>... There was a nice restaurant <em>downstairs</em>... Fly Guy <em>smelled</em> something wonderful... He thought the warm water was a <em>bathtub</em>... 'There's a fly in my <em>soup</em>!'... Fly Guy <em>washed</em> his face."</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part C: Phonics -->
+  <div class="hw-section" id="sec-hw-partC">
+    <div class="hw-title">Part C · Phonics Detective <button class="push-btn" onclick="openPushModal('HW-PartC','Phonics Detective: find story words matching sh-, oo, -ing, ow/ou patterns; bonus syllable counting and stress marking')">📤 Push</button></div>
+    <div class="hw-subtitle l10n" data-cn="LT02 + LT03 · 找出符合各语音模式的故事单词。" data-en="LT02 + LT03 · Find words in the story that match each sound pattern.">LT02 + LT03 · 找出符合各语音模式的故事单词。</div>
+
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th style="width:120px;">Sound Pattern</th><th class="l10n" data-cn="从书中找出 1–2 个词" data-en="Find 1–2 words from the story">从书中找出 1–2 个词</th><th class="l10n" data-cn="IPA 发音" data-en="Pronunciation (IPA)">IPA 发音</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>sh-</strong> /ʃ/</td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>oo</strong> /uː/</td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>-ing</strong> /ɪŋ/</td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span> 3. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+        <tr><td><strong>ow/ou</strong> /aʊ/</td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="font-size:var(--fs-sm);margin-top:0.8rem;" class="l10n" data-cn="<strong>Bonus:</strong> 标出音节与重音：res-tau-rant · down-stairs · bath-tub · won-der-ful" data-en="<strong>Bonus:</strong> Circle the syllables and mark the stress: res-tau-rant · down-stairs · bath-tub · won-der-ful">Bonus: 标出音节与重音：res-tau-rant · down-stairs · bath-tub · won-der-ful</p>
+
+    <details class="answer-key" open>
+      <summary class="l10n" data-cn="参考答案 Answer Key" data-en="Answer Key">参考答案 Answer Key</summary>
+      <div class="ak-body">
+        <p style="margin-bottom:0.4rem;"><strong>sh-:</strong> wash /wɒʃ/, washing /ˈwɒʃ.ɪŋ/ · <strong>oo:</strong> room /ruːm/, cool /kuːl/ · <strong>-ing:</strong> flying /ˈflaɪ.ɪŋ/, going /ˈɡəʊ.ɪŋ/, washing /ˈwɒʃ.ɪŋ/, something /ˈsʌm.θɪŋ/ · <strong>ow/ou:</strong> downstairs /ˌdaʊnˈsteəz/, found /faʊnd/</p>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);"><strong>Bonus stress:</strong> <strong>RES</strong>-tau-rant · down-<strong>STAIRS</strong> · <strong>BATH</strong>-tub · <strong>WON</strong>-der-ful</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part D: Grammar -->
+  <div class="hw-section" id="sec-hw-partD">
+    <div class="hw-title">Part D · Grammar Power <button class="push-btn" onclick="openPushModal('HW-PartD','Grammar Power: There is/There isn\'t completion + past tense base-to-past conversion (10 verbs including irregulars: go, drive, find, fly, stop, smell, wash, scream, jump)')">📤 Push</button></div>
+    <div class="hw-subtitle l10n" data-cn="LT05 + LT06 · There is/There's &amp; Past Tense" data-en="LT05 + LT06 · There is/There's &amp; Past Tense">LT05 + LT06 · There is/There's &amp; Past Tense</div>
+
+    <h4 style="font-size:var(--fs-base);margin-bottom:0.5rem;" class="l10n" data-cn="D1: There is / There isn't —— 完成句子" data-en="D1: There is / There isn't — Complete the sentences">D1: There is / There isn't —— 完成句子</h4>
+    <div class="hw-question"><span class="q-num">1.</span> <span class="hw-blank" style="min-width:70px;"></span> a fly in my soup! (有)</div>
+    <div class="hw-question"><span class="q-num">2.</span> <span class="hw-blank" style="min-width:70px;"></span> a nice restaurant downstairs. (有)</div>
+    <div class="hw-question"><span class="q-num">3.</span> <span class="hw-blank" style="min-width:70px;"></span> any hot water left in the bathtub. (没有)</div>
+    <div class="hw-question"><span class="q-num">4.</span> <span class="hw-blank" style="min-width:70px;"></span> a pool at the hotel. Let's jump in! (有)</div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;" class="l10n" data-cn="D2: Past Tense —— 写出过去式" data-en="D2: Past Tense — Write the past tense form">D2: Past Tense —— 写出过去式</h4>
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th>Base Form</th><th>Past Tense</th><th>Base Form</th><th>Past Tense</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>go</td><td><span class="hw-blank"></span></td><td>stop</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>drive</td><td><span class="hw-blank"></span></td><td>smell</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>find</td><td><span class="hw-blank"></span></td><td>wash</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>fly</td><td><span class="hw-blank"></span></td><td>scream</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>yell</td><td><span class="hw-blank"></span></td><td>jump</td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <details class="answer-key" open>
+      <summary class="l10n" data-cn="参考答案 Answer Key" data-en="Answer Key">参考答案 Answer Key</summary>
+      <div class="ak-body">
+        <p style="margin-bottom:0.4rem;"><strong>D1:</strong> 1. There's / There is · 2. There is · 3. There isn't · 4. There is</p>
+        <p style="margin-bottom:0.4rem;"><strong>D2:</strong> go→went · drive→drove · find→found · fly→flew · yell→yelled · stop→stopped · smell→smelled · wash→washed · scream→screamed · jump→jumped</p>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">Reminder for the teacher: <em>went, drove, found, flew</em> are irregular; <em>stopped</em> doubles the p (CVC); the rest just add <em>-ed</em>.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part E: Cohesion -->
+  <div class="hw-section" id="sec-hw-partE">
+    <div class="hw-title">Part E · Cohesion — Who Does "He" / "It" Mean? <button class="push-btn" onclick="openPushModal('HW-PartE','Cohesion: identify pronoun reference (he=Fly Guy/Buzz/Dad; it=bathtub/soup) and find the go-flying chain sentence that repeats')">📤 Push</button></div>
+    <div class="hw-subtitle l10n" data-cn="LT07 · 读句子，写出 he/it 指代谁或什么。" data-en="LT07 · Read each sentence. Write who or what "he" and "it" refer to.">LT07 · 读句子，写出 he/it 指代谁或什么。</div>
+
+    <div class="hw-question"><span class="q-num">1.</span> "<strong>He</strong> washed his face and hands." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">2.</span> "<strong>He</strong> found a puddle." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">3.</span> "<strong>It</strong> was set down on a table in front of a lady." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">4.</span> "The lady jumped up. <strong>Her</strong> soup and Fly Guy went flying..." → <strong>Her</strong> = <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">5.</span> "Everyone jumped up. <strong>Everyone's</strong> soup and Fly Guy went flying." → <strong>Everyone's</strong> = <span class="hw-blank"></span></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;" class="l10n" data-cn="找连锁句！" data-en="Find the chain!">找连锁句！</h4>
+    <p style="font-size:var(--fs-sm);" class="l10n" data-cn="从书中抄写一句以 went flying 结尾的句子，并写出它一共出现了几次。" data-en="Copy one sentence from the story that uses &quot;went flying&quot; and count how many times that chain repeats.">从书中抄写一句以 "went flying" 结尾的句子，并写出它一共出现了几次。</p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);" class="l10n" data-cn="句子：____" data-en="Sentence: ____">Sentence: <span class="hw-blank" style="min-width:320px;"></span></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);" class="l10n" data-cn="出现次数：____" data-en="It repeats ___ times.">It repeats <span class="hw-blank" style="min-width:80px;"></span> times.</p>
+
+    <details class="answer-key" open>
+      <summary class="l10n" data-cn="参考答案 Answer Key" data-en="Answer Key">参考答案 Answer Key</summary>
+      <div class="ak-body">
+        <p style="margin-bottom:0.4rem;"><strong>1.</strong> Fly Guy · <strong>2.</strong> Fly Guy · <strong>3.</strong> the bathtub (the bowl of soup Fly Guy is in) · <strong>4.</strong> the first lady · <strong>5.</strong> all the people in the restaurant</p>
+        <p style="margin-bottom:0.4rem;"><strong>Chain example:</strong> "Her soup and Fly Guy went flying into another lady's soup." The <em>went flying</em> pattern repeats <strong>four times</strong> (into another lady's soup → into a gentleman's head → and it keeps building), each time more soup and more people join the chaos.</p>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">Teacher note: accept any correctly copied chain sentence; the point is that students notice the cumulative repetition.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part F: Writing -->
+  <div class="hw-section" id="sec-hw-partF">
+    <div class="hw-title">Part F · Creative Writing — A Funny Scene <button class="push-btn" onclick="openPushModal('HW-PartF','Creative Writing: Write a short funny scene where something is where it should NOT be. Use &quot;There\'s a ___ in my ___!&quot; and the scaffold frame')">📤 Push</button></div>
+    <div class="hw-subtitle l10n" data-cn="LT08 · 写一个“有东西不该出现在某处”的搞笑场景，至少 5 句，必须用到本课的句型。" data-en="LT08 · Write a funny scene where something is where it should not be. Use at least 5 sentences and include the target phrases.">LT08 · 写一个"有东西不该出现在某处"的搞笑场景，至少 5 句，必须用到本课的句型。</div>
+
+    <p style="font-size:var(--fs-sm);margin-bottom:0.5rem;" class="l10n" data-cn="<strong>可用的句型：</strong>" data-en="<strong>Use these phrases if you need help:</strong>"><strong>可用的句型：</strong></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.8rem;">
+      "There's a ___ in my ___!"<br>
+      "First, I was ___. Then I saw ___."<br>
+      "OOPZ! MEZZY! Oh no!"<br>
+      "In the end, everyone ___."
+    </p>
+    <div class="hw-lines" style="min-height:12em;"></div>
+
+    <details class="answer-key" open>
+      <summary class="l10n" data-cn="参考答案（示例短文）Answer Key" data-en="Answer Key (Sample Story)">参考答案（示例短文）Answer Key</summary>
+      <div class="ak-body">
+        <p style="margin-bottom:0.4rem;"><strong>Sample (native-level model):</strong></p>
+        <p style="font-size:var(--fs-sm);">"First, I was eating breakfast with my family. Then I saw something wiggling in my cereal bowl. 'There's a frog in my milk!' I yelled. My little sister dropped her spoon, and the frog jumped right onto Dad's toast. OOPZ! Everyone started shouting, but the frog just sat there looking as happy as can be. In the end, we took him outside and let him hop away — but now Dad always checks his toast!"</p>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">Checklist: <strong>target phrase included?</strong> · <strong>5+ sentences?</strong> · <strong>a silly surprise + a clear ending?</strong></p>
+      </div>
+    </details>
+  </div>
+
+</section><!-- ═══════ TEACHER NOTES ═══════ -->
+<section>
+  <div class="section-label">Teacher Notes</div>
+  <h2 class="l10n" data-cn="教师备注" data-en="Teacher Notes">教师备注</h2>
+
+  <div class="lt-grid">
+    <div class="card">
+      <h4 class="l10n" data-cn="📊 LT Coverage Map" data-en="📊 LT Coverage Map">📊 LT Coverage Map</h4>
+      <div style="overflow-x:auto"><table style="min-width:500px">
+        <thead>
+          <tr><th>LT Module</th><th>Session 1</th><th>Session 2</th><th>Homework</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LT01 Vocabulary</td><td class="l10n" data-cn="✅ 主教学" data-en="✅ main focus">✅ 主教学</td><td class="l10n" data-cn="复习" data-en="review">复习</td><td>✅ Part A–B</td></tr>
+          <tr><td>LT02 Phonics</td><td class="l10n" data-cn="✅ 主教学" data-en="✅ main focus">✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT03 Pronunciation</td><td class="l10n" data-cn="✅ 主教学" data-en="✅ main focus">✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT04 Sentence Patterns</td><td class="l10n" data-cn="✅ 初探" data-en="✅  introduce">✅ 初探</td><td class="l10n" data-cn="复习" data-en="review">复习</td><td>—</td></tr>
+          <tr><td>LT05 Grammar</td><td>—</td><td class="l10n" data-cn="✅ 主教学" data-en="✅ main focus">✅ 主教学</td><td>✅ Part D</td></tr>
+          <tr><td>LT06 Morphology</td><td>—</td><td class="l10n" data-cn="✅ 主教学" data-en="✅ main focus">✅ 主教学</td><td>✅ Part C+D</td></tr>
+          <tr><td>LT07 Cohesion</td><td>—</td><td class="l10n" data-cn="✅ 主教学" data-en="✅ main focus">✅ 主教学</td><td>✅ Part E</td></tr>
+          <tr><td>LT08 Functional</td><td>—</td><td class="l10n" data-cn="✅ 主教学" data-en="✅ main focus">✅ 主教学</td><td>✅ Part F</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h4 class="l10n" data-cn="🎯 CCSS Alignment (Grade 1–2)" data-en="🎯 CCSS Alignment (Grade 1–2)">🎯 CCSS Alignment (Grade 1–2)</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>RL.1.1</strong> Ask and answer questions about key details</li>
+        <li><strong>RL.1.2</strong> Retell stories, including key details</li>
+        <li><strong>RL.1.3</strong> Describe characters, settings, and major events</li>
+        <li><strong>RL.1.7</strong> Use illustrations and details to describe characters/events</li>
+        <li><strong>RL.2.5</strong> Describe the overall structure of a story (beginning → end, cumulative chain)</li>
+        <li><strong>W.1.3</strong> Write narratives with a sequence of events and a sense of closure</li>
+        <li><strong>SL.1.1</strong> Participate in collaborative conversations</li>
+        <li><strong>SL.1.4</strong> Describe people, places, things, and events</li>
+        <li><strong>L.1.1</strong> Use common conventions; produce and expand complete sentences</li>
+        <li><strong>L.1.4</strong> Determine the meaning of words using context clues</li>
+        <li><strong>RF.1.3</strong> Know and apply grade-level phonics and word-analysis skills</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="page-wrap">
+    <p>There's a Fly Guy in My Soup — 精读教案 · 两课时 · Emily's Reading Studio</p>
+    <p style="margin-top:0.3rem;">Language Target Framework · LT01–LT08 · CCSS Grade 1–2 Aligned</p>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll for TOC
+document.querySelectorAll('.toc a').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var id = this.getAttribute('href').slice(1);
+    var target = document.getElementById(id);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ═══════ CN / EN Language Toggle ═══════
+var CURRENT_LANG = 'zh';
+function toggleLang() {
+  var btn = document.getElementById('langToggle');
+  if (CURRENT_LANG === 'zh') {
+    CURRENT_LANG = 'en';
+    document.documentElement.setAttribute('lang', 'en');
+    if (btn) btn.textContent = '🌐 中文';
+  } else {
+    CURRENT_LANG = 'zh';
+    document.documentElement.setAttribute('lang', 'zh-CN');
+    if (btn) btn.textContent = '🌐 English';
+  }
+  document.querySelectorAll('.l10n').forEach(function(el) {
+    var txt = CURRENT_LANG === 'zh' ? el.getAttribute('data-cn') : el.getAttribute('data-en');
+    if (txt !== null && txt !== undefined) el.innerHTML = txt;
+  });
+}
+
+// ═══════ Push to Students ═══════
+var BOOK_TITLE = "There's a Fly Guy in My Soup";
+var SOURCE_LESSON_URL = '/frontend/fly-guy/theres_a_fly_guy_in_my_soup_lesson_plan.html';
+var SOURCE_LESSON_ID = 'flyguy-theres-a-fly-guy-in-my-soup';
+
+const sectionContentMap = {
+  'LT01-Vocabulary': '12 core vocabulary words with IPA, POS, definitions, examples, and word families: restaurant, downstairs, outside, puddle, sticky, garbage, smell, wash, bathtub, soup, waiter, gentleman, rotten',
+  'LT02-Phonics': 'Sound patterns: sh- (wash, washing); oo /uː/ (room, cool, food); -ing (flying, going, washing, something); ow/ou /aʊ/ (downstairs, found, around); sl- (smelled, slimy); st- (sticky, stopped); br- (brown)',
+  'LT03-Pronunciation': 'Syllable counting and stress: restaurant(3), downstairs(2), puddle(2), bathtub(2), garbage(2), wonderful(3), gentleman(3); sentence stress: There\'s a FLY in my SOUP!; linking: There\'s_a fly',
+  'LT04-Sentence-Patterns': 'Core patterns: There\'s a [noun] in/on [place]; [Subject] found [something]; [Subject] needed to [verb] before [noun]; ...went flying into [place]; Exclamations: OOPZ! / MEZZY! / Perfect!',
+  'LT05-Grammar': "There is/There's existential ('There's a fly in my soup!'); can/can't ability; Simple Past (went, drove, found, smelled, washed); need to + verb; simple passive: was picked up / was set down",
+  'LT06-Morphology': 'Word families with suffixes: -ed (followed, smelled, washed, screamed, jumped); irregular past (go→went, drive→drove, find→found, fly→flew); compounds (down+stairs, bath+tub, garbage+can, gentle+man); -ing; plurals -s',
+  'LT07-Cohesion': 'Cohesion devices: but (contrast), then / at last (sequence), and; the cumulative repetition chain (went flying into...); pronoun reference (he / it / they)',
+  'LT08-Functional-Communication': 'Speaking & writing tasks: retell the soup chain; use There\'s... in my...; exclaim (OOPZ!/MEZZY!/Perfect!); give an opinion; predict what the lady does next',
+  'HW-PartA': 'Vocabulary Match: match 6 words (restaurant, puddle, sticky, bathtub, waiter, rotten) with their definitions',
+  'HW-PartB': 'Vocabulary in Context: fill in blanks using the word bank (downstairs, smelled, washed, bathtub, outside, waiter, soup)',
+  'HW-PartC': 'Phonics Detective: find story words matching sh-, oo, -ing, ow/ou patterns; bonus syllable counting and stress marking',
+  'HW-PartD': 'Grammar Power: There is / There isn\'t completion + past tense conversion (10 verbs including irregulars go, drive, find, fly)',
+  'HW-PartE': 'Cohesion: identify who/what he and it refer to; find and count the went-flying chain sentence that repeats',
+  'HW-PartF': 'Creative Writing: write a funny scene where something is where it should NOT be; use "There\'s a ___ in my ___!" and the scaffold frame'
+};
+
+function openPushModal(sectionId, sectionContent) {
+  var token = localStorage.getItem('authToken');
+  if (!token) {
+    window.location.href = '/lesson.html';
+    return;
+  }
+  var content = sectionContent || sectionContentMap[sectionId] || sectionId;
+
+  fetch('/api/students/list', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API error: ' + r.status);
+    return r.json();
+  })
+  .then(function(students) {
+    if (!Array.isArray(students) || students.length === 0) {
+      alert('No students found. Please add students first.');
+      return;
+    }
+    var existing = document.querySelector('.push-modal-overlay');
+    if (existing) existing.remove();
+
+    var modal = document.createElement('div');
+    modal.className = 'push-modal-overlay';
+    var studentListHtml = students.map(function(s) {
+      return '<label class="student-item"><input type="checkbox" value="' + s.id + '"><span>' + s.name + '</span></label>';
+    }).join('');
+    modal.innerHTML = '<div class="push-modal">' +
+      '<h3>\ud83d\udce4 Push to Students</h3>' +
+      '<p style="color:#666;font-size:13px;">' + sectionId + '</p>' +
+      '<p style="color:#888;font-size:11px;margin-bottom:8px;">' + content.substring(0, 120) + (content.length > 120 ? '...' : '') + '</p>' +
+      '<div class="student-list">' + studentListHtml + '</div>' +
+      '<button class="push-confirm-btn" id="pushConfirmBtn">\u2705 Confirm Push</button>' +
+      '<button class="push-cancel-btn" id="pushCancelBtn">\u2716 Cancel</button>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    document.getElementById('pushConfirmBtn').onclick = function() { doPush(sectionId, content, this); };
+    document.getElementById('pushCancelBtn').onclick = function() { modal.remove(); };
+    modal.onclick = function(e) { if (e.target === modal) modal.remove(); };
+  })
+  .catch(function(err) {
+    alert('Failed to load students: ' + err.message);
+  });
+}
+
+function doPush(sectionId, content, btn) {
+  var modal = document.querySelector('.push-modal-overlay');
+  if (!modal) return;
+  var checked = modal.querySelectorAll('input:checked');
+  if (checked.length === 0) {
+    alert('Please select at least one student.');
+    return;
+  }
+  var token = localStorage.getItem('authToken');
+  btn.textContent = 'Pushing...';
+  btn.disabled = true;
+
+  var emojiMap = {
+    'LT01': '\ud83d\udcd6', 'LT02': '\ud83d\udd24', 'LT03': '\ud83c\udfa4',
+    'LT04': '\u270f\ufe0f', 'LT05': '\ud83d\udd24', 'LT06': '\ud83e\udde9',
+    'LT07': '\ud83d\udd17', 'LT08': '\ud83d\udcac', 'HW': '\ud83d\udcdd'
+  };
+  var prefix = sectionId.split('-')[0];
+  var emoji = emojiMap[prefix] || '\ud83d\udccc';
+  var title = emoji + ' [Fly Guy] ' + sectionId;
+  var today = new Date();
+  var todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  var teacher = localStorage.getItem('currentUser') || localStorage.getItem('lesson_tracker_user') || 'emily_mo';
+
+  // Build a Practice assignment (backend-persisted) for each selected student.
+  var taskDef = PUSH_TASKS[sectionId] || { renderer: 'checklist', prompt: content, required: true };
+  var taskId = 'flyguy-theres-a-fly-guy-in-my-soup-' + String(sectionId).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  var taskSnapshot = {
+    id: taskId,
+    title: title,
+    type: 'task',
+    series: 'Fly Guy',
+    book: BOOK_TITLE,
+    lesson: sectionId,
+    part: sectionId,
+    sourceLessonUrl: SOURCE_LESSON_URL,
+    studentRenderer: taskDef.renderer,
+    prompt: taskDef.prompt || content,
+    required: !!taskDef.required
+  };
+  if (taskDef.renderer === 'drag-match' && taskDef.pairs) taskSnapshot.pairs = taskDef.pairs;
+  if (taskDef.renderer === 'drag-order' && taskDef.items) taskSnapshot.items = taskDef.items;
+  if (taskDef.renderer === 'multiple-choice' && taskDef.options) taskSnapshot.options = taskDef.options;
+  if (taskDef.renderer === 'checklist') taskSnapshot.instructions = taskDef.prompt || content;
+
+  var assignments = [];
+  for (var i = 0; i < checked.length; i++) {
+    var studentId = checked[i].value;
+    assignments.push({
+      assignmentId: 'assign-' + Date.now() + '-' + Math.random().toString(16).slice(2) + '-' + i,
+      practiceId: 'lessonplan:' + sectionId,
+      title: title,
+      content: content,
+      sourceLessonUrl: SOURCE_LESSON_URL,
+      sourceLessonId: SOURCE_LESSON_ID,
+      taskIds: [taskId],
+      tasks: [taskSnapshot],
+      sourceBook: 'Fly Guy',
+      targetType: 'student',
+      targetIds: [studentId],
+      studentIds: [studentId],
+      classId: '',
+      relatedClassDate: todayStr,
+      assignedDate: todayStr,
+      dueDate: '',
+      teacherNote: '',
+      assignedBy: teacher,
+      status: 'active'
+    });
+  }
+
+  fetch('/api/practice/assignments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ assignments: assignments })
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    alert('\u2705 Pushed to ' + (data.count || assignments.length) + ' student(s)');
+    modal.remove();
+  })
+  .catch(function(err) {
+    alert('Push failed: ' + err.message);
+    btn.textContent = 'Push';
+    btn.disabled = false;
+  });
+}
+
+// ═══════ Task definitions for Practice push (task snapshot) ═══════
+// Each pushable section maps to an interactive task. Reasonable defaults:
+// LT*  → checklist (teacher marks completion of that learning phase)
+// HW-A → drag-match, HW-B/C → drag-order, HW-D → multiple-choice,
+// HW-E → short-answer, HW-F → short-answer (writing)
+var PUSH_TASKS = {
+  'LT01-Vocabulary': { renderer: 'checklist', prompt: 'Review the 12 core vocabulary words with IPA, definitions and word families.', required: true },
+  'LT02-Phonics': { renderer: 'checklist', prompt: 'Practice sound patterns: sh-, oo /uː/, -ing, ow/ou /aʊ/, sl-, st-, br-.', required: true },
+  'LT03-Pronunciation': { renderer: 'checklist', prompt: 'Count syllables and mark stress: restaurant(3), downstairs(2), puddle(2), bathtub(2), garbage(2), wonderful(3).', required: true },
+  'LT04-Sentence-Patterns': { renderer: 'checklist', prompt: 'Practice sentence patterns: There\'s a [noun] in/on [place]; [Subject] found [something]; ...went flying into [place].', required: true },
+  'LT05-Grammar': { renderer: 'multiple-choice', prompt: 'Choose the correct sentence for what is in the bowl.', options: [
+    { label: 'There\'s a fly in my soup!', value: 'there-is-fly', correct: true },
+    { label: 'There is no soup in my fly.', value: 'no-soup-fly', correct: false },
+    { label: 'My soup is a fly there.', value: 'soup-fly-there', correct: false }
+  ], required: true },
+  'LT06-Morphology': { renderer: 'checklist', prompt: 'Review word families (-ed, -ing), irregular past (went, drove, found, flew), and compound words (bathtub, downstairs, garbage can, gentleman).', required: true },
+  'LT07-Cohesion': { renderer: 'short-answer', prompt: 'In the story, what does "it" refer to in "It was set down on a table"? Write the answer and explain why.', required: true },
+  'LT08-Functional-Communication': { renderer: 'short-answer', prompt: 'Retell the story chain: First... Then... Next... In the end. Use "There\'s a ___ in my ___!"', required: true },
+  'HW-PartA': { renderer: 'drag-match', prompt: 'Match each word with its meaning.', pairs: [
+    { left: 'restaurant', right: 'a place where you buy and eat food' },
+    { left: 'puddle', right: 'a small pool of water on the ground' },
+    { left: 'sticky', right: 'gluey to the touch' },
+    { left: 'bathtub', right: 'a container you fill to take a bath' },
+    { left: 'waiter', right: 'a man who serves food' },
+    { left: 'rotten', right: 'bad, spoiled, or in trouble' }
+  ], required: true },
+  'HW-PartB': { renderer: 'drag-order', prompt: 'Put the words in the correct order to complete the sentences.', items: ['downstairs', 'smelled', 'washed', 'bathtub', 'outside', 'soup'], required: true },
+  'HW-PartC': { renderer: 'multiple-choice', prompt: 'Which phonics pattern does "wash" use?', options: [
+    { label: 'sh- digraph', value: 'sh', correct: true },
+    { label: 'oo vowel team', value: 'oo', correct: false },
+    { label: 'ow/ou diphthong', value: 'ou', correct: false }
+  ], required: true },
+  'HW-PartD': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense of "fly".', options: [
+    { label: 'fly → flew', value: 'flew', correct: true },
+    { label: 'fly → flyed', value: 'flyed', correct: false },
+    { label: 'fly → flown', value: 'flown', correct: false }
+  ], required: true },
+  'HW-PartE': { renderer: 'short-answer', prompt: 'For each sentence, write who or what "he" and "it" refer to.', required: true },
+  'HW-PartF': { renderer: 'short-answer', prompt: 'Write a funny scene where something is where it should NOT be; use "There\'s a ___ in my ___!"', required: true }
+};
+</script>
+</body>
+</html>

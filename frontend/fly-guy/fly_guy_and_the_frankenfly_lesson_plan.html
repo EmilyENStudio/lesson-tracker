@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fly Guy and the Frankenfly — 精读教案 · 两课时</title>
+<style>
+:root {
+  --canvas: #FBF3E7;
+  --surface: #FFF9F1;
+  --surface-alt: #FFF3E0;
+  --ink: #31251B;
+  --ink-secondary: #8B7662;
+  --accent: #C96F3D;
+  --accent-light: #F5DCC8;
+  --green: #5A8F56;
+  --green-light: #E8F0E6;
+  --blue: #4A7FA5;
+  --blue-light: #E3EFF6;
+  --purple: #8B6DAF;
+  --purple-light: #F0EAF6;
+  --red: #C75A4A;
+  --red-light: #FCEAE7;
+  --divider: #E8DDD0;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-heading: Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.35rem;
+  --fs-2xl: 1.7rem;
+  --fs-3xl: 2.2rem;
+  --lh: 1.7;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(49,37,27,0.06);
+  --shadow: 0 2px 8px rgba(49,37,27,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* ── Header ── */
+.site-header {
+  background: linear-gradient(135deg, #C96F3D 0%, #B85A2E 100%);
+  color: #fff;
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2rem;
+}
+.site-header .page-wrap { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; }
+.header-text { flex: 1; min-width: 260px; }
+.header-text h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.3rem;
+}
+.header-text .subtitle {
+  font-size: var(--fs-lg);
+  opacity: 0.9;
+}
+.book-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.badge {
+  display: inline-block;
+  font-size: var(--fs-sm);
+  padding: 0.2em 0.7em;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+/* ── Section ── */
+section { margin-bottom: 2.5rem; }
+.section-label {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+h4 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+p { margin-bottom: 0.8rem; }
+.text-secondary { color: var(--ink-secondary); }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.card-accent { border-left: 4px solid var(--accent); }
+.card-green { border-left: 4px solid var(--green); }
+.card-blue { border-left: 4px solid var(--blue); }
+.card-purple { border-left: 4px solid var(--purple); }
+
+/* ── LT Grid ── */
+.lt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.lt-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+.lt-card .lt-num {
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.lt-card h4 { margin-bottom: 0.5rem; font-size: var(--fs-base); }
+.lt-card ul { padding-left: 1.2em; }
+.lt-card li { margin-bottom: 0.3rem; font-size: var(--fs-sm); color: var(--ink-secondary); }
+
+/* ── Session Timeline ── */
+.session-block {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.session-header {
+  padding: 1.2rem 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.session-header.s1 { background: linear-gradient(135deg, #C96F3D, #A85A30); }
+.session-header.s2 { background: linear-gradient(135deg, #5A8F56, #3D7A3A); }
+.session-header h2 { color: #fff; margin: 0; font-size: var(--fs-xl); }
+.session-header .session-meta { font-size: var(--fs-sm); opacity: 0.9; }
+.session-body { padding: 1.5rem; }
+
+.phase {
+  position: relative;
+  padding-left: 1.8rem;
+  padding-bottom: 1.5rem;
+  border-left: 2px solid var(--divider);
+  margin-left: 0.5rem;
+}
+.phase:last-child { border-left-color: transparent; padding-bottom: 0; }
+.phase::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 0.3rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.phase.green-dot::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+.phase-blue-dot::before { background: var(--blue); box-shadow: 0 0 0 2px var(--blue); }
+.phase-purple-dot::before { background: var(--purple); box-shadow: 0 0 0 2px var(--purple); }
+
+.phase-label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+.phase.green-dot .phase-label { color: var(--green); }
+.phase-blue-dot .phase-label { color: var(--blue); }
+.phase-purple-dot .phase-label { color: var(--purple); }
+
+.phase-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  margin: 0.8rem 0;
+}
+th, td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--divider);
+  vertical-align: top;
+}
+th {
+  background: var(--surface-alt);
+  font-weight: 700;
+  white-space: nowrap;
+}
+td { color: var(--ink); }
+.wrap-word { overflow-wrap: break-word; word-break: break-word; }
+
+/* ── Vocab Table ── */
+.vocab-card {
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  align-items: baseline;
+}
+.vocab-word {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--accent);
+}
+.vocab-ipa {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+}
+.vocab-pos {
+  font-size: var(--fs-sm);
+  color: var(--blue);
+  font-weight: 600;
+}
+.vocab-def { font-size: var(--fs-sm); }
+.vocab-example {
+  grid-column: 1 / -1;
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  border-top: 1px dashed var(--divider);
+  padding-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+/* ── Phonics ── */
+.phonics-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.8rem;
+  margin: 0.25rem;
+  font-size: var(--fs-sm);
+}
+.phonics-pattern {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* ── Sentence Pattern ── */
+.pattern-block {
+  background: var(--purple-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+.pattern-template {
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  color: var(--purple);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.pattern-example {
+  font-style: italic;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+}
+
+/* ── Callout ── */
+.callout {
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: var(--fs-sm);
+}
+.callout-tip { background: var(--green-light); border-left: 3px solid var(--green); }
+.callout-warn { background: var(--red-light); border-left: 3px solid var(--red); }
+.callout-info { background: var(--blue-light); border-left: 3px solid var(--blue); }
+.callout strong { display: block; margin-bottom: 0.3rem; }
+
+/* ── Answer Key ── */
+details.answer-key {
+  background: var(--green-light);
+  border: 1px dashed var(--green);
+  border-radius: var(--radius);
+  padding: 0.6rem 1rem;
+  margin-top: 0.8rem;
+  font-size: var(--fs-sm);
+}
+details.answer-key summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--green);
+}
+details.answer-key .ak-body { margin-top: 0.5rem; color: var(--ink); }
+.ak-body ol, .ak-body ul { padding-left: 1.4em; }
+.ak-body li { margin-bottom: 0.25rem; }
+
+/* ── Homework Section ── */
+.hw-section {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
+}
+.hw-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.hw-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--divider);
+}
+.hw-question {
+  margin-bottom: 1rem;
+  padding-left: 0.2rem;
+}
+.hw-question .q-num {
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 0.3rem;
+}
+.hw-blank {
+  display: inline-block;
+  min-width: 120px;
+  border-bottom: 1px solid var(--ink);
+  margin: 0 0.2rem;
+}
+.hw-lines {
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 1.8em,
+    var(--divider) 1.8em,
+    var(--divider) calc(1.8em + 1px)
+  );
+  min-height: 6em;
+}
+
+/* ── Sticky Nav ── */
+.toc {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(251,243,231,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--divider);
+  padding: 0.6rem 0;
+  margin-bottom: 1.5rem;
+}
+.toc .page-wrap {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.toc .page-wrap::-webkit-scrollbar { display: none; }
+.toc a {
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.3em 0.8em;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.toc a:hover, .toc a:focus { background: var(--accent-light); color: var(--accent); }
+.toc a:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ── Divider ── */
+hr { border: none; border-top: 1px solid var(--divider); margin: 2rem 0; }
+
+/* ── Footer ── */
+.site-footer {
+  text-align: center;
+  color: var(--ink-secondary);
+  font-size: var(--fs-sm);
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--divider);
+  margin-top: 2rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .lt-grid { grid-template-columns: 1fr; }
+  .session-body { padding: 1rem; }
+  .phase { padding-left: 1.2rem; }
+  table { font-size: 0.8rem; }
+  th, td { padding: 0.4rem 0.5rem; }
+}
+
+/* ── Print ── */
+@media print {
+  .toc { display: none; }
+  .site-header { background: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .session-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card, .lt-card, .session-block, .hw-section, .vocab-card, .pattern-block, .callout, .phonics-item {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  details.answer-key { display: none; }
+  body { font-size: 11pt; }
+  .page-wrap { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ── Push Modal ── */
+.push-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+}
+.push-modal {
+  background: white; border-radius: 16px; padding: 24px;
+  max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.push-modal h3 { margin: 0 0 8px; font-size: 18px; }
+.student-list { margin: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.student-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.student-item:hover { background: #f5f5f5; }
+.student-item input { width: 16px; height: 16px; }
+.push-confirm-btn {
+  width: 100%; padding: 12px; margin-top: 12px;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 10px;
+  font-weight: 700; cursor: pointer; font-size: 14px;
+}
+.push-cancel-btn {
+  width: 100%; padding: 10px; margin-top: 8px;
+  background: #f0f0f0; color: #666; border: none;
+  border-radius: 10px; cursor: pointer; font-size: 13px;
+}
+.push-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; margin: 4px 0;
+  background: linear-gradient(135deg, #C96F3D, #A85A30);
+  color: white; border: none; border-radius: 6px;
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  float: right;
+}
+.push-btn:hover { opacity: 0.9; transform: scale(1.05); }
+@media print { .push-btn { display: none !important; } }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header class="site-header">
+  <div class="page-wrap">
+    <div class="header-text">
+      <h1>Fly Guy and the Frankenfly</h1>
+      <p class="subtitle">精读教案 · 两课时 · 100 分钟</p>
+      <div class="book-badges">
+        <span class="badge">Tedd Arnold</span>
+        <span class="badge">Lexile 410L</span>
+        <span class="badge">GRL Level L</span>
+        <span class="badge">Grade K–2</span>
+        <span class="badge">Fly Guy #13</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════ TOC ═══════ -->
+<nav class="toc" aria-label="页面导航">
+  <div class="page-wrap">
+    <a href="#overview">故事概览</a>
+    <a href="#lt-overview">LT 框架总览</a>
+    <a href="#session1">第一课时</a>
+    <a href="#session2">第二课时</a>
+    <a href="#homework">课后作业</a>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<section id="overview">
+  <div class="section-label">Overview</div>
+  <h2>故事概览</h2>
+  <div class="card card-accent">
+    <h3>Story Summary</h3>
+    <p>It was a dark and stormy night. Buzz and Fly Guy were playing — Buzz made puzzles, costumes, and drawings for both of them. Finally, Buzz said, "Time for bed, Fly Guy," and Fly Guy said, "BIZZY!" As Buzz fell asleep, he wondered, "What is Fly Guy making?"</p>
+    <p>Late that night, a strange light woke Buzz. Fly Guy was making something in his laboratory. Fly Guy turned on the power, and a huge monster — Frankenfly — sat up! Buzz cried, "It's Frankenfly!" The monster walked to the bed and picked Buzz up. But Fly Guy shut off the power, and CRASH! Frankenfly dropped Buzz and fell onto the bed.</p>
+    <p>Buzz woke up. It was morning. "Wow!" said Buzz. "That was a bad dream." Fly Guy was asleep on the desk. When Buzz asked if Fly Guy had made something, Fly Guy said, "BUZZ!" — and pointed to a painting of Buzz and Fly Guy together! "How did you paint this? My brushes are too big for you." And Buzz smiled: "We are the BEST best friends ever!"</p>
+  </div>
+  <div class="lt-grid" style="margin-top:1rem;">
+    <div class="card" style="margin:0;">
+      <h4>📖 文本特征</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li>3 chapters, ~32 pages, ~287 words</li>
+        <li>过去时叙述：was/were + -ing 背景 + simple past 事件推进</li>
+        <li>科幻/怪物词汇：laboratory, power, monster, Frankenfly</li>
+        <li>拟声词与感叹：BIZZY! / BUZZ! / CRASH!</li>
+        <li>梦境 vs 现实对照 (dream vs. reality)</li>
+        <li>核心主题词：friendship, best friends, dream</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>🎯 教学目标</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>Reading:</strong> 理解故事结构（梦境发展），区分"梦"与"现实"</li>
+        <li><strong>Language:</strong> 掌握核心词汇、过去时（-ed 与不规则）、-ing 进行时、最高级 best</li>
+        <li><strong>Speaking:</strong> 能复述梦境情节、表达对 Frankenfly 的看法</li>
+        <li><strong>Writing:</strong> 完成 opinion 写作：Is Fly Guy a good friend?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LT FRAMEWORK OVERVIEW ═══════ -->
+<section id="lt-overview">
+  <div class="section-label">Language Target Framework</div>
+  <h2>LT 框架总览 — Fly Guy and the Frankenfly</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;">以下 8 个模块构成本书的完整语言目标体系，两个课时分工推进。</p>
+
+  <div class="lt-grid">
+    <div class="lt-card">
+      <div class="lt-num">LT01</div>
+      <h4>Vocabulary 词汇</h4>
+      <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.5rem;">12 个核心词，含 IPA、词性、搭配、例句、词族。</p>
+      <ul>
+        <li>stormy, laboratory, power, monster</li>
+        <li>dream, wake, painting, brush</li>
+        <li>costume, puzzle, drawing, best</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT02</div>
+      <h4>Phonics / Decoding 语音拼读</h4>
+      <ul>
+        <li><strong>fl-</strong> blend: fell, flew</li>
+        <li><strong>st-</strong> blend: stormy, strange</li>
+        <li><strong>dr-</strong> blend: dream, dropped</li>
+        <li><strong>br-</strong> blend: brush</li>
+        <li><strong>sh-</strong>: she, shut</li>
+        <li><strong>-ing</strong> suffix: making, painting, playing</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT03</div>
+      <h4>Pronunciation 发音</h4>
+      <ul>
+        <li>音节切分：mak-ing (2), play-ing (2), paint-ing (2)</li>
+        <li>重音模式：mon<em>STER</em> 不——<em>MON</em>ster, la<em>BOR</em>a-to-ry</li>
+        <li>三音节复合词：<em>FRAN</em>-ken-fly</li>
+        <li>句重音/感叹：BEST best friends!</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT04</div>
+      <h4>Sentence Patterns 句型</h4>
+      <ul>
+        <li>It was a [adj] and [adj] night.</li>
+        <li>___ was/were + -ing ... (进行时背景)</li>
+        <li>What is ___ making? (现在进行特殊疑问)</li>
+        <li>Did you make ...? (一般过去疑问)</li>
+        <li>"We are the BEST best friends ever!" (最高级强调)</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT05</div>
+      <h4>Grammar 语法功能</h4>
+      <ul>
+        <li><strong>Past Continuous:</strong> was/were + -ing — "Fly Guy was making something."</li>
+        <li><strong>Simple past:</strong> made, said, woke, sat, shut, dropped</li>
+        <li><strong>Question forms:</strong> "What is Fly Guy making?" / "Did you make...?"</li>
+        <li><strong>Exclamation:</strong> "Wow!" / "It's Frankenfly!" / "CRASH!"</li>
+        <li><strong>Superlative:</strong> the BEST best friends</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT06</div>
+      <h4>Morphology 词形变化</h4>
+      <ul>
+        <li><strong>-ing:</strong> play→playing, make→making, paint→painting</li>
+        <li><strong>-ed 规则变化:</strong> point→pointed, ask→asked</li>
+        <li><strong>不规则过去式:</strong> make→made, say→said, wake→woke, sit→sat</li>
+        <li><strong>复合词:</strong> Frankenfly = Franken(stein) + fly</li>
+        <li><strong>最高级:</strong> good → better → best</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT07</div>
+      <h4>Cohesion / Discourse 语篇衔接</h4>
+      <ul>
+        <li><strong>Finally:</strong> 时间推进 — "Finally, Buzz said..."</li>
+        <li><strong>Late that night:</strong> 时间转换 — 梦境开启</li>
+        <li><strong>As:</strong> 伴随 — "As Buzz fell asleep, he wondered..."</li>
+        <li><strong>代词 he:</strong> 指 Buzz / Fly Guy / Frankenfly</li>
+        <li><strong>因果:</strong> 开电→怪物坐起；断电→CRASH</li>
+      </ul>
+    </div>
+
+    <div class="lt-card">
+      <div class="lt-num">LT08</div>
+      <h4>Functional Communication 语用功能</h4>
+      <ul>
+        <li><strong>Predict:</strong> What is Fly Guy making?</li>
+        <li><strong>Describe:</strong> Describe Frankenfly.</li>
+        <li><strong>Retell:</strong> 复述暗夜梦境情节</li>
+        <li><strong>Express opinion:</strong> Is Fly Guy a good friend? Why?</li>
+        <li><strong>Compare:</strong> 梦中的怪物 vs. 现实中的好朋友</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ SESSION 1 ═══════ -->
+<section id="session1">
+  <div class="section-label">Session 1 · 50 minutes</div>
+  <h2>第一课时 — 基础阅读与语言输入</h2>
+  <p class="text-secondary">目标：建立背景知识，通读全文，掌握核心词汇与语音规律，完成基础理解。</p>
+
+  <div class="session-block">
+    <div class="session-header s1">
+      <div>
+        <h2>Lesson 1: A Dark and Stormy Night</h2>
+        <div class="session-meta">Focus: Pre-reading → Reading → Vocabulary → Phonics → Pronunciation</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–10 min · Warm-up &amp; Pre-reading</div>
+        <div class="phase-title">激活背景 · 图片讨论</div>
+
+        <h4>活动 1：Picture Talk (5 min)</h4>
+        <p>展示封面和内页插图，引导学生观察：</p>
+        <ul style="padding-left:1.2em;margin-bottom:1rem;">
+          <li>"What kind of night is it?" → Dark and stormy. (引导学生说出 storm)</li>
+          <li>"Who is in the picture?" → A boy and a fly.</li>
+          <li>"Does this fly look scary or friendly?" → 引出 monster 的对比。</li>
+          <li>"What do you think the big creature is?" → 引导预测 Frankenfly。</li>
+        </ul>
+
+        <h4>活动 2：Key Concept — Dream vs. Reality (5 min)</h4>
+        <p>在白板上画两栏：<strong>REAL</strong> (things that really happen) vs. <strong>DREAM</strong> (things we see when we sleep)。请学生判断：a monster in the bedroom / flying with a fly / building a robot。引出核心问题：</p>
+        <div class="callout callout-info">
+          <strong>🔑 Big Question</strong>
+          What is Fly Guy making when Buzz falls asleep? Let's read and find out!
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 教学提示</strong>
+          不急于揭晓"这是一场梦"。把梦境与现实的悬念保留到第二课时讨论。
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase green-dot">
+        <div class="phase-label">⏱ 10–20 min · Read Aloud</div>
+        <div class="phase-title">通读全文 · 理解故事</div>
+
+        <h4>Chapter 1 精读 (3 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.1–2</td>
+              <td>"It was a dark and stormy night. Buzz and Fly Guy were playing."</td>
+              <td>引入句式 <em>"It was a ___ and ___ night"</em>；讲解 stormy；过去进行时 were playing</td>
+            </tr>
+            <tr>
+              <td>p.3–6</td>
+              <td>"Buzz made puzzles / costumes / a drawing for both of them."</td>
+              <td>反复结构 "made them for both of them"；学习名词 puzzle / costume / drawing</td>
+            </tr>
+            <tr>
+              <td>p.7–8</td>
+              <td>"Finally, Buzz said, 'Time for bed, Fly Guy.' Fly Guy said, BIZZY!"</td>
+              <td>理解 finally（时间推进）；拟声词 BIZZY! 指向 Fly Guy 很"忙 busy"</td>
+            </tr>
+            <tr>
+              <td>p.9</td>
+              <td>"As Buzz fell asleep he wondered, 'What is Fly Guy making?'"</td>
+              <td>帮助理解 wonder；设置悬念，训练预测 "What is Fly Guy making?"</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 2 精读 (4 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.10–11</td>
+              <td>"Late that night a strange light woke up Buzz."</td>
+              <td>时间转换 late that night；strange light 制造氛围</td>
+            </tr>
+            <tr>
+              <td>p.12–13</td>
+              <td>"Fly Guy was making something in his laboratory."</td>
+              <td>过去进行时 was making；科学词汇 laboratory</td>
+            </tr>
+            <tr>
+              <td>p.14–16</td>
+              <td>"Fly Guy turned on the power. The monster sat up. Buzz cried, 'It's Frankenfly!'"</td>
+              <td>动词 chain：turned on → sat up → cried；核心词 power, monster, Frankenfly</td>
+            </tr>
+            <tr>
+              <td>p.17–20</td>
+              <td>"He walked to the bed. Frankenfly picked up Buzz. Fly Guy yelled."</td>
+              <td>理解 He=Frankenfly；动作连续（walked / picked up / yelled）制造紧张</td>
+            </tr>
+            <tr>
+              <td>p.21–22</td>
+              <td>"Fly Guy shut off the power. CRASH! Frankenfly dropped Buzz..."</td>
+              <td>因果：shut off the power → CRASH；拟声词 CRASH!</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <h4>Chapter 3 精读 (3 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>页面</th><th>原文</th><th>教学重点</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p.23–24</td>
+              <td>"Buzz fell out of bed and woke up. It was morning. 'Wow! That was a bad dream.'"</td>
+              <td>梦醒转折：确认这一切是 dream；对比梦境与现实</td>
+            </tr>
+            <tr>
+              <td>p.25–27</td>
+              <td>"'Fly Guy, did you make something last night?' 'BUZZ!' 'You made me?' 'YEZZZ!'"</td>
+              <td>一般过去疑问 did you make；Fly Guy 的趣味回答 BUZZ! / YEZZZ!</td>
+            </tr>
+            <tr>
+              <td>p.28–30</td>
+              <td>"He pointed to a piece of paper. 'It's a painting of you and me!' 'How did you paint this?'"</td>
+              <td>理解 painting；"How did you paint this? My brushes are too big for you." 巧妙</td>
+            </tr>
+            <tr>
+              <td>p.31–32</td>
+              <td>"Buzz said, 'We are the BEST best friends ever!'"</td>
+              <td>主题点题：最高级 best；理解全书"友谊"主题</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-tip">
+          <strong>💡 朗读提示</strong>
+          在黑夜里朗读第 2 章可适当放慢、压低声音制造悬念；到 CRASH! 时突然加大音量，增强戏剧效果并呼应拟声词。
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase blue-dot" id="sec-lt01-vocab">
+        <div class="phase-label">⏱ 20–33 min · LT01 Vocabulary <button class="push-btn" onclick="openPushModal('LT01-Vocabulary','12 core words: stormy, laboratory, power, monster, dream, wake, painting, brush, costume, puzzle, drawing, best — with IPA, POS, definitions, examples, word families')">📤 Push to Students</button></div>
+        <div class="phase-title">核心词汇深度讲解（12 词）</div>
+
+        <div class="callout callout-info">
+          <strong>📋 词汇教学原则</strong>
+          每个词从 Recognize → Understand → Use 三个层次推进。先让学生听/看到词，再理解含义和用法，最后尝试产出。
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">stormy</span>
+            <span class="vocab-ipa">/ˈstɔːrmi/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adj</span>
+            <span class="vocab-pos" style="color:var(--purple);">storm + -y</span>
+            <div class="vocab-def">very windy and rainy, with storms in the sky</div>
+          </div>
+          <div class="vocab-example">It was a dark and <strong>stormy</strong> night. → We stayed home on the <strong>stormy</strong> day.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">laboratory</span>
+            <span class="vocab-ipa">/ləˈbɔːrətɔːri/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a special room where scientists make and test things</div>
+          </div>
+          <div class="vocab-example">Fly Guy was making something in his <strong>laboratory</strong>. → Scientists work in a <strong>laboratory</strong>.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">power</span>
+            <span class="vocab-ipa">/ˈpaʊər/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">energy or electricity that makes machines work</div>
+          </div>
+          <div class="vocab-example">Fly Guy turned <strong>on</strong> the <strong>power</strong>. → The lamp needs <strong>power</strong> to light up.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">monster</span>
+            <span class="vocab-ipa">/ˈmɒnstər/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a big, scary creature from a story or a dream</div>
+          </div>
+          <div class="vocab-example">The <strong>monster</strong> sat up. → A <strong>monster</strong> hides under my bed in the dream.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">dream</span>
+            <span class="vocab-ipa">/driːm/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun / verb</span>
+            <span class="vocab-pos" style="color:var(--red);">past: dreamt/dreamed</span>
+            <div class="vocab-def">pictures and stories we see in our sleep</div>
+          </div>
+          <div class="vocab-example">"Wow!" said Buzz. "That was a bad <strong>dream</strong>." → I had a funny <strong>dream</strong> last night.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">wake</span>
+            <span class="vocab-ipa">/weɪk/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">verb</span>
+            <span class="vocab-pos" style="color:var(--red);">past: woke</span>
+            <div class="vocab-def">to stop sleeping and become awake</div>
+          </div>
+          <div class="vocab-example">A strange light <strong>woke</strong> up Buzz. → I <strong>wake</strong> up when the sun shines.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">painting</span>
+            <span class="vocab-ipa">/ˈpeɪntɪŋ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">paint + -ing</span>
+            <div class="vocab-def">a picture made with paint</div>
+          </div>
+          <div class="vocab-example">"It's a <strong>painting</strong> of you and me!" → She hung the <strong>painting</strong> on the wall.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">brush</span>
+            <span class="vocab-ipa">/brʌʃ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">plural: brushes</span>
+            <div class="vocab-def">a tool with hairs used for painting</div>
+          </div>
+          <div class="vocab-example">"My <strong>brushes</strong> are too big for you." → Hold the paint <strong>brush</strong> gently.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">costume</span>
+            <span class="vocab-ipa">/ˈkɒstjuːm/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">clothes you wear to look like someone or something else</div>
+          </div>
+          <div class="vocab-example">Buzz made <strong>costumes</strong> for both of them. → He wore a monster <strong>costume</strong> at Halloween.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">puzzle</span>
+            <span class="vocab-ipa">/ˈpʌzl/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <div class="vocab-def">a game that you solve, often by putting pieces together</div>
+          </div>
+          <div class="vocab-example">Buzz made <strong>puzzles</strong> for both of them. → Let's put the <strong>puzzle</strong> together.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">drawing</span>
+            <span class="vocab-ipa">/ˈdrɔːɪŋ/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">noun</span>
+            <span class="vocab-pos" style="color:var(--purple);">draw + -ing</span>
+            <div class="vocab-def">a picture made with a pencil or pen</div>
+          </div>
+          <div class="vocab-example">Buzz made a <strong>drawing</strong> for both of them. → My <strong>drawing</strong> shows a big dog.</div>
+        </div>
+
+        <div class="vocab-card">
+          <div>
+            <span class="vocab-word">best</span>
+            <span class="vocab-ipa">/best/</span>
+          </div>
+          <div>
+            <span class="vocab-pos">adj</span>
+            <span class="vocab-pos" style="color:var(--purple);">good → better → best</span>
+            <div class="vocab-def">better than everything else; excellent</div>
+          </div>
+          <div class="vocab-example">"We are the <strong>BEST</strong> best friends ever!" → She is my <strong>best</strong> friend.</div>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 词汇巩固活动 (3 min)</strong>
+          <strong>Real or Dream?</strong> 教师读出书中词汇，学生用手指向白板上的 REAL 或 DREAM 栏。
+          像 monster、Frankenfly 应指向 DREAM；而 painting、drawing、costume 应指向 REAL——这正是全书主题！
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase-purple-dot" id="sec-lt02-phonics">
+        <div class="phase-label">⏱ 33–43 min · LT02 Phonics + LT03 Pronunciation <button class="push-btn" onclick="openPushModal('LT02-Phonics','Consonant blends: fl- (fell, flew), st- (stormy, strange), dr- (dream, dropped), br- (brush), sh- (shut); -ing suffix patterns from Fly Guy and the Frankenfly')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT03-Pronunciation','Syllable counting and stress patterns: making(2), playing(2), painting(2), drawing(2), monster(2), power(2), laboratory(5, 2nd stress), Frankenfly(3); echo game')">📤 Push</button></div>
+        <div class="phase-title">语音拼读与发音训练</div>
+
+        <h4>Phonics Focus (5 min)</h4>
+        <p>从本书中提取高频语音模式，引导学生发现规律：</p>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">辅音连缀 Consonant Blends &amp; Digraphs</h4>
+          <span class="phonics-item"><span class="phonics-pattern">fl-</span> fell, flew</span>
+          <span class="phonics-item"><span class="phonics-pattern">st-</span> stormy, strange</span>
+          <span class="phonics-item"><span class="phonics-pattern">dr-</span> dream, dropped</span>
+          <span class="phonics-item"><span class="phonics-pattern">br-</span> brush</span>
+          <span class="phonics-item"><span class="phonics-pattern">sh-</span> she, shut</span>
+        </div>
+
+        <div style="margin:0.8rem 0;">
+          <h4 style="font-size:var(--fs-sm);color:var(--blue);margin-bottom:0.5rem;">-ing 后缀</h4>
+          <span class="phonics-item"><span class="phonics-pattern">-ing</span> /ɪŋ/ — making, painting, playing, drawing</span>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">引导发现：make → mak<strong>ing</strong>, play → play<strong>ing</strong>, draw → draw<strong>ing</strong>。动词 + -ing 描述"正在进行"。</p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Pronunciation Focus (5 min)</h4>
+
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Word</th><th>Syllables</th><th>Stress</th><th>Practice</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>making</td><td>mak·ing (2)</td><td>1st</td><td><strong>MAK</strong>-ing</td></tr>
+            <tr><td>playing</td><td>play·ing (2)</td><td>1st</td><td><strong>PLAY</strong>-ing</td></tr>
+            <tr><td>painting</td><td>paint·ing (2)</td><td>1st</td><td><strong>PAINT</strong>-ing</td></tr>
+            <tr><td>drawing</td><td>draw·ing (2)</td><td>1st</td><td><strong>DRAW</strong>-ing</td></tr>
+            <tr><td>monster</td><td>mon·ster (2)</td><td>1st</td><td><strong>MON</strong>-ster</td></tr>
+            <tr><td>power</td><td>pow·er (2)</td><td>1st</td><td><strong>POW</strong>-er</td></tr>
+            <tr><td>laboratory</td><td>la·bor·a·to·ry (5)</td><td>2nd</td><td>la-<strong>BOR</strong>-a-to-ry</td></tr>
+            <tr><td>Frankenfly</td><td>Fran·ken·fly (3)</td><td>1st</td><td><strong>FRAN</strong>-ken-fly</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-tip">
+          <strong>💡 发音练习 (2 min)</strong>
+          <strong>回声游戏：</strong>教师读一个词，学生跟读并拍手打出音节数。
+          "la-bor-a-to-ry!" → 拍手 5 次。"Fran-ken-fly!" → 拍手 3 次。
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase green-dot" id="sec-lt04-patterns">
+        <div class="phase-label">⏱ 43–50 min · LT04 Sentence Patterns + Wrap-up <button class="push-btn" onclick="openPushModal('LT04-Sentence-Patterns','Core patterns: It was a [adj] and [adj] night; ___ was/were + -ing; What is ___ making?; Did you make...?; exclamations BIZZY!/BUZZ!/CRASH!; superlative BEST')">📤 Push to Students</button></div>
+        <div class="phase-title">核心句型初探 + 小结</div>
+
+        <p>引入本课核心句式，为第二课时深度语法做铺垫：</p>
+
+        <div class="pattern-block">
+          <div class="pattern-template">It was a [adj] and [adj] night.</div>
+          <div class="pattern-example">"It was a dark and stormy night."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 经典的开场句式，用两个形容词营造氛围。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">___ was / were + -ing ...</div>
+          <div class="pattern-example">"Buzz and Fly Guy were playing." / "Fly Guy was making something."</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 过去进行时：描述"当时正在进行"的背景动作。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">What is ___ making? / Did ___ make ...?</div>
+          <div class="pattern-example">"What is Fly Guy making?" (p.9) / "Did you make something last night?" (p.26)</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 现代进行疑问与过去一般疑问——贯穿全书的悬念引擎。</p>
+        </div>
+
+        <div class="pattern-block">
+          <div class="pattern-template">"We are the BEST best friends ever!"</div>
+          <div class="pattern-example">Buzz 最后一个字——用大写 BEST + 最高级 maximum 强调友谊。</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">📌 拟声词 BIZZY! / BUZZ! / YEZZZ! 与感叹 CRASH! / WOW! 让语言富有趣味。</p>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>📝 第一课时小结</strong>
+          回顾 Big Question: "What is Fly Guy making?" 让学生用一句话预测：
+          <br>"I think Fly Guy is making a ___."
+          <br>（为第二课时揭示"画的友谊画"和 opinion writing 做铺垫。）
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ SESSION 2 ═══════ -->
+<section id="session2">
+  <div class="section-label">Session 2 · 50 minutes</div>
+  <h2>第二课时 — 深度分析与语言输出</h2>
+  <p class="text-secondary">目标：深入语法、词形、语篇分析，完成口语输出和写作任务。</p>
+
+  <div class="session-block">
+    <div class="session-header s2">
+      <div>
+        <h2>Lesson 2: Dream or Best Friend?</h2>
+        <div class="session-meta">Focus: Grammar → Morphology → Cohesion → Speaking → Writing</div>
+      </div>
+    </div>
+    <div class="session-body">
+
+      <!-- Phase 1 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 0–5 min · Review</div>
+        <div class="phase-title">快速复习</div>
+
+        <p>用 3 个快速问题回顾第一课时内容：</p>
+        <ol style="padding-left:1.5em;margin-bottom:0.8rem;">
+          <li>"What kind of night was it?" → A dark and stormy night.</li>
+          <li>"What did Buzz dream about?" → A giant monster named Frankenfly.</li>
+          <li>"What did Fly Guy really make?" → A painting of Buzz and Fly Guy together.</li>
+        </ol>
+        <p>然后用 <strong>Story Mountain</strong> 快速梳理故事结构（从夜晚到清晨）：</p>
+        <svg viewBox="0 0 700 200" style="width:100%;max-width:700px;height:auto;margin:0.5rem 0;" role="img" aria-label="Story Mountain for Fly Guy and the Frankenfly">
+          <title>Story Mountain — Fly Guy and the Frankenfly</title>
+          <desc>A mountain shape showing story structure: beginning, rising action, climax, falling action, ending</desc>
+          <polygon points="50,170 175,40 350,20 525,100 650,170" fill="none" stroke="#C96F3D" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="50" cy="170" r="6" fill="#C96F3D"/>
+          <circle cx="175" cy="40" r="6" fill="#C96F3D"/>
+          <circle cx="350" cy="20" r="6" fill="#C75A4A"/>
+          <circle cx="525" cy="100" r="6" fill="#C96F3D"/>
+          <circle cx="650" cy="170" r="6" fill="#C96F3D"/>
+          <text x="50" y="195" text-anchor="middle" font-size="11" fill="#31251B">Beginning</text>
+          <text x="50" y="160" text-anchor="middle" font-size="9" fill="#8B7662">Playing in the storm</text>
+          <text x="175" y="30" text-anchor="middle" font-size="11" fill="#31251B">Rising</text>
+          <text x="175" y="58" text-anchor="middle" font-size="9" fill="#8B7662">Strange light, laboratory</text>
+          <text x="350" y="12" text-anchor="middle" font-size="11" fill="#C75A4A" font-weight="700">Climax</text>
+          <text x="350" y="42" text-anchor="middle" font-size="9" fill="#8B7662">Frankenfly gets Buzz!</text>
+          <text x="525" y="90" text-anchor="middle" font-size="11" fill="#31251B">Falling</text>
+          <text x="525" y="118" text-anchor="middle" font-size="9" fill="#8B7662">Shut off power, CRASH</text>
+          <text x="650" y="195" text-anchor="middle" font-size="11" fill="#31251B">Ending</text>
+          <text x="650" y="160" text-anchor="middle" font-size="9" fill="#8B7662">A dream — best friends</text>
+        </svg>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase blue-dot" id="sec-lt05-grammar">
+        <div class="phase-label">⏱ 5–18 min · LT05 Grammar <button class="push-btn" onclick="openPushModal('LT05-Grammar','Past Continuous (was/were + -ing); Simple Past regular (-ed) vs irregular (made, said, woke, sat, shut, fell, dropped); question forms; superlative the BEST; exclamations')">📤 Push to Students</button></div>
+        <div class="phase-title">语法功能深度分析</div>
+
+        <h4>① Past Continuous 过去进行时 — 背景 (5 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>原文句</th><th>功能</th><th>结构</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>"Buzz and Fly Guy <strong>were playing</strong>."</td><td>当时正在进行的背景</td><td>was/were + 动词-ing</td></tr>
+            <tr><td>"Fly Guy <strong>was making</strong> something."</td><td>当时正在发生的动作</td><td>was + 动词-ing</td></tr>
+            <tr><td>"Buzz <strong>was wondering</strong>..."（转述意）</td><td>心理状态的动作化</td><td>was + 动词-ing</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">类比：过去进行时就像"照片里的那个瞬间"，常常搭配 simple past 打断。<br>
+        "Fly Guy <strong>was making</strong> something <strong>when</strong> a strange light woke Buzz."（教师示范）</p>
+
+        <h4 style="margin-top:1rem;">② Simple Past Tense — 故事推进的核心 (6 min)</h4>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base Form</th><th>Past Tense</th><th>Type</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>make</td><td><strong>made</strong></td><td style="color:var(--red);">irregular</td><td>"Buzz <em>made</em> a drawing."</td></tr>
+            <tr><td>say</td><td><strong>said</strong></td><td style="color:var(--red);">irregular</td><td>"Buzz <em>said</em>, 'Time for bed.'"</td></tr>
+            <tr><td>wake</td><td><strong>woke</strong></td><td style="color:var(--red);">irregular</td><td>"A strange light <em>woke</em> up Buzz."</td></tr>
+            <tr><td>sit</td><td><strong>sat</strong></td><td style="color:var(--red);">irregular</td><td>"The monster <em>sat</em> up."</td></tr>
+            <tr><td>shut</td><td><strong>shut</strong></td><td style="color:var(--red);">irregular (不变)</td><td>"Fly Guy <em>shut</em> off the power."</td></tr>
+            <tr><td>fall</td><td><strong>fell</strong></td><td style="color:var(--red);">irregular</td><td>"Buzz <em>fell</em> out of bed."</td></tr>
+            <tr><td>pick</td><td><strong>picked</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"Frankenfly <em>picked</em> up Buzz."</td></tr>
+            <tr><td>point</td><td><strong>pointed</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"He <em>pointed</em> to a piece of paper."</td></tr>
+            <tr><td>ask</td><td><strong>asked</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"Buzz <em>asked</em>, 'Did you make...?'"</td></tr>
+            <tr><td>drop</td><td><strong>dropped</strong></td><td style="color:var(--green);">regular (-ed)</td><td>"Frankenfly <em>dropped</em> Buzz."</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-warn">
+          <strong>⚠️ 重点提示</strong>
+          本书包含大量不规则过去式（made, said, woke, sat, shut, fell）。注意 drop → <em>dropped</em>（双写 p），fall → <em>fell</em>（完全变化）。
+          建议用配对练习：给 base form，学生快速说出 past tense。
+        </div>
+
+        <h4 style="margin-top:1rem;">③ Question Forms 疑问句 (2 min)</h4>
+        <div class="pattern-block">
+          <div class="pattern-template">Present Continuous: What + is + subject + -ing?</div>
+          <div class="pattern-example">"What is Fly Guy making?"</div>
+        </div>
+        <div class="pattern-block">
+          <div class="pattern-template">Simple Past: Did + subject + base verb?</div>
+          <div class="pattern-example">"Did you make something last night?"</div>
+        </div>
+
+        <h4 style="margin-top:1rem;">④ Superlative + Exclamation 最高级与感叹 (2 min)</h4>
+        <div class="pattern-block">
+          <div class="pattern-template">the + best / the most + adj</div>
+          <div class="pattern-example">good → better → <strong>best</strong> — "the <strong>BEST</strong> best friends ever!"</div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-top:0.3rem;">大写 BEST + best 叠加 = maximum 强调。感叹词 WOW! / BUZZ! / CRASH! 表达强烈情绪。</p>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-purple-dot" id="sec-lt06-morphology">
+        <div class="phase-label">⏱ 18–26 min · LT06 Morphology + LT07 Cohesion <button class="push-btn" onclick="openPushModal('LT06-Morphology','Word families: -ing (playing, making, painting); base → past (-ed vs irregular); good→better→best; compound Frankenfly = Frankenstein + fly')">📤 Push</button> <button class="push-btn" onclick="openPushModal('LT07-Cohesion','Cohesion devices: finally, late that night, as; pronoun he = Buzz/Fly Guy/Frankenfly; cause-and-effect (power on → monster sits up, power off → crash)')">📤 Push</button></div>
+        <div class="phase-title">词形变化与语篇衔接</div>
+
+        <h4>LT06 · Morphology 词形变化 (4 min)</h4>
+        <p>引导学生发现词族（word families）与制造新词的方法：</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Base</th><th>+ -ing</th><th>+ -ed</th><th>+ -er / -est</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>play</td><td>playing</td><td>played</td><td>—</td><td>规则变化</td></tr>
+            <tr><td>make</td><td>making (去 e)</td><td>made (不规则)</td><td>—</td><td>拼写/look 注意去 e</td></tr>
+            <tr><td>paint</td><td>painting</td><td>painted</td><td>—</td><td>规则变化</td></tr>
+            <tr><td>draw</td><td>drawing</td><td>drew (不规则)</td><td>—</td><td>draw 的不规则过去式</td></tr>
+            <tr><td>good</td><td>—</td><td>—</td><td>better / best</td><td>不规则比较级/最高级</td></tr>
+            <tr><td>monster</td><td>—</td><td>—</td><td>—</td><td>复合词 Frankenfly</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="callout callout-info">
+          <strong>🔍 造词：Frankenfly 的秘密</strong>
+          Frankenfly = <strong>Franken</strong>(stein) + <strong>fly</strong>。作者把"科学怪人 Frankenstein"和"苍蝇 fly"拼在一起造出一个新怪物。
+          让学生尝试拼出：super + hero = <strong>superhero</strong>；rain + bow = <strong>rainbow</strong>。
+        </div>
+
+        <h4 style="margin-top:1rem;">LT07 · Cohesion 语篇衔接 (4 min)</h4>
+        <p>分析本书如何连接事件、营造"梦境/现实"：《Fly Guy and the Frankenfly</p>
+        <div style="overflow-x:auto"><table style="min-width:500px">
+          <thead>
+            <tr><th>Connector</th><th>Function</th><th>Example from Text</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Finally</strong></td>
+              <td>时间推进（夜晚活动收尾）</td>
+              <td>"<strong>Finally</strong>, Buzz said, 'Time for bed.'"</td>
+            </tr>
+            <tr>
+              <td><strong>Late that night</strong></td>
+              <td>时间切换（转入梦境）</td>
+              <td>"<strong>Late that night</strong> a strange light woke up Buzz."</td>
+            </tr>
+            <tr>
+              <td><strong>As</strong></td>
+              <td>同时/伴随</td>
+              <td>"<strong>As</strong> Buzz fell asleep, he wondered..."</td>
+            </tr>
+            <tr>
+              <td><strong>代词 he</strong></td>
+              <td>指代 — 需看上下文</td>
+              <td>"<strong>He</strong> turned on the power." → He = Fly Guy<br>"<strong>He</strong> picked up Buzz." → He = Frankenfly</td>
+            </tr>
+          </tbody>
+        </table></div>
+        <div class="callout callout-tip">
+          <strong>💡 讨论：因果的力量</strong>
+          让学生找出"开电/断电"对应的结果：
+          "Fly Guy turned <strong>on</strong> the power. The monster <strong>sat up</strong>."（因 → 果）
+          "Fly Guy shut <strong>off</strong> the power. <strong>CRASH</strong>!"（因 → 果）
+          作者用因果关系推动情节，制造"怪物"的起落。
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase green-dot" id="sec-lt08-functional">
+        <div class="phase-label">⏱ 26–40 min · LT08 Functional Communication <button class="push-btn" onclick="openPushModal('LT08-Functional-Communication','Story retelling frame; dream-vs-reality discussion; opinion/writing scaffold: I think... because... First... Also... In conclusion...')">📤 Push to Students</button></div>
+        <div class="phase-title">口语输出与写作任务</div>
+
+        <h4>Activity 1: Retell the Story (5 min)</h4>
+        <p>学生两人一组，用以下框架复述"暗夜惊梦"：</p>
+        <div class="card" style="background:var(--green-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Story Retelling Frame:</strong></p>
+          <p style="font-size:var(--fs-sm);">
+            First, it was a dark and stormy night. Buzz and Fly Guy were playing.<br>
+            Then, they went to bed, and Fly Guy said "BIZZY!"<br>
+            Next, a strange light woke Buzz. Fly Guy was making something.<br>
+            After that, a big monster named Frankenfly picked up Buzz!<br>
+            In the end, it was just a bad dream, and Fly Guy had made a painting of them. "We are best friends!"
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 2: Express Your Opinion (6 min)</h4>
+        <p>回到 Big Question，进行 mini-debate：</p>
+        <div class="card" style="background:var(--purple-light);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Discussion Prompts:</strong></p>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li>"Was Frankenfly real or was it a dream? How do you know?"</li>
+            <li>"In real life, was Fly Guy a monster or a good friend? Why?"</li>
+            <li>"What is the nicest thing a friend has ever made for you?"</li>
+          </ul>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Language scaffold:</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            "I think Frankenfly was a ___ because ___."<br>
+            "Fly Guy is a good friend because ___."<br>
+            "In my opinion, ___."
+          </p>
+        </div>
+
+        <h4 style="margin-top:1rem;">Activity 3: Writing — Opinion Piece (4 min 指导 + 课后完成)</h4>
+        <div class="card" style="background:var(--surface-alt);border:none;">
+          <p style="margin-bottom:0.5rem;"><strong>Writing Prompt:</strong></p>
+          <p style="font-size:var(--fs-base);font-weight:600;">Is Fly Guy a good friend? Write your opinion. Give at least two reasons.</p>
+          <p style="font-size:var(--fs-sm);margin-top:0.5rem;"><strong>Writing Frame (scaffold):</strong></p>
+          <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">
+            I think Fly Guy is a good friend because ___.<br>
+            First, ___.<br>
+            Also, ___.<br>
+            In conclusion, ___.
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase">
+        <div class="phase-label">⏱ 40–50 min · Review &amp; Extension</div>
+        <div class="phase-title">总结回顾 + 拓展延伸</div>
+
+        <h4>Exit Ticket (5 min)</h4>
+        <p>每人回答 3 个问题后离开教室：</p>
+        <ol style="padding-left:1.5em;">
+          <li>说出 2 个你新学的单词。</li>
+          <li>用一个过去时句子描述 Fly Guy 做了什么。</li>
+          <li>Frankenfly 是一场梦，还是真的？为什么？（用 because）</li>
+        </ol>
+
+        <h4 style="margin-top:0.8rem;">Extension (5 min)</h4>
+        <div class="callout callout-tip">
+          <strong>🌟 拓展活动选择</strong>
+          <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+            <li><strong>Dream, Dream, Dream:</strong> 画出你做过的一个梦，用"I dreamed that ___"写一句话。</li>
+            <li><strong>Robo Engineer:</strong> 让学生用 bob外星语 AE的线索，猜猜"实验室里还能造出什么怪物"（Frogzilla? Ducktron?）。</li>
+            <li><strong>Role Play:</strong> 3 人一组表演"实验室造怪物"场景（Buzz, Fly Guy, Frankenfly）。</li>
+            <li><strong>Word Detective:</strong> 找出书中所有以 "fl-", "st-", "dr-" 开头的词，写在纸上。</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════ HOMEWORK ═══════ -->
+<section id="homework">
+  <div class="section-label">Homework Worksheet</div>
+  <h2>课后作业 · Fly Guy and the Frankenfly</h2>
+  <p class="text-secondary" style="margin-bottom:1rem;">以下作业分为 6 个部分，覆盖 LT01–LT08 全部模块。可打印为 A4 纸质版。建议在第 1 课时后完成 Part A–D，第 2 课时后完成 Part E–F。每部分下方附参考答案（教师打印时可折叠隐藏）。</p>
+
+  <!-- Part A: Vocabulary -->
+  <div class="hw-section" id="sec-hw-partA">
+    <div class="hw-title">Part A · Vocabulary Match <button class="push-btn" onclick="openPushModal('HW-PartA','Vocabulary Match: match 6 words (stormy, laboratory, monster, painting, costume, best) with definitions')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Draw a line to match each word with its meaning.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;font-size:var(--fs-sm);">
+      <div>
+        <p><strong>1.</strong> stormy &nbsp;________</p>
+        <p><strong>2.</strong> laboratory &nbsp;________</p>
+        <p><strong>3.</strong> monster &nbsp;________</p>
+        <p><strong>4.</strong> painting &nbsp;________</p>
+        <p><strong>5.</strong> costume &nbsp;________</p>
+        <p><strong>6.</strong> best &nbsp;________</p>
+      </div>
+      <div>
+        <p><strong>A.</strong> better than everything else</p>
+        <p><strong>B.</strong> a big, scary creature from a story or dream</p>
+        <p><strong>C.</strong> a room where scientists make and test things</p>
+        <p><strong>D.</strong> a picture made with paint</p>
+        <p><strong>E.</strong> windy and rainy, with storms in the sky</p>
+        <p><strong>F.</strong> clothes you wear to look like someone or something else</p>
+      </div>
+    </div>
+
+    <details class="answer-key"><summary>参考答案 · Teacher Answer Key</summary><div class="ak-body"><ol>
+      <li>1–E ; 2–C ; 3–B ; 4–D ; 5–F ; 6–A</li>
+    </ol></div></details>
+  </div>
+
+  <!-- Part B: Vocabulary in Context -->
+  <div class="hw-section" id="sec-hw-partB">
+    <div class="hw-title">Part B · Vocabulary in Context <button class="push-btn" onclick="openPushModal('HW-PartB','Vocabulary in Context: fill in blanks using word bank (laboratory, power, painting, dream, monster, brushes)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT01 · Fill in the blanks with the correct word from the box.</div>
+
+    <div style="background:var(--surface-alt);border-radius:var(--radius);padding:0.6rem 1rem;margin-bottom:1rem;font-size:var(--fs-sm);">
+      <strong>Word Bank:</strong> &nbsp; laboratory &nbsp; | &nbsp; power &nbsp; | &nbsp; painting &nbsp; | &nbsp; dream &nbsp; | &nbsp; monster &nbsp; | &nbsp; brushes
+    </div>
+
+    <div class="hw-question"><span class="q-num">1.</span> Fly Guy was making something in his <span class="hw-blank"></span>.</div>
+    <div class="hw-question"><span class="q-num">2.</span> The <span class="hw-blank"></span> sat up when Fly Guy turned on the power.</div>
+    <div class="hw-question"><span class="q-num">3.</span> "Wow! That was a bad <span class="hw-blank"></span>!" said Buzz.</div>
+    <div class="hw-question"><span class="q-num">4.</span> "It's a <span class="hw-blank"></span> of you and me!" said Buzz.</div>
+    <div class="hw-question"><span class="q-num">5.</span> "My <span class="hw-blank"></span> are too big for you," said Buzz.</div>
+    <div class="hw-question"><span class="q-num">6.</span> Fly Guy shut off the <span class="hw-blank"></span>, and CRASH!</div>
+
+    <details class="answer-key"><summary>参考答案 · Teacher Answer Key</summary><div class="ak-body"><ol>
+      <li>laboratory</li>
+      <li>monster</li>
+      <li>dream</li>
+      <li>painting</li>
+      <li>brushes</li>
+      <li>power</li>
+    </ol></div></details>
+  </div>
+
+  <!-- Part C: Phonics + Morphology -->
+  <div class="hw-section" id="sec-hw-partC">
+    <div class="hw-title">Part C · Sound &amp; Word Detective <button class="push-btn" onclick="openPushModal('HW-PartC','Sound and Word Detective: find story words matching fl-, st-, dr-, -ing patterns; name the parts of compound word Frankenfly; fix the irregular past forms')">📤 Push</button></div>
+    <div class="hw-subtitle">LT02 + LT03 + LT06 · Find words and build words.</div>
+
+    <h4 style="font-size:var(--fs-base);margin-bottom:0.5rem;">C1: Find 2 story words for each sound pattern.</h4>
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th style="width:120px;">Sound Pattern</th><th>Find 2 words from the story</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>fl-</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td></tr>
+        <tr><td><strong>st-</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td></tr>
+        <tr><td><strong>dr-</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span></td></tr>
+        <tr><td><strong>-ing</strong></td><td>1. <span class="hw-blank" style="min-width:80px;"></span> 2. <span class="hw-blank" style="min-width:80px;"></span> 3. <span class="hw-blank" style="min-width:80px;"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">C2: Build the monster word! Write the two parts of Frankenfly.</h4>
+    <p style="font-size:var(--fs-sm);">Frankenfly = <span class="hw-blank" style="min-width:140px;"></span> + <span class="hw-blank" style="min-width:140px;"></span></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);">Hint: Can you make more monster names? Try: <em>Duck</em> + <em>zilla</em>, <em>Frog</em> + <em>zilla</em>.</p>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">C3: Fix the mistakes! Write the correct past tense.</h4>
+    <div class="hw-question"><span class="q-num">1.</span> Buzz <em>maked</em> a drawing. → Buzz <span class="hw-blank" style="min-width:90px;"></span> a drawing.</div>
+    <div class="hw-question"><span class="q-num">2.</span> The monster <em>sat up</em>. (correct already) → The monster <span class="hw-blank" style="min-width:90px;"></span> up.</div>
+    <div class="hw-question"><span class="q-num">3.</span> Buzz <em>falled</em> out of bed. → Buzz <span class="hw-blank" style="min-width:90px;"></span> out of bed.</div>
+    <div class="hw-question"><span class="q-num">4.</span> Fly Guy <em>shutted</em> off the power. → Fly Guy <span class="hw-blank" style="min-width:90px;"></span> off the power.</div>
+
+    <details class="answer-key"><summary>参考答案 · Teacher Answer Key</summary><div class="ak-body"><ol>
+      <li><strong>C1 (suggested):</strong> fl- : fell, flew ; st- : stormy, strange ; dr- : dream, dropped ; -ing : making, painting, playing / drawing</li>
+      <li><strong>C2:</strong> Frankenfly = <em>Franken</em>(stein) + <em>fly</em></li>
+      <li><strong>C3:</strong> 1. made ; 2. sat (unchanged — already correct) ; 3. fell ; 4. shut (unchanged — irregular)</li>
+    </ol></div></details>
+  </div>
+
+  <!-- Part D: Grammar -->
+  <div class="hw-section" id="sec-hw-partD">
+    <div class="hw-title">Part D · Grammar Power <button class="push-btn" onclick="openPushModal('HW-PartD','Grammar Power: base form → past tense conversion; complete Past Continuous sentences (was/were + -ing)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT05 + LT06 · Simple Past &amp; Past Continuous</div>
+
+    <h4 style="font-size:var(--fs-base);margin-bottom:0.5rem;">D1: Past Tense — Write the past tense form.</h4>
+    <div style="overflow-x:auto"><table style="min-width:500px">
+      <thead>
+        <tr><th>Base Form</th><th>Past Tense</th><th>Base Form</th><th>Past Tense</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>make</td><td><span class="hw-blank"></span></td><td>point</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>wake</td><td><span class="hw-blank"></span></td><td>drop</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>say</td><td><span class="hw-blank"></span></td><td>pick</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>sit</td><td><span class="hw-blank"></span></td><td>fall</td><td><span class="hw-blank"></span></td></tr>
+        <tr><td>shut</td><td><span class="hw-blank"></span></td><td>ask</td><td><span class="hw-blank"></span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">D2: Past Continuous — Complete with was / were + -ing.</h4>
+    <div class="hw-question"><span class="q-num">1.</span> Buzz and Fly Guy <span class="hw-blank" style="min-width:60px;"></span> <span class="hw-blank" style="min-width:90px;"></span> (play) in the storm.</div>
+    <div class="hw-question"><span class="q-num">2.</span> Fly Guy <span class="hw-blank" style="min-width:60px;"></span> <span class="hw-blank" style="min-width:90px;"></span> (make) something in his laboratory.</div>
+    <div class="hw-question"><span class="q-num">3.</span> Buzz <span class="hw-blank" style="min-width:60px;"></span> <span class="hw-blank" style="min-width:90px;"></span> (wonder) what Fly Guy was doing.</div>
+    <div class="hw-question"><span class="q-num">4.</span> Frankenfly <span class="hw-blank" style="min-width:60px;"></span> <span class="hw-blank" style="min-width:90px;"></span> (walk) to the bed.</div>
+
+    <details class="answer-key"><summary>参考答案 · Teacher Answer Key</summary><div class="ak-body"><ol>
+      <li><strong>D1:</strong> make→made ; wake→woke ; say→said ; sit→sat ; shut→shut ; point→pointed ; drop→dropped ; pick→picked ; fall→fell ; ask→asked</li>
+      <li><strong>D2:</strong> 1. were + playing ; 2. was + making ; 3. was + wondering ; 4. was + walking</li>
+    </ol></div></details>
+  </div>
+
+  <!-- Part E: Cohesion -->
+  <div class="hw-section" id="sec-hw-partE">
+    <div class="hw-title">Part E · Cohesion — Who Does "He" Mean? <button class="push-btn" onclick="openPushModal('HW-PartE','Cohesion: identify who he refers to (Buzz/Fly Guy/Frankenfly); match the cause and effect (power on/off)')">📤 Push</button></div>
+    <div class="hw-subtitle">LT07 · Read each sentence. Write who "he" refers to: Buzz, Fly Guy, or Frankenfly.</div>
+
+    <div class="hw-question"><span class="q-num">1.</span> "<strong>He</strong> shut off the power." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">2.</span> "<strong>He</strong> picked up Buzz." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">3.</span> "As <strong>he</strong> fell asleep, Buzz wondered..." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">4.</span> "<strong>He</strong> pointed to a piece of paper." → <span class="hw-blank"></span></div>
+    <div class="hw-question"><span class="q-num">5.</span> "<strong>He</strong> turned on the power." → <span class="hw-blank"></span></div>
+
+    <h4 style="font-size:var(--fs-base);margin:1rem 0 0.5rem;">Cause and Effect — Match the cause with its effect.</h4>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;font-size:var(--fs-sm);">
+      <div>
+        <p><strong>1.</strong> Fly Guy turned on the power. → <span class="hw-blank"></span></p>
+        <p><strong>2.</strong> Fly Guy shut off the power. → <span class="hw-blank"></span></p>
+        <p><strong>3.</strong> Buzz fell out of bed. → <span class="hw-blank"></span></p>
+      </div>
+      <div>
+        <p><strong>A.</strong> Frankenfly dropped Buzz and fell onto the bed.</p>
+        <p><strong>B.</strong> Buzz woke up and said, "Wow! That was a bad dream."</p>
+        <p><strong>C.</strong> The monster sat up.</p>
+      </div>
+    </div>
+
+    <details class="answer-key"><summary>参考答案 · Teacher Answer Key</summary><div class="ak-body"><ol>
+      <li><strong>Who is "he"?</strong> 1. Fly Guy ; 2. Frankenfly ; 3. Buzz ; 4. Fly Guy ; 5. Fly Guy</li>
+      <li><strong>Cause &amp; Effect:</strong> 1–C (power on → monster sits up) ; 2–A (power off → Frankenfly drops Buzz) ; 3–B (Buzz falls out of bed → wakes up, it was a dream)</li>
+    </ol></div></details>
+  </div>
+
+  <!-- Part F: Writing -->
+  <div class="hw-section" id="sec-hw-partF">
+    <div class="hw-title">Part F · Opinion Writing <button class="push-btn" onclick="openPushModal('HW-PartF','Opinion Writing: Is Fly Guy a good friend? Write at least 4 sentences using the scaffold starters')">📤 Push</button></div>
+    <div class="hw-subtitle">LT08 · Is Fly Guy a good friend? Write your opinion. Use at least 4 sentences.</div>
+
+    <p style="font-size:var(--fs-sm);margin-bottom:0.5rem;"><strong>Use these sentence starters if you need help:</strong></p>
+    <p style="font-size:var(--fs-sm);color:var(--ink-secondary);margin-bottom:0.8rem;">
+      I think Fly Guy is a good friend because ___.<br>
+      First, ___.<br>
+      Also, ___.<br>
+      In conclusion, ___.
+    </p>
+    <div class="hw-lines" style="min-height:12em;"></div>
+
+    <details class="answer-key"><summary>参考答案 · Teacher Answer Key (Model Answer)</summary><div class="ak-body">
+      <p><em>A strong sample (for comprehension, not to copy word-for-word):</em></p>
+      <p>I think Fly Guy is a very good friend. First, he stayed awake all night to make a surprise for Buzz. Also, the surprise was a beautiful painting of Buzz and Fly Guy together, which shows he cares. In conclusion, Fly Guy is a good friend because he always thinks of Buzz.</p>
+    </div></details>
+  </div>
+
+</section>
+
+<!-- ═══════ TEACHER NOTES ═══════ -->
+<section>
+  <div class="section-label">Teacher Notes</div>
+  <h2>教师备注</h2>
+
+  <div class="lt-grid">
+    <div class="card">
+      <h4>📊 LT Coverage Map</h4>
+      <div style="overflow-x:auto"><table style="min-width:500px">
+        <thead>
+          <tr><th>LT Module</th><th>Session 1</th><th>Session 2</th><th>Homework</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LT01 Vocabulary</td><td>✅ 主教学</td><td>复习</td><td>✅ Part A–B</td></tr>
+          <tr><td>LT02 Phonics</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT03 Pronunciation</td><td>✅ 主教学</td><td>—</td><td>✅ Part C</td></tr>
+          <tr><td>LT04 Sentence Patterns</td><td>✅ 初探</td><td>复习</td><td>—</td></tr>
+          <tr><td>LT05 Grammar</td><td>—</td><td>✅ 主教学</td><td>✅ Part D</td></tr>
+          <tr><td>LT06 Morphology</td><td>—</td><td>✅ 主教学</td><td>✅ Part C+D</td></tr>
+          <tr><td>LT07 Cohesion</td><td>—</td><td>✅ 主教学</td><td>✅ Part E</td></tr>
+          <tr><td>LT08 Functional</td><td>—</td><td>✅ 主教学</td><td>✅ Part F</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h4>🎯 CCSS Alignment (Grade 1–2)</h4>
+      <ul style="padding-left:1.2em;font-size:var(--fs-sm);">
+        <li><strong>RL.1.1</strong> Ask and answer questions about key details</li>
+        <li><strong>RL.1.2</strong> Retell stories, including key details</li>
+        <li><strong>RL.1.3</strong> Describe characters, settings, and major events</li>
+        <li><strong>RL.1.7</strong> Use illustrations and details to describe characters/events</li>
+        <li><strong>W.1.1</strong> Write opinion pieces, introduce topic, supply reason</li>
+        <li><strong>SL.1.1</strong> Participate in collaborative conversations</li>
+        <li><strong>SL.1.4</strong> Describe people, places, things, and events</li>
+        <li><strong>L.1.1</strong> Print all upper- and lowercase letters; use conventions</li>
+        <li><strong>L.1.4</strong> Determine meaning of words using context clues</li>
+        <li><strong>RF.1.3</strong> Know and apply grade-level phonics and word analysis skills</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="page-wrap">
+    <p>Fly Guy and the Frankenfly — 精读教案 · 两课时 · Emily's Reading Studio</p>
+    <p style="margin-top:0.3rem;">Language Target Framework · LT01–LT08 · CCSS Grade 1–2 Aligned · Lexile 410L</p>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll for TOC
+document.querySelectorAll('.toc a').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var id = this.getAttribute('href').slice(1);
+    var target = document.getElementById(id);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+
+// ═══════ Push to Students ═══════
+const sectionContentMap = {
+  'LT01-Vocabulary': '12 core vocabulary words with IPA, POS, definitions, examples, and word families: stormy, laboratory, power, monster, dream, wake, painting, brush, costume, puzzle, drawing, best',
+  'LT02-Phonics': 'Consonant blends and digraphs: fl- (fell, flew), st- (stormy, strange), dr- (dream, dropped), br- (brush), sh- (she, shut); -ing suffix patterns from Fly Guy and the Frankenfly',
+  'LT03-Pronunciation': 'Syllable counting and stress patterns: making(2), playing(2), painting(2), drawing(2), monster(2), power(2), laboratory(5, stress 2nd), Frankenfly(3); echo game practice',
+  'LT04-Sentence-Patterns': 'Core sentence patterns: It was a [adj] and [adj] night; ___ was/were + -ing; What is ___ making?; Did you make...?; exclamations BIZZY!/BUZZ!/CRASH!; superlative the BEST',
+  'LT05-Grammar': 'Past Continuous (was/were + -ing); Simple Past tense (regular -ed vs irregular: made, said, woke, sat, shut, fell, dropped); question forms; superlative "the BEST"; exclamations',
+  'LT06-Morphology': 'Word families with -ing (playing, making, painting); base form to past (-ed vs irregular); good→better→best; compound word Frankenfly = Frankenstein + fly',
+  'LT07-Cohesion': 'Cohesion devices: finally, late that night, as; pronoun reference (he = Buzz/Fly Guy/Frankenfly); cause-and-effect (power on → monster sits up, power off → crash)',
+  'LT08-Functional-Communication': 'Story retelling frame; dream-vs-reality discussion prompts; opinion/writing scaffold with sentence starters',
+  'HW-PartA': 'Vocabulary Match: match 6 words (stormy, laboratory, monster, painting, costume, best) with their definitions',
+  'HW-PartB': 'Vocabulary in Context: fill in blanks using word bank (laboratory, power, painting, dream, monster, brushes)',
+  'HW-PartC': 'Sound and Word Detective: find story words matching fl-, st-, dr-, -ing; build the compound word Frankenfly; fix the irregular past forms',
+  'HW-PartD': 'Grammar Power: base form → past tense conversion (10 verbs); complete Past Continuous sentences (was/were + -ing)',
+  'HW-PartE': 'Cohesion: identify who he refers to in 5 sentences; match the cause and effect (power on/off)',
+  'HW-PartF': 'Opinion Writing: Is Fly Guy a good friend? Write 4+ sentences with scaffold'
+};
+
+function openPushModal(sectionId, sectionContent) {
+  var token = localStorage.getItem('authToken');
+  if (!token) {
+    window.location.href = '/lesson.html';
+    return;
+  }
+  var content = sectionContent || sectionContentMap[sectionId] || sectionId;
+
+  fetch('/api/students/list', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API error: ' + r.status);
+    return r.json();
+  })
+  .then(function(students) {
+    if (!Array.isArray(students) || students.length === 0) {
+      alert('No students found. Please add students first.');
+      return;
+    }
+    var existing = document.querySelector('.push-modal-overlay');
+    if (existing) existing.remove();
+
+    var modal = document.createElement('div');
+    modal.className = 'push-modal-overlay';
+    var studentListHtml = students.map(function(s) {
+      return '<label class="student-item"><input type="checkbox" value="' + s.id + '"><span>' + s.name + '</span></label>';
+    }).join('');
+    modal.innerHTML = '<div class="push-modal">' +
+      '<h3>\ud83d\udce4 Push to Students</h3>' +
+      '<p style="color:#666;font-size:13px;">' + sectionId + '</p>' +
+      '<p style="color:#888;font-size:11px;margin-bottom:8px;">' + content.substring(0, 120) + (content.length > 120 ? '...' : '') + '</p>' +
+      '<div class="student-list">' + studentListHtml + '</div>' +
+      '<button class="push-confirm-btn" id="pushConfirmBtn">\u2705 Confirm Push</button>' +
+      '<button class="push-cancel-btn" id="pushCancelBtn">\u2716 Cancel</button>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    document.getElementById('pushConfirmBtn').onclick = function() { doPush(sectionId, content, this); };
+    document.getElementById('pushCancelBtn').onclick = function() { modal.remove(); };
+    modal.onclick = function(e) { if (e.target === modal) modal.remove(); };
+  })
+  .catch(function(err) {
+    alert('Failed to load students: ' + err.message);
+  });
+}
+
+function doPush(sectionId, content, btn) {
+  var modal = document.querySelector('.push-modal-overlay');
+  if (!modal) return;
+  var checked = modal.querySelectorAll('input:checked');
+  if (checked.length === 0) {
+    alert('Please select at least one student.');
+    return;
+  }
+  var token = localStorage.getItem('authToken');
+  btn.textContent = 'Pushing...';
+  btn.disabled = true;
+
+  // Build a Practice assignment (backend-persisted) for each selected student.
+  var emojiMap = {
+    'LT01': '\ud83d\udcd6', 'LT02': '\ud83d\udd24', 'LT03': '\ud83c\udfa4',
+    'LT04': '\u270f\ufe0f', 'LT05': '\ud83d\udd24', 'LT06': '\ud83e\udde9',
+    'LT07': '\ud83d\udd17', 'LT08': '\ud83d\udcac', 'HW': '\ud83d\udcdd'
+  };
+  var prefix = sectionId.split('-')[0];
+  var emoji = emojiMap[prefix] || '\ud83d\udccc';
+  var title = emoji + ' [Fly Guy] ' + sectionId;
+  var today = new Date();
+  var todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  var teacher = localStorage.getItem('currentUser') || localStorage.getItem('lesson_tracker_user') || 'emily_mo';
+
+  // Push a TASK SNAPSHOT (not the whole lesson HTML) so the student renders
+  // only the selected task interactively.
+  var taskDef = PUSH_TASKS[sectionId] || { renderer: 'checklist', prompt: content, required: true };
+  var taskId = 'flyguy-frankenfly-' + String(sectionId).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  var taskSnapshot = {
+    id: taskId,
+    title: title,
+    type: 'task',
+    series: 'Fly Guy',
+    book: 'Fly Guy and the Frankenfly',
+    lesson: sectionId,
+    part: sectionId,
+    sourceLessonUrl: '/frontend/fly-guy/fly_guy_and_the_frankenfly_lesson_plan.html',
+    studentRenderer: taskDef.renderer,
+    prompt: taskDef.prompt || content,
+    required: !!taskDef.required
+  };
+  if (taskDef.renderer === 'drag-match' && taskDef.pairs) taskSnapshot.pairs = taskDef.pairs;
+  if (taskDef.renderer === 'drag-order' && taskDef.items) taskSnapshot.items = taskDef.items;
+  if (taskDef.renderer === 'multiple-choice' && taskDef.options) taskSnapshot.options = taskDef.options;
+  if (taskDef.renderer === 'checklist') taskSnapshot.instructions = taskDef.prompt || content;
+
+  var assignments = [];
+  for (var i = 0; i < checked.length; i++) {
+    var studentId = checked[i].value;
+    assignments.push({
+      assignmentId: 'assign-' + Date.now() + '-' + Math.random().toString(16).slice(2) + '-' + i,
+      practiceId: 'lessonplan:' + sectionId,
+      title: title,
+      content: content,
+      sourceLessonUrl: '/frontend/fly-guy/fly_guy_and_the_frankenfly_lesson_plan.html',
+      sourceLessonId: 'flyguy-frankenfly',
+      taskIds: [taskId],
+      tasks: [taskSnapshot],
+      sourceBook: 'Fly Guy',
+      targetType: 'student',
+      targetIds: [studentId],
+      studentIds: [studentId],
+      classId: '',
+      relatedClassDate: todayStr,
+      assignedDate: todayStr,
+      dueDate: '',
+      teacherNote: '',
+      assignedBy: teacher,
+      status: 'active'
+    });
+  }
+
+  fetch('/api/practice/assignments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ assignments: assignments })
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('API ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    alert('\u2705 Pushed to ' + (data.count || assignments.length) + ' student(s)');
+    modal.remove();
+  })
+  .catch(function(err) {
+    alert('Push failed: ' + err.message);
+    btn.textContent = 'Push';
+    btn.disabled = false;
+  });
+}
+// ═══════ Task definitions for Practice push (task snapshot) ═══════
+// Each pushable section maps to an interactive task. Reasonable defaults:
+// LT*  → checklist (teacher marks completion of that learning phase)
+// HW-A → drag-match, HW-B → drag-order, HW-C → multiple-choice,
+// HW-D → multiple-choice, HW-E → short-answer, HW-F → short-answer (writing)
+var PUSH_TASKS = {
+  'LT01-Vocabulary': { renderer: 'checklist', prompt: 'Review the 12 core vocabulary words with IPA, definitions and word families.', required: true },
+  'LT02-Phonics': { renderer: 'checklist', prompt: 'Practice consonant blends and digraphs (fl-, st-, dr-, br-, sh-) and the -ing suffix patterns.', required: true },
+  'LT03-Pronunciation': { renderer: 'checklist', prompt: 'Count syllables and practice stress: making(2), playing(2), painting(2), drawing(2), monster(2), power(2), laboratory(5), Frankenfly(3).', required: true },
+  'LT04-Sentence-Patterns': { renderer: 'checklist', prompt: 'Practice sentence patterns: It was a [adj] and [adj] night; ___ was/were + -ing; What is ___ making?; Did you make...?', required: true },
+  'LT05-Grammar': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of "make".', options: [
+    { label: 'make → made', value: 'made', correct: true },
+    { label: 'make → maked', value: 'maked', correct: false },
+    { label: 'make → makeded', value: 'makeded', correct: false }
+  ], required: true },
+  'LT06-Morphology': { renderer: 'multiple-choice', prompt: 'Which word is a compound made from two smaller words?', options: [
+    { label: 'Frankenfly', value: 'frankenfly', correct: true },
+    { label: 'monster', value: 'monster', correct: false },
+    { label: 'painting', value: 'painting', correct: false }
+  ], required: true },
+  'LT07-Cohesion': { renderer: 'short-answer', prompt: 'In the story, who does "he" refer to in "He shut off the power"? Write the name and explain why.', required: true },
+  'LT08-Functional-Communication': { renderer: 'short-answer', prompt: 'Retell the story: Was Frankenfly real or a dream? Write 4+ sentences with "I think... because...".', required: true },
+  'HW-PartA': { renderer: 'drag-match', prompt: 'Match each word with its meaning.', pairs: [
+    { left: 'stormy', right: 'windy and rainy' },
+    { left: 'laboratory', right: 'a science room' },
+    { left: 'monster', right: 'a big scary creature' },
+    { left: 'painting', right: 'a picture with paint' },
+    { left: 'costume', right: 'special clothes' },
+    { left: 'best', right: 'better than all' }
+  ], required: true },
+  'HW-PartB': { renderer: 'drag-order', prompt: 'Put the words in the correct order to complete the sentences.', items: ['laboratory', 'monster', 'dream', 'painting', 'brushes', 'power'], required: true },
+  'HW-PartC': { renderer: 'multiple-choice', prompt: 'Which phonics pattern does "drawing" use?', options: [
+    { label: '-ing suffix', value: 'ing', correct: true },
+    { label: 'fl- blend', value: 'fl', correct: false },
+    { label: 'sh- digraph', value: 'sh', correct: false }
+  ], required: true },
+  'HW-PartD': { renderer: 'multiple-choice', prompt: 'Choose the correct past tense form of "wake".', options: [
+    { label: 'wake → woke', value: 'woke', correct: true },
+    { label: 'wake → waked', value: 'waked', correct: false },
+    { label: 'wake → wook', value: 'wook', correct: false }
+  ], required: true },
+  'HW-PartE': { renderer: 'short-answer', prompt: 'For each sentence, write who "he" refers to: Buzz, Fly Guy or Frankenfly.', required: true },
+  'HW-PartF': { renderer: 'short-answer', prompt: 'Is Fly Guy a good friend? Write at least 4 sentences using the scaffold starters.', required: true }
+};
+</script>
+</body>
+</html>
