@@ -58,6 +58,23 @@ class MigrationTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "Stop emily-backend"):
             run(self.root, apply=True, backup_dir=Path(self.temp.name) / "private-backup")
 
+    @patch("migrate_ids.subprocess.run")
+    def test_terminal_leave_normalization_is_opt_in_and_keeps_status(self, run_systemctl):
+        run_systemctl.return_value.returncode = 1
+        profile = json.loads(self.profile_path.read_text(encoding="utf-8"))
+        profile["leaveRequests"] = [{"status": "approved", "handled": False},
+                                    {"status": "pending", "handled": True}]
+        self.profile_path.write_text(json.dumps(profile), encoding="utf-8")
+        backup = Path(self.temp.name) / "leave-backup"
+        result = run(self.root, apply=True, backup_dir=backup, normalize_leave_state=True)
+        migrated = json.loads(self.profile_path.read_text(encoding="utf-8"))
+        self.assertEqual(result["leaveStatesNormalized"], 1)
+        self.assertEqual(migrated["leaveRequests"][0]["status"], "approved")
+        self.assertTrue(migrated["leaveRequests"][0]["handled"])
+        self.assertEqual(migrated["leaveRequests"][1]["status"], "pending")
+        self.assertTrue(migrated["leaveRequests"][1]["handled"])
+        self.assertEqual(json.loads((backup / "profile-000.json").read_text(encoding="utf-8")), profile)
+
 
 if __name__ == "__main__":
     unittest.main()

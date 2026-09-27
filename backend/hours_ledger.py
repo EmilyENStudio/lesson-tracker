@@ -167,6 +167,56 @@ def _as_list(value: Any) -> list[Any]:
     return value if isinstance(value, list) else []
 
 
+def calculate_balance(profile: dict[str, Any], *, empty_payments: str = "preserve") -> dict[str, float | int]:
+    """Apply the existing rule: purchased credits minus valid lesson records.
+
+    A record's ``hours`` is lesson duration, not the number of credits charged.
+    Profiles without payment rows retain their legacy total unless an explicit
+    payment deletion requests an empty balance.
+    """
+    payments = [x for x in _as_list(profile.get("payments")) if isinstance(x, dict)]
+    records = [
+        x for x in _as_list(profile.get("records"))
+        if isinstance(x, dict) and x.get("status") not in {"draft", "deleted", "cancelled"}
+    ]
+    if payments:
+        total = sum(float(x.get("hours") or 0) for x in payments)
+    elif empty_payments == "zero":
+        total = 0.0
+    elif empty_payments == "preserve":
+        total = float(profile.get("totalHours") or 0)
+    else:
+        raise ValueError("empty_payments must be 'preserve' or 'zero'")
+    used = len(records)
+    return {"totalHours": total, "usedHours": used, "remainingHours": total - used}
+
+
+def recompute_balance(profile: dict[str, Any], *, empty_payments: str = "preserve") -> dict[str, float | int]:
+    """Update cached balances using the shared legacy-compatible rule."""
+    balance = calculate_balance(profile, empty_payments=empty_payments)
+    profile.update(balance)
+    return balance
+
+
+def leave_is_handled(leave: dict[str, Any]) -> bool:
+    """Project one consistent handled state without overriding explicit handling."""
+    status = str(leave.get("status") or "").strip().casefold()
+    return bool(leave.get("handled")) or status in TERMINAL_LEAVE_STATUSES
+
+
+def normalize_terminal_leave_handled(profile: dict[str, Any]) -> int:
+    """Materialize the existing UI projection for terminal leave statuses."""
+    changed = 0
+    for leave in _as_list(profile.get("leaveRequests")):
+        if not isinstance(leave, dict):
+            continue
+        status = str(leave.get("status") or "").strip().casefold()
+        if status in TERMINAL_LEAVE_STATUSES and not bool(leave.get("handled")):
+            leave["handled"] = True
+            changed += 1
+    return changed
+
+
 def audit_profile(profile: dict[str, Any]) -> dict[str, Any]:
     """Return counts and balance comparisons without changing the profile."""
     issues: list[str] = []
@@ -193,21 +243,22 @@ def audit_profile(profile: dict[str, Any]) -> dict[str, Any]:
         paid_hours = None
         issues.append("payments:invalid_hours")
 
-    used_hours = 0.0
+    billable_records = [x for x in records if x.get("status") not in {"draft", "deleted", "cancelled"}]
+    used_hours = float(len(billable_records))
+    duration_hours = 0.0
     missing_record_hours = 0
     for record in records:
         value = record.get("hours")
         if value is None or value == "":
             missing_record_hours += 1
-            value = 1
+            continue
         try:
             number = float(value)
             if number < 0:
                 raise ValueError
-            used_hours += number
+            duration_hours += number
         except (TypeError, ValueError):
             issues.append("records:invalid_hours")
-            used_hours = None
             break
 
     try:
@@ -221,7 +272,9 @@ def audit_profile(profile: dict[str, Any]) -> dict[str, Any]:
     balance = {
         "paidHours": paid_hours,
         "recordCount": len(records),
-        "recordHoursAssumingMissingIsOne": used_hours,
+        "lessonCreditsUsed": used_hours,
+        "nonBillableRecordCount": len(records) - len(billable_records),
+        "recordDurationHours": duration_hours,
         "missingRecordHours": missing_record_hours,
         "storedTotalHours": stored_total,
         "storedUsedHours": stored_used,
@@ -229,21 +282,21 @@ def audit_profile(profile: dict[str, Any]) -> dict[str, Any]:
     }
     if paid_hours is not None and stored_total is not None and abs(paid_hours - stored_total) > 1e-6:
         issues.append("balance:total_differs_from_payments")
-    if stored_used is not None and abs(stored_used - len(records)) > 1e-6:
+    if stored_used is not None and abs(stored_used - len(billable_records)) > 1e-6:
         issues.append("balance:used_differs_from_record_count")
-    if used_hours is not None and stored_used is not None and abs(stored_used - used_hours) > 1e-6:
-        issues.append("balance:used_differs_from_record_hours")
-    if paid_hours is not None and used_hours is not None and stored_remaining is not None:
+    if paid_hours is not None and stored_remaining is not None:
         expected = paid_hours - used_hours
-        if abs(stored_remaining - expected) > 1e-6:
-            issues.append("balance:remaining_differs_from_hours_basis")
+        # Legacy profiles without payment rows may retain a manually migrated total.
+        if payments and abs(stored_remaining - expected) > 1e-6:
+            issues.append("balance:remaining_differs_from_lesson_credits")
 
     handled_mismatches = 0
     for leave in leaves:
         status = str(leave.get("status") or "").strip().casefold()
         if status:
-            expected_handled = status in TERMINAL_LEAVE_STATUSES
-            if bool(leave.get("handled")) != expected_handled:
+            # Explicitly handled pending requests are valid: handled and status
+            # represent related but distinct workflow facts.
+            if status in TERMINAL_LEAVE_STATUSES and not bool(leave.get("handled")):
                 handled_mismatches += 1
     if handled_mismatches:
         issues.append(f"leave:handled_status_mismatch:{handled_mismatches}")

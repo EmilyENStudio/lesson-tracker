@@ -13,7 +13,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from hours_ledger import COLLECTIONS, audit_profile, ensure_profile_ids
+from hours_ledger import (COLLECTIONS, audit_profile, ensure_profile_ids,
+                          normalize_terminal_leave_handled)
 
 
 def _sha256(raw: bytes) -> str:
@@ -38,7 +39,7 @@ def _profiles(root: Path) -> list[tuple[str, Path]]:
     return result
 
 
-def _transform(student_id: str, raw: bytes) -> tuple[bytes, dict[str, Any]]:
+def _transform(student_id: str, raw: bytes, normalize_leave_state: bool = False) -> tuple[bytes, dict[str, Any]]:
     profile = json.loads(raw.decode("utf-8"))
     if not isinstance(profile, dict):
         raise ValueError("Student profile must be a JSON object")
@@ -53,6 +54,7 @@ def _transform(student_id: str, raw: bytes) -> tuple[bytes, dict[str, Any]]:
         if isinstance(item, dict) and item.get("sessionId")
     )
     ensure_profile_ids(student_id, profile)
+    leave_states_normalized = normalize_terminal_leave_handled(profile) if normalize_leave_state else 0
     after_ids = sum(
         1 for collection in COLLECTIONS
         for item in _as_items(profile.get(collection))
@@ -67,6 +69,7 @@ def _transform(student_id: str, raw: bytes) -> tuple[bytes, dict[str, Any]]:
     return encoded, {
         "idsAdded": after_ids - before_ids,
         "sessionIdsAdded": after_sessions - before_sessions,
+        "leaveStatesNormalized": leave_states_normalized,
         "audit": audit_profile(profile),
     }
 
@@ -104,17 +107,20 @@ def _atomic_write(path: Path, raw: bytes, mode: int, uid: int, gid: int) -> None
             os.unlink(tmp_name)
 
 
-def run(root: Path, apply: bool, backup_dir: Path | None) -> dict[str, Any]:
+def run(root: Path, apply: bool, backup_dir: Path | None,
+        normalize_leave_state: bool = False) -> dict[str, Any]:
     entries = []
-    totals: dict[str, int] = {"profiles": 0, "idsAdded": 0, "sessionIdsAdded": 0}
+    totals: dict[str, int] = {"profiles": 0, "idsAdded": 0, "sessionIdsAdded": 0,
+                              "leaveStatesNormalized": 0}
     issue_counts: dict[str, int] = {}
 
     for student_id, path in _profiles(root):
         original = path.read_bytes()
-        updated, report = _transform(student_id, original)
+        updated, report = _transform(student_id, original, normalize_leave_state)
         totals["profiles"] += 1
         totals["idsAdded"] += report["idsAdded"]
         totals["sessionIdsAdded"] += report["sessionIdsAdded"]
+        totals["leaveStatesNormalized"] += report["leaveStatesNormalized"]
         for issue in report["audit"]["issues"]:
             category = issue.rsplit(":", 1)[0]
             issue_counts[category] = issue_counts.get(category, 0) + 1
@@ -180,8 +186,12 @@ def main() -> None:
     parser.add_argument("--root", type=Path, default=Path("/var/www/lesson-tracker"))
     parser.add_argument("--apply", action="store_true", help="write additive IDs after an external backup")
     parser.add_argument("--backup-dir", type=Path)
+    parser.add_argument("--normalize-terminal-leaves", action="store_true",
+                        help="set handled=true for statuses already treated as terminal by the UI")
     args = parser.parse_args()
-    print(json.dumps(run(args.root, args.apply, args.backup_dir), ensure_ascii=False, indent=2))
+    print(json.dumps(run(args.root, args.apply, args.backup_dir,
+                         normalize_leave_state=args.normalize_terminal_leaves),
+                     ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

@@ -1,7 +1,8 @@
 import copy
 import unittest
 
-from hours_ledger import audit_profile, ensure_profile_ids
+from hours_ledger import (audit_profile, calculate_balance, ensure_profile_ids,
+                          leave_is_handled, normalize_terminal_leave_handled)
 
 
 class HoursLedgerTests(unittest.TestCase):
@@ -42,13 +43,44 @@ class HoursLedgerTests(unittest.TestCase):
         migrated = ensure_profile_ids("student-a", self.profile)
         self.assertEqual(migrated["records"][0]["id"], "legacy-record-42")
 
-    def test_audit_flags_hours_mismatch_without_mutating_data(self):
+    def test_duration_is_not_confused_with_credits(self):
         original = copy.deepcopy(self.profile)
         audit = audit_profile(self.profile)
-        self.assertIn("balance:used_differs_from_record_hours", audit["issues"])
-        self.assertIn("balance:remaining_differs_from_hours_basis", audit["issues"])
-        self.assertEqual(audit["balance"]["recordHoursAssumingMissingIsOne"], 2.5)
+        self.assertEqual(audit["balance"]["lessonCreditsUsed"], 2)
+        self.assertEqual(audit["balance"]["recordDurationHours"], 2.5)
+        self.assertNotIn("balance:used_differs_from_record_count", audit["issues"])
         self.assertEqual(self.profile, original)
+
+    def test_balance_preserves_legacy_empty_payments_but_deletion_can_zero(self):
+        profile = {"totalHours": 3, "usedHours": 1, "records": [{}], "payments": []}
+        self.assertEqual(calculate_balance(profile)["remainingHours"], 2)
+        self.assertEqual(calculate_balance(profile, empty_payments="zero")["remainingHours"], -1)
+
+    def test_paid_hours_and_lesson_count_use_one_shared_balance_rule(self):
+        result = calculate_balance(self.profile)
+        self.assertEqual(result, {"totalHours": 4, "usedHours": 2, "remainingHours": 2})
+
+    def test_cancelled_draft_and_deleted_records_do_not_charge(self):
+        profile = {"totalHours": 5, "payments": [{"hours": 5}], "records": [
+            {"status": "completed"}, {"status": "cancelled"}, {"status": "draft"}, {"status": "deleted"}
+        ]}
+        self.assertEqual(calculate_balance(profile),
+                         {"totalHours": 5, "usedHours": 1, "remainingHours": 4})
+
+    def test_pending_request_can_be_handled_without_changing_its_status(self):
+        self.assertTrue(leave_is_handled({"status": "pending", "handled": True}))
+        self.assertTrue(leave_is_handled({"status": "approved", "handled": False}))
+        self.assertFalse(leave_is_handled({"status": "pending", "handled": False}))
+
+    def test_normalizer_only_materializes_terminal_states(self):
+        profile = {"leaveRequests": [
+            {"status": "approved", "handled": False},
+            {"status": "cancelled", "handled": False},
+            {"status": "pending", "handled": True},
+        ]}
+        self.assertEqual(normalize_terminal_leave_handled(profile), 2)
+        self.assertEqual([x["handled"] for x in profile["leaveRequests"]], [True, True, True])
+        self.assertEqual(profile["leaveRequests"][2]["status"], "pending")
 
     def test_audit_flags_conflicting_leave_state(self):
         self.profile["leaveRequests"][0]["handled"] = False

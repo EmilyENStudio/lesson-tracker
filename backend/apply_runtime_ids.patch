@@ -1,16 +1,50 @@
 diff --git a/backend/app.py b/backend/app.py
 --- a/backend/app.py
 +++ b/backend/app.py
-@@ -14,2 +14,3 @@
+@@ -12,6 +12,7 @@
+ import urllib.request
+ import re
+ import urllib.error
  import threading
-+from hours_ledger import ensure_profile_ids
++from hours_ledger import ensure_profile_ids, recompute_balance
  
-@@ -469,2 +470,3 @@
+ app = Flask(__name__)
+ app.secret_key = secrets.token_hex(32)
+@@ -467,17 +468,8 @@ def update_student_data(student_id):
+             return jsonify({'error': 'No data provided'}), 400
+         if not data.get('name') or not data.get('courseName'):
              return jsonify({'error': 'Incomplete data - name and courseName required'}), 400
 +        ensure_profile_ids(student_id, data)
-         # AUTO-RECOMPUTE: 课时三层全自动（Emily 确认 2026-09-03）
-@@ -581,3 +581,4 @@
+-        # AUTO-RECOMPUTE: 课时三层全自动（Emily 确认 2026-09-03）
+-        #   ①总课次 = 购买记录 payments 各条 hours 累加（payments 非空时才覆盖，防清空未续费学员）
+-        #   ②已上课次 = records 条数   ③剩余 = 总课次 - 已上课次
+-        payments = data.get('payments') or []
+-        if isinstance(payments, dict): payments = [payments]
+-        paid = sum((p.get('hours') or 0) for p in payments if isinstance(p, dict))
+-        if paid > 0:
+-            data['totalHours'] = paid
+-        records = data.get('records') or []
+-        data['usedHours'] = len(records)
+-        data['remainingHours'] = (data.get('totalHours') or 0) - len(records)
++        recompute_balance(data)
+         with open(student_file, 'w') as f:
+             json.dump(data, f, ensure_ascii=False, indent=2)
+         return jsonify({'success': True})
+@@ -510,9 +502,7 @@ def delete_payment(user, student_id):
+         payments.pop(index)
+         data['payments']=payments
+-        data['totalHours']=sum(float(p.get('hours') or 0) for p in payments)
+-        data['usedHours']=len(data.get('records') or [])
+-        data['remainingHours']=data['totalHours']-data['usedHours']
++        recompute_balance(data, empty_payments='zero')
+         if path.read_bytes()!=raw:return jsonify({'error':'资料已变化，请刷新重试'}),409
+         st=path.stat()
+         fd,tmp=tempfile.mkstemp(dir=str(path.parent),prefix='.payment-')
+@@ -580,6 +570,7 @@ def teacher_create_leave(user, student_id):
          requests.append(leave)
          data['leaveRequests'] = requests
-+        ensure_profile_ids(student_id, data)
          stat = os.stat(student_file)
++        ensure_profile_ids(student_id, data)
+         tmp = student_file + '.leave.tmp'
+         with open(tmp, 'w', encoding='utf-8') as f:
+             json.dump(data, f, ensure_ascii=False, indent=2)

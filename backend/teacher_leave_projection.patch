@@ -1,0 +1,20 @@
+diff --git a/home-v1.html b/home-v1.html
+--- a/home-v1.html
++++ b/home-v1.html
+@@ -2417,7 +2417,7 @@
+     var hist = $('msgHist'); if(!hist) return;
+     var items = [];
+     ((data && data.leaveRequests) || []).forEach(function(l){
+-      items.push({ t: Date.parse(l.requestTime)||0, rawTm: l.requestTime||'', isMsg:true, d: l.date||'', tm: l.startTime||'', course: l.courseName||'未命名课程', content: l.reason||'', status: l.status||'pending', handled: !!l.handled, reply: (l.teacherReply && l.teacherReply.content) || '' });
++      items.push({ t: Date.parse(l.requestTime)||0, rawTm: l.requestTime||'', isMsg:true, d: l.date||'', tm: l.startTime||'', course: l.courseName||'未命名课程', content: l.reason||'', status: l.status||'pending', handled: tdLeaveHandled(l), reply: (l.teacherReply && l.teacherReply.content) || '' });
+     });
+     ((data && data.records) || []).forEach(function(r){
+       if(r && r.parentFeedback && typeof r.parentFeedback.content === 'string'){
+@@ -3001,6 +3001,6 @@
+   function tdOpen(title, html) { if (!tdMask || !tdTitle || !tdBody) return; tdTitle.textContent = title; tdBody.innerHTML = html; tdMask.classList.add('show'); }
+   function tdClose() { if (tdMask) tdMask.classList.remove('show'); }
+   function tdTip(msg) { try { showToast(msg); } catch (e) { if (window.alert) alert(msg || ''); } }
+-  function tdLeaveHandled(l) { return !!(l && (l.handled || l.status === 'approved' || l.status === 'resolved' || l.status === 'rejected' || l.status === 'cancelled')); }
++  function tdLeaveHandled(l) { return !!(l && (l.handled || ['approved', 'accepted', 'resolved', 'rejected', 'cancelled', 'completed'].indexOf(String(l.status || '').toLowerCase()) >= 0)); }
+   // ---------- 教师运营台：家长留言汇总（真实数据，非写死） ----------
+   function renderTeacherMessages(realStudents) {
