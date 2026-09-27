@@ -1,0 +1,16 @@
+diff --git a/backend/app.py b/backend/app.py
+--- a/backend/app.py
++++ b/backend/app.py
+@@ -14,2 +14,3 @@
+ import threading
++from hours_ledger import ensure_profile_ids
+ 
+@@ -469,2 +470,3 @@
+             return jsonify({'error': 'Incomplete data - name and courseName required'}), 400
++        ensure_profile_ids(student_id, data)
+         # AUTO-RECOMPUTE: 课时三层全自动（Emily 确认 2026-09-03）
+@@ -581,3 +581,4 @@
+         requests.append(leave)
+         data['leaveRequests'] = requests
++        ensure_profile_ids(student_id, data)
+         stat = os.stat(student_file)
