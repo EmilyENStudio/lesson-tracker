@@ -1,0 +1,571 @@
+{
+  "schemaVersion": 1,
+  "relationship": "reader-page-to-teaching-plan-unit",
+  "books": [
+    {
+      "bookId": "magic-finger-the-magic-finger",
+      "slug": "magic-finger",
+      "readerSource": "books/magic-finger/the-magic-finger/book.json",
+      "teachingPlanIndex": "frontend/roald-dahl/teaching-v2/magic-finger/index.html",
+      "units": [
+        {
+          "unitId": "dahl-magic-finger-unit-01",
+          "readerPageId": "chapter-01",
+          "title": "The Magic Finger & Mrs. Winter's Whiskers",
+          "planPage": "frontend/roald-dahl/teaching-v2/magic-finger/unit-1-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-magic-finger-unit-02",
+          "readerPageId": "chapter-02",
+          "title": "The Tragic Deer & The Magic Finger Zap",
+          "planPage": "frontend/roald-dahl/teaching-v2/magic-finger/unit-2-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-magic-finger-unit-03",
+          "readerPageId": "chapter-03",
+          "title": "Duck Wings & Robin-Sized Hunters",
+          "planPage": "frontend/roald-dahl/teaching-v2/magic-finger/unit-3-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-magic-finger-unit-04",
+          "readerPageId": "chapter-04",
+          "title": "Giant Ducks Take Over & The High-Tree Nest",
+          "planPage": "frontend/roald-dahl/teaching-v2/magic-finger/unit-4-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-magic-finger-unit-05",
+          "readerPageId": "chapter-05",
+          "title": "Apple Dinners & The Morning Gun Standoff",
+          "planPage": "frontend/roald-dahl/teaching-v2/magic-finger/unit-5-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-magic-finger-unit-06",
+          "readerPageId": "chapter-06",
+          "title": "The Egg Family Transformation & Cooper's Call",
+          "planPage": "frontend/roald-dahl/teaching-v2/magic-finger/unit-6-plan.html",
+          "sourceChapterNumbers": []
+        }
+      ]
+    },
+    {
+      "bookId": "dahl-fox",
+      "slug": "fox",
+      "readerSource": "books/roald-dahl/fox/book.json",
+      "teachingPlanIndex": "frontend/roald-dahl/teaching-v2/fox/index.html",
+      "units": [
+        {
+          "unitId": "dahl-fox-unit-01",
+          "readerPageId": "chapter-01",
+          "title": "Lesson 1: Three Nasty Farmers and a Clever Fox",
+          "planPage": "frontend/roald-dahl/teaching-v2/fox/unit-1-plan.html",
+          "sourceChapterNumbers": [
+            1,
+            2
+          ]
+        },
+        {
+          "unitId": "dahl-fox-unit-02",
+          "readerPageId": "chapter-02",
+          "title": "Lesson 2: The Shooting and the Terrible Shovels",
+          "planPage": "frontend/roald-dahl/teaching-v2/fox/unit-2-plan.html",
+          "sourceChapterNumbers": [
+            3,
+            4
+          ]
+        },
+        {
+          "unitId": "dahl-fox-unit-03",
+          "readerPageId": "chapter-03",
+          "title": "Lesson 3: The Terrible Tractors and The Race",
+          "planPage": "frontend/roald-dahl/teaching-v2/fox/unit-3-plan.html",
+          "sourceChapterNumbers": [
+            5,
+            6
+          ]
+        },
+        {
+          "unitId": "dahl-fox-unit-04",
+          "readerPageId": "chapter-04",
+          "title": "Lesson 4: The Siege and the Starving Foxes",
+          "planPage": "frontend/roald-dahl/teaching-v2/fox/unit-4-plan.html",
+          "sourceChapterNumbers": [
+            7,
+            8
+          ]
+        },
+        {
+          "unitId": "dahl-fox-unit-05",
+          "readerPageId": "chapter-05",
+          "title": "Lesson 5: Mr Fox Has a Plan — The Chicken House!",
+          "planPage": "frontend/roald-dahl/teaching-v2/fox/unit-5-plan.html",
+          "sourceChapterNumbers": [
+            9,
+            10
+          ]
+        },
+        {
+          "unitId": "dahl-fox-unit-06",
+          "readerPageId": "chapter-06",
+          "title": "Lesson 6: Mrs Fox’s Surprise and Badger",
+          "planPage": "frontend/roald-dahl/teaching-v2/fox/unit-6-plan.html",
+          "sourceChapterNumbers": [
+            11,
+            12
+          ]
+        },
+        {
+          "unitId": "dahl-fox-unit-07",
+          "readerPageId": "chapter-07",
+          "title": "Lesson 7: Bunce’s Storehouse and Badger’s Doubts",
+          "planPage": "frontend/roald-dahl/teaching-v2/fox/unit-7-plan.html",
+          "sourceChapterNumbers": [
+            13,
+            14
+          ]
+        },
+        {
+          "unitId": "dahl-fox-unit-08",
+          "readerPageId": "chapter-08",
+          "title": "Lesson 8: Bean’s Secret Cider Cellar and The Woman",
+          "planPage": "frontend/roald-dahl/teaching-v2/fox/unit-8-plan.html",
+          "sourceChapterNumbers": [
+            15,
+            16
+          ]
+        },
+        {
+          "unitId": "dahl-fox-unit-09",
+          "readerPageId": "chapter-09",
+          "title": "Lesson 9: The Great Feast and Still Waiting",
+          "planPage": "frontend/roald-dahl/teaching-v2/fox/unit-9-plan.html",
+          "sourceChapterNumbers": [
+            17,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "bookId": "dahl-crocodile",
+      "slug": "crocodile",
+      "readerSource": "books/roald-dahl/crocodile/book.json",
+      "teachingPlanIndex": "frontend/roald-dahl/teaching-v2/crocodile/index.html",
+      "units": [
+        {
+          "unitId": "dahl-crocodile-unit-01",
+          "readerPageId": "chapter-01",
+          "title": "Lesson 1: The Greedy Plot in the Muddy River",
+          "planPage": "frontend/roald-dahl/teaching-v2/crocodile/unit-1-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-crocodile-unit-02",
+          "readerPageId": "chapter-02",
+          "title": "Lesson 2: Jungle Warnings & The Clever Disguises",
+          "planPage": "frontend/roald-dahl/teaching-v2/crocodile/unit-2-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-crocodile-unit-03",
+          "readerPageId": "chapter-03",
+          "title": "Lesson 3: The Four Secret Tricks & Heroic Rescues",
+          "planPage": "frontend/roald-dahl/teaching-v2/crocodile/unit-3-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-crocodile-unit-04",
+          "readerPageId": "chapter-04",
+          "title": "Lesson 4: Elephant Launch & The Solar Finale",
+          "planPage": "frontend/roald-dahl/teaching-v2/crocodile/unit-4-plan.html",
+          "sourceChapterNumbers": []
+        }
+      ]
+    },
+    {
+      "bookId": "dahl-charlie",
+      "slug": "charlie",
+      "readerSource": "books/roald-dahl/charlie/book.json",
+      "teachingPlanIndex": "frontend/roald-dahl/teaching-v2/charlie/index.html",
+      "units": [
+        {
+          "unitId": "dahl-charlie-unit-01",
+          "readerPageId": "chapter-01",
+          "title": "Here Comes Charlie",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-1-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-02",
+          "readerPageId": "chapter-02",
+          "title": "Mr Willy Wonka's Factory",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-2-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-03",
+          "readerPageId": "chapter-03",
+          "title": "Mr Wonka and the Indian Prince",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-3-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-04",
+          "readerPageId": "chapter-04",
+          "title": "The Secret Workers",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-4-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-05",
+          "readerPageId": "chapter-05",
+          "title": "The Golden Tickets",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-5-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-06",
+          "readerPageId": "chapter-06",
+          "title": "The First Two Finders",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-6-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-07",
+          "readerPageId": "chapter-07",
+          "title": "Charlie's Birthday",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-7-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-08",
+          "readerPageId": "chapter-08",
+          "title": "Two More Golden Tickets Found",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-8-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-09",
+          "readerPageId": "chapter-09",
+          "title": "Grandpa Joe Takes a Gamble",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-9-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-10",
+          "readerPageId": "chapter-10",
+          "title": "The Family Begins to Starve",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-10-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-11",
+          "readerPageId": "chapter-11",
+          "title": "The Miracle",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-11-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-12",
+          "readerPageId": "chapter-12",
+          "title": "What It Said on the Golden Ticket",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-12-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-13",
+          "readerPageId": "chapter-13",
+          "title": "The Big Day Arrives",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-13-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-14",
+          "readerPageId": "chapter-14",
+          "title": "Mr Willy Wonka",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-14-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-15",
+          "readerPageId": "chapter-15",
+          "title": "The Chocolate Room",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-15-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-16",
+          "readerPageId": "chapter-16",
+          "title": "The Oompa-Loompas",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-16-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-17",
+          "readerPageId": "chapter-17",
+          "title": "Augustus Gloop Goes up the Pipe",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-17-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-18",
+          "readerPageId": "chapter-18",
+          "title": "Down the Chocolate River",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-18-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-19",
+          "readerPageId": "chapter-19",
+          "title": "The Inventing Room — Everlasting Gobstoppers and Hair Toffee",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-19-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-20",
+          "readerPageId": "chapter-20",
+          "title": "The Great Gum Machine",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-20-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-21",
+          "readerPageId": "chapter-21",
+          "title": "Goodbye Violet",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-21-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-22",
+          "readerPageId": "chapter-22",
+          "title": "Along the Corridor",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-22-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-23",
+          "readerPageId": "chapter-23",
+          "title": "Square Sweets That Look Round",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-23-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-24",
+          "readerPageId": "chapter-24",
+          "title": "Veruca in the Nut Room",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-24-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-25",
+          "readerPageId": "chapter-25",
+          "title": "The Great Glass Elevator",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-25-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-26",
+          "readerPageId": "chapter-26",
+          "title": "The Television-Chocolate Room",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-26-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-27",
+          "readerPageId": "chapter-27",
+          "title": "Mike Teavee is Sent by Television",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-27-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-28",
+          "readerPageId": "chapter-28",
+          "title": "Only Charlie Left",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-28-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-29",
+          "readerPageId": "chapter-29",
+          "title": "The Other Children Go Home",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-29-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-charlie-unit-30",
+          "readerPageId": "chapter-30",
+          "title": "Charlie's Chocolate Factory",
+          "planPage": "frontend/roald-dahl/teaching-v2/charlie/unit-30-plan.html",
+          "sourceChapterNumbers": []
+        }
+      ]
+    },
+    {
+      "bookId": "dahl-george",
+      "slug": "george",
+      "readerSource": "books/roald-dahl/george/book.json",
+      "teachingPlanIndex": "frontend/roald-dahl/teaching-v2/george/index.html",
+      "units": [
+        {
+          "unitId": "dahl-george-unit-01",
+          "readerPageId": "chapter-01",
+          "title": "Grandma",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-1-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-02",
+          "readerPageId": "chapter-02",
+          "title": "The Marvellous Plan",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-2-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-03",
+          "readerPageId": "chapter-03",
+          "title": "George Begins to Make the Medicine",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-3-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-04",
+          "readerPageId": "chapter-04",
+          "title": "Animal Pills",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-4-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-05",
+          "readerPageId": "chapter-05",
+          "title": "The Cook-up",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-5-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-06",
+          "readerPageId": "chapter-06",
+          "title": "Brown Paint",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-6-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-07",
+          "readerPageId": "chapter-07",
+          "title": "Grandma Gets the Medicine",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-7-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-08",
+          "readerPageId": "chapter-08",
+          "title": "The Brown Hen",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-8-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-09",
+          "readerPageId": "chapter-09",
+          "title": "The Pig, the Bullocks, the Sheep, the Pony and the Nanny-goat",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-9-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-10",
+          "readerPageId": "chapter-10",
+          "title": "A Crane for Grandma",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-10-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-11",
+          "readerPageId": "chapter-11",
+          "title": "Mr Kranky's Great Idea",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-11-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-12",
+          "readerPageId": "chapter-12",
+          "title": "Marvellous Medicine Number Two",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-12-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-13",
+          "readerPageId": "chapter-13",
+          "title": "Marvellous Medicine Number Three",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-13-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-14",
+          "readerPageId": "chapter-14",
+          "title": "Marvellous Medicine Number Four",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-14-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-george-unit-15",
+          "readerPageId": "chapter-15",
+          "title": "Goodbye Grandma",
+          "planPage": "frontend/roald-dahl/teaching-v2/george/unit-15-plan.html",
+          "sourceChapterNumbers": []
+        }
+      ]
+    },
+    {
+      "bookId": "dahl-esio-trot",
+      "slug": "esio-trot",
+      "readerSource": "books/roald-dahl/esio-trot/book.json",
+      "teachingPlanIndex": "frontend/roald-dahl/teaching-v2/esio-trot/index.html",
+      "units": [
+        {
+          "unitId": "dahl-esio-trot-unit-01",
+          "readerPageId": "chapter-01",
+          "title": "Mr Hoppy's Lonely Life & The Magic Words",
+          "planPage": "frontend/roald-dahl/teaching-v2/esio-trot/unit-1-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-esio-trot-unit-02",
+          "readerPageId": "chapter-02",
+          "title": "The Plan Begins",
+          "planPage": "frontend/roald-dahl/teaching-v2/esio-trot/unit-2-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-esio-trot-unit-03",
+          "readerPageId": "chapter-03",
+          "title": "Esio Trot... The Magic Words!",
+          "planPage": "frontend/roald-dahl/teaching-v2/esio-trot/unit-3-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-esio-trot-unit-04",
+          "readerPageId": "chapter-04",
+          "title": "The Big Swap",
+          "planPage": "frontend/roald-dahl/teaching-v2/esio-trot/unit-4-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-esio-trot-unit-05",
+          "readerPageId": "chapter-05",
+          "title": "The Final Trick",
+          "planPage": "frontend/roald-dahl/teaching-v2/esio-trot/unit-5-plan.html",
+          "sourceChapterNumbers": []
+        },
+        {
+          "unitId": "dahl-esio-trot-unit-06",
+          "readerPageId": "chapter-06",
+          "title": "Happily Ever After",
+          "planPage": "frontend/roald-dahl/teaching-v2/esio-trot/unit-6-plan.html",
+          "sourceChapterNumbers": []
+        }
+      ]
+    }
+  ]
+}
