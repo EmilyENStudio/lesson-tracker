@@ -2156,17 +2156,22 @@
     { key:'story', title:'Story World', desc:'短篇与故事世界 · 复习与 My Words', cover:'cover-story', emoji:'🌍', mark:'STORIES',
       href:'/story-world.html', entryLabel:'进入 Story World', course:null, always:true, books:[] }
   ];
-  function libUnlocked(s, records){
+  function libUnlocked(s, records, currentClasses){
     if (s.always) return true;
     if (!s.course) return false;
-    return (records || []).some(function (r) { return s.course.test(String(r.courseName || '') + ' ' + (r.lessonTitle || '')); });
+    var evidence = (records || []).slice();
+    if (s.key === 'flyguy') evidence = evidence.concat(currentClasses || []);
+    return evidence.some(function (r) {
+      return s.course.test([r.courseName, r.lessonTitle, r.lessonName, r.title, r.content]
+        .filter(Boolean).join(' '));
+    });
   }
   function closeSeriesDetail(){
     var d = $('libSeriesDetail');
     if (d) { d.classList.remove('open'); d.innerHTML = ''; }
   }
-  function renderSeriesDetail(s, records){
-    var un = libUnlocked(s, records);
+  function renderSeriesDetail(s, records, currentClasses){
+    var un = libUnlocked(s, records, currentClasses);
     var subs = '';
     if (s.books && s.books.length) {
       subs = '<div class="lib-subgrid">' + s.books.map(function (b) {
@@ -2208,9 +2213,9 @@
     var cl = $('libDetailClose');
     if (cl) cl.addEventListener('click', closeSeriesDetail);
   }
-  function openSeriesDetail(key, records){
+  function openSeriesDetail(key, records, currentClasses){
     for (var i = 0; i < LIBRARY_SERIES.length; i++) {
-      if (LIBRARY_SERIES[i].key === key) { renderSeriesDetail(LIBRARY_SERIES[i], records); break; }
+      if (LIBRARY_SERIES[i].key === key) { renderSeriesDetail(LIBRARY_SERIES[i], records, currentClasses); break; }
     }
     var d = $('libSeriesDetail');
     if (d) { d.classList.add('open'); d.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
@@ -2219,9 +2224,10 @@
     var grid = $('libGrid');
     if (!grid) return;
     var records = (data && data.records) || [];
+    var currentClasses = ((data && data.schedule) || []).concat((data && data.oneTimeClasses) || []);
     var cards = '';
     LIBRARY_SERIES.forEach(function (s) {
-      var un = libUnlocked(s, records);
+      var un = libUnlocked(s, records, currentClasses);
       cards += '<button class="book-card ' + (un ? 'is-link' : 'locked') + '" data-key="' + s.key + '" data-status="' + (un ? 'unlocked' : 'locked') + '">'
         + '<div class="cover ' + s.cover + '"><span class="cover-emoji">' + s.emoji + '</span><span class="cover-mark">' + esc(s.mark) + '</span></div>'
         + '<div class="book-body"><h4>' + esc(s.title) + '</h4><p>' + esc(s.desc) + '</p>'
@@ -2230,7 +2236,7 @@
     });
     grid.innerHTML = cards;
     grid.querySelectorAll('.book-card[data-key]').forEach(function (c) {
-      c.addEventListener('click', function () { openSeriesDetail(c.dataset.key, records); });
+      c.addEventListener('click', function () { openSeriesDetail(c.dataset.key, records, currentClasses); });
     });
     closeSeriesDetail();
   }
