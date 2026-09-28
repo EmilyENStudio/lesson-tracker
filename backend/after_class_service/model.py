@@ -264,7 +264,12 @@ def project(students, states, today=None, start=None, finish=None):
                        title=target['title'], needsCheck=False, missing=target['missing'],
                        publication=target['publication'])
             row['ready'] = target['ready']
-            row['nextAction'] = target['nextAction']
+            send_state = states.get(row['id'], {}).get('data', {})
+            row['sentAt'] = send_state.get('sentAt', '')
+            row['sent'] = bool(row['sentAt']) and send_state.get('sentPublication') == target['publication']
+            row['notificationChanged'] = bool(row['sentAt']) and send_state.get('sentPublication') != target['publication']
+            row['nextAction'] = ('发送家长通知' if row['ready'] and not row['sent'] else
+                                 '查看家长反馈' if row['sent'] else target['nextAction'])
     return sorted(rows, key=lambda r: (r['date'], r['time'], r['course'], r['studentName']), reverse=True)
 
 
