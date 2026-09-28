@@ -2160,7 +2160,7 @@
     if (s.always) return true;
     if (!s.course) return false;
     var evidence = (records || []).slice();
-    if (s.key === 'flyguy') evidence = evidence.concat(currentClasses || []);
+    if (s.key === 'flyguy' || s.key === 'frogtoad') evidence = evidence.concat(currentClasses || []);
     return evidence.some(function (r) {
       return s.course.test([r.courseName, r.lessonTitle, r.lessonName, r.title, r.content]
         .filter(Boolean).join(' '));
