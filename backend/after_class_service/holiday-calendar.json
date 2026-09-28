@@ -1,0 +1,19 @@
+{
+  "region": {"province": "浙江省", "city": "绍兴市", "district": "越城区"},
+  "source": "国务院办公厅关于2026年部分节假日安排的通知",
+  "updated": "2026-09-20",
+  "days": [
+    {"date": "2026-09-20", "name": "调休上学日", "holiday_type": "makeup_school_day", "student_daytime_available": false},
+    {"date": "2026-09-25", "name": "中秋节", "holiday_type": "national_holiday", "student_daytime_available": true},
+    {"date": "2026-09-26", "name": "中秋节", "holiday_type": "national_holiday", "student_daytime_available": true},
+    {"date": "2026-09-27", "name": "中秋节", "holiday_type": "national_holiday", "student_daytime_available": true},
+    {"date": "2026-10-01", "name": "国庆节", "holiday_type": "national_holiday", "student_daytime_available": true},
+    {"date": "2026-10-02", "name": "国庆节", "holiday_type": "national_holiday", "student_daytime_available": true},
+    {"date": "2026-10-03", "name": "国庆节", "holiday_type": "national_holiday", "student_daytime_available": true},
+    {"date": "2026-10-04", "name": "国庆节", "holiday_type": "national_holiday", "student_daytime_available": true},
+    {"date": "2026-10-05", "name": "国庆节", "holiday_type": "national_holiday", "student_daytime_available": true},
+    {"date": "2026-10-06", "name": "国庆节", "holiday_type": "national_holiday", "student_daytime_available": true},
+    {"date": "2026-10-07", "name": "国庆节", "holiday_type": "national_holiday", "student_daytime_available": true},
+    {"date": "2026-10-10", "name": "调休上学日", "holiday_type": "makeup_school_day", "student_daytime_available": false}
+  ]
+}
