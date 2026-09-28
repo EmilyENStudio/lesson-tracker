@@ -131,6 +131,14 @@ def project(students, states, today=None, start=None, finish=None):
                 if (candidate and candidate['schedules'] and not candidate['records'] and not conflict
                         and saved_attendance not in ('leave', 'makeup_pending', 'cancelled')):
                     item = candidate
+            if item is None and time:
+                # A saved record can carry its creation time instead of the lesson's
+                # scheduled time. Link it only when one unambiguous same-day slot exists.
+                candidates = [r for r in possible if r['schedules'] and not r['records'] and
+                              states.get(r['id'], {}).get('data', {}).get('attendance') not in
+                              ('leave', 'makeup_pending', 'cancelled')]
+                if len(candidates) == 1:
+                    item = candidates[0]
             if item is None:
                 if not first <= day <= last:
                     continue
