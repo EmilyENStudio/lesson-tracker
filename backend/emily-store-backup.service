@@ -1,0 +1,13 @@
+[Unit]
+Description=Verified backup of unified Emily operational storage
+
+[Service]
+Type=oneshot
+User=emily-practice
+Group=emily-practice
+ExecStart=/usr/bin/python3 /opt/emily-store/backup_unified_store.py
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/emily-store
