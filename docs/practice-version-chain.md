@@ -24,3 +24,14 @@ aggregate counts only and contains no student names or answers. It never writes 
 Route tests use a Flask test client, temporary assignment/submission JSON files,
 and synthetic auth tokens. Production profile, attendance, and payment files are
 not test fixtures. This phase retains the existing file storage and service ownership.
+
+## Runtime deployment boundary
+
+The live homepage contains newer server-only changes beyond the repository mirror.
+Do not deploy this repository as a whole-site copy. Compare and back up each live
+file, then apply only the selected modules or guarded patches. The after-class
+loader added on 2026-09-28 is represented by `backend/patch_after_class_home.py`.
+Its default mode only checks; applying requires the inspected live file hash and
+preserves all other bytes, owner, and mode. The current production loader is already
+up to date. The follow-up service model and JavaScript snapshot include that day's
+notification and lesson-record matching fixes.
