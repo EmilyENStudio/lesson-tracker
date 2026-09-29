@@ -32,8 +32,11 @@ def link_assignment_version(assignment: dict) -> None:
         raise ValueError("assignment requires taskIds and frozen task snapshots")
     if any(not isinstance(task, dict) or not task.get("id") for task in snapshots):
         raise ValueError("assignment contains an invalid task snapshot")
-    snapshot_ids = {str(task["id"]) for task in snapshots}
-    if snapshot_ids != {str(task_id) for task_id in task_ids}:
+    snapshot_ids = [str(task["id"]) for task in snapshots]
+    selected_ids = [str(task_id) for task_id in task_ids]
+    if len(set(snapshot_ids)) != len(snapshot_ids) or len(set(selected_ids)) != len(selected_ids):
+        raise ValueError("assignment contains duplicate task IDs")
+    if set(snapshot_ids) != set(selected_ids):
         raise ValueError("taskIds do not match frozen task snapshots")
     for task in snapshots:
         expected = task_version(task)
@@ -49,7 +52,10 @@ def link_assignment_version(assignment: dict) -> None:
 def link_submission_version(submission: dict, assignment: dict) -> None:
     link_assignment_version(assignment)
     versions = {str(task["id"]): task["taskVersionId"] for task in assignment["tasks"]}
-    submission["assignmentVersionId"] = assignment["assignmentVersionId"]
+    expected = assignment["assignmentVersionId"]
+    if submission.get("assignmentVersionId") not in (None, expected):
+        raise ValueError("作业版本不匹配，请刷新作业后再提交")
+    linked_items = []
     for field in ("answers", "files"):
         values = submission.get(field, [])
         if not isinstance(values, list):
@@ -64,4 +70,9 @@ def link_submission_version(submission: dict, assignment: dict) -> None:
                 continue
             if task_id not in versions:
                 raise ValueError("submission answer refers to a task outside its assignment")
-            item["taskVersionId"] = versions[task_id]
+            if item.get("taskVersionId") not in (None, versions[task_id]):
+                raise ValueError("题目版本与已分发的作业不一致，请刷新作业后再提交")
+            linked_items.append((item, versions[task_id]))
+    submission["assignmentVersionId"] = expected
+    for item, version in linked_items:
+        item["taskVersionId"] = version

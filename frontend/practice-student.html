@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Practice · 学生端</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#F5F3EE;color:#2B2A26;padding:24px}
+.student-practice{max-width:900px;margin:0 auto}
+header{background:#244F38;color:#fff;border-radius:14px;padding:20px;margin-bottom:16px}
+header h1{font-size:22px}
+header .who{font-size:13px;opacity:.85;margin-top:4px}
+.back-link{display:inline-block;margin:0 0 12px;color:#244F38;font-size:14px;text-decoration:none;font-weight:600}
+section{background:#fff;border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+section h2{font-size:16px;color:#244F38;margin-bottom:14px;border-bottom:1px solid #EEE9E0;padding-bottom:8px}
+.practice-card{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid #EEE9E0;border-radius:10px;padding:14px;margin-bottom:10px}
+.practice-card strong{font-size:15px}
+.practice-card p{color:#6E6A5E;font-size:13px;margin:4px 0}
+.practice-card small{color:#8A8678;font-size:12px}
+.practice-card button{cursor:pointer;border:none;border-radius:8px;padding:9px 14px;font-size:13px;background:#244F38;color:#fff;white-space:nowrap}
+.practice-card button:hover{background:#1D3F2D}
+.practice-card button.ghost{background:#fff;border:1px solid #244F38;color:#244F38}
+.empty{color:#8A8678;padding:20px 0;text-align:center}
+.stu-status{display:inline-block;font-size:12px;padding:3px 8px;border-radius:12px}
+.stu-status.submitted{background:#F4E9D7;color:#9A6B1F}
+.stu-status.checked{background:#E2EFE6;color:#1D7A3F}
+.stu-status.needredo{background:#FBE4E0;color:#B4452C}
+.meta{color:#8A8678;font-size:12px;margin:4px 0}
+.task-card{border:1px solid #EEE9E0;border-radius:10px;padding:14px;margin-bottom:12px}
+.task-title{font-size:14px;font-weight:600;color:#244F38;margin-bottom:4px}
+.task-prompt{font-size:13px;color:#4A4A44;margin-bottom:10px;line-height:1.6}
+.task-required{color:#B4452C;font-size:12px}
+.opt{display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid #EEE9E0;border-radius:8px;margin-bottom:8px;cursor:pointer;font-size:14px}
+.opt input{accent-color:#244F38;width:16px;height:16px}
+.opt.selected{background:#EEF3EF;border-color:#244F38}
+.mcq{border:1px solid #EEE9E0;border-radius:10px;padding:10px 12px;margin-bottom:12px;background:#FCFBF9}
+.mcq .mcq-q{font-size:14px;font-weight:600;color:#244F38;margin-bottom:8px}
+.shortinput{width:100%;min-height:80px;padding:10px 12px;border:1px solid #DCD6CA;border-radius:8px;font-size:14px;background:#FCFBF9;resize:vertical;font-family:inherit}
+.checklist-label{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid #EEE9E0;border-radius:8px;margin-bottom:8px;cursor:pointer;font-size:14px}
+.checklist-label input{accent-color:#244F38;width:16px;height:16px}
+.order-box{display:flex;flex-direction:column;gap:8px}
+.ri{display:flex;align-items:center;gap:8px;border:1px solid #EEE9E0;border-radius:8px;padding:8px 12px;background:#FCFBF9;font-size:14px}
+.ri .gh{color:#C9C3B4;cursor:grab}
+.ri .rit{flex:1}
+.ri button{background:#EEF3EF;border:1px solid #D4E0D6;color:#244F38;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:12px}
+.match-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.match-col h4{font-size:13px;color:#244F38;margin-bottom:8px;border-bottom:1px solid #EEE9E0;padding-bottom:6px}
+.left-slot{border:1px solid #EEE9E0;border-radius:8px;padding:8px 12px;margin-bottom:8px;background:#FCFBF9;font-size:14px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.left-slot .assigned{color:#1D7A3F;font-size:12px;background:#E2EFE6;border-radius:6px;padding:2px 8px}
+.left-slot .unassigned{color:#8A8678;font-size:12px}
+.right-card{border:1px solid #EEE9E0;border-radius:8px;padding:8px 12px;margin-bottom:8px;background:#fff;font-size:14px;cursor:pointer;text-align:center}
+.right-card.avail{border-style:dashed}
+.right-card.selected{background:#EEF3EF;border-color:#244F38;border-style:solid}
+.hint-note{color:#8A8678;font-size:12px;margin-bottom:8px}
+.upload-note{color:#9A6B1F;background:#FBF3E4;border:1px dashed #E3C98A;border-radius:8px;padding:12px;font-size:13px}
+.submit-bar{margin-top:8px;display:flex;justify-content:flex-end}
+.submit-bar button,.do-btn,.back-btn{cursor:pointer;border:none;border-radius:8px;padding:10px 18px;font-size:14px;background:#244F38;color:#fff}
+.submit-bar button:hover{background:#1D3F2D}
+.login-prompt{background:#fff;border-radius:14px;padding:40px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.login-prompt p{margin-bottom:16px;color:#6E6A5E}
+.hidden{display:none}
+.feedback{background:#F4F7F4;border-radius:8px;padding:10px 12px;font-size:13px;color:#2B2A26;margin-top:6px;border-left:3px solid #244F38}
+.feedback b{color:#244F38}
+.feedback-correct{color:#1D7A3F;font-weight:700}
+.worksheet-field{display:block;margin:16px 0;font-size:14px}.worksheet-field>span{display:block;margin-bottom:8px;white-space:pre-wrap}.worksheet-field input,.worksheet-field textarea{display:block;width:100%;box-sizing:border-box;padding:12px;border:1px solid #c6d3c9;border-radius:6px;font:inherit;background:white;color:#222}.worksheet-field textarea{min-height:110px;resize:vertical}.task-prompt{white-space:pre-wrap}.ri{touch-action:pan-y}.ri[draggable=true]{cursor:grab}.task-card{min-width:0;overflow-wrap:anywhere}.rit{min-width:0}.draft-status{font-size:12px;color:#596c60;padding:6px 0}
+</style>
+<link rel="stylesheet" href="/exercise-view.css?v=20260908-3">
+<script src="/exercise-view.js?v=20260908-3"></script>
+</head>
+<body>
+<main class="student-practice">
+  <header>
+    <h1>My Practice</h1>
+    <div class="who" id="whoText"></div>
+  </header>
+
+  <div id="loginBox" class="login-prompt hidden">
+    <p>请先登录后再查看作业。</p>
+    <button class="do-btn" type="button" onclick="relogin()">重新登录</button>
+  </div>
+
+  <div id="listView">
+    <section id="todoSection"><h2>待完成</h2><div id="todoList"></div></section>
+    <section id="doneSection"><h2>已提交 / 已批改</h2><div id="doneList"></div></section>
+  </div>
+
+  <div id="detailView" class="hidden">
+    <a class="back-link" href="javascript:void(0)" onclick="showList()">← 返回作业列表</a>
+    <section>
+      <h2 id="detailTitle"></h2>
+      <div class="meta" id="detailMeta"></div>
+      <div id="taskArea"></div>
+      <div class="submit-bar"><button type="button" id="submitBtn" onclick="submitCurrent()">提交作业</button></div>
+    </section>
+  </div>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  function esc(s){
+    if(s==null) return '';
+    return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});
+  }
+  function norm(s){ return s==null?'':String(s).trim().toLowerCase(); }
+
+  // ---------- 身份与认证 ----------
+  function getCurrentStudent(){
+    var params=new URLSearchParams(location.search);
+    return params.get('student') || localStorage.getItem('lesson_tracker_user') || localStorage.getItem('currentUser') || 'mia';
+  }
+  function getToken(){ return localStorage.getItem('authToken')||''; }
+  function authHeaders(t){ return {'Authorization':'Bearer '+(t||getToken())}; }
+  async function ensureToken(username,role){
+    var t=getToken(); if(t) return t;
+    var res=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:username,password:'000',role:role||'student'})});
+    if(!res.ok){ var e=await res.json().catch(function(){return{};}); throw new Error((e&&e.error)||'登录失败'); }
+    var d=await res.json(); localStorage.setItem('authToken',d.token); return d.token;
+  }
+
+  // ---------- 全局状态 ----------
+  var assignments=[];   // 该生全部作业
+  var submissions=[];   // 该生全部提交
+  var currentAssignment=null; // 正在作答的 assignment
+  var renderState={};   // taskId -> {type, ...} 用于收集 answers
+
+  var studentId='';
+  function init(){
+    studentId=getCurrentStudent();
+    $('whoText').textContent='学生：'+studentId;
+    ensureToken(studentId,'student').then(async function(token){
+      var auth=await fetch('/api/auth/me',{headers:authHeaders(token),cache:'no-store'});
+      var me=auth.ok?await auth.json():null;
+      if(!me||me.role!=='student'||norm(me.username)!==norm(studentId))throw Error('请重新登录当前学员账号');
+      $('loginBox').classList.add('hidden');
+      $('listView').classList.remove('hidden');
+      return loadAll();
+    }).catch(function(err){
+      $('loginBox').classList.remove('hidden');
+      $('listView').classList.add('hidden');
+      $('detailView').classList.add('hidden');
+      console.error('auth error:',err);
+    });
+  }
+  function relogin(){
+    localStorage.removeItem('authToken');
+    location.reload();
+  }
+
+  async function loadAll(){
+    var token=ensureToken(studentId,'student');
+    var params=new URLSearchParams(location.search);
+    var targetId=params.get('assignmentId');
+    try{
+      var t=await token;
+      var ar=await fetch('/api/practice/assignments?student='+encodeURIComponent(studentId),{headers:authHeaders(t),cache:'no-store'});
+      if(!ar.ok){ assignments=[]; }
+      else { assignments=await ar.json(); }
+      var sr=await fetch('/api/practice/submissions?student='+encodeURIComponent(studentId),{headers:authHeaders(t),cache:'no-store'});
+      if(sr.ok) submissions=await sr.json();
+    }catch(e){ console.error('load error',e); assignments=[]; submissions=[]; }
+
+    // 归一化 studentId 匹配
+    var n=norm(studentId);
+    assignments=assignments.filter(function(a){
+      return (a.studentIds||[]).some(function(s){return norm(s)===n;})
+        || (a.targetIds||[]).some(function(s){return norm(s)===n;});
+    });
+
+    if(targetId){
+      var found=assignments.filter(function(a){return a.assignmentId===targetId;})[0];
+      if(found){ openAssignment(found); }
+      else { showList(); $('todoList').innerHTML='<p class="empty">未找到该作业。</p>'; }
+      return;
+    }
+    renderList();
+  }
+
+  function mySubmissionFor(assignmentId){
+    var n=norm(studentId);
+    return submissions.filter(function(s){ return norm(s.studentId)===n && s.assignmentId===assignmentId; })[0];
+  }
+  function isChecked(assignmentId){ var s=mySubmissionFor(assignmentId); return s && s.status==='checked'; }
+  function statusLabel(assignmentId){
+    var s=mySubmissionFor(assignmentId);
+    if(!s) return '';
+    var map={checked:'已批改',needredo:'需重做',submitted:'已提交'};
+    var cls=s.status==='checked'?'checked':(s.status==='needredo'?'needredo':'submitted');
+    return '<span class="stu-status '+cls+'">'+(map[s.status]||s.status)+'</span>';
+  }
+
+  function formatTeacherFeedback(value){
+    var safe=esc(value||'');
+    return safe.replace(/(正确答案\s*[：:]?\s*(?:「[^」]*」|\[[^\]]*\]|[^；;\n，,。]*))/g,'<strong class="feedback-correct">$1</strong>');
+  }
+
+  function renderList(){
+    var pending=[],done=[];
+    assignments.forEach(function(a){
+      var s=mySubmissionFor(a.assignmentId);
+      if(s) done.push(a); else pending.push(a);
+    });
+
+    var todoBox=$('todoList');
+    if(!pending.length){ todoBox.innerHTML='<p class="empty">没有待完成的作业。</p>'; }
+    else{
+      todoBox.innerHTML=pending.map(function(a){
+        var meta=[];
+        if(a.courseName) meta.push(esc(a.courseName));
+        if(a.relatedClassDate) meta.push('上课：'+esc(a.relatedClassDate));
+        if(a.dueDate) meta.push('截止：'+esc(a.dueDate));
+        var n=(a.tasks||[]).length;
+        return '<article class="practice-card">'
+          +'<div><strong>'+esc(a.title||a.assignmentId)+'</strong>'
+          +(meta.length?'<p>'+meta.join(' · ')+'</p>':'')
+          +'<small>共 '+(n||0)+' 个任务</small></div>'
+          +'<button type="button" onclick="app.openAssignmentId(\''+esc(a.assignmentId)+'\')">开始作答</button>'
+          +'</article>';
+      }).join('');
+    }
+
+    var doneBox=$('doneList');
+    if(!done.length){ doneBox.innerHTML='<p class="empty">还没有已提交的作业。</p>'; }
+    else{
+      doneBox.innerHTML=done.map(function(a){
+        var s=mySubmissionFor(a.assignmentId);
+        var fb=s&&s.teacherFeedback
+          ?'<div class="feedback"><b>老师反馈：</b><br>'+formatTeacherFeedback(s.teacherFeedback)+'</div>'
+          :(s&&s.status==='checked'?'<div class="feedback"><b>已批改</b>'+(s.score!=null?' · 评分：'+esc(s.score):'')+'，无反馈。</div>':'');
+        var meta=[];
+        if(a.relatedClassDate) meta.push('上课：'+esc(a.relatedClassDate));
+        if(a.dueDate) meta.push('截止：'+esc(a.dueDate));
+        return '<article class="practice-card">'
+          +'<div><strong>'+esc(a.title||a.assignmentId)+'</strong>'
+          +(meta.length?'<p>'+meta.join(' · ')+'</p>':'')
+          +fb+'<button type="button" onclick="app.openAssignmentId(\''+esc(a.assignmentId)+'\')">查看答案与老师反馈</button></div>'
+          +'<div style="flex-direction:column;display:flex;gap:8px;align-items:flex-end"><div>'+statusLabel(a.assignmentId)+'</div></div>'
+          +'</article>';
+      }).join('');
+    }
+  }
+
+  // ---------- 作答渲染 ----------
+  function taskTitle(task){ return esc(task.title||task.part||task.lesson||'任务')+(task.required?'<span class="task-required"> ·必做</span>':''); }
+
+  function openAssignment(assignment){
+    currentAssignment=assignment;
+    renderState={};
+    $('detailView').classList.remove('hidden');
+    $('listView').classList.add('hidden');
+    $('detailTitle').textContent=assignment.title||assignment.assignmentId;
+    var meta=[];
+    if(assignment.courseName) meta.push(esc(assignment.courseName));
+    if(assignment.series) meta.push(esc(assignment.series));
+    if(assignment.book) meta.push(esc(assignment.book));
+    if(assignment.lesson) meta.push(esc(assignment.lesson));
+    if(assignment.relatedClassDate) meta.push('上课：'+esc(assignment.relatedClassDate));
+    if(assignment.dueDate) meta.push('截止：'+esc(assignment.dueDate));
+    $('detailMeta').innerHTML=meta.join(' · ')||'';
+    var submission=mySubmissionFor(assignment.assignmentId);
+    $('submitBtn').hidden=!!submission;
+    if(submission){$('taskArea').innerHTML=renderSubmitted(assignment,submission);return;}
+    renderTasks(assignment.tasks||[]);
+  }
+
+  function renderSubmitted(assignment,submission){
+    var feedbackText=submission.teacherFeedback||(submission.status==='checked'?'老师已批改，未填写文字反馈。':'已提交，等待老师批改。');
+    var result='<section class="feedback" style="white-space:pre-wrap"><b>老师反馈</b><p>'+formatTeacherFeedback(feedbackText)+'</p>'+(submission.score!=null?'<p>评分：'+esc(submission.score)+'</p>':'')+'</section>';
+    (submission.answers||[]).forEach(function(answer){
+      var task=(assignment.tasks||[]).find(function(t){return t.id===answer.taskId;})||{};
+      result+='<section class="task-card"><h3>'+esc(answer.taskTitle||task.title||'已提交答案')+'</h3>';
+      if(answer.type==='worksheet'){
+        (task.fields||[]).forEach(function(field){var value=(answer.value||{})[field.id]||'';result+='<p><b>'+esc(field.label)+'</b></p><p>'+esc(value||'未作答')+'</p>';});
+      }else if(answer.type==='multiple-choice'){
+        var values=Array.isArray(answer.value)?answer.value:[answer.value];
+        values.forEach(function(value,i){var q=(task.questions||[])[i]||task;var option=(q.options||[]).find(function(o){return o.value===value;});result+='<p>'+esc(q.prompt||'')+'</p><p>'+esc(option?option.label:value??'未作答')+'</p>';});
+      }else{result+='<p style="white-space:pre-wrap">'+esc(Array.isArray(answer.value)?answer.value.join('\n'):typeof answer.value==='object'?JSON.stringify(answer.value):answer.value||'未作答')+'</p>';}
+      result+='</section>';
+    });return result;
+  }
+
+  function renderTasks(tasks){
+    var area=$('taskArea');
+    area.innerHTML=tasks.map(function(task,i){
+      var body=renderTaskBody(task);
+      return '<div class="task-card"><div class="task-title">'+(i+1)+'. '+taskTitle(task)+'</div>'
+        +'<div class="task-prompt">'+esc(task.prompt||task.instructions||'')+'</div>'
+        +body+'</div>';
+    }).join('');
+    tasks.forEach(function(t){
+      if(window.ExerciseView&&['drag-order','drag-match'].includes(t.studentRenderer)){
+        window.ExerciseView.mount($('ev_'+t.id),t,function(value){const st=renderState[t.id];if(t.studentRenderer==='drag-order')st.value=value;else{st.assigned={};value.forEach(function(v,i){if(v!=null)st.assigned[i]=st.pairs.findIndex(function(p){return p.right===v;});});}});
+      }else{if(t.studentRenderer==='drag-order')renderOrderBox(t.id);if(t.studentRenderer==='drag-match')renderMatchBox(t.id);}
+    });
+    area.querySelectorAll('[data-field-task]').forEach(function(input){input.addEventListener('input',function(){renderState[input.dataset.fieldTask].value[input.dataset.fieldId]=input.value;});});
+  }
+
+  function renderTaskBody(task){
+    var r=task.studentRenderer;
+    switch(r){
+      case 'multiple-choice': return renderMC(task);
+      case 'checklist': return renderChecklist(task);
+      case 'short-answer': return renderShort(task);
+      case 'worksheet': return renderWorksheet(task);
+      case 'drag-order': return renderOrder(task);
+      case 'drag-match': return renderMatch(task);
+      case 'upload': return '<div class="upload-note">📎 本任务需要上传图片或录音，上传功能建设中（后端暂未接入），请线下交给老师。</div>';
+      default: return '<div class="upload-note">暂不支持该题型（'+(r||task.type||'unknown')+'）。</div>';
+    }
+  }
+
+  // multiple-choice：支持单题(options)或多题(questions:[{prompt,options}])
+  function renderMC(task){
+    var id=task.id;
+    var qs=task.questions||[];
+    if(qs.length){
+      renderState[id]={type:'multiple-choice', value:qs.map(function(){return null;})};
+      return qs.map(function(q,qi){
+        var name='mc_'+id+'_'+qi;
+        return '<div class="mcq" data-q="'+qi+'">'
+          +'<div class="mcq-q">'+esc(q.prompt||'')+'</div>'
+          +((q.options||[]).map(function(o){
+            return '<label class="opt"><input type="radio" name="'+name+'" onchange="app.pickMC(\''+esc(id)+'\','+qi+',\''+escAttr(o.value)+'\',this)"><span>'+esc(o.label)+'</span></label>';
+          }).join(''))
+          +'</div>';
+      }).join('');
+    }
+    renderState[id]={type:'multiple-choice',value:null};
+    var name='mc_'+id;
+    return (task.options||[]).map(function(o,i){
+      return '<label class="opt"><input type="radio" name="'+name+'" onchange="app.pickMC(\''+esc(id)+'\',0,\''+escAttr(o.value)+'\',this)"><span>'+esc(o.label)+'</span></label>';
+    }).join('');
+  }
+  function escAttr(v){ return String(v==null?'':v).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,' '); }
+
+  // checklist
+  function renderChecklist(task){
+    var id=task.id; renderState[id]={type:'checklist',value:''};
+    var text=task.instructions||task.prompt||'点击完成';
+    return '<label class="checklist-label"><input type="checkbox" onchange="app.tickCheck(\''+esc(id)+'\',this.checked)"><span>'+esc(text)+'</span></label>';
+  }
+
+  // short-answer
+  function renderShort(task){
+    var id=task.id; renderState[id]={type:'short-answer',value:''};
+    return '<textarea class="shortinput" oninput="app.typeShort(\''+esc(id)+'\',this.value)" placeholder="在这里作答…"></textarea>';
+  }
+
+  function renderWorksheet(task){
+    renderState[task.id]={type:'worksheet',value:{}};
+    if(window.ExerciseView&&task.layout)return window.ExerciseView.worksheet(task);
+    return (task.fields||[]).map(function(f){
+      return '<label class="worksheet-field"><span>'+esc(f.label)+'</span>'+(f.multiline?'<textarea':'<input type="text"')+' data-field-task="'+esc(task.id)+'" data-field-id="'+esc(f.id)+'" '+(f.multiline?'rows="4"></textarea>':'>')+'</label>';
+    }).join('');
+  }
+
+  // drag-order：上下按钮 + 拖拽手柄
+  function renderOrder(task){
+    var id=task.id; var items=(task.items||[]).slice();
+    renderState[id]={type:'drag-order', items:items.slice(), value:items.slice()};
+    if(window.ExerciseView)return '<div id="ev_'+esc(id)+'"></div>';
+    return '<div class="hint-note">把词语按顺序排好（可用 ▲▼ 或拖动 ☰ 手柄）。</div><div class="order-box" id="order_'+esc(id)+'"></div>';
+  }
+
+  // drag-match：点击配对
+  function renderMatch(task){
+    var id=task.id; var pairs=task.pairs||[];
+    renderState[id]={type:'drag-match', pairs:pairs, assigned:{}, pool:pairs.map(function(p,i){return i;}), selected:null};
+    if(window.ExerciseView)return '<div id="ev_'+esc(id)+'"></div>';
+    return '<div class="hint-note">先点击右侧卡片，再点击左侧词条进行配对；再次点击已配对的词条可取消。</div>'
+      +'<div class="match-wrap" id="match_'+esc(id)+'"></div>';
+  }
+
+  // 渲染 order 容器
+  function renderOrderBox(id){
+    var box=$('order_'+id); if(!box) return;
+    var st=renderState[id]; var arr=st.value;
+    box.innerHTML=arr.map(function(it,i){
+      return '<div class="ri" draggable="true" data-index="'+i+'"><span class="gh">☰</span><span class="rit">'+esc(it)+'</span>'
+        +'<button type="button" onclick="app.moveOrder(\''+esc(id)+'\','+i+',-1)">▲</button>'
+        +'<button type="button" onclick="app.moveOrder(\''+esc(id)+'\','+i+',1)">▼</button></div>';
+    }).join('');
+    box.querySelectorAll('.ri').forEach(function(row){
+      row.addEventListener('dragstart',function(e){e.dataTransfer.setData('text/plain',id+':'+row.dataset.index);});
+      row.addEventListener('dragover',function(e){e.preventDefault();});
+      row.addEventListener('drop',function(e){e.preventDefault();var raw=e.dataTransfer.getData('text/plain'),split=raw.lastIndexOf(':');if(raw.slice(0,split)!==id)return;var from=Number(raw.slice(split+1)),to=Number(row.dataset.index);if(!Number.isInteger(from)||from<0||from>=arr.length)return;arr.splice(to,0,arr.splice(from,1)[0]);renderOrderBox(id);});
+    });
+  }
+
+  // 渲染 match 容器
+  function renderMatchBox(id){
+    var box=$('match_'+id); if(!box) return;
+    var st=renderState[id]; var pairs=st.pairs;
+    var leftHtml=pairs.map(function(p,i){
+      var assigned = (st.assigned[i]!=null) ? st.assigned[i] : null;
+      var rightLabel = assigned!=null ? pairs[assigned].right : null;
+      return '<div class="left-slot"><span>'+esc(p.left)+'</span>'
+        +(rightLabel!=null
+          ?'<span class="assigned">'+esc(rightLabel)+' <a href="javascript:void(0)" onclick="app.unmatch(\''+esc(id)+'\','+i+',event)">✕</a></span>'
+          :'<span class="unassigned">未配对</span>')
+        +'</div>';
+    }).join('');
+    var poolHtml=(st.pool&&st.pool.length)?st.pool.map(function(pi,poolIdx){
+      var cls='right-card avail'+(st.selected===pi?' selected':'');
+      return '<div class="'+cls+'" onclick="app.pickCard(\''+esc(id)+'\','+pi+')">'+esc(pairs[pi].right)+'</div>';
+    }).join(''):'<div class="unassigned">全部配对完成 ✓</div>';
+
+    box.innerHTML='<div class="match-col"><h4>词语 / 句子</h4>'+leftHtml+'</div>'
+      +'<div class="match-col"><h4>含义卡片</h4>'+poolHtml+'</div>';
+  }
+
+  // ---------- answers 收集 ----------
+  function buildAnswers(tasks){
+    var answers=[]; var missing=[];
+    (tasks||[]).forEach(function(task){
+      var a=collectAnswer(task);
+      if(task.required && a.empty) missing.push(task.title||task.lesson||task.id);
+      answers.push(a.answer);
+    });
+    return {answers:answers, missing:missing};
+  }
+  function collectAnswer(task){
+    var id=task.id; var st=renderState[id];
+    var base={taskId:id, taskVersionId:task.taskVersionId, taskTitle:task.title||task.part||task.id, type:task.studentRenderer||task.type};
+    if(!st) return {answer:{...base,value:null,autoScore:null}, empty:true};
+    var type=st.type;
+    var value=null, empty=true, autoScore=null;
+    if(type==='multiple-choice'){
+      var qs=task.questions||[];
+      base.questionLabels=(qs.length?qs:[task]).map(function(q){return q.prompt||task.prompt||'';});
+      base.choiceLabels=(qs.length?qs:[task]).map(function(q){var labels={};(q.options||[]).forEach(function(o){labels[o.value]=o.label;});return labels;});
+      if(qs.length && st.value instanceof Array){
+        value=st.value.slice();
+        var any=false, correctCount=0;
+        qs.forEach(function(q,qi){
+          var v=value[qi];
+          if(v!=null){ any=true; var c=(q.options||[]).filter(function(o){return o.correct;})[0]; if(c&&c.value===v) correctCount++; }
+        });
+        empty=value.some(function(v){return v==null;});
+        autoScore=any?correctCount/qs.length:null;
+      }else{
+        value=st.value;
+        if(value!=null){ empty=false; var correct=(task.options||[]).filter(function(o){return o.correct;})[0]; autoScore=(correct&&correct.value===value)?1:0; }
+      }
+    }else if(type==='checklist'){
+      value=st.value==='done'?'done':'';
+      if(st.value==='done'){ empty=false; }
+    }else if(type==='short-answer'){
+      value=(st.value||'').trim();
+      if(value){ empty=false; }
+    }else if(type==='worksheet'){
+      value=Object.assign({},st.value);
+      var fields=task.fields||[];
+      base.fieldLabels={};fields.forEach(function(f){base.fieldLabels[f.id]=f.label;});
+      empty=!fields.length||fields.some(function(f){return !(value[f.id]||'').trim();});
+      if(fields.length&&fields.every(function(f){return f.acceptedAnswers&&f.acceptedAnswers.length;})){
+        var normalize=function(v){return String(v||'').trim().toLowerCase().replace(/\s+/g,' ');};
+        autoScore=fields.filter(function(f){return f.acceptedAnswers.some(function(a){return normalize(a)===normalize(value[f.id]);});}).length/fields.length;
+      }
+    }else if(type==='drag-order'){
+      value=(st.value||[]).slice();
+      if(value.length){ empty=false; }
+      var correctOrder=task.correctOrder||task.items||[];
+      var same=correctOrder.length===value.length && correctOrder.every(function(x,i){return x===value[i];});
+      autoScore=same?1:0;
+    }else if(type==='drag-match'){
+      value=(st.pairs||[]).map(function(p,i){ return st.assigned[i]!=null? st.pairs[st.assigned[i]].right:''; });
+      empty=value.some(function(v){return v==='';});
+      var correct=(st.pairs||[]).map(function(p){return p.right;});
+      var same=correct.length===value.length && correct.every(function(x,i){return x===value[i];});
+      autoScore=same?1:0;
+    }
+    return {answer:{...base, value:value, autoScore:autoScore}, empty:empty};
+  }
+
+  async function submitCurrent(){
+    if(!currentAssignment) return;
+    var build=buildAnswers(currentAssignment.tasks);
+    if(build.missing.length){ alert('请完成必做任务：'+build.missing.join('、')); return; }
+    var existing=mySubmissionFor(currentAssignment.assignmentId);
+    if(existing){ alert('该作业已提交，请勿重复提交。'); return; }
+    var submission={
+      submissionId:'sub-'+Date.now()+'-'+Math.random().toString(16).slice(2),
+      assignmentId:currentAssignment.assignmentId,
+      assignmentVersionId:currentAssignment.assignmentVersionId,
+      practiceId:currentAssignment.practiceId||'',
+      practiceTitle:currentAssignment.title||currentAssignment.practiceId||'作业',
+      studentId:studentId,
+      submittedAt:new Date().toISOString(),
+      answers:build.answers,
+      files:[],
+      status:'submitted',
+      teacherFeedback:'',
+      score:null,
+      checkedAt:null
+    };
+    var token=getToken();
+    try{
+      var res=await fetch('/api/practice/submissions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(submission)});
+      if(res.ok){ submissions.push(submission); alert('已提交 ✅'); showList(); }
+      else {
+        var error=await res.json().catch(function(){return {};});
+        alert('提交失败：'+(error.error||res.status));
+      }
+    }catch(e){ alert('提交失败：'+e.message); }
+  }
+
+  function showList(){
+    currentAssignment=null; renderState={};
+    $('detailView').classList.add('hidden');
+    $('listView').classList.remove('hidden');
+    renderList();
+  }
+
+  // ---------- app 暴露给 inline handler ----------
+  window.app={
+    openAssignmentId:function(id){
+      var a=assignments.filter(function(x){return x.assignmentId===id;})[0];
+      if(a) openAssignment(a);
+      else alert('未找到该作业');
+    },
+    pickMC:function(id,qi,val,el){
+      var st=renderState[id]; if(st.value instanceof Array) st.value[qi]=val; else st.value=val;
+      el.closest('.mcq, .opt').querySelectorAll('.opt').forEach(function(o){o.classList.remove('selected');});
+      el.closest('.opt').classList.add('selected');
+    },
+    tickCheck:function(id,checked){ renderState[id].value=checked?'done':''; },
+    typeShort:function(id,val){ renderState[id].value=val; },
+    moveOrder:function(id,idx,dir){
+      var st=renderState[id]; var arr=st.value; var ni=idx+dir;
+      if(ni<0||ni>=arr.length) return;
+      var t=arr.splice(idx,1)[0]; arr.splice(ni,0,t); renderOrderBox(id);
+    },
+    pickCard:function(id,pairIdx){
+      var st=renderState[id];
+      if(st.selected===pairIdx){ st.selected=null; renderMatchBox(id); return; }
+      st.selected=pairIdx; renderMatchBox(id);
+    },
+    unmatch:function(id,leftIdx,ev){
+      if(ev){ ev.preventDefault(); ev.stopPropagation(); }
+      var st=renderState[id];
+      var pi=st.assigned[leftIdx];
+      if(pi!=null){ delete st.assigned[leftIdx]; st.pool.push(pi); st.selected=null; renderMatchBox(id); }
+    }
+  };
+  // 点击左侧词条：若选中了卡片则配对
+  document.addEventListener('click',function(ev){
+    var slot=ev.target.closest&&ev.target.closest('.left-slot');
+    if(!slot) return;
+    var box=slot.closest('.match-wrap'); if(!box) return;
+    var id=box.id.replace('match_',''); var st=renderState[id];
+    if(!st) return;
+    var i=Array.prototype.indexOf.call(box.querySelectorAll('.left-slot'),slot);
+    if(st.selected!=null){
+      if(st.assigned[i]!=null)st.pool.push(st.assigned[i]);
+      st.assigned[i]=st.selected;
+      st.pool=st.pool.filter(function(x){return x!==st.selected;});
+      st.selected=null;
+      renderMatchBox(id);
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded',init);
+  // 供内联按钮暴露到 window（IIFE 内函数不暴露则 onclick 找不到）
+  window.submitCurrent = submitCurrent;
+  window.showList = showList;
+  window.relogin = relogin;
+})();
+</script>
+</body>
+</html>

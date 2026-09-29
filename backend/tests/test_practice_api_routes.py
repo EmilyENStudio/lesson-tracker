@@ -93,6 +93,27 @@ class PracticeApiTests(unittest.TestCase):
         teacher_submissions = self.client.get("/api/practice/submissions", headers=self.auth("teacher-token"))
         self.assertEqual(1, len(teacher_submissions.get_json()))
 
+    def test_stale_submission_is_rejected_and_matching_version_is_saved(self):
+        self.assertEqual(200, self.teacher_assign().status_code)
+        assignment = json.loads(self.assign_path.read_text(encoding="utf-8"))[0]
+        payload = {"submissionId": "version-check", "assignmentId": "distribution-1",
+                   "studentId": "student-1", "assignmentVersionId": "av1-stale",
+                   "answers": [{"taskId": "task-1", "value": "A"}], "files": []}
+        response = self.client.post("/api/practice/submissions", headers=self.auth("student-token"), json=payload)
+        self.assertEqual(400, response.status_code)
+        self.assertEqual([], json.loads(self.sub_path.read_text(encoding="utf-8")))
+        payload["assignmentVersionId"] = assignment["assignmentVersionId"]
+        payload["answers"][0]["taskVersionId"] = assignment["tasks"][0]["taskVersionId"]
+        response = self.client.post("/api/practice/submissions", headers=self.auth("student-token"), json=payload)
+        self.assertEqual(200, response.status_code)
+        saved = json.loads(self.sub_path.read_text(encoding="utf-8"))[0]
+        response = self.client.put("/api/practice/submissions/version-check", headers=self.auth("teacher-token"),
+                                   json={"status": "reviewed", "teacherFeedback": "Well done", "assignmentVersionId": "changed"})
+        self.assertEqual(200, response.status_code)
+        reviewed = json.loads(self.sub_path.read_text(encoding="utf-8"))[0]
+        self.assertEqual(saved["assignmentVersionId"], reviewed["assignmentVersionId"])
+        self.assertEqual(saved["answers"], reviewed["answers"])
+
     def test_student_cannot_submit_to_another_students_assignment(self):
         self.assertEqual(200, self.teacher_assign().status_code)
         response = self.client.post("/api/practice/submissions", headers=self.auth("other-token"), json={

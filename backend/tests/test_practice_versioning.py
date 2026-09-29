@@ -1,3 +1,4 @@
+import copy
 import unittest
 
 from practice_versioning import (
@@ -44,6 +45,37 @@ class PracticeVersioningTests(unittest.TestCase):
         link_assignment_version(self.assignment)
         with self.assertRaises(ValueError):
             link_submission_version({"answers": [{"taskId": "other-task"}], "files": []}, self.assignment)
+
+    def test_assignment_rejects_duplicate_task_ids(self):
+        for field in ("tasks", "taskIds"):
+            assignment = copy.deepcopy(self.assignment)
+            assignment[field].append(copy.deepcopy(assignment[field][0]))
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                link_assignment_version(assignment)
+
+    def test_submission_rejects_stale_versions_without_relabeling_answers(self):
+        link_assignment_version(self.assignment)
+        for field in ("assignmentVersionId", "answers", "files"):
+            submission = {"answers": [{"taskId": "task-1", "value": "A"}], "files": []}
+            if field == "assignmentVersionId":
+                submission[field] = "av1-stale"
+            else:
+                submission[field] = [{"taskId": "task-1", "taskVersionId": "tv1-stale"}]
+            before = copy.deepcopy(submission)
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                link_submission_version(submission, self.assignment)
+            self.assertEqual(before, submission)
+
+    def test_existing_distribution_keeps_its_version_after_catalog_changes(self):
+        link_assignment_version(self.assignment)
+        original = copy.deepcopy(self.assignment)
+        updated_catalog = dict(self.task, prompt="A revised question")
+        self.assertNotEqual(task_version(updated_catalog), original["tasks"][0]["taskVersionId"])
+        submission = {"assignmentVersionId": original["assignmentVersionId"], "answers": [{
+            "taskId": "task-1", "taskVersionId": original["tasks"][0]["taskVersionId"], "value": "A"
+        }], "files": []}
+        link_submission_version(submission, self.assignment)
+        self.assertEqual(original, self.assignment)
 
 
 if __name__ == "__main__":
